@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-// import 'package:flutter_web_dashboard/constants/style.dart';
-// import 'package:flutter_web_dashboard/helpers/reponsiveness.dart';
-
+import 'package:mindsight_admin_page/app_export.dart';
 import 'custom_text.dart';
 
 AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
@@ -27,17 +24,17 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
         children: [
           Visibility(
               visible: !ResponsiveWidget.isSmallScreen(context),
-              child: const CustomText(
+              child: CustomText(
                 text: "Dash",
-                color: lightGrey,
+                color: appTheme.grayScale11,
                 size: 20,
                 weight: FontWeight.bold,
               )),
           Expanded(child: Container()),
           IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.settings,
-                color: dark,
+                color: appTheme.black,
               ),
               onPressed: () {}),
           Stack(
@@ -45,7 +42,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
               IconButton(
                   icon: Icon(
                     Icons.notifications,
-                    color: dark.withOpacity(.7),
+                    color: appTheme.black.withOpacity(.7),
                   ),
                   onPressed: () {}),
               Positioned(
@@ -56,9 +53,9 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
                   height: 12,
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                      color: active,
+                      color: appTheme.primary,
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: light, width: 2)),
+                      border: Border.all(color: appTheme.grayScale1, width: 2)),
                 ),
               )
             ],
@@ -66,39 +63,39 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           Container(
             width: 1,
             height: 22,
-            color: lightGrey,
+            color: appTheme.grayScale6,
           ),
           const SizedBox(
             width: 24,
           ),
-          const CustomText(
+          CustomText(
             text: "Santos Enoque",
-            color: lightGrey,
+            color: appTheme.grayScale6,
           ),
           const SizedBox(
             width: 16,
           ),
           Container(
             decoration: BoxDecoration(
-                color: active.withOpacity(.5),
+                color: appTheme.primary.withOpacity(.5),
                 borderRadius: BorderRadius.circular(30)),
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(30)),
               padding: const EdgeInsets.all(2),
               margin: const EdgeInsets.all(2),
-              child: const CircleAvatar(
-                backgroundColor: light,
+              child: CircleAvatar(
+                backgroundColor: appTheme.grayScale1,
                 child: Icon(
                   Icons.person_outline,
-                  color: dark,
+                  color: appTheme.black,
                 ),
               ),
             ),
           )
         ],
       ),
-      iconTheme: const IconThemeData(color: dark),
+      iconTheme: IconThemeData(color: appTheme.black),
       elevation: 0,
       backgroundColor: Colors.transparent,
     );
