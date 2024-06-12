@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/utils/size_utils';
 
 class AppDecoration {
     /*
@@ -92,17 +91,6 @@ class AppDecoration {
           colors: [
             appTheme.white,
             appTheme.background.withOpacity(0),
-          ],
-        ),
-      );
-
-  static BoxDecoration get gradientSkyBlueToBlueHorizon => BoxDecoration(
-        gradient: LinearGradient(
-          // begin: const Alignment(0.5, 0.12),
-          // end: const Alignment(0.5, 0.83),
-          colors: [
-            appTheme.skyBlue,
-            appTheme.blue,
           ],
         ),
       );
