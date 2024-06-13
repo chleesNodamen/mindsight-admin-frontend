@@ -26,19 +26,20 @@ class AuthenticationPage extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text("Login",
-                      style: GoogleFonts.roboto(
-                          fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(
+                    "Login",
+                    style: CustomTextStyles.bodyMediumBlack,
+                  ),
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+               Row(
                 children: [
                   CustomText(
                     text: "Welcome back to the admin panel.",
-                    color: lightGrey,
+                    color: appTheme.grayScale6,
                   ),
                 ],
               ),
@@ -77,7 +78,7 @@ class AuthenticationPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const CustomText(text: "Forgot password?", color: active)
+                   CustomText(text: "Forgot password?", color: appTheme.grayScale6)
                 ],
               ),
               const SizedBox(
@@ -89,7 +90,7 @@ class AuthenticationPage extends StatelessWidget {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      color: active, borderRadius: BorderRadius.circular(20)),
+                      color: appTheme.primary, borderRadius: BorderRadius.circular(20)),
                   alignment: Alignment.center,
                   width: double.maxFinite,
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -103,11 +104,11 @@ class AuthenticationPage extends StatelessWidget {
                 height: 15,
               ),
               RichText(
-                  text: const TextSpan(children: [
-                TextSpan(text: "Do not have admin credentials? "),
+                  text:  TextSpan(children: [
+                const TextSpan(text: "Do not have admin credentials? "),
                 TextSpan(
                     text: "Request Credentials! ",
-                    style: TextStyle(color: active))
+                    style: TextStyle(color: appTheme.primary))
               ]))
             ],
           ),

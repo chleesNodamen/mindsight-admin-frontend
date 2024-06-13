@@ -8,7 +8,7 @@ class SideMenu extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Container(
-      color: light,
+      color: appTheme.grayScale3,
       child: ListView(
         children: [
           if (ResponsiveWidget.isSmallScreen(context))
@@ -25,12 +25,12 @@ class SideMenu extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 12),
                       child: Image.asset("assets/icons/logo.png"),
                     ),
-                    const Flexible(
+                     Flexible(
                       child: CustomText(
                         text: "Dash",
                         size: 20,
                         weight: FontWeight.bold,
-                        color: active,
+                        color: appTheme.primary,
                       ),
                     ),
                     SizedBox(width: width / 48),
@@ -42,7 +42,7 @@ class SideMenu extends StatelessWidget {
               ],
             ),
           Divider(
-            color: lightGrey.withOpacity(.1),
+            color: appTheme.grayScale2,
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -53,7 +53,7 @@ class SideMenu extends StatelessWidget {
                       if (item.route == authenticationPageRoute) {
                         Get.offAllNamed(authenticationPageRoute);
                         menuController
-                            .changeActiveItemTo(overviewPageDisplayName);
+                            .changeActiveItemTo(dashboardPageDisplayName);
                       }
                       if (!menuController.isActive(item.name)) {
                         menuController.changeActiveItemTo(item.name);

@@ -1,4 +1,4 @@
-const rootRoute = "/";
+const rootRoute = "/dashboard";
 
 const dashboardPageRoute = "/dashboard";
 const dashboardPageDisplayName = "Dashboard";

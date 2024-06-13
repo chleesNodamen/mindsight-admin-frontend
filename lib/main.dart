@@ -1,13 +1,10 @@
 import 'app_export.dart';
+import 'package:mindsight_admin_page/controllers/menu_controller.dart' as menu_controller;
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]).then((value) {
-    // Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
-    runApp(const MyApp());
-  });
+void main() {
+  Get.put(menu_controller.MenuController());
+  Get.put(NavigationController());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: rootRoute,
+      initialRoute: authenticationPageRoute,
       unknownRoute: GetPage(
           name: '/not-found',
           page: () => const PageNotFound(),
@@ -42,7 +39,7 @@ class MyApp extends StatelessWidget {
         }),
         primarySwatch: Colors.blue,
       ),
-      // home: AuthenticationPage(),
+      home: const AuthenticationPage(),
     );
   }
 }
