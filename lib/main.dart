@@ -12,8 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Sizer(builder: (context, orientation, deviceType) {
     return GetMaterialApp(
-      initialRoute: authenticationPageRoute,
+      initialRoute: rootRoute,
       unknownRoute: GetPage(
           name: '/not-found',
           page: () => const PageNotFound(),
@@ -30,16 +31,18 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       title: 'Dashboard',
-      theme: ThemeData(
-        scaffoldBackgroundColor: appTheme.white,
-        textTheme: CustomTextStyles.bodyLargeBlack.mulishTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.black),
-        pageTransitionsTheme: const PageTransitionsTheme(builders: {
-          TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-          TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-        }),
-        primarySwatch: Colors.blue,
-      ),
-      home: const AuthenticationPage(),
+      theme: theme,
+      // theme: ThemeData(
+      //   scaffoldBackgroundColor: appTheme.white,
+      //   textTheme: CustomTextStyles.bodyLargeBlack.mulishTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.black),
+      //   pageTransitionsTheme: const PageTransitionsTheme(builders: {
+      //     TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+      //     TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+      //   }),
+      //   primarySwatch: Colors.blue,
+      // ),
+      // home: const AuthenticationPage(),
     );
-  }
+  });
+}
 }
