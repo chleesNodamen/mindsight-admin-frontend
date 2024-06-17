@@ -234,7 +234,7 @@ class CustomTextStyles {
 extension on TextStyle {
   TextStyle get inter {
     return copyWith(
-      fontFamily: 'Inter',
+      fontFamily: 'Pretendard',
     );
   }
 

@@ -7,10 +7,10 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           ? Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 16),
+                  padding: const EdgeInsets.only(left: 24),
                   child: Image.asset(
-                    "assets/icons/logo.png",
-                    width: 28,
+                    "assets/logo.png",
+                    width: 300,
                   ),
                 ),
               ],
@@ -23,13 +23,9 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
       title: Row(
         children: [
           Visibility(
-              visible: !ResponsiveWidget.isSmallScreen(context),
-              child: CustomText(
-                text: "Dash",
-                color: appTheme.grayScale11,
-                size: 20,
-                weight: FontWeight.bold,
-              )),
+            visible: !ResponsiveWidget.isSmallScreen(context),
+            child: Text('Admin', style: CustomTextStyles.labelLargeWhite),
+          ),
           Expanded(child: Container()),
           IconButton(
               icon: Icon(

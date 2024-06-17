@@ -13,7 +13,7 @@ class TextThemes {
           fontSize: 32.fSize,
           fontFamily: 'Pretendard',
           fontWeight: FontWeight.w700,
-          height: 1.37,
+          // height: 1.37,
         ),
         headlineMedium: TextStyle(
           color: appTheme.black,
