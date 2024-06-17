@@ -1,0 +1,27 @@
+class IconConstant {
+  static String iconPath = 'assets/icons';
+
+  static String arrowRight = '$iconPath/icon_arrow_right.svg';
+  static String newTab = '$iconPath/icon_newtab.svg';
+  static String powerOn = '$iconPath/icon_power_on.svg';
+  static String upload = '$iconPath/icon_upload.svg';
+  static String download = '$iconPath/icon_download.svg';
+  static String search = '$iconPath/icon_search.svg';
+  static String add = '$iconPath/icon_add.svg';
+  static String dashboard = '$iconPath/icon_dashboard.svg';
+  static String dashboardFull = '$iconPath/icon_dashboard_full.svg';
+  static String member = '$iconPath/icon_member.svg';
+  static String memberFull = '$iconPath/icon_member_full.svg';
+  static String content = '$iconPath/icon_content.svg';
+  static String contentFull = '$iconPath/icon_content_full.svg';
+  static String feedback = '$iconPath/icon_feedback.svg';
+  static String feedbackFull = '$iconPath/icon_feedback_full.svg';
+  static String policy = '$iconPath/icon_policy.svg';
+  static String policyFull = '$iconPath/icon_policy_full.svg';
+  static String settings = '$iconPath/icon_settings.svg';
+  static String settingsFull = '$iconPath/icon_settings_full.svg';
+  static String previousPage = '$iconPath/icon_previous_page.svg';
+  static String nextPage = '$iconPath/icon_next_page.svg';
+  static String firstPage = '$iconPath/icon_first_page.svg';
+  static String lastPage = '$iconPath/icon_last_page.svg';
+}
