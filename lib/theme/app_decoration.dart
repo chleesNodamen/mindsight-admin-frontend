@@ -46,7 +46,7 @@ class AppDecoration {
         color: appTheme.white,
         border: Border.all(
           color: appTheme.grayScale2,
-          width: 1.h,
+          width: 1,
         ),
       );
 
@@ -98,27 +98,27 @@ class AppDecoration {
 
 class BorderRadiusStyle {
   static BorderRadius get roundedBorder6 => BorderRadius.circular(
-        6.h,
+        6,
       );
   static BorderRadius get roundedBorder8 => BorderRadius.circular(
-        8.h,
+        8,
       );
   static BorderRadius get roundedBorder12 => BorderRadius.circular(
-        12.h,
+        12,
       );
   static BorderRadius get roundedBorder16 => BorderRadius.circular(
-        16.h,
+        16,
       );
   static BorderRadius get roundedBorder20 => BorderRadius.circular(
-        20.h,
+        20,
       );
   static BorderRadius get roundedBorder32 => BorderRadius.circular(
-        32.h,
+        32,
       );
   static BorderRadius get roundedBorder64 => BorderRadius.circular(
-        64.h,
+        64,
       );
   static BorderRadius get roundedBorder140 => BorderRadius.circular(
-        140.h,
+        140,
       );
 }

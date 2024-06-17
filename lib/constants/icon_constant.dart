@@ -24,4 +24,6 @@ class IconConstant {
   static String nextPage = '$iconPath/icon_next_page.svg';
   static String firstPage = '$iconPath/icon_first_page.svg';
   static String lastPage = '$iconPath/icon_last_page.svg';
+  static String visibilityFalse = '$iconPath/icon_visibility.svg';
+  static String visibilityTrue = '$iconPath/icon_visibility_true.svg';
 }

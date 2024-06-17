@@ -31,10 +31,58 @@ class AuthenticationPage extends StatelessWidget {
               ),
               TextField(
                 decoration: InputDecoration(
-                    labelText: "이메일 주소",
-                    hintText: "abc@domain.com",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12))),
+                  labelText: "이메일 주소",
+                  labelStyle: CustomTextStyles.bodyMediumGray,
+                  // floatingLabelStyle: TextStyle(color: appTheme.black),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  // hintText: "abc@domain.com",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 1,
+                    ),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.red,
+                      width: 2,
+                    ),
+                  ),
+                  errorStyle: TextStyle(
+                      color: appTheme.red,
+                      fontSize: 12.fSize,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
               const SizedBox(
                 height: 16,
@@ -42,30 +90,74 @@ class AuthenticationPage extends StatelessWidget {
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                    labelText: "비밀번호",
-                    hintText: "123",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12))),
+                  suffixIcon: CustomImageView(
+                    onTap: () {},
+                    margin: const EdgeInsets.only(
+                        right: 16, left: 12, top: 16, bottom: 16),
+                    imagePath: IconConstant.visibilityFalse,
+                  ),
+                  // floatingLabelStyle: TextStyle(color: appTheme.black),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  labelText: "비밀번호",
+                  labelStyle: CustomTextStyles.bodyMediumGray,
+                  // hintText: "123",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 1,
+                    ),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.grayScale3,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appTheme.red,
+                      width: 2,
+                    ),
+                  ),
+                  errorStyle: TextStyle(
+                      color: appTheme.red,
+                      fontSize: 12.fSize,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
               const SizedBox(
                 height: 32,
               ),
-              InkWell(
-                onTap: () {
+              CustomElevatedButton(
+                height: 56,
+                text: "Continue".tr,
+                onPressed: () {
                   Get.offAllNamed(rootRoute);
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: appTheme.primary,
-                      borderRadius: BorderRadius.circular(20)),
-                  alignment: Alignment.center,
-                  width: double.maxFinite,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: const CustomText(
-                    text: "로그인",
-                    color: Colors.white,
-                  ),
-                ),
               ),
               const SizedBox(
                 height: 15,
@@ -89,3 +181,65 @@ class AuthenticationPage extends StatelessWidget {
     );
   }
 }
+
+
+
+// // Obx(
+              // //   () => 
+              //   CustomTextFormField(
+              //     // controller: controller.emailController,
+              //     hintText: "Business email".tr,
+              //     textInputType: TextInputType.emailAddress,
+              //     // suffix:
+              //     //     InkWell(
+              //     //         onTap: () {
+              //     //           // controller.emailController.clear();
+              //     //         },
+              //     //         child: Container(
+              //     //           margin:
+              //     //               EdgeInsets.fromLTRB(30.h, 16.v, 16.h, 16.v),
+              //     //           child: CustomImageView(
+              //     //             imagePath: IconConstant.close,
+              //     //             color: appTheme.grayScale5,
+              //     //             height: 24.adaptSize,
+              //     //             width: 24.adaptSize,
+              //     //           ),
+              //     //         ),
+              //     //       )
+              //     //     ,
+              //     // validator: (value) => controller.emailValidator(value),
+              //     contentPadding: const EdgeInsets.symmetric(
+              //       horizontal: 16,
+              //       vertical: 16,
+              //     ),
+              //     borderDecoration: TextFormFieldStyleHelper.outlineGrayScale3,
+              //     filled: true,
+              //   ),
+              // // ),
+              // const SizedBox(height: 16),
+              // // Obx(
+              // //   () => 
+              //   CustomTextFormField(
+              //     // controller: controller.passwordController,
+              //     hintText: "Password".tr,
+              //     textInputAction: TextInputAction.done,
+              //     textInputType: TextInputType.visiblePassword,
+              //     suffix: InkWell(
+              //       onTap: () {
+              //         // controller.isObscured.value =
+              //         // !controller.isObscured.value;
+              //       },
+              //       child: Container(
+              //         // margin: EdgeInsets.fromLTRB(30.h, 16.v, 16.h, 16.v),
+              //         child: CustomImageView(
+              //           imagePath: IconConstant.visibilityFalse,
+              //           // color: controller.isObscured.value
+              //           //     ? appTheme.grayScale5
+              //           //     : appTheme.black,
+              //           height: 24,
+              //           width: 24,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
