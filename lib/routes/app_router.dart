@@ -9,17 +9,17 @@ import 'package:mindsight_admin_page/routes/app_routes.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case DashboardViewRoute:
+    case dashboardPageRoute:
       return _getPageRoute(const DashboardView());
-    case MemberManageViewRoute:
+    case memberManagePageRoute:
       return _getPageRoute(const MemberManageView());
-    case ContentManageViewRoute:
+    case contentManagePageRoute:
       return _getPageRoute(const ContentManageView());
-    case ActivityManageViewRoute:
+    case activityManagePageRoute:
       return _getPageRoute(const ActivityManageView());
-    case TermsManageViewRoute:
+    case termsManagePageRoute:
       return _getPageRoute(const TermsManageView());
-    case AdminSettingsViewRoute:
+    case adminSettingsPageRoute:
       return _getPageRoute(const AdminSettingsView());
     default:
       return _getPageRoute(const DashboardView());

@@ -1,6 +1,6 @@
-import 'package:mindsight/app_export.dart';
-import 'package:mindsight/data/base_repository.dart';
-import 'package:mindsight/data/auth_verify_email/auth_verify_email_model.dart';
+import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/base_repository.dart';
+import 'package:mindsight_admin_page/data/auth_verify_email/auth_verify_email_model.dart';
 
 class AuthVerifyEmailType {
   static String emailVerification = "emailVerification";

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:mindsight/constants/app_constant.dart';
-import 'package:mindsight/utils/logger.dart';
+import 'package:mindsight_admin_page/constants/app_constant.dart';
+import 'package:mindsight_admin_page/utils/logger.dart';
 
 class CustomHttpClient extends GetConnect {
   final String _baseUrl = AppConstant.isProdServer

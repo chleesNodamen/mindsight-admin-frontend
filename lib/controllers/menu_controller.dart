@@ -2,7 +2,7 @@ import 'package:mindsight_admin_page/app_export.dart';
 
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
-  var activeItem = DashboardViewDisplayName.obs;
+  var activeItem = dashboardPageDisplayName.obs;
 
   var hoverItem = "".obs;
 
@@ -20,17 +20,17 @@ class MenuController extends GetxController {
 
   Widget returnIconFor(String itemName) {
     switch (itemName) {
-      case DashboardViewDisplayName:
+      case dashboardPageDisplayName:
         return _customIcon(Icons.trending_up, itemName);
-      case MemberManageViewDisplayName:
+      case memberManagePageDisplayName:
         return _customIcon(Icons.drive_eta, itemName);
-      case ContentManageViewDisplayName:
+      case contentManagePageDisplayName:
         return _customIcon(Icons.people_alt_outlined, itemName);
-      case ActivityManageViewDisplayName:
+      case activityManagePageDisplayName:
         return _customIcon(Icons.people_alt_outlined, itemName);
-      case TermsManageViewDisplayName:
+      case termsManagePageDisplayName:
         return _customIcon(Icons.people_alt_outlined, itemName);
-      case AdminSettingsViewDisplayName:
+      case adminSettingsPageDisplayName:
         return _customIcon(Icons.people_alt_outlined, itemName);
       // case authenticationPageDisplayName:
       //   return _customIcon(Icons.exit_to_app, itemName);

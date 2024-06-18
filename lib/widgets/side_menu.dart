@@ -53,7 +53,7 @@ class SideMenu extends StatelessWidget {
                       if (item.route == authenticationPageRoute) {
                         Get.offAllNamed(authenticationPageRoute);
                         menuController
-                            .changeActiveItemTo(DashboardViewDisplayName);
+                            .changeActiveItemTo(dashboardPageDisplayName);
                       }
                       if (!menuController.isActive(item.name)) {
                         menuController.changeActiveItemTo(item.name);

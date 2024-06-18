@@ -73,19 +73,35 @@ class MenuItem {
   MenuItem(this.name, this.route);
   
 }
+const rootRoute = "/";
 const dashboardPageRoute = "/dashboard";
 const dashboardPageDisplayName = "Dashboard";
 
 const memberManagePageRoute = "/member_manage";
 const memberManagePageDisplayName = "Manage Members";
 
+const contentManagePageDisplayName = "Manage Content";
+const contentManagePageRoute = "/content_manage";
+
+const activityManagePageDisplayName = "Manage Activity";
+const activityManagePageRoute = "/activity_manage";
+
+const termsManagePageDisplayName = "Manage Terms";
+const termsManagePageRoute = "/terms_manage";
+
+const adminSettingsPageDisplayName = "Admin Settings";
+const adminSettingsPageRoute = "/admin_settings";
+
+const authenticationPageDisplayName = "Log out";
+const authenticationPageRoute = "/auth";
+
 
 List<MenuItem> sideMenuItemRoutes = [
-  MenuItem(DashboardViewDisplayName, DashboardViewRoute),
-  MenuItem(MemberManageViewDisplayName, MemberManageViewRoute),
-  MenuItem(ContentManageViewDisplayName, ContentManageViewRoute),
-  MenuItem(ActivityManageViewDisplayName, ActivityManageViewRoute),
-  MenuItem(AdminSettingsViewDisplayName, AdminSettingsViewRoute),
-  MenuItem(TermsManageViewDisplayName, TermsManageViewRoute),
+  MenuItem(dashboardPageDisplayName, dashboardPageRoute),
+  MenuItem(memberManagePageDisplayName, memberManagePageRoute),
+  MenuItem(contentManagePageDisplayName, contentManagePageRoute),
+  MenuItem(activityManagePageDisplayName, activityManagePageRoute),
+  MenuItem(adminSettingsPageDisplayName, adminSettingsPageRoute),
+  MenuItem(termsManagePageDisplayName, termsManagePageRoute),
   // MenuItem(authenticationPageDisplayName, authenticationPageRoute),
 ];

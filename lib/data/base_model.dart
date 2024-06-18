@@ -1,4 +1,4 @@
-import 'package:mindsight/app_export.dart';
+import 'package:mindsight_admin_page/app_export.dart';
 
 class BaseModel {
   bool _isOk = false;

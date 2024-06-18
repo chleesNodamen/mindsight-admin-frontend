@@ -1,4 +1,4 @@
-import 'package:mindsight/data/base_model.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
 
 class AuthVerifyEmailModel extends BaseModel {
   AuthVerifyEmailModel();

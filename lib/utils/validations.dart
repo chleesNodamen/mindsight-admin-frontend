@@ -1,3 +1,4 @@
+import 'package:mindsight_admin_page/utils/correct_word_checker.dart';
 bool isValidEmail(
   String? inputString, {
   bool isRequired = false,
@@ -18,4 +19,14 @@ bool isValidEmail(
   }
 
   return isInputStringValid;
+}
+bool isValidPassword(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  final CorrectWordChecker wordChecker = CorrectWordChecker(inputString ?? '');
+
+  return wordChecker.is8Characters &&
+      wordChecker.isUpperLowerLetter &&
+      wordChecker.is1Symbol;
 }

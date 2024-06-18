@@ -1,14 +1,11 @@
 import 'package:mindsight_admin_page/app_export.dart';
-// import 'package:mindsight/data/auth_sign_in/auth_signin_model.dart';
-// import 'package:mindsight/data/auth_sign_in/auth_signin_repository.dart';
-// import 'package:mindsight/data/auth_sign_in/auth_signin_req_post.dart';
-// import 'package:mindsight/data/auth_verify_email/auth_verify_email_model.dart';
-// import 'package:mindsight/data/auth_verify_email/auth_verify_email_repository.dart';
-// import 'package:mindsight/data/auth_verify_email/auth_verify_email_req_post.dart';
+import 'package:mindsight_admin_page/data/auth/auth_model.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+
 
 class AuthenticationController extends GetxController {
-  // late AuthSigninModel authSigninModel;
-  // late AuthVerifyEmailModel authVerifyEmailModel;
+  late AuthModel authModel;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -43,51 +40,47 @@ class AuthenticationController extends GetxController {
 
   String? emailValidator(String? value) {
     if (value == null ||
-        !isValidEmail(value, isRequired: true)
-        // authSigninModel.compareErrorCode(ApiErrorCode.credentialsInvalid) ||
-        // authSigninModel.compareErrorCode(ApiErrorCode.emailNotVerified)
+        !isValidEmail(value, isRequired: true) ||
+        authModel.compareErrorCode(ApiErrorCode.credentialsInvalid) ||
+        authModel.compareErrorCode(ApiErrorCode.emailNotVerified)
         ) {
-      return "This email address is not registered.\nPlease check your email and try again."
+      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요. "
           .tr;
     }
-
-    // if (!authSigninModel.isSuccess) {
-    //   return "Unknown error.\nPlease check your email and try again.".tr;
-    // }
 
     return null;
   }
 
   String? passwordValidator(String? value) {
-    if (value == null
-        // !isValidPassword(value, isRequired: true) ||
-        // authSigninModel.compareErrorCode(ApiErrorCode.credentialsMismatch)
+    if (value == null ||
+        !isValidPassword(value, isRequired: true) ||
+        authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)
         ) {
-      // return "This password is incorrect.\nYou have ${authSigninModel.attemptsLeft} attempts remaining to try again."
-          // .tr;
+      return "This password is incorrect.\nYou have ${authModel.attemptsLeft} attempts remaining to try again."
+          .tr;
     }
     return null;
   }
 
   Future<bool> onContinue() async {
-    // isLoading.value = true;
+    isLoading.value = true;
 
-    // authSigninModel = await AuthSigninRepository().post(AuthSigninReqPost(
-        // email: emailController.text, password: passwordController.text));
+    authModel = await AuthRepository().post(AuthReqPost(
+        email: emailController.text, password: passwordController.text));
 
-    // isLoading.value = false;
+    isLoading.value = false;
 
-    // if (authSigninModel.isSuccess) {
-    //   Get.offAllNamed(AppRoutes.bottomNavi);
-    // } else {
-    //   formKey.currentState!.validate();
+    if (authModel.isSuccess) {
+      Get.offAllNamed(AppRoutes.rootRoute);
+    } else {
+      formKey.currentState!.validate();
 
-    //   if (authSigninModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
-    //     if (authSigninModel.attemptsLeft! <= 0) {
-    //       return false;
-    //     }
-    //   }
-    // }
+      if (authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
+        if (authModel.attemptsLeft! <= 0) {
+          return false;
+        }
+      }
+    }
 
     return true;
   }
