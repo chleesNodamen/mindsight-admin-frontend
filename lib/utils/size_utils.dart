@@ -70,7 +70,7 @@ class SizeUtils {
           boxConstraints.maxHeight.isNonZero(defaultValue: FIGMA_DESIGN_WIDTH);
       height = boxConstraints.maxWidth.isNonZero();
     }
-    deviceType = DeviceType.mobile;
+    deviceType = DeviceType.desktop;
   }
 }
 

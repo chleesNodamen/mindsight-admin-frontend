@@ -1,7 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/authentication/auth_controller.dart';
 
-class AuthenticationPage extends StatelessWidget {
-  const AuthenticationPage({super.key});
+class AuthenticationView extends GetWidget<AuthenticationController> {
+  const AuthenticationView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +11,7 @@ class AuthenticationPage extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               color: appTheme.white, borderRadius: BorderRadius.circular(32)),
-          constraints: const BoxConstraints(maxWidth: 417, maxHeight: 438),
+          constraints: const BoxConstraints(maxWidth: 420, maxHeight: 441),
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +30,14 @@ class AuthenticationPage extends StatelessWidget {
               const SizedBox(
                 height: 32,
               ),
-              TextField(
+              TextFormField(
+                controller: controller.emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   labelText: "이메일 주소",
                   labelStyle: CustomTextStyles.bodyMediumGray,
@@ -87,14 +95,18 @@ class AuthenticationPage extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              TextField(
-                obscureText: true,
+              TextFormField(
+                controller: controller.passwordController,
+                obscureText: controller.isObscured.value,
                 decoration: InputDecoration(
                   suffixIcon: CustomImageView(
-                    onTap: () {},
+                    onTap: () {
+                      controller.isObscured.value =
+                            !controller.isObscured.value;
+                    },
                     margin: const EdgeInsets.only(
                         right: 16, left: 12, top: 16, bottom: 16),
-                    imagePath: IconConstant.visibilityFalse,
+                    imagePath: controller.isObscured.value ? IconConstant.visibilityFalse : IconConstant.visibilityTrue,
                   ),
                   // floatingLabelStyle: TextStyle(color: appTheme.black),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -154,17 +166,18 @@ class AuthenticationPage extends StatelessWidget {
               ),
               CustomElevatedButton(
                 height: 56,
-                text: "Continue".tr,
+                text: "로그인",
                 onPressed: () {
-                  Get.offAllNamed(rootRoute);
+                  controller.onContinue();
+                  Get.offAllNamed(AppRoutes.rootRoute);
                 },
               ),
               const SizedBox(
-                height: 15,
+                height: 16,
               ),
               Text(
                 "로그인에 문제가 있다면\nleochoi@nodame.com으로 문의하세요.",
-                style: CustomTextStyles.bodyLargeGray,
+                style: CustomTextStyles.labelLargeGray,
                 textAlign: TextAlign.center,
               ),
               // RichText(

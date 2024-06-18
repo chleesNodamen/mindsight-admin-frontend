@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
               }),
           GetPage(
               name: authenticationPageRoute,
-              page: () => const AuthenticationPage()),
+              page: () => const AuthenticationView()),
         ],
         debugShowCheckedModeBanner: false,
         title: 'Dashboard',
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         //   }),
         //   primarySwatch: Colors.blue,
         // ),
-        home: const AuthenticationPage(),
+        home: const AuthenticationView(),
       );
     });
   }
