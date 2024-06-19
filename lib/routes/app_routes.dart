@@ -5,7 +5,9 @@ import 'package:mindsight_admin_page/presentation/authentication/auth__binding.d
 import 'package:mindsight_admin_page/presentation/authentication/auth_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/dashboard/dashboard_binding.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_view.dart';
@@ -25,9 +27,15 @@ class AppRoutes{
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
 
-  static const String initialRoute = auth;
+  static const String initialRoute = rootRoute;
 
   static List<GetPage> pages = [
+     GetPage(
+      name: rootRoute,
+      page: () {
+        return SiteLayout();
+      },
+    ),
     GetPage(
       name: auth,
       page: () => const AuthenticationView(),
@@ -36,7 +44,7 @@ class AppRoutes{
     GetPage(
       name: dashboard,
       page: () => const DashboardView(),
-      bindings: [AuthenticationBinding()],
+      bindings: [DashboardBinding()],
     ),
     GetPage(
       name: memberManage,
@@ -46,7 +54,7 @@ class AppRoutes{
     GetPage(
       name: contentManage,
       page: () => const ContentManageView(),
-      bindings: [AuthenticationBinding()],
+      bindings: [ContentManageBinding()],
     ),
     GetPage(
       name: activityManage,

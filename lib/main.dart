@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
 
 import 'app_export.dart';
 import 'package:mindsight_admin_page/controllers/menu_controller.dart'
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         //   }),
         //   primarySwatch: Colors.blue,
         // ),
-        home: const AuthenticationView(),
+        // home: const DashboardView(),
       );
     });
   }

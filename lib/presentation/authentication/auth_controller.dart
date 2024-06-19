@@ -21,7 +21,6 @@ class AuthenticationController extends GetxController {
   void onInit() {
     super.onInit();
     emailController.addListener(_updateTextStatus);
-    // debounce<String>(username, validations, time: const Duration(milliseconds: 500));
 
     isInited.value = true;
   }
