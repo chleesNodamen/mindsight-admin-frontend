@@ -9,16 +9,9 @@ class SideMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (ResponsiveWidget.isCustomSize(context)) {
-      return VertticalMenuItem(
-        itemName: itemName,
-        onTap: onTap,
-      );
-    } else {
       return HorizontalMenuItem(
         itemName: itemName,
         onTap: onTap,
       );
-    }
   }
 }

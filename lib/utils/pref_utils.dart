@@ -39,6 +39,19 @@ class PrefUtils {
     }
   }
 
+  Future<bool> setSigninTime() {
+    return _sharedPreferences!.setString("SigninTime", DateTime.now().toString());
+  }
+
+  String getSigninTime() {
+    try {
+      return _sharedPreferences!.getString("SigninTime") ?? "";
+    } catch (e) {
+      Logger.log("익셉션: SigninTime");
+      return "";
+    }
+  }
+
   Future<bool> setUserName(String userName) {
     return _sharedPreferences!.setString("UserName", userName);
   }

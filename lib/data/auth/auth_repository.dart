@@ -17,6 +17,7 @@ class AuthRepository extends BaseRepository {
       httpClient.setBearerAuthorization(model.accessToken!);
 
       PrefUtils.to.setSigninId(dto.email!);
+      PrefUtils.to.setSigninTime();
     } else {
       Map<String, dynamic> message = model.data["message"];
       if (message["attemptsLeft"] != null) {

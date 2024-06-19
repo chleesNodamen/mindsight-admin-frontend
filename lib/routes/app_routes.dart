@@ -83,21 +83,21 @@ class MenuItem {
 }
 const rootRoute = "/";
 const dashboardPageRoute = "/dashboard";
-const dashboardPageDisplayName = "Dashboard";
+const dashboardPageDisplayName = "대시보드";
 
 const memberManagePageRoute = "/member_manage";
-const memberManagePageDisplayName = "Manage Members";
+const memberManagePageDisplayName = "회원 관리";
 
-const contentManagePageDisplayName = "Manage Content";
+const contentManagePageDisplayName = "콘텐츠 관리";
 const contentManagePageRoute = "/content_manage";
 
-const activityManagePageDisplayName = "Manage Activity";
+const activityManagePageDisplayName = "활동 기록 관리";
 const activityManagePageRoute = "/activity_manage";
 
-const termsManagePageDisplayName = "Manage Terms";
+const termsManagePageDisplayName = "약관 관리";
 const termsManagePageRoute = "/terms_manage";
 
-const adminSettingsPageDisplayName = "Admin Settings";
+const adminSettingsPageDisplayName = "관리자 설정";
 const adminSettingsPageRoute = "/admin_settings";
 
 const authenticationPageDisplayName = "Log out";

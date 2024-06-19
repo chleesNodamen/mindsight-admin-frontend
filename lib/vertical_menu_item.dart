@@ -7,17 +7,17 @@ class VertticalMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
         onTap: onTap,
-        onHover: (value) {
-          value
-              ? menuController.onHover(itemName)
-              : menuController.onHover("not hovering");
-        },
+        // onHover: (value) {
+        //   value
+        //       ? menuController.onHover(itemName)
+        //       : menuController.onHover("not hovering");
+        // },
         child: Obx(() => Container(
               color: menuController.isHovering(itemName)
-                  ? appTheme.grayScale2
-                  : Colors.transparent,
+                  ? appTheme.white
+                  : appTheme.white.withOpacity(0.75),
               child: Row(
                 children: [
                   Visibility(
@@ -27,9 +27,9 @@ class VertticalMenuItem extends StatelessWidget {
                     maintainAnimation: true,
                     maintainState: true,
                     child: Container(
-                      width: 3,
+                      width: 4,
                       height: 72,
-                      color: Colors.white,
+                      color: appTheme.white,
                     ),
                   ),
                   Expanded(
@@ -38,23 +38,31 @@ class VertticalMenuItem extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(16),
-                          child: menuController.returnIconFor(itemName),
+                          child: menuController.returnIconFor(itemName, menuController.isActive(itemName)),
                         ),
                         if (!menuController.isActive(itemName))
                           Flexible(
-                              child: CustomText(
-                            text: itemName,
-                            color: menuController.isHovering(itemName)
-                                ? Colors.white
-                                : appTheme.grayScale6,
+                              child: Text(
+                            itemName,
+                            style: TextStyle(
+color: Colors.white.withOpacity(0.75),
+fontSize: 18,
+fontFamily: 'Pretendard',
+fontWeight: FontWeight.w700,
+height: 0.07,
+),
                           ))
                         else
                           Flexible(
-                              child: CustomText(
-                            text: itemName,
-                            color: Colors.white,
-                            size: 18,
-                            weight: FontWeight.bold,
+                              child: Text(
+                            itemName,
+                            style: const TextStyle(
+color: Colors.white,
+fontSize: 18,
+fontFamily: 'Pretendard',
+fontWeight: FontWeight.w700,
+height: 0.07,
+),
                           ))
                       ],
                     ),

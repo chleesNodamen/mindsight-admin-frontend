@@ -18,20 +18,20 @@ class MenuController extends GetxController {
 
   isActive(String itemName) => activeItem.value == itemName;
 
-  Widget returnIconFor(String itemName) {
+  Widget returnIconFor(String itemName, bool full) {
     switch (itemName) {
       case dashboardPageDisplayName:
-        return _customIcon(Icons.trending_up, itemName);
+        return CustomImageView(imagePath: '${IconConstant.dashboard.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case memberManagePageDisplayName:
-        return _customIcon(Icons.drive_eta, itemName);
+        return CustomImageView(imagePath: '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case contentManagePageDisplayName:
-        return _customIcon(Icons.people_alt_outlined, itemName);
+        return CustomImageView(imagePath: '${IconConstant.content.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case activityManagePageDisplayName:
-        return _customIcon(Icons.people_alt_outlined, itemName);
+        return CustomImageView(imagePath: '${IconConstant.feedback.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case termsManagePageDisplayName:
-        return _customIcon(Icons.people_alt_outlined, itemName);
+        return CustomImageView(imagePath: '${IconConstant.policy.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case adminSettingsPageDisplayName:
-        return _customIcon(Icons.people_alt_outlined, itemName);
+        return CustomImageView(imagePath: '${IconConstant.settings.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       // case authenticationPageDisplayName:
       //   return _customIcon(Icons.exit_to_app, itemName);
       default:

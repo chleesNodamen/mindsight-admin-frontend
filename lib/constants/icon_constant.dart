@@ -14,8 +14,8 @@ class IconConstant {
   static String memberFull = '$iconPath/icon_member_full.svg';
   static String content = '$iconPath/icon_content.svg';
   static String contentFull = '$iconPath/icon_content_full.svg';
-  static String feedback = '$iconPath/icon_feedback.svg';
-  static String feedbackFull = '$iconPath/icon_feedback_full.svg';
+  static String feedback = '$iconPath/icon_recordfeedback.svg';
+  static String feedbackFull = '$iconPath/icon_recordfeedback_full.svg';
   static String policy = '$iconPath/icon_policy.svg';
   static String policyFull = '$iconPath/icon_policy_full.svg';
   static String settings = '$iconPath/icon_settings.svg';

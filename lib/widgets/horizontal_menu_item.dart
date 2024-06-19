@@ -18,42 +18,37 @@ class HorizontalMenuItem extends StatelessWidget {
         },
         child: Obx(() => Container(
               color: menuController.isHovering(itemName)
-                  ? appTheme.grayScale2
+                  ? appTheme.white.withOpacity(0.4)
                   : Colors.transparent,
               child: Row(
                 children: [
                   Visibility(
-                    visible: menuController.isHovering(itemName) ||
+                    visible: 
                         menuController.isActive(itemName),
                     maintainSize: true,
                     maintainAnimation: true,
                     maintainState: true,
                     child: Container(
-                      width: 6,
-                      height: 40,
-                      color: appTheme.black,
+                      width: 4,
+                      height: 72,
+                      color: appTheme.white,
                     ),
                   ),
-                  SizedBox(width: width / 88),
                   Padding(
                     padding: const EdgeInsets.all(16),
-                    child: menuController.returnIconFor(itemName),
+                    child: menuController.returnIconFor(itemName, menuController.isActive(itemName)),
                   ),
                   if (!menuController.isActive(itemName))
                     Flexible(
-                        child: CustomText(
-                      text: itemName,
-                      color: menuController.isHovering(itemName)
-                          ? appTheme.black
-                          : appTheme.grayScale6,
+                        child: Text(
+                            itemName,
+                            style: CustomTextStyles.titleSmallWhite.copyWith(color: appTheme.white.withOpacity(0.75)),
                     ))
                   else
                     Flexible(
-                        child: CustomText(
-                      text: itemName,
-                      color: appTheme.black,
-                      size: 18,
-                      weight: FontWeight.bold,
+                        child: Text(
+                            itemName,
+                            style: CustomTextStyles.titleSmallWhite
                     ))
                 ],
               ),
