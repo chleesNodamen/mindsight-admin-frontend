@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
 
@@ -9,6 +10,7 @@ import 'package:mindsight_admin_page/controllers/menu_controller.dart'
 void main() {
   Get.put(menu_controller.MenuController());
   Get.put(NavigationController());
+  // Get.lazyPut(() => ContentManageController());
   runApp(const MyApp());
 }
 

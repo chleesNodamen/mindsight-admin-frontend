@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
@@ -7,6 +8,10 @@ class MenuController extends GetxController {
   var hoverItem = "".obs;
 
   changeActiveItemTo(String itemName) {
+    switch (itemName) {
+      case contentManagePageDisplayName:
+        Get.lazyPut(() => ContentManageController());
+    }
     activeItem.value = itemName;
   }
 
