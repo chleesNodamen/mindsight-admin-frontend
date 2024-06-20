@@ -26,17 +26,29 @@ class MenuController extends GetxController {
   Widget returnIconFor(String itemName, bool full) {
     switch (itemName) {
       case dashboardPageDisplayName:
-        return CustomImageView(imagePath: '${IconConstant.dashboard.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.dashboard.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case memberManagePageDisplayName:
-        return CustomImageView(imagePath: '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case contentManagePageDisplayName:
-        return CustomImageView(imagePath: '${IconConstant.content.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.content.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case activityManagePageDisplayName:
-        return CustomImageView(imagePath: '${IconConstant.feedback.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.feedback.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case termsManagePageDisplayName:
-        return CustomImageView(imagePath: '${IconConstant.policy.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.policy.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case adminSettingsPageDisplayName:
-        return CustomImageView(imagePath: '${IconConstant.settings.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.settings.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       // case authenticationPageDisplayName:
       //   return _customIcon(Icons.exit_to_app, itemName);
       default:

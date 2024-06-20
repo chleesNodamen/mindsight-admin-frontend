@@ -12,7 +12,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const TopBarSearch(
+          const TobBarSearch(
             name: "콘텐츠 목록",
             searchShow: true,
             viewCount: true,
@@ -26,30 +26,118 @@ class ContentManageView extends GetWidget<ContentManageController> {
           ),
           const SizedBox(height: 32),
           Container(
-            height: 268,
-            width: double.infinity,
-            margin: const EdgeInsets.all(32.0),
-            child: Obx(
-              () => GestureDetector(
-                child: Row(
-                  children: <Widget>[
-                    Checkbox(
-                        value: controller.removeButton.value,
-                        onChanged: (a) {
-                          controller.removeButton.value =
-                              !controller.removeButton.value;
-                        }),
-                    Text('Remove Button',
-                        style: CustomTextStyles.bodyMediumBlack)
-                  ],
-                ),
-                onTap: () {
-                  controller.removeButton.value =
-                      !controller.removeButton.value;
-                },
+            decoration: BoxDecoration(
+              color: appTheme.white,
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(12),
+                topRight: Radius.circular(12),
               ),
             ),
-          ),
+            height: 268,
+            width: double.infinity,
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('타입', style: CustomTextStyles.labelMediumGray),
+                Expanded(
+                  child: Obx(
+                    () => Row(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            // padding:
+                            // const EdgeInsets.only(left: 12, bottom: 12),
+                            itemCount: controller.showMore.value ? 12 : 8,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                child: Row(
+                                  children: <Widget>[
+                                    Checkbox(
+                                      value: controller.checkboxValues[index],
+                                      onChanged: (value) {
+                                        controller.checkboxValues[index] =
+                                            value!;
+                                      },
+                                    ),
+                                    Text('Checkbox $index',
+                                        style:
+                                            CustomTextStyles.bodyMediumBlack),
+                                  ],
+                                ),
+                                onTap: () {
+                                  controller.checkboxValues[index] =
+                                      !controller.checkboxValues[index];
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: !controller.showMore.value,
+                    child: GestureDetector(
+                      child: Text(
+                        "전체 보기",
+                        style: CustomTextStyles.bodySmallSkyBlue.copyWith(
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      onTap: () {
+                        controller.showMore.value = true;
+                      },
+                    ),
+                  ),
+                ),
+                const Divider(),
+                Text('타입', style: CustomTextStyles.labelMediumGray),
+                // Obx(
+                //     () => Row(
+                //       children: [
+                //         Expanded(
+                //           child: ListView.builder(
+                //             scrollDirection: Axis.horizontal,
+                //             // shrinkWrap: true,
+                //             // padding:
+                //             // const EdgeInsets.only(left: 12, bottom: 12),
+                //             itemCount: 2,
+                //             itemBuilder: (context, index) {
+                //               return GestureDetector(
+                //                 child: Row(
+                //                   children: <Widget>[
+                //                     Checkbox(
+                //                       value: controller.checkboxValues[index],
+                //                       onChanged: (value) {
+                //                         controller.checkboxValues[index] =
+                //                             value!;
+                //                       },
+                //                     ),
+                //                     Text('Checkbox $index',
+                //                         style:
+                //                             CustomTextStyles.bodyMediumBlack),
+                //                   ],
+                //                 ),
+                //                 onTap: () {
+                //                   controller.checkboxValues[index] =
+                //                       !controller.checkboxValues[index];
+                //                 },
+                //               );
+                //             },
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+              ],
+            ),
+          )
         ],
       ),
     );
