@@ -4,4 +4,11 @@ class ContentManageController extends GetxController {
   static ContentManageController get to => Get.find<ContentManageController>();
   RxList<bool> checkboxValues = List<bool>.filled(12, false).obs;
   RxBool showMore = false.obs;
+
+  
+  var isChecked = false.obs;
+
+  void toggleCheckbox(bool value) {
+    isChecked.value = value;
+  }
 }

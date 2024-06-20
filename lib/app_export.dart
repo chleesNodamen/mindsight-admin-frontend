@@ -34,3 +34,4 @@ export 'package:mindsight_admin_page/constants/app_constant.dart';
 export 'package:mindsight_admin_page/utils/pref_utils.dart';
 export 'package:mindsight_admin_page/constants/api_error_code.dart';
 export 'package:mindsight_admin_page/widgets/tob_bar_search.dart';
+export 'package:mindsight_admin_page/widgets/custom_checkbox.dart';
