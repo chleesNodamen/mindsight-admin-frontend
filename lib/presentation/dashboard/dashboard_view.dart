@@ -48,9 +48,11 @@ class DashboardView extends GetWidget<DashboardController> {
               ),
               _buildPracticePlanContainer(),
             ],
-          ), const SizedBox(
+          ),
+          const SizedBox(
             height: 16,
-          ),Row(
+          ),
+          Row(
             children: [
               _buildChallengeContainer(),
             ],
@@ -354,8 +356,8 @@ class DashboardView extends GetWidget<DashboardController> {
 
   Widget _buildPracticePlanContainer() {
     return Container(
-      width: 672,
-      height: 397,
+        width: 672,
+        height: 397,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: appTheme.white),
         padding: const EdgeInsets.all(24),
@@ -371,7 +373,12 @@ class DashboardView extends GetWidget<DashboardController> {
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 GestureDetector(
-                  child: Text('모두보기', style: CustomTextStyles.labelLargeSkyBlue.copyWith(decoration: TextDecoration.underline, decorationColor: appTheme.skyBlue),),
+                  child: Text(
+                    '모두보기',
+                    style: CustomTextStyles.labelLargeSkyBlue.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: appTheme.skyBlue),
+                  ),
                 )
               ],
             ),
@@ -379,18 +386,21 @@ class DashboardView extends GetWidget<DashboardController> {
               height: 8,
             ),
             DataTable(
-              border: TableBorder(horizontalInside: BorderSide(color: appTheme.grayScale2)),
+              border: TableBorder(
+                  horizontalInside: BorderSide(color: appTheme.grayScale2)),
               columns: <DataColumn>[
                 DataColumn(
                   label: SizedBox(
-                    width:20, child: Text(
-                    '',
-                    style: CustomTextStyles.labelLargeGray,
-                  ),),
+                    width: 20,
+                    child: Text(
+                      '',
+                      style: CustomTextStyles.labelLargeGray,
+                    ),
+                  ),
                 ),
                 DataColumn(
                   label: SizedBox(
-                    width:80,
+                    width: 80,
                     child: Text(
                       '회차',
                       style: CustomTextStyles.labelLargeGray,
@@ -399,7 +409,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 ),
                 DataColumn(
                   label: SizedBox(
-                    width:80,
+                    width: 80,
                     child: Text(
                       '완료 회원 수',
                       style: CustomTextStyles.labelLargeGray,
@@ -408,7 +418,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 ),
                 DataColumn(
                   label: SizedBox(
-                    width:80,
+                    width: 80,
                     child: Text(
                       '참여 회원 수',
                       style: CustomTextStyles.labelLargeGray,
@@ -417,7 +427,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 ),
                 DataColumn(
                   label: SizedBox(
-                    width:80,
+                    width: 80,
                     child: Text(
                       '완료율',
                       style: CustomTextStyles.labelLargeGray,
@@ -428,47 +438,127 @@ class DashboardView extends GetWidget<DashboardController> {
               rows: <DataRow>[
                 DataRow(
                   cells: <DataCell>[
-                    DataCell(Text('1', style: CustomTextStyles.bodyLargeSkyBlue,)),
-                    DataCell(Text('1회차', style: CustomTextStyles.bodyLargeBlack.copyWith(decoration: TextDecoration.underline),)),
-                    DataCell(Text('3,456', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('3,920', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('88.1%', style: CustomTextStyles.bodyLargeGreen,)),
+                    DataCell(Text(
+                      '1',
+                      style: CustomTextStyles.bodyLargeSkyBlue,
+                    )),
+                    DataCell(Text(
+                      '1회차',
+                      style: CustomTextStyles.bodyLargeBlack
+                          .copyWith(decoration: TextDecoration.underline),
+                    )),
+                    DataCell(Text(
+                      '3,456',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '3,920',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '88.1%',
+                      style: CustomTextStyles.bodyLargeGreen,
+                    )),
                   ],
                 ),
                 DataRow(
                   cells: <DataCell>[
-                    DataCell(Text('2', style: CustomTextStyles.bodyLargeSkyBlue,)),
-                    DataCell(Text('2회차', style: CustomTextStyles.bodyLargeBlack.copyWith(decoration: TextDecoration.underline),)),
-                    DataCell(Text('3,456', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('3,920', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('88.1%', style: CustomTextStyles.bodyLargeGreen,)),
+                    DataCell(Text(
+                      '2',
+                      style: CustomTextStyles.bodyLargeSkyBlue,
+                    )),
+                    DataCell(Text(
+                      '2회차',
+                      style: CustomTextStyles.bodyLargeBlack
+                          .copyWith(decoration: TextDecoration.underline),
+                    )),
+                    DataCell(Text(
+                      '3,456',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '3,920',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '88.1%',
+                      style: CustomTextStyles.bodyLargeGreen,
+                    )),
                   ],
                 ),
                 DataRow(
                   cells: <DataCell>[
-                    DataCell(Text('3', style: CustomTextStyles.bodyLargeSkyBlue,)),
-                    DataCell(Text('3회차', style: CustomTextStyles.bodyLargeBlack.copyWith(decoration: TextDecoration.underline),)),
-                    DataCell(Text('3,456', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('3,920', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('88.1%', style: CustomTextStyles.bodyLargeGreen,)),
+                    DataCell(Text(
+                      '3',
+                      style: CustomTextStyles.bodyLargeSkyBlue,
+                    )),
+                    DataCell(Text(
+                      '3회차',
+                      style: CustomTextStyles.bodyLargeBlack
+                          .copyWith(decoration: TextDecoration.underline),
+                    )),
+                    DataCell(Text(
+                      '3,456',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '3,920',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '88.1%',
+                      style: CustomTextStyles.bodyLargeGreen,
+                    )),
                   ],
                 ),
                 DataRow(
                   cells: <DataCell>[
-                    DataCell(Text('4', style: CustomTextStyles.bodyLargeSkyBlue,)),
-                    DataCell(Text('4회차', style: CustomTextStyles.bodyLargeBlack.copyWith(decoration: TextDecoration.underline),)),
-                    DataCell(Text('3,456', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('3,920', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('88.1%', style: CustomTextStyles.bodyLargeGreen,)),
+                    DataCell(Text(
+                      '4',
+                      style: CustomTextStyles.bodyLargeSkyBlue,
+                    )),
+                    DataCell(Text(
+                      '4회차',
+                      style: CustomTextStyles.bodyLargeBlack
+                          .copyWith(decoration: TextDecoration.underline),
+                    )),
+                    DataCell(Text(
+                      '3,456',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '3,920',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '88.1%',
+                      style: CustomTextStyles.bodyLargeGreen,
+                    )),
                   ],
                 ),
                 DataRow(
                   cells: <DataCell>[
-                    DataCell(Text('5', style: CustomTextStyles.bodyLargeSkyBlue,)),
-                    DataCell(Text('5회차', style: CustomTextStyles.bodyLargeBlack.copyWith(decoration: TextDecoration.underline),)),
-                    DataCell(Text('3,456', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('3,920', style: CustomTextStyles.bodyLargeBlack,)),
-                    DataCell(Text('88.1%', style: CustomTextStyles.bodyLargeGreen,)),
+                    DataCell(Text(
+                      '5',
+                      style: CustomTextStyles.bodyLargeSkyBlue,
+                    )),
+                    DataCell(Text(
+                      '5회차',
+                      style: CustomTextStyles.bodyLargeBlack
+                          .copyWith(decoration: TextDecoration.underline),
+                    )),
+                    DataCell(Text(
+                      '3,456',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '3,920',
+                      style: CustomTextStyles.bodyLargeBlack,
+                    )),
+                    DataCell(Text(
+                      '88.1%',
+                      style: CustomTextStyles.bodyLargeGreen,
+                    )),
                   ],
                 ),
               ],
@@ -477,10 +567,10 @@ class DashboardView extends GetWidget<DashboardController> {
         ));
   }
 
-    Widget _buildChallengeContainer() {
+  Widget _buildChallengeContainer() {
     return Container(
-      width: 1016,
-      height: 346,
+        width: 1016,
+        height: 350,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: appTheme.white),
         padding: const EdgeInsets.all(24),
@@ -496,73 +586,151 @@ class DashboardView extends GetWidget<DashboardController> {
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 GestureDetector(
-                  child: Text('모두보기', style: CustomTextStyles.labelLargeSkyBlue.copyWith(decoration: TextDecoration.underline, decorationColor: appTheme.skyBlue),),
+                  child: Text(
+                    '모두보기',
+                    style: CustomTextStyles.labelLargeSkyBlue.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: appTheme.skyBlue),
+                  ),
                 )
               ],
             ),
             const SizedBox(
               height: 8,
             ),
-            Text('집계기간  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 1)))}', style: CustomTextStyles.labelMediumGray),
+            Text(
+                '집계기간  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 1)))}',
+                style: CustomTextStyles.labelMediumGray),
             const SizedBox(
               height: 24,
             ),
-_challengeItemBuilder(1),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    _challengeItemBuilder(1),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _challengeItemBuilder(2),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _challengeItemBuilder(3),
+                  ],
+                ),
+                const SizedBox(width: 32,),
+                Column(
+                  children: [
+                    _challengeItemBuilder(4),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _challengeItemBuilder(5),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _challengeItemBuilder(6),
+                  ],
+                ),
+              ],
+            ),
           ],
         ));
   }
-  Widget _challengeItemBuilder(int index){
-    return Container(
-      child: Row(
-        children: [
-          Text(index.toString(), style: CustomTextStyles.labelLargeSkyBlue),
-          const SizedBox(width: 16,),
-          CustomImageView(
-            imagePath: "assets/challenge_example.png",
-          ),
-          Column(
-            children: [
-              Text('Help Digestion', style: CustomTextStyles.titleSmallBlack),
-              Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 1.v),
-                          child: Text(
-                            // "${model.duration![index]} ${"min".tr}",
-                            '8 - 11 min',
-                            style: CustomTextStyles.labelLargeGray,
-                          ),
+
+  Widget _challengeItemBuilder(int index) {
+    return SizedBox(
+        width: 468,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(index.toString(), style: CustomTextStyles.labelLargeSkyBlue),
+            const SizedBox(
+              width: 16,
+            ),
+            CustomImageView(
+              imagePath: "assets/challenge_example.png",
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            Column(
+              children: [
+                Text('Help Digestion', style: CustomTextStyles.titleSmallBlack),
+                const SizedBox(height: 4,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 6),
+                      child: Text(
+                        // "${model.duration![index]} ${"min".tr}",
+                        '8 - 11 min',
+                        style: CustomTextStyles.labelLargeGray,
+                      ),
+                    ),
+                    Container(
+                      height: 2,
+                      width: 2,
+                      decoration: BoxDecoration(
+                        color: appTheme.grayScale6,
+                        borderRadius: BorderRadius.circular(
+                          1,
                         ),
-                        Container(
-                          height: 2.adaptSize,
-                          width: 2.adaptSize,
-                          margin: EdgeInsets.only(
-                            left: 6.h,
-                            top: 7.v,
-                            bottom: 8.v,
-                          ),
-                          decoration: BoxDecoration(
-                            color: appTheme.grayScale6,
-                            borderRadius: BorderRadius.circular(
-                              1.h,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 6.h),
-                          child: Text(
-                            '14 days',
-                            // "${model.daysTotal![index]} days",
-                            style: CustomTextStyles.labelLargeGray,
-                          ),
-                        ),
-                      ],),
-            ],
-          )
-        ],
-      )
-    );
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 6),
+                      child: Text(
+                        '14 days',
+                        // "${model.daysTotal![index]} days",
+                        style: CustomTextStyles.labelLargeGray,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Spacer(),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Row(
+                children: [
+                  CustomImageView(
+                    imagePath: IconConstant.user,
+                  ),
+                  SizedBox(
+                    width: 48,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        '1,643',
+                        style: CustomTextStyles.labelLargeGray,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }
 
