@@ -43,6 +43,8 @@ dependencies:
   flutter_svg_provider: ^1.0.4
   shared_preferences: ^2.2.2
   flutter_svg: ^2.0.9
+  syncfusion_flutter_charts: ^25.2.4
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
