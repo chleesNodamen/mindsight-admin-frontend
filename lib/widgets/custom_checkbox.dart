@@ -21,7 +21,7 @@ class CustomCheckboxWidget extends StatelessWidget {
     return GestureDetector(
       onTap: _handleTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 17.0),
+        padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -39,7 +39,10 @@ class CustomCheckboxWidget extends StatelessWidget {
                 return null;
               }),
             ),
-            Text(label, style: CustomTextStyles.bodyMediumBlack),
+            const SizedBox(width: 8),
+            Text(label,
+                style: CustomTextStyles.bodyMediumBlack
+                    .copyWith(fontWeight: FontWeight.w500)),
             const SizedBox(width: 24)
           ],
         ),
