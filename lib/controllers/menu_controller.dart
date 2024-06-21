@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 
 class MenuController extends GetxController {
@@ -11,6 +12,8 @@ class MenuController extends GetxController {
     switch (itemName) {
       case contentManagePageDisplayName:
         Get.lazyPut(() => ContentManageController());
+        case activityManagePageDisplayName:
+        Get.lazyPut(() => ActivityManageController());
     }
     activeItem.value = itemName;
   }

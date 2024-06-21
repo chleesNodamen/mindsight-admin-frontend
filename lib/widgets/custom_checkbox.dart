@@ -30,7 +30,7 @@ class CustomCheckboxWidget extends StatelessWidget {
               onChanged: (value) {
                 _handleTap();
               },
-              activeColor: Colors.blue,
+              activeColor: appTheme.skyBlue,
               checkColor: Colors.white,
               fillColor: MaterialStateProperty.resolveWith((states) {
                 if (!states.contains(MaterialState.selected)) {

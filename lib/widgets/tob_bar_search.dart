@@ -5,11 +5,13 @@ class TobBarSearch extends StatelessWidget {
     super.key,
     this.name,
     this.viewCount = false,
+    this.searchText,
     this.searchShow = true,
   });
 
   final String? name;
   final bool? viewCount;
+  final String? searchText;
   final bool? searchShow;
 
   @override
@@ -54,48 +56,66 @@ class TobBarSearch extends StatelessWidget {
                 child: TextFormField(
                   // controller: controller.emailController,
                   decoration: InputDecoration(
-                    labelText: "제목, 마스터 이름, 태그 검색",
+                    labelText: searchText,
                     labelStyle: CustomTextStyles.bodyMediumGray,
                     // floatingLabelStyle: TextStyle(color: appTheme.black),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     // hintText: "abc@domain.com",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      topLeft: Radius.circular(12),
+                    ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      topLeft: Radius.circular(12),
+                    ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      topLeft: Radius.circular(12),
+                    ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      topLeft: Radius.circular(12),
+                    ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      topLeft: Radius.circular(12),
+                    ),
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      topLeft: Radius.circular(12),
+                    ),
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,

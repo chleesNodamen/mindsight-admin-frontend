@@ -16,6 +16,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                 name: "콘텐츠 목록",
                 searchShow: true,
                 viewCount: true,
+                searchText: "제목, 마스터 이름, 태그 검색",
               ),
               const SizedBox(height: 32),
               CustomElevatedButton(
