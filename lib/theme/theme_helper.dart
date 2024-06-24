@@ -187,7 +187,7 @@ class ThemeHelper {
           if (states.contains(MaterialState.selected)) {
             return colorScheme.primary;
           }
-          return colorScheme.onSurface;
+          return Colors.transparent;
         }),
         side: const BorderSide(width: 1),
         visualDensity: const VisualDensity(
