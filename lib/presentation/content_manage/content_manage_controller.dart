@@ -55,4 +55,123 @@ class ContentManageController extends GetxController {
   void updateSelectedOrder(String newOrder) {
     selectedOrder.value = newOrder;
   }
+
+  //DATA TABLE
+  RxString dataTableButtonText = '정상'.obs;
+  void updateDTText(String newText) {
+    dataTableButtonText.value = newText;
+  }
+
+  RxInt activePage = 1.obs;
+  void loadNewPage(int pageNum) {
+    activePage.value = pageNum;
+  }
+
+  var data = [].obs;
+  var isLoading = true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchData();
+  }
+
+  RxBool selected = false.obs;
+  void updateValue() {
+    selected.value = !selected.value;
+  }
+
+  void fetchData() async {
+    try {
+      isLoading(true);
+      // Simulate API call
+      await Future.delayed(Duration(seconds: 1));
+      var fetchedData = [
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "정상"
+        },
+        {
+          "type": "Focus breathing",
+          "title": "Sunrise 10-Minute Morning Yoga",
+          "views": "999,999",
+          "likes": "9,999",
+          "preview": "재생",
+          "status": "안함"
+        },
+        // Add more items as needed
+      ];
+      data.assignAll(fetchedData);
+    } finally {
+      isLoading(false);
+    }
+  }
 }
