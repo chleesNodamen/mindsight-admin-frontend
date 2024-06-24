@@ -8,8 +8,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => ListView(
-      children: [Container(
+    return Obx(() => ListView(children: [
+          Container(
             margin: const EdgeInsets.all(48.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,8 +35,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                 _pageView(),
               ],
             ),
-          ),]
-    ));
+          ),
+        ]));
   }
 
   Container buildFirstContainer() {
@@ -59,55 +59,60 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
             child: Stack(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 170,
-                          child: Align(
-                            alignment: Alignment.centerLeft,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 170,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: ListTile(
+                                  contentPadding:
+                                      EdgeInsets.only(left: 0.0, right: 0.0),
+                                  title: Row(
+                                    children: <Widget>[
+                                      Radio<Type>(
+                                        value: Type.practice,
+                                        groupValue: controller.type.value,
+                                        onChanged: (Type? value) {
+                                          controller.type.value = value!;
+                                        },
+                                      ),
+                                      Text(controller.typeLabels[0],
+                                          style: CustomTextStyles
+                                              .bodyMediumBlack
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500)),
+                                    ],
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 170,
                             child: ListTile(
-                              contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                              title: Row(
-                                children: <Widget>[
-                            Radio<Type>(
-                                value: Type.practice,
-                                groupValue: controller.type.value,
-                                onChanged: (Type? value) {
-                                  controller.type.value = value!;
-                                },
-                              ),
-                              Text(controller.typeLabels[0], style: CustomTextStyles.bodyMediumBlack
-                                                .copyWith(fontWeight: FontWeight.w500)),
-                                ],
-                              )
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 170,
-                          child: ListTile(
-                            contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                            title: Row(
-                              children: <Widget>[
-                                Radio<Type>(
-                              value: Type.challenge,
-                              groupValue: controller.type.value,
-                              onChanged: (Type? value) {
-                                controller.type.value = value!;
-                              },
-                            ),
-                            Text(controller.typeLabels[1], style: CustomTextStyles.bodyMediumBlack
-                                              .copyWith(fontWeight: FontWeight.w500)),
-                              ],
-                            )
-                          ),
-                        )
-                      ],
-                    ),
-                  ])
+                                contentPadding:
+                                    EdgeInsets.only(left: 0.0, right: 0.0),
+                                title: Row(
+                                  children: <Widget>[
+                                    Radio<Type>(
+                                      value: Type.challenge,
+                                      groupValue: controller.type.value,
+                                      onChanged: (Type? value) {
+                                        controller.type.value = value!;
+                                      },
+                                    ),
+                                    Text(controller.typeLabels[1],
+                                        style: CustomTextStyles.bodyMediumBlack
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500)),
+                                  ],
+                                )),
+                          )
+                        ],
+                      ),
+                    ])
               ],
             ),
           ),
@@ -120,7 +125,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text('회원 소속', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
@@ -137,10 +142,12 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                   ),
                 ],
               ),
-              const SizedBox(width: 48,),
+              const SizedBox(
+                width: 48,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text('챗봇 기록', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
@@ -157,10 +164,12 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                   ),
                 ],
               ),
-const SizedBox(width: 48,),
+              const SizedBox(
+                width: 48,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text('피드백 상태', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
@@ -183,18 +192,19 @@ const SizedBox(width: 48,),
       ),
     );
   }
-  Container _pageView(){
+
+  Container _pageView() {
     return Container(
-      decoration: BoxDecoration(
-        color: appTheme.white,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      height: 500,
-      width: double.infinity,
-      padding: const EdgeInsets.all(32.0),
-      child: Column(
-        children: [
-          DataTable(
+        decoration: BoxDecoration(
+          color: appTheme.white,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        height: 500,
+        width: double.infinity,
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          children: [
+            DataTable(
               border: TableBorder(
                   horizontalInside: BorderSide(color: appTheme.grayScale2)),
               columns: <DataColumn>[
@@ -372,57 +382,11 @@ const SizedBox(width: 48,),
                 ),
               ],
             ),
-          const SizedBox(
-            height: 32,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(child: CustomImageView(
-                imagePath: IconConstant.firstPage,
-                width: 24,
-                height: 24,
-              )),
-              const SizedBox(width: 8,),
-              GestureDetector(child: CustomImageView(
-                imagePath: IconConstant.previousPage,
-                width: 24,
-                height: 24,
-              )),
-              const SizedBox(width: 8,),
-              CustomElevatedButton(text: '1', width: 31, height: 30, buttonStyle: CustomButtonStyles.numberFillPrimary, buttonTextStyle: CustomTextStyles.labelLargeWhite,),
-              const SizedBox(width: 8,),
-          CustomElevatedButton(text: '2', width: 31, height: 30, buttonStyle: CustomButtonStyles.numberFillPrimaryTransparent, buttonTextStyle: CustomTextStyles.labelLargeBlack,),
-          const SizedBox(width: 8,),
-          CustomElevatedButton(text: '3', width: 31, height: 30, buttonStyle: CustomButtonStyles.numberFillPrimaryTransparent, buttonTextStyle: CustomTextStyles.labelLargeBlack,),
-          const SizedBox(width: 8,),
-          CustomElevatedButton(text: '4', width: 31, height: 30, buttonStyle: CustomButtonStyles.numberFillPrimaryTransparent, buttonTextStyle: CustomTextStyles.labelLargeBlack,),
-          const SizedBox(width: 8,),
-          CustomElevatedButton(text: '5', width: 31, height: 30, buttonStyle: CustomButtonStyles.numberFillPrimaryTransparent, buttonTextStyle: CustomTextStyles.labelLargeBlack,),
-          const SizedBox(width: 8,),
-          GestureDetector(child: CustomImageView(
-                imagePath: IconConstant.more,
-                width: 20,
-                height: 20,
-              )),
-          const SizedBox(width: 8,),          
-          CustomElevatedButton(text: '100', width: 48, height: 30, buttonStyle: CustomButtonStyles.numberFillPrimaryTransparent, buttonTextStyle: CustomTextStyles.labelLargeBlack,),
-          const SizedBox(width: 8,),
-          GestureDetector(child: CustomImageView(
-                imagePath: IconConstant.nextPage,
-                width: 24,
-                height: 24,
-              )),
-              const SizedBox(width: 8,),
-              GestureDetector(child: CustomImageView(
-                imagePath: IconConstant.lastPage,
-                width: 24,
-                height: 24,
-              )),
-            ],
-          ),
-        ],
-      )
-    );
+            const SizedBox(
+              height: 32,
+            ),
+            Obx(()=> Pages(pages: 100, activePage: controller.activePage.value, onTap: (int pageNum){controller.loadNewPage(pageNum);}))
+          ],
+        ));
   }
 }

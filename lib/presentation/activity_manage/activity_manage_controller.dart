@@ -32,7 +32,11 @@ class ActivityManageController extends GetxController {
   RxList<bool> chatbotValues = List<bool>.filled(2, true).obs;
   RxList<bool> feedbackValues = List<bool>.filled(2, true).obs;
   Rx<Type> type = Type.practice.obs;
-  
+  RxInt activePage = 1.obs;
+
+  void loadNewPage(int pageNum){
+    activePage.value = pageNum;
+  }
 
   void toggleMembership(int index, bool value) {
     membershipValues[index] = value;
