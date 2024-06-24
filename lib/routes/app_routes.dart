@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_binding.dart';
+import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_binding.dart';
 import 'package:mindsight_admin_page/presentation/authentication/auth__binding.dart';
@@ -26,6 +28,7 @@ class AppRoutes{
   static const String activityManage = "/activity_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
+  static const String activityHistory = "/activity_history";
 
   static const String initialRoute = rootRoute;
 
@@ -62,6 +65,11 @@ class AppRoutes{
       bindings: [ActivityManageBinding()],
     ),
     GetPage(
+      name: activityHistory,
+      page: () => const ActivityHistoryView(),
+      bindings: [ActivityHistoryBinding()],
+    ),
+    GetPage(
       name: termsManage,
       page: () => const TermsManageView(),
       bindings: [TermsManageBinding()],
@@ -93,6 +101,9 @@ const contentManagePageRoute = "/content_manage";
 
 const activityManagePageDisplayName = "활동 기록 관리";
 const activityManagePageRoute = "/activity_manage";
+
+const activityHistoryPageDisplayName = "활동 기록 상세";
+const activityHistoryPageRoute = "/activity_history";
 
 const termsManagePageDisplayName = "약관 관리";
 const termsManagePageRoute = "/terms_manage";

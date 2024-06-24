@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
@@ -17,6 +18,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(const ContentManageView());
     case activityManagePageRoute:
       return _getPageRoute(const ActivityManageView());
+    case activityHistoryPageRoute:
+      return _getPageRoute(const ActivityHistoryView());
     case termsManagePageRoute:
       return _getPageRoute(const TermsManageView());
     case adminSettingsPageRoute:

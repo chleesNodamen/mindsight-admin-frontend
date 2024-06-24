@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_controller.dart';
 import 'package:mindsight_admin_page/theme/custom_button_style.dart';
@@ -261,10 +262,13 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                       '1',
                       style: CustomTextStyles.bodyLargeSkyBlue,
                     )),
-                    DataCell(Text(
-                      '1회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
+                    DataCell(GestureDetector(
+                      child: Text(
+                        '1회차',
+                        style: CustomTextStyles.bodyLargeBlack
+                            .copyWith(decoration: TextDecoration.underline),
+                      ),
+                      onTap: controller.onHistoryTap,
                     )),
                     DataCell(Text(
                       '3,456',

@@ -34,10 +34,6 @@ class ActivityManageController extends GetxController {
   Rx<Type> type = Type.practice.obs;
   RxInt activePage = 1.obs;
 
-  void loadNewPage(int pageNum){
-    activePage.value = pageNum;
-  }
-
   void toggleMembership(int index, bool value) {
     membershipValues[index] = value;
   }
@@ -47,5 +43,17 @@ class ActivityManageController extends GetxController {
   }
   void toggleFeedback(int index, bool value) {
     feedbackValues[index] = value;
+  }
+
+  void loadNewPage(int pageNum){
+    activePage.value = pageNum;
+  }
+
+  void onHistoryTap(){
+
+                          menuController.changeActiveItemTo(activityHistoryPageDisplayName);
+                          navigationController.navigateTo(activityHistoryPageRoute);
+
+                      
   }
 }
