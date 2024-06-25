@@ -11,6 +11,10 @@ import 'package:mindsight_admin_page/presentation/content_manage/content_manage_
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_binding.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_details_binding.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_details_view.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/terms_manage/terms_manage_binding.dart';
@@ -24,6 +28,8 @@ class AppRoutes{
   static const String auth = "/auth";
   static const String dashboard= "/dashboard";
   static const String memberManage = "/member_manage";
+  static const String memberDetails = "/member_details";
+  static const String memberEdit = "/member_edit";
   static const String contentManage = "/content_manage";
   static const String activityManage = "/activity_manage";
   static const String termsManage = "/terms_manage";
@@ -53,6 +59,16 @@ class AppRoutes{
       name: memberManage,
       page: () => const MemberManageView(),
       bindings: [MemberManageBinding()],
+    ),
+    GetPage(
+      name: memberDetails,
+      page: () => const MemberDetailsView(),
+      bindings: [MemberDetailsBinding()],
+    ),
+    GetPage(
+      name: memberEdit,
+      page: () => const MemberEditView(),
+      bindings: [MemberEditBinding()],
     ),
     GetPage(
       name: contentManage,
@@ -95,6 +111,15 @@ const dashboardPageDisplayName = "대시보드";
 
 const memberManagePageRoute = "/member_manage";
 const memberManagePageDisplayName = "회원 관리";
+
+const memberDetailsPageRoute = "/member_details";
+const memberDetailsPageDisplayName = "회원 상세";
+
+const memberEditPageRoute = "/member_edit";
+const memberEditPageDisplayName = "사전 정보 수정";
+
+const inactiveMemberManagePageRoute = "/inactive_member_manage";
+const inactiveMemberManagePageDisplayName = "비활성 회원 관리";
 
 const contentManagePageDisplayName = "콘텐츠 관리";
 const contentManagePageRoute = "/content_manage";

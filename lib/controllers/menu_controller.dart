@@ -2,10 +2,16 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_edit_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
 
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
   var activeItem = dashboardPageDisplayName.obs;
+  Map<String, List<String>> subMenuItems = {
+    memberManagePageDisplayName : [memberManagePageDisplayName, inactiveMemberManagePageDisplayName]
+  };
 
   var hoverItem = "".obs;
 
@@ -15,8 +21,13 @@ class MenuController extends GetxController {
         Get.lazyPut(() => ContentManageController());
         case activityManagePageDisplayName:
         Get.lazyPut(() => ActivityManageController());
-        case activityHistoryPageDisplayName:
         Get.lazyPut(() => ActivityHistoryController());
+        case memberManagePageDisplayName:
+        Get.lazyPut(() => MemberManageController());
+        case memberDetailsPageDisplayName:
+        Get.lazyPut(() => MemberDetailsController());
+        case memberEditPageDisplayName:
+        Get.lazyPut(() => MemberEditController());
     }
     activeItem.value = itemName;
   }
@@ -69,5 +80,9 @@ class MenuController extends GetxController {
       icon,
       color: isHovering(itemName) ? appTheme.black : appTheme.grayScale10,
     );
+  }
+
+  bool hasSubMenu(String itemName){
+    return subMenuItems.containsKey(itemName);
   }
 }

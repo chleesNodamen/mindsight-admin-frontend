@@ -51,7 +51,7 @@ class ActivityManageController extends GetxController {
 
   void onHistoryTap(){
 
-                          menuController.changeActiveItemTo(activityHistoryPageDisplayName);
+                          // menuController.changeActiveItemTo(activityHistoryPageDisplayName);
                           navigationController.navigateTo(activityHistoryPageRoute);
 
                       
