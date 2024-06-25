@@ -1,8 +1,4 @@
 import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
-import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
-
 import 'app_export.dart';
 import 'package:mindsight_admin_page/controllers/menu_controller.dart'
     as menu_controller;
@@ -21,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
-        initialRoute: AppRoutes.initialRoute,
+        initialRoute: AppRoutes.dashboard,
         unknownRoute: GetPage(
             name: '/not-found',
             page: () => const PageNotFound(),
@@ -31,16 +27,6 @@ class MyApp extends StatelessWidget {
         title: 'Dashboard',
         theme: theme,
         initialBinding: InitialBindings(),
-        // theme: ThemeData(
-        //   scaffoldBackgroundColor: appTheme.white,
-        //   textTheme: CustomTextStyles.bodyLargeBlack.mulishTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.black),
-        //   pageTransitionsTheme: const PageTransitionsTheme(builders: {
-        //     TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-        //     TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-        //   }),
-        //   primarySwatch: Colors.blue,
-        // ),
-        // home: const DashboardView(),
       );
     });
   }

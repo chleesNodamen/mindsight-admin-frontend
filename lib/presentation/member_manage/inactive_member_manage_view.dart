@@ -1,8 +1,9 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_controller.dart';
 
-class MemberManageView extends GetWidget<MemberManageController> {
-  const MemberManageView({super.key});
+
+class InactiveMemberManageView extends GetWidget<InactiveMemberManageController> {
+  const InactiveMemberManageView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const TobBarSearch(
-                            name: "회원 목록",
+                            name: "비활성 회원 관리",
                             searchShow: true,
                             viewCount: true,
                             searchText: "이메일 주소, 사용자 이름 검색",
@@ -282,16 +283,31 @@ class MemberManageView extends GetWidget<MemberManageController> {
               height: 32,
             ),
             Obx(() => Stack(alignment: Alignment.centerLeft, children: [
-                  CustomElevatedButton(
-                    text: '비활성',
-                    buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
+                  Row(
+                    children: [
+                      CustomElevatedButton(
+                    text: '활성',
+                    buttonTextStyle: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
-                    buttonStyle: CustomButtonStyles.fillRedTransparent,
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 11, horizontal: 24),
+                    buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                    // margin: const EdgeInsets.symmetric(
+                    //     vertical: 11, horizontal: 24),
                     width: 90,
                     height: 44,
+                  ),
+                      CustomElevatedButton(
+                        text: '비활성',
+                        buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                        buttonStyle: CustomButtonStyles.fillRedTransparent,
+                        margin: const EdgeInsets.symmetric(
+                             horizontal: 16),
+                        width: 90,
+                        height: 44,
+                      ),
+                    ],
                   ),
                   Pages(
                       pages: 100,

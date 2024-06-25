@@ -64,7 +64,12 @@ class HorizontalMenuItem extends StatelessWidget {
                       children: menuController.subMenuItems[itemName]!
                   .map((item) => Column(
                     children: [
-                      GestureDetector(child: Text(item, style: CustomTextStyles.bodyMediumWhite,)),
+                      InkWell(child: Container(
+                  color: menuController.isHovering(item[0])
+                      ? appTheme.white.withOpacity(0.4)
+                      : Colors.transparent,
+                  child: Text(item[0], style: menuController.isActiveSubItem(item[0]) ? CustomTextStyles.bodyMediumWhite.copyWith(fontWeight: FontWeight.w700,) : CustomTextStyles.bodyMediumWhite.copyWith(color: Colors.white.withOpacity(0.75),))), onTap:(){Get.toNamed(item[1]); menuController.changeActiveSubItem(item[0]);}, 
+            ),
                       const SizedBox(height: 16,)
                     ],
                   ))

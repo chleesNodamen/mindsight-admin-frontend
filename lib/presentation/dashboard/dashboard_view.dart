@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_controller.dart';
-import 'package:mindsight_admin_page/theme/theme_helper.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
 class DashboardView extends GetWidget<DashboardController> {
@@ -10,57 +7,70 @@ class DashboardView extends GetWidget<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(
-        left: 16,
-        right: 48,
-      ),
-      child: ListView(
-        children: [
-          const SizedBox(
-            height: 80,
-          ),
-          Text('대시보드', style: CustomTextStyles.headlineLargeBlack),
-          const SizedBox(
-            height: 32,
-          ),
-          Row(
-            children: [
-              _buildFirstContainer(),
-              const SizedBox(
-                width: 16,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      body: ResponsiveWidget(
+        largeScreen: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SideMenu(),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(
+                  left: 32,
+                  right: 48,
+                ),
+                child: ListView(
+                  children: [
+                    const SizedBox(
+                      height: 80,
+                    ),
+                    Text('대시보드', style: CustomTextStyles.headlineLargeBlack),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    Row(
+                      children: [
+                        _buildFirstContainer(),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        _buildSecondContainer(),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        _buildThirdContainer(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        _buildMembersGraph(),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        _buildPracticePlanContainer(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        _buildChallengeContainer(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 80,
+                    ),
+                  ],
+                ),
               ),
-              _buildSecondContainer(),
-              const SizedBox(
-                width: 16,
-              ),
-              _buildThirdContainer(),
-            ],
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              _buildMembersGraph(),
-              const SizedBox(
-                width: 16,
-              ),
-              _buildPracticePlanContainer(),
-            ],
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              _buildChallengeContainer(),
-            ],
-          ),
-          const SizedBox(
-            height: 80,
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -612,7 +622,11 @@ class DashboardView extends GetWidget<DashboardController> {
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    Container(
+                      height: 1,
+                      width: 468,
+                      decoration: BoxDecoration(color: appTheme.grayScale2),
+                    ),
                     const SizedBox(
                       height: 16,
                     ),
@@ -620,21 +634,31 @@ class DashboardView extends GetWidget<DashboardController> {
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    Container(
+                      height: 1,
+                      width: 468,
+                      decoration: BoxDecoration(color: appTheme.grayScale2),
+                    ),
                     const SizedBox(
                       height: 16,
                     ),
                     _challengeItemBuilder(3),
                   ],
                 ),
-                const SizedBox(width: 32,),
+                const SizedBox(
+                  width: 32,
+                ),
                 Column(
                   children: [
                     _challengeItemBuilder(4),
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    Container(
+                      height: 1,
+                      width: 468,
+                      decoration: BoxDecoration(color: appTheme.grayScale2),
+                    ),
                     const SizedBox(
                       height: 16,
                     ),
@@ -642,7 +666,11 @@ class DashboardView extends GetWidget<DashboardController> {
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(height: 1, width: 468, decoration: BoxDecoration(color: appTheme.grayScale2),),
+                    Container(
+                      height: 1,
+                      width: 468,
+                      decoration: BoxDecoration(color: appTheme.grayScale2),
+                    ),
                     const SizedBox(
                       height: 16,
                     ),
@@ -674,7 +702,9 @@ class DashboardView extends GetWidget<DashboardController> {
             Column(
               children: [
                 Text('Help Digestion', style: CustomTextStyles.titleSmallBlack),
-                const SizedBox(height: 4,),
+                const SizedBox(
+                  height: 4,
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

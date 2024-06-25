@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
 
@@ -8,50 +6,70 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-          Container(
-            margin: const EdgeInsets.all(48.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const TobBarSearch(
-                  name: "활동 기록 상세",
-                  searchShow: false,
-                  viewCount: false,
-                ),
-                const SizedBox(height: 16),
-                Row(
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      body: ResponsiveWidget(
+        largeScreen: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SideMenu(),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: ListView(
                   children: [
-                    GestureDetector(
-                      child: Text(
-                        "활동 기록 관리",
-                        style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline,
-                          decorationColor: appTheme.skyBlue,
-                        ),
+                    Container(
+                      margin: const EdgeInsets.all(48.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const TobBarSearch(
+                            name: "활동 기록 상세",
+                            searchShow: false,
+                            viewCount: false,
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                child: Text(
+                                  "활동 기록 관리",
+                                  style: CustomTextStyles.bodyMediumSkyBlue
+                                      .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: appTheme.skyBlue,
+                                  ),
+                                ),
+                                onTap: () => Get.back(),
+                              ),
+                              CustomImageView(
+                                imagePath: IconConstant.arrowRight,
+                              ),
+                              Text('활동 기록 상세',
+                                  style: CustomTextStyles.bodyMediumGray),
+                            ],
+                          ),
+                          const SizedBox(height: 32),
+                          _buildFirstContainer(),
+                          const SizedBox(height: 16),
+                          controller.type == Type.practice
+                              ? _buildPracticeContainer()
+                              : _buildChallengeContainer(),
+                          const SizedBox(height: 16),
+                          _buildThirdContainer(),
+                        ],
                       ),
-                      onTap: () => Get.back(),
                     ),
-                    CustomImageView(
-                      imagePath: IconConstant.arrowRight,
-                    ),
-                    Text('활동 기록 상세', style: CustomTextStyles.bodyMediumGray),
                   ],
                 ),
-                const SizedBox(height: 32),
-                _buildFirstContainer(),
-                const SizedBox(height: 16),
-                controller.type == Type.practice
-                    ? _buildPracticeContainer()
-                    : _buildChallengeContainer(),
-                const SizedBox(height: 16),
-                _buildThirdContainer(),
-              ],
+              ),
             ),
-          ),
-        ]);
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildFirstContainer() {
@@ -187,8 +205,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                     ],
                   ),
                   const SizedBox(
-                width: 16,
-              ),
+                    width: 16,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -381,7 +399,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Container(height: 14, width: 1, decoration: BoxDecoration(color: appTheme.grayScale3)),
+                  Container(
+                      height: 14,
+                      width: 1,
+                      decoration: BoxDecoration(color: appTheme.grayScale3)),
                   const SizedBox(
                     width: 8,
                   ),
@@ -394,7 +415,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Container(height: 14, width: 1, decoration: BoxDecoration(color: appTheme.grayScale3)),
+                  Container(
+                      height: 14,
+                      width: 1,
+                      decoration: BoxDecoration(color: appTheme.grayScale3)),
                   const SizedBox(
                     width: 8,
                   ),
@@ -467,7 +491,11 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                             const SizedBox(
                               width: 8,
                             ),
-                            Container(height: 14, width: 1, decoration: BoxDecoration(color: appTheme.grayScale3)),
+                            Container(
+                                height: 14,
+                                width: 1,
+                                decoration:
+                                    BoxDecoration(color: appTheme.grayScale3)),
                             const SizedBox(
                               width: 8,
                             ),

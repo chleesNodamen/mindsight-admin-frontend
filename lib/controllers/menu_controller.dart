@@ -9,8 +9,9 @@ import 'package:mindsight_admin_page/presentation/member_manage/member_manage_co
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
   var activeItem = dashboardPageDisplayName.obs;
-  Map<String, List<String>> subMenuItems = {
-    memberManagePageDisplayName : [memberManagePageDisplayName, inactiveMemberManagePageDisplayName]
+  Rx<String>? activeSubItem;
+  Map<String, List<List<String>>> subMenuItems = {
+    memberManagePageDisplayName : [[memberManagePageSubMenuDisplayName, AppRoutes.memberManage], [inactiveMemberManagePageDisplayName, AppRoutes.inactiveMemberManage]]
   };
 
   var hoverItem = "".obs;
@@ -31,14 +32,27 @@ class MenuController extends GetxController {
     }
     activeItem.value = itemName;
   }
+  setActiveSubItem(String itemName){
+    activeSubItem = subMenuItems[itemName]![0][0].obs;
+  }
+
+  changeActiveSubItem(String itemName){
+    activeSubItem = itemName.obs;
+  }
 
   onHover(String itemName) {
     if (!isActive(itemName)) hoverItem.value = itemName;
   }
 
+  onHoverSubItem(String itemName) {
+    if (!isActiveSubItem(itemName)) hoverItem.value = itemName;
+  }
+
   isHovering(String itemName) => hoverItem.value == itemName;
 
   isActive(String itemName) => activeItem.value == itemName;
+
+  isActiveSubItem(String itemName) => activeSubItem!.value == itemName;
 
   Widget returnIconFor(String itemName, bool full) {
     switch (itemName) {
@@ -58,10 +72,6 @@ class MenuController extends GetxController {
         return CustomImageView(
             imagePath:
                 '${IconConstant.feedback.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case termsManagePageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.policy.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case adminSettingsPageDisplayName:
         return CustomImageView(
             imagePath:

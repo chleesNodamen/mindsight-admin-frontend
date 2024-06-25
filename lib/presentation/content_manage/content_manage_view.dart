@@ -8,217 +8,264 @@ class ContentManageView extends GetWidget<ContentManageController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Container(
-        margin: const EdgeInsets.all(48.0),
-        child: ListView(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const TobBarSearch(
-                  name: "콘텐츠 목록",
-                  searchShow: true,
-                  viewCount: true,
-                  searchText: "제목, 마스터 이름, 태그 검색",
-                ),
-                const SizedBox(height: 32),
-                CustomElevatedButton(
-                  text: "신규 등록",
-                  height: 44,
-                  width: 107,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(12)),
-                ),
-                const SizedBox(height: 32),
-                buildFirstContainer(),
-                const SizedBox(height: 16),
-                dropdownButton(),
-                const SizedBox(height: 16),
-                SingleChildScrollView(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        body: ResponsiveWidget(
+          largeScreen: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SideMenu(),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: appTheme.white,
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      border: Border.all(
-                        width: 1,
-                        color: appTheme.grayScale2,
-                      ),
-                    ),
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(32.0),
-                    // height: 972,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    margin: const EdgeInsets.all(48.0),
+                    child: ListView(
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: DataTable(
-                            columnSpacing: 0,
-                            checkboxHorizontalMargin: 0,
-                            // dataRowMinHeight: ,
-                            dataRowMaxHeight: 80,
-                            border: TableBorder(
-                                horizontalInside:
-                                    BorderSide(color: appTheme.grayScale2)),
-                            columns: [
-                              // DataColumn(
-                              //   label: Checkbox(
-                              //       activeColor: appTheme.skyBlue,
-                              //       checkColor: Colors.white,
-                              //       fillColor: MaterialStateProperty.resolveWith(
-                              //         (states) {
-                              //           if (!states
-                              //               .contains(MaterialState.selected)) {
-                              //             return Colors.transparent;
-                              //           }
-                              //           return null;
-                              //         },
-                              //       ),
-                              //       value: false,
-                              //       onChanged: (bool? value) {}),
-                              // ),
-                              DataColumn(
-                                  label: Text('타입',
-                                      style: CustomTextStyles.labelLargeGray)),
-                              DataColumn(
-                                  label: Text('제목',
-                                      style: CustomTextStyles.labelLargeGray)),
-                              DataColumn(
-                                  label: Text('조회수',
-                                      style: CustomTextStyles.labelLargeGray)),
-                              DataColumn(
-                                  label: Text('좋아요 수',
-                                      style: CustomTextStyles.labelLargeGray)),
-                              DataColumn(
-                                  label: Text('미리보기',
-                                      style: CustomTextStyles.labelLargeGray)),
-                              DataColumn(
-                                  label: Text('상태',
-                                      style: CustomTextStyles.labelLargeGray)),
-                            ],
-                            rows: controller.data.map((item) {
-                              return DataRow(
-                                  selected: controller.selected.value,
-                                  onSelectChanged: (bool? value) {
-                                    controller.updateValue();
-                                  },
-                                  cells: [
-                                    // DataCell(
-                                    //   Padding(
-                                    //     padding: const EdgeInsets.only(right: 8.0),
-                                    //     child: Checkbox(
-                                    //       value: controller.selected.value,
-                                    //       onChanged: (bool? value) {
-                                    //         controller.updateValue();
-                                    //       },
-                                    //     ),
-                                    //   ),
-                                    // ), // Checkbox cell
-                                    DataCell(Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 24.0),
-                                      child: Text(item['type'],
-                                          style:
-                                              CustomTextStyles.bodyLargeBlack),
-                                    )),
-                                    DataCell(Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 24.0),
-                                      child: Text(item['title'],
-                                          style:
-                                              CustomTextStyles.bodyLargeBlack),
-                                    )),
-                                    DataCell(Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 24.0),
-                                      child: Text(item['views'],
-                                          style:
-                                              CustomTextStyles.bodyLargeBlack),
-                                    )),
-                                    DataCell(Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 24.0),
-                                      child: Text(item['likes'],
-                                          style:
-                                              CustomTextStyles.bodyLargeBlack),
-                                    )),
-                                    DataCell(Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 24.0),
-                                      child: Text(item['preview'],
-                                          style:
-                                              CustomTextStyles.bodyLargeBlack),
-                                    )),
-                                    DataCell(DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: appTheme.white,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          width: 1,
-                                          color: appTheme.grayScale2,
-                                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const TobBarSearch(
+                              name: "콘텐츠 목록",
+                              searchShow: true,
+                              viewCount: true,
+                              searchText: "제목, 마스터 이름, 태그 검색",
+                            ),
+                            const SizedBox(height: 32),
+                            CustomElevatedButton(
+                              text: "신규 등록",
+                              height: 44,
+                              width: 107,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12)),
+                            ),
+                            const SizedBox(height: 32),
+                            buildFirstContainer(),
+                            const SizedBox(height: 16),
+                            dropdownButton(),
+                            const SizedBox(height: 16),
+                            SingleChildScrollView(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: appTheme.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12)),
+                                  border: Border.all(
+                                    width: 1,
+                                    color: appTheme.grayScale2,
+                                  ),
+                                ),
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(32.0),
+                                // height: 972,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: DataTable(
+                                        columnSpacing: 0,
+                                        checkboxHorizontalMargin: 0,
+                                        // dataRowMinHeight: ,
+                                        dataRowMaxHeight: 80,
+                                        border: TableBorder(
+                                            horizontalInside: BorderSide(
+                                                color: appTheme.grayScale2)),
+                                        columns: [
+                                          // DataColumn(
+                                          //   label: Checkbox(
+                                          //       activeColor: appTheme.skyBlue,
+                                          //       checkColor: Colors.white,
+                                          //       fillColor: MaterialStateProperty.resolveWith(
+                                          //         (states) {
+                                          //           if (!states
+                                          //               .contains(MaterialState.selected)) {
+                                          //             return Colors.transparent;
+                                          //           }
+                                          //           return null;
+                                          //         },
+                                          //       ),
+                                          //       value: false,
+                                          //       onChanged: (bool? value) {}),
+                                          // ),
+                                          DataColumn(
+                                              label: Text('타입',
+                                                  style: CustomTextStyles
+                                                      .labelLargeGray)),
+                                          DataColumn(
+                                              label: Text('제목',
+                                                  style: CustomTextStyles
+                                                      .labelLargeGray)),
+                                          DataColumn(
+                                              label: Text('조회수',
+                                                  style: CustomTextStyles
+                                                      .labelLargeGray)),
+                                          DataColumn(
+                                              label: Text('좋아요 수',
+                                                  style: CustomTextStyles
+                                                      .labelLargeGray)),
+                                          DataColumn(
+                                              label: Text('미리보기',
+                                                  style: CustomTextStyles
+                                                      .labelLargeGray)),
+                                          DataColumn(
+                                              label: Text('상태',
+                                                  style: CustomTextStyles
+                                                      .labelLargeGray)),
+                                        ],
+                                        rows: controller.data.map((item) {
+                                          return DataRow(
+                                              selected:
+                                                  controller.selected.value,
+                                              onSelectChanged: (bool? value) {
+                                                controller.updateValue();
+                                              },
+                                              cells: [
+                                                // DataCell(
+                                                //   Padding(
+                                                //     padding: const EdgeInsets.only(right: 8.0),
+                                                //     child: Checkbox(
+                                                //       value: controller.selected.value,
+                                                //       onChanged: (bool? value) {
+                                                //         controller.updateValue();
+                                                //       },
+                                                //     ),
+                                                //   ),
+                                                // ), // Checkbox cell
+                                                DataCell(Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 24.0),
+                                                  child: Text(item['type'],
+                                                      style: CustomTextStyles
+                                                          .bodyLargeBlack),
+                                                )),
+                                                DataCell(Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 24.0),
+                                                  child: Text(item['title'],
+                                                      style: CustomTextStyles
+                                                          .bodyLargeBlack),
+                                                )),
+                                                DataCell(Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 24.0),
+                                                  child: Text(item['views'],
+                                                      style: CustomTextStyles
+                                                          .bodyLargeBlack),
+                                                )),
+                                                DataCell(Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 24.0),
+                                                  child: Text(item['likes'],
+                                                      style: CustomTextStyles
+                                                          .bodyLargeBlack),
+                                                )),
+                                                DataCell(Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 24.0),
+                                                  child: Text(item['preview'],
+                                                      style: CustomTextStyles
+                                                          .bodyLargeBlack),
+                                                )),
+                                                DataCell(DecoratedBox(
+                                                  decoration: BoxDecoration(
+                                                    color: appTheme.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    border: Border.all(
+                                                      width: 1,
+                                                      color:
+                                                          appTheme.grayScale2,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 6,
+                                                            right: 0,
+                                                            top: 0,
+                                                            bottom: 0),
+                                                    child:
+                                                        DropdownButton<String>(
+                                                      value: item['status'],
+                                                      underline: Container(),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 6),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      elevation: 16,
+                                                      style: const TextStyle(
+                                                          color: Colors
+                                                              .deepPurple),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        if (newValue != null) {
+                                                          item['status'] =
+                                                              newValue;
+                                                          controller
+                                                              .updateDTText(
+                                                                  newValue);
+                                                        }
+                                                      },
+                                                      items: <String>[
+                                                        '정상',
+                                                        '안함'
+                                                      ].map<
+                                                              DropdownMenuItem<
+                                                                  String>>(
+                                                          (String value) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: value,
+                                                          child: Text(
+                                                            value,
+                                                            style: value == "정상"
+                                                                ? CustomTextStyles
+                                                                    .labelLargeGreen
+                                                                : CustomTextStyles
+                                                                    .labelLargeRed,
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  ),
+                                                )),
+                                              ]);
+                                        }).toList(),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 6,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0),
-                                        child: DropdownButton<String>(
-                                          value: item['status'],
-                                          underline: Container(),
-                                          padding:
-                                              const EdgeInsets.only(left: 6),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          elevation: 16,
-                                          style: const TextStyle(
-                                              color: Colors.deepPurple),
-                                          onChanged: (String? newValue) {
-                                            if (newValue != null) {
-                                              item['status'] = newValue;
-                                              controller.updateDTText(newValue);
-                                            }
-                                          },
-                                          items: <String>['정상', '안함']
-                                              .map<DropdownMenuItem<String>>(
-                                                  (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: value == "정상"
-                                                    ? CustomTextStyles
-                                                        .labelLargeGreen
-                                                    : CustomTextStyles
-                                                        .labelLargeRed,
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      ),
-                                    )),
-                                  ]);
-                            }).toList(),
-                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 32,
+                                    ),
+                                    Pages(
+                                        pages: 100,
+                                        activePage: controller.activePage.value,
+                                        onTap: (int pageNum) {
+                                          controller.loadNewPage(pageNum);
+                                        })
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        Pages(
-                            pages: 100,
-                            activePage: controller.activePage.value,
-                            onTap: (int pageNum) {
-                              controller.loadNewPage(pageNum);
-                            })
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
