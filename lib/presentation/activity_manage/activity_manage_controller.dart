@@ -3,8 +3,9 @@ import 'package:mindsight_admin_page/app_export.dart';
 enum Type { practice, challenge }
 
 class ActivityManageController extends GetxController {
-  static ActivityManageController get to => Get.find<ActivityManageController>();
- //  FIRST CONTAINER //
+  static ActivityManageController get to =>
+      Get.find<ActivityManageController>();
+  //  FIRST CONTAINER //
   List<String> typeLabels = [
     "Practice plan",
     "Challenge",
@@ -41,19 +42,18 @@ class ActivityManageController extends GetxController {
   void toggleChatbot(int index, bool value) {
     chatbotValues[index] = value;
   }
+
   void toggleFeedback(int index, bool value) {
     feedbackValues[index] = value;
   }
 
-  void loadNewPage(int pageNum){
+  void loadNewPage(int pageNum) {
     activePage.value = pageNum;
   }
 
-  void onHistoryTap(){
+  void onHistoryTap() {
+    // menuController.changeActiveItemTo(activityHistoryPageDisplayName);
+    navigationController.navigateTo(activityHistoryPageRoute, arguments: {"hello": "hello"});
 
-                          // menuController.changeActiveItemTo(activityHistoryPageDisplayName);
-                          navigationController.navigateTo(activityHistoryPageRoute);
-
-                      
   }
 }
