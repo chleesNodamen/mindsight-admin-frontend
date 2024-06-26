@@ -8,7 +8,7 @@ class TobBarSearch extends StatelessWidget {
     this.viewCount = false,
     this.viewNumber = 122878,
     this.memberShow = false,
-    this.memberCount,
+    this.memberCount = 0,
     this.searchText,
     this.searchShow = true,
   });
@@ -40,7 +40,9 @@ class TobBarSearch extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomImageView(
-                      imagePath: viewCount! ? IconConstant.contentFull : IconConstant.user,
+                      imagePath: viewCount!
+                          ? IconConstant.contentFull
+                          : IconConstant.user,
                       color: appTheme.black,
                       width: 20,
                       height: 20,
@@ -48,7 +50,10 @@ class TobBarSearch extends StatelessWidget {
                     const SizedBox(
                       width: 4,
                     ),
-                    Text(viewCount! ? "${NumberFormat('#,###').format(viewNumber)} 건" : "${NumberFormat('#,###').format(memberCount)} 명",
+                    Text(
+                        viewCount!
+                            ? "${NumberFormat('#,###').format(viewNumber)} 건"
+                            : "${NumberFormat('#,###').format(memberCount)} 명",
                         style: CustomTextStyles.bodyMediumGray
                             .copyWith(fontWeight: FontWeight.w500)),
                   ],
@@ -74,9 +79,9 @@ class TobBarSearch extends StatelessWidget {
                     // hintText: "abc@domain.com",
                     border: OutlineInputBorder(
                       borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12),
-                    ),
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                      ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
@@ -84,9 +89,9 @@ class TobBarSearch extends StatelessWidget {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12),
-                    ),
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                      ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
@@ -94,9 +99,9 @@ class TobBarSearch extends StatelessWidget {
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12),
-                    ),
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                      ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
@@ -104,9 +109,9 @@ class TobBarSearch extends StatelessWidget {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12),
-                    ),
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                      ),
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 2,
@@ -114,9 +119,9 @@ class TobBarSearch extends StatelessWidget {
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12),
-                    ),
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                      ),
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,
@@ -124,9 +129,9 @@ class TobBarSearch extends StatelessWidget {
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12),
-                    ),
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                      ),
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,
