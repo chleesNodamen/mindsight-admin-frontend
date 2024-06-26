@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 
 class TobBarSearch extends StatelessWidget {
@@ -5,12 +6,18 @@ class TobBarSearch extends StatelessWidget {
     super.key,
     this.name,
     this.viewCount = false,
+    this.viewNumber = 122878,
+    this.memberShow = false,
+    this.memberCount,
     this.searchText,
     this.searchShow = true,
   });
 
   final String? name;
   final bool? viewCount;
+  final int? viewNumber;
+  final bool? memberShow;
+  final int? memberCount;
   final String? searchText;
   final bool? searchShow;
 
@@ -20,28 +27,32 @@ class TobBarSearch extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text("$name", style: CustomTextStyles.headlineLargeBlack),
             const SizedBox(
               width: 16,
             ),
-            Visibility(
-              visible: viewCount!,
-              child: Row(
-                children: [
-                  CustomImageView(
-                    imagePath: IconConstant.contentFull,
-                    color: appTheme.black,
-                    width: 20,
-                    height: 20,
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  Text("122,878 건",
-                      style: CustomTextStyles.bodyMediumGray
-                          .copyWith(fontWeight: FontWeight.w500)),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 6.0),
+              child: Visibility(
+                visible: viewCount! || memberShow!,
+                child: Row(
+                  children: [
+                    CustomImageView(
+                      imagePath: viewCount! ? IconConstant.contentFull : IconConstant.user,
+                      color: appTheme.black,
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(viewCount! ? "${NumberFormat('#,###').format(viewNumber)} 건" : "${NumberFormat('#,###').format(memberCount)} 명",
+                        style: CustomTextStyles.bodyMediumGray
+                            .copyWith(fontWeight: FontWeight.w500)),
+                  ],
+                ),
               ),
             ),
           ],
