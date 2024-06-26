@@ -28,7 +28,8 @@ class MemberManageView extends GetWidget<MemberManageController> {
                             const TobBarSearch(
                               name: "회원 목록",
                               searchShow: true,
-                              viewCount: true,
+                              memberShow: true,
+                              memberCount: 7814,
                               searchText: "이메일 주소, 사용자 이름 검색",
                             ),
                             const SizedBox(height: 32),
