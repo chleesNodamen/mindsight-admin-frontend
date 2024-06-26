@@ -1,8 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_controller.dart';
 
-
-class InactiveMemberManageView extends GetWidget<InactiveMemberManageController> {
+class InactiveMemberManageView
+    extends GetWidget<InactiveMemberManageController> {
   const InactiveMemberManageView({super.key});
 
   @override
@@ -84,16 +84,18 @@ class InactiveMemberManageView extends GetWidget<InactiveMemberManageController>
     );
   }
 
-  Container _pageView() {
-    return Container(
+  SingleChildScrollView _pageView() {
+    return SingleChildScrollView(
+      child: Container(
         decoration: BoxDecoration(
           color: appTheme.white,
           borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
-        height: 1016,
+        // height: 1016,
         width: double.infinity,
         padding: const EdgeInsets.all(32.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             DataTable(
               columnSpacing: 0,
@@ -282,28 +284,32 @@ class InactiveMemberManageView extends GetWidget<InactiveMemberManageController>
             const SizedBox(
               height: 32,
             ),
-            Obx(() => Stack(alignment: Alignment.centerLeft, children: [
+            Obx(
+              () => Stack(
+                alignment: Alignment.centerLeft,
+                children: [
                   Row(
                     children: [
                       CustomElevatedButton(
-                    text: '활성',
-                    buttonTextStyle: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                    buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                    // margin: const EdgeInsets.symmetric(
-                    //     vertical: 11, horizontal: 24),
-                    width: 90,
-                    height: 44,
-                  ),
+                        text: '활성',
+                        buttonTextStyle:
+                            CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                        // margin: const EdgeInsets.symmetric(
+                        //     vertical: 11, horizontal: 24),
+                        width: 90,
+                        height: 44,
+                      ),
                       CustomElevatedButton(
                         text: '비활성',
-                        buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
+                        buttonTextStyle:
+                            CustomTextStyles.bodyMediumRed.copyWith(
                           fontWeight: FontWeight.w700,
                         ),
                         buttonStyle: CustomButtonStyles.fillRedTransparent,
-                        margin: const EdgeInsets.symmetric(
-                             horizontal: 16),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
                         width: 90,
                         height: 44,
                       ),
@@ -315,8 +321,12 @@ class InactiveMemberManageView extends GetWidget<InactiveMemberManageController>
                       onTap: (int pageNum) {
                         controller.loadNewPage(pageNum);
                       }),
-                ]))
+                ],
+              ),
+            )
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

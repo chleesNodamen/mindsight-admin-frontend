@@ -11,7 +11,15 @@ class MenuController extends GetxController {
   var activeItem = dashboardPageDisplayName.obs;
   Rx<String>? activeSubItem;
   Map<String, List<List<String>>> subMenuItems = {
-    memberManagePageDisplayName : [[memberManagePageSubMenuDisplayName, AppRoutes.memberManage], [inactiveMemberManagePageDisplayName, AppRoutes.inactiveMemberManage]]
+    memberManagePageDisplayName: [
+      [memberManagePageSubMenuDisplayName, AppRoutes.memberManage],
+      [inactiveMemberManagePageDisplayName, AppRoutes.inactiveMemberManage]
+    ],
+    contentManagePageDisplayName: [
+      [contentManageContentDisplayName, AppRoutes.contentManage],
+      [contentPracticePlanDisplayName, AppRoutes.contentPracticePlanManage],
+      [contentChallengeDisplayName, AppRoutes.contentChallengeManage]
+    ]
   };
 
   var hoverItem = "".obs;
@@ -20,23 +28,24 @@ class MenuController extends GetxController {
     switch (itemName) {
       case contentManagePageDisplayName:
         Get.lazyPut(() => ContentManageController());
-        case activityManagePageDisplayName:
+      case activityManagePageDisplayName:
         Get.lazyPut(() => ActivityManageController());
         Get.lazyPut(() => ActivityHistoryController());
-        case memberManagePageDisplayName:
+      case memberManagePageDisplayName:
         Get.lazyPut(() => MemberManageController());
-        case memberDetailsPageDisplayName:
+      case memberDetailsPageDisplayName:
         Get.lazyPut(() => MemberDetailsController());
-        case memberEditPageDisplayName:
+      case memberEditPageDisplayName:
         Get.lazyPut(() => MemberEditController());
     }
     activeItem.value = itemName;
   }
-  setActiveSubItem(String itemName){
+
+  setActiveSubItem(String itemName) {
     activeSubItem = subMenuItems[itemName]![0][0].obs;
   }
 
-  changeActiveSubItem(String itemName){
+  changeActiveSubItem(String itemName) {
     activeSubItem = itemName.obs;
   }
 
@@ -92,7 +101,7 @@ class MenuController extends GetxController {
     );
   }
 
-  bool hasSubMenu(String itemName){
+  bool hasSubMenu(String itemName) {
     return subMenuItems.containsKey(itemName);
   }
 }

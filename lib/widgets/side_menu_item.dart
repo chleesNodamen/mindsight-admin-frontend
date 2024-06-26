@@ -10,23 +10,22 @@ class SideMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Column(
-      children: [
-        InkWell(
-            onTap: onTap,
-            onHover: (value) {
-              value
-                  ? menuController.onHover(itemName)
-                  : menuController.onHover("not hovering");
-            },
-            child:  Container(
+          children: [
+            InkWell(
+                onTap: onTap,
+                onHover: (value) {
+                  value
+                      ? menuController.onHover(itemName)
+                      : menuController.onHover("not hovering");
+                },
+                child: Container(
                   color: menuController.isHovering(itemName)
                       ? appTheme.white.withOpacity(0.4)
                       : Colors.transparent,
                   child: Row(
                     children: [
                       Visibility(
-                        visible: 
-                            menuController.isActive(itemName),
+                        visible: menuController.isActive(itemName),
                         maintainSize: true,
                         maintainAnimation: true,
                         maintainState: true,
@@ -38,43 +37,61 @@ class SideMenuItem extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16),
-                        child: menuController.returnIconFor(itemName, menuController.isActive(itemName)),
+                        child: menuController.returnIconFor(
+                            itemName, menuController.isActive(itemName)),
                       ),
                       if (!menuController.isActive(itemName))
                         Flexible(
                             child: Text(
-                                itemName,
-                                style: CustomTextStyles.titleSmallWhite.copyWith(color: appTheme.white.withOpacity(0.75)),
+                          itemName,
+                          style: CustomTextStyles.titleSmallWhite.copyWith(
+                              color: appTheme.white.withOpacity(0.75)),
                         ))
                       else
                         Flexible(
-                            child: Text(
-                                itemName,
-                                style: CustomTextStyles.titleSmallWhite
-                        ))
+                            child: Text(itemName,
+                                style: CustomTextStyles.titleSmallWhite))
                     ],
                   ),
-        
                 )),
-                menuController.isActive(itemName) && menuController.hasSubMenu(itemName) ?
-                  Column(
+            menuController.isActive(itemName) &&
+                    menuController.hasSubMenu(itemName)
+                ? Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                      children: menuController.subMenuItems[itemName]!
-                  .map((item) => Column(
-                    children: [
-                      InkWell(child: Container(
-                  color: menuController.isHovering(item[0])
-                      ? appTheme.white.withOpacity(0.4)
-                      : Colors.transparent,
-                  child: Text(item[0], style: menuController.isActiveSubItem(item[0]) ? CustomTextStyles.bodyMediumWhite.copyWith(fontWeight: FontWeight.w700,) : CustomTextStyles.bodyMediumWhite.copyWith(color: Colors.white.withOpacity(0.75),))), onTap:(){Get.toNamed(item[1]); menuController.changeActiveSubItem(item[0]);}, 
-            ),
-                      const SizedBox(height: 16,)
-                    ],
-                  ))
-                  .toList()
-                    ) : const SizedBox.shrink()
-      ],
-    ));
+                    children: menuController.subMenuItems[itemName]!
+                        .map((item) => Column(
+                              children: [
+                                InkWell(
+                                  child: Container(
+                                      color: menuController.isHovering(item[0])
+                                          ? appTheme.white.withOpacity(0.4)
+                                          : Colors.transparent,
+                                      child: Text(item[0],
+                                          style: menuController
+                                                  .isActiveSubItem(item[0])
+                                              ? CustomTextStyles.bodyMediumWhite
+                                                  .copyWith(
+                                                  fontWeight: FontWeight.w700,
+                                                )
+                                              : CustomTextStyles.bodyMediumWhite
+                                                  .copyWith(
+                                                  color: Colors.white
+                                                      .withOpacity(0.75),
+                                                ))),
+                                  onTap: () {
+                                    Get.toNamed(item[1]);
+                                    menuController.changeActiveSubItem(item[0]);
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                )
+                              ],
+                            ))
+                        .toList())
+                : const SizedBox.shrink()
+          ],
+        ));
   }
 }

@@ -67,7 +67,7 @@ class SideMenu extends StatelessWidget {
                         }
                         if (!menuController.isActive(item.name)) {
                           menuController.changeActiveItemTo(item.name);
-                          if(menuController.hasSubMenu(item.name)){
+                          if (menuController.hasSubMenu(item.name)) {
                             menuController.setActiveSubItem(item.name);
                           }
                           Get.toNamed(item.route);
@@ -101,10 +101,10 @@ class SideMenu extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                          'ms_content@nodamen.com',
-                          // PrefUtils.to.getSigninId(),
-                          style: CustomTextStyles.labelLargeBlack,
-                        ),
+                        'ms_content@nodamen.com',
+                        // PrefUtils.to.getSigninId(),
+                        style: CustomTextStyles.labelLargeBlack,
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         '2024-01-12-11:32:23',

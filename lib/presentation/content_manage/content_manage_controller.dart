@@ -135,38 +135,6 @@ class ContentManageController extends GetxController {
           "preview": "재생",
           "status": "정상"
         },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "안함"
-        },
         // Add more items as needed
       ];
       data.assignAll(fetchedData);

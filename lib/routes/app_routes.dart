@@ -7,8 +7,12 @@ import 'package:mindsight_admin_page/presentation/authentication/auth_binding.da
 import 'package:mindsight_admin_page/presentation/authentication/auth_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_binding.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_binding.dart';
@@ -30,6 +34,10 @@ class AppRoutes {
   static const String memberDetails = "/member_details";
   static const String memberEdit = "/member_edit";
   static const String contentManage = "/content_manage";
+  static const String contentManageList = "/content_manage_list";
+  static const String contentPracticePlanManage =
+      "/content_practice_plan_manage";
+  static const String contentChallengeManage = "/content_challenge_manage";
   static const String activityManage = "/activity_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
@@ -80,6 +88,14 @@ class AppRoutes {
       bindings: [ContentManageBinding()],
     ),
     GetPage(
+        name: contentPracticePlanManage,
+        page: () => const PracticePlanManageView(),
+        bindings: [PracticePlanManageBinding()]),
+    GetPage(
+        name: contentChallengeManage,
+        page: () => const ChallengeManageView(),
+        bindings: [ChallengeManageBinding()]),
+    GetPage(
       name: activityManage,
       page: () => const ActivityManageView(),
       bindings: [ActivityManageBinding()],
@@ -123,6 +139,9 @@ const inactiveMemberManagePageDisplayName = "비활성 회원 관리";
 
 const contentManagePageDisplayName = "콘텐츠 관리";
 const contentManagePageRoute = "/content_manage";
+const contentManageContentDisplayName = "콘텐츠 목록";
+const contentPracticePlanDisplayName = "Practice plan 관리";
+const contentChallengeDisplayName = "Challenge 관리";
 
 const activityManagePageDisplayName = "활동 기록 관리";
 const activityManagePageRoute = "/activity_manage";
