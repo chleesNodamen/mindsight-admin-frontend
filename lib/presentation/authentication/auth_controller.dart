@@ -55,7 +55,7 @@ class AuthenticationController extends GetxController {
         !isValidPassword(value, isRequired: true) ||
         authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)
         ) {
-      return "This password is incorrect.\nYou have ${authModel.attemptsLeft} attempts remaining to try again."
+      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요."
           .tr;
     }
     return null;
@@ -75,9 +75,7 @@ class AuthenticationController extends GetxController {
       formKey.currentState!.validate();
 
       if (authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
-        if (authModel.attemptsLeft! <= 0) {
-          return false;
-        }
+        return false;
       }
     }
 

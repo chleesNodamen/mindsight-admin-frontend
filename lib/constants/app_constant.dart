@@ -1,7 +1,7 @@
 import 'package:mindsight_admin_page/routes/app_routes.dart';
 
 class AppConstant {
-  static bool isProdServer = true;
+  static bool isProdServer = false;
   static String version = "1.0.6";
   // static const String initialRoute = AppRoutes.bottomNavi;
   static const String initialRoute = AppRoutes.auth;

@@ -6,8 +6,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
+    return  Scaffold(
         extendBodyBehindAppBar: true,
         body: ResponsiveWidget(
           largeScreen: Row(
@@ -76,7 +75,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 

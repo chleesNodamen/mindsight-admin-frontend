@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_controller.dart';
 import 'package:intl/intl.dart';
@@ -31,15 +32,15 @@ class DashboardView extends GetWidget<DashboardController> {
                     ),
                     Row(
                       children: [
-                        _buildFirstContainer(),
+                        Expanded(flex: 1, child: _buildFirstContainer()),
                         const SizedBox(
                           width: 16,
                         ),
-                        _buildSecondContainer(),
+                        Expanded(flex: 1, child: _buildSecondContainer()),
                         const SizedBox(
                           width: 16,
                         ),
-                        _buildThirdContainer(),
+                        Expanded(flex: 1, child: _buildThirdContainer()),
                       ],
                     ),
                     const SizedBox(
@@ -47,11 +48,11 @@ class DashboardView extends GetWidget<DashboardController> {
                     ),
                     Row(
                       children: [
-                        _buildMembersGraph(),
+                        Expanded(flex: 1, child: _buildMembersGraph()),
                         const SizedBox(
                           width: 16,
                         ),
-                        _buildPracticePlanContainer(),
+                        Expanded(flex: 2, child: _buildPracticePlanContainer()),
                       ],
                     ),
                     const SizedBox(
@@ -59,7 +60,7 @@ class DashboardView extends GetWidget<DashboardController> {
                     ),
                     Row(
                       children: [
-                        _buildChallengeContainer(),
+                        Expanded(flex: 1, child: _buildChallengeContainer()),
                       ],
                     ),
                     const SizedBox(
@@ -80,54 +81,59 @@ class DashboardView extends GetWidget<DashboardController> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: appTheme.white),
         padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Stack(
           children: [
-            Text(
-              '어제 접속 회원 수',
-              style: CustomTextStyles.labelLargeGray,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              '2.3천',
-              style: CustomTextStyles.headlineLargeBlack,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: appTheme.alertNegative.withOpacity(0.1)),
-              child: Text('-6.5%', style: CustomTextStyles.labelLargeRed),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            GestureDetector(
-                child: Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Text(
+                  '어제 접속 회원 수',
+                  style: CustomTextStyles.labelLargeGray,
+                ),
                 const SizedBox(
-                  width: 125,
+                  height: 8,
                 ),
                 Text(
-                  'Google Analytics',
-                  style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                    fontWeight: FontWeight.w500,
-                    decoration: TextDecoration.underline,
-                    decorationColor: appTheme.skyBlue,
-                  ),
+                  '2.3천',
+                  style: CustomTextStyles.headlineLargeBlack,
                 ),
-                const SizedBox(width: 8),
-                CustomImageView(
-                  imagePath: IconConstant.newTab,
-                )
+                const SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: appTheme.alertNegative.withOpacity(0.1)),
+                  child: Text('-6.5%', style: CustomTextStyles.labelLargeRed),
+                ),
+                const SizedBox(
+                  height: 48,
+                ),
               ],
-            )),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                  child: Row(
+                children: [
+                  Text(
+                    'Google Analytics',
+                    style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                      decorationColor: appTheme.skyBlue,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  CustomImageView(
+                    imagePath: IconConstant.newTab,
+                  )
+                ],
+              )),
+            ),
           ],
         ));
   }
@@ -137,54 +143,59 @@ class DashboardView extends GetWidget<DashboardController> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: appTheme.white),
         padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Stack(
           children: [
-            Text(
-              '지난 7일 이벤트 수',
-              style: CustomTextStyles.labelLargeGray,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              '8.6천',
-              style: CustomTextStyles.headlineLargeBlack,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: appTheme.alertPositive.withOpacity(0.1)),
-              child: Text('+35.4%', style: CustomTextStyles.labelLargeGreen),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            GestureDetector(
-                child: Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Text(
+                  '지난 7일 이벤트 수',
+                  style: CustomTextStyles.labelLargeGray,
+                ),
                 const SizedBox(
-                  width: 125,
+                  height: 8,
                 ),
                 Text(
-                  'Google Analytics',
-                  style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                    fontWeight: FontWeight.w500,
-                    decoration: TextDecoration.underline,
-                    decorationColor: appTheme.skyBlue,
-                  ),
+                  '8.6천',
+                  style: CustomTextStyles.headlineLargeBlack,
                 ),
-                const SizedBox(width: 8),
-                CustomImageView(
-                  imagePath: IconConstant.newTab,
-                )
+                const SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: appTheme.alertPositive.withOpacity(0.1)),
+                  child: Text('+35.4%', style: CustomTextStyles.labelLargeGreen),
+                ),
+                const SizedBox(
+                  height: 48,
+                ),
+                
               ],
-            )),
+            ),Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                      child: Row(
+                    children: [
+                      Text(
+                        'Google Analytics',
+                        style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          decorationColor: appTheme.skyBlue,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      CustomImageView(
+                        imagePath: IconConstant.newTab,
+                      )
+                    ],
+                  )),
+            ),
           ],
         ));
   }
@@ -194,54 +205,59 @@ class DashboardView extends GetWidget<DashboardController> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: appTheme.white),
         padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Stack(
           children: [
-            Text(
-              '지난 7일 재사용 회원 수',
-              style: CustomTextStyles.labelLargeGray,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              '74',
-              style: CustomTextStyles.headlineLargeBlack,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: appTheme.alertPositive.withOpacity(0.1)),
-              child: Text('+37.0%', style: CustomTextStyles.labelLargeGreen),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            GestureDetector(
-                child: Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Text(
+                  '지난 7일 재사용 회원 수',
+                  style: CustomTextStyles.labelLargeGray,
+                ),
                 const SizedBox(
-                  width: 125,
+                  height: 8,
                 ),
                 Text(
-                  'Google Analytics',
-                  style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                    fontWeight: FontWeight.w500,
-                    decoration: TextDecoration.underline,
-                    decorationColor: appTheme.skyBlue,
-                  ),
+                  '74',
+                  style: CustomTextStyles.headlineLargeBlack,
                 ),
-                const SizedBox(width: 8),
-                CustomImageView(
-                  imagePath: IconConstant.newTab,
-                )
+                const SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: appTheme.alertPositive.withOpacity(0.1)),
+                  child: Text('+37.0%', style: CustomTextStyles.labelLargeGreen),
+                ),
+                const SizedBox(
+                  height: 48,
+                ),
+                
               ],
-            )),
+            ),Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                      child: Row(
+                    children: [
+                      Text(
+                        'Google Analytics',
+                        style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          decorationColor: appTheme.skyBlue,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      CustomImageView(
+                        imagePath: IconConstant.newTab,
+                      )
+                    ],
+                  )),
+            ),
           ],
         ));
   }
@@ -249,7 +265,6 @@ class DashboardView extends GetWidget<DashboardController> {
   Widget _buildMembersGraph() {
     return Container(
         height: 397,
-        width: 328,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: appTheme.white),
         padding: const EdgeInsets.all(24),

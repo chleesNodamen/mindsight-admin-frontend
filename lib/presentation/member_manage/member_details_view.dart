@@ -6,8 +6,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
+    return Scaffold(
         extendBodyBehindAppBar: true,
         body: ResponsiveWidget(
           largeScreen: Row(
@@ -53,6 +52,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                           const SizedBox(height: 32),
                           _buildFirstContainer(),
                           const SizedBox(height: 16),
+                          _buildSecondContainer()
                         ],
                       ),
                     ),
@@ -62,7 +62,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 
@@ -80,12 +80,13 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 children: [
                   Text('회원 정보', style: CustomTextStyles.labelLargeBlack),
                   GestureDetector(
+                    onTap: controller.onMemberEdit,
                     child: Text(
                       '사전 정보 수정',
                       style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                           decoration: TextDecoration.underline,
                           decorationColor: appTheme.skyBlue),
-                    ),
+                    )
                   )
                 ],
               ),

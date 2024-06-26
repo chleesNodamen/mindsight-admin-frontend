@@ -6,7 +6,7 @@ import 'package:mindsight_admin_page/data/base_repository.dart';
 class AuthRepository extends BaseRepository {
   Future<AuthModel> post(AuthReqPost dto) async {
     // req
-    String endpoint = "auth/signin";
+    String endpoint = "admin/signin";
     Response response = await httpClient.post(endpoint, dto.toJson());
 
     // result
@@ -18,12 +18,8 @@ class AuthRepository extends BaseRepository {
 
       PrefUtils.to.setSigninId(dto.email!);
       PrefUtils.to.setSigninTime();
-    } else {
-      Map<String, dynamic> message = model.data["message"];
-      if (message["attemptsLeft"] != null) {
-        model.attemptsLeft =
-            int.parse(message["attemptsLeft"]["attemptsLeft"].toString());
-      }
+    } else { 
+      print("log in unsuccessful"); //TODO
     }
 
     return model;

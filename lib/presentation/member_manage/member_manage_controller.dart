@@ -18,7 +18,6 @@ class MemberManageController extends GetxController {
   }
 
   void onMemberTap() {
-    menuController.changeActiveItemTo(activityHistoryPageDisplayName);
-    navigationController.navigateTo(activityHistoryPageRoute);
+    Get.toNamed(AppRoutes.memberDetails);
   }
 }
