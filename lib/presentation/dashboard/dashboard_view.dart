@@ -10,68 +10,72 @@ class DashboardView extends GetWidget<DashboardController> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: ResponsiveWidget(
-        largeScreen: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SideMenu(),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(
-                  left: 32,
-                  right: 48,
-                ),
-                child: ListView(
-                  children: [
-                    const SizedBox(
-                      height: 80,
-                    ),
-                    Text('대시보드', style: CustomTextStyles.headlineLargeBlack),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(flex: 1, child: _buildFirstContainer()),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(flex: 1, child: _buildSecondContainer()),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(flex: 1, child: _buildThirdContainer()),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(flex: 1, child: _buildMembersGraph()),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(flex: 2, child: _buildPracticePlanContainer()),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(flex: 1, child: _buildChallengeContainer()),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 80,
-                    ),
-                  ],
+      body: PageLoadingIndicator(
+        isLoading: controller.isLoading.value,
+        child: controller.isInited.value ? ResponsiveWidget(
+          largeScreen: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SideMenu(),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    left: 32,
+                    right: 48,
+                  ),
+                  child: ListView(
+                    children: [
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Text('대시보드', style: CustomTextStyles.headlineLargeBlack),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(flex: 1, child: _buildFirstContainer()),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(flex: 1, child: _buildSecondContainer()),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(flex: 1, child: _buildThirdContainer()),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(flex: 1, child: _buildMembersGraph()),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(
+                              flex: 2, child: _buildPracticePlanContainer()),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(flex: 1, child: _buildChallengeContainer()),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ) : const SizedBox.shrink(),
       ),
     );
   }
@@ -102,7 +106,8 @@ class DashboardView extends GetWidget<DashboardController> {
                   height: 8,
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: appTheme.alertNegative.withOpacity(0.1)),
@@ -168,33 +173,34 @@ class DashboardView extends GetWidget<DashboardController> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: appTheme.alertPositive.withOpacity(0.1)),
-                  child: Text('+35.4%', style: CustomTextStyles.labelLargeGreen),
+                  child:
+                      Text('+35.4%', style: CustomTextStyles.labelLargeGreen),
                 ),
                 const SizedBox(
                   height: 48,
                 ),
-                
               ],
-            ),Positioned(
+            ),
+            Positioned(
               bottom: 0,
               right: 0,
               child: GestureDetector(
-                      child: Row(
-                    children: [
-                      Text(
-                        'Google Analytics',
-                        style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline,
-                          decorationColor: appTheme.skyBlue,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      CustomImageView(
-                        imagePath: IconConstant.newTab,
-                      )
-                    ],
-                  )),
+                  child: Row(
+                children: [
+                  Text(
+                    'Google Analytics',
+                    style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                      decorationColor: appTheme.skyBlue,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  CustomImageView(
+                    imagePath: IconConstant.newTab,
+                  )
+                ],
+              )),
             ),
           ],
         ));
@@ -230,33 +236,34 @@ class DashboardView extends GetWidget<DashboardController> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: appTheme.alertPositive.withOpacity(0.1)),
-                  child: Text('+37.0%', style: CustomTextStyles.labelLargeGreen),
+                  child:
+                      Text('+37.0%', style: CustomTextStyles.labelLargeGreen),
                 ),
                 const SizedBox(
                   height: 48,
                 ),
-                
               ],
-            ),Positioned(
+            ),
+            Positioned(
               bottom: 0,
               right: 0,
               child: GestureDetector(
-                      child: Row(
-                    children: [
-                      Text(
-                        'Google Analytics',
-                        style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline,
-                          decorationColor: appTheme.skyBlue,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      CustomImageView(
-                        imagePath: IconConstant.newTab,
-                      )
-                    ],
-                  )),
+                  child: Row(
+                children: [
+                  Text(
+                    'Google Analytics',
+                    style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                      decorationColor: appTheme.skyBlue,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  CustomImageView(
+                    imagePath: IconConstant.newTab,
+                  )
+                ],
+              )),
             ),
           ],
         ));
@@ -381,7 +388,6 @@ class DashboardView extends GetWidget<DashboardController> {
 
   Widget _buildPracticePlanContainer() {
     return Container(
-        width: 672,
         height: 397,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: appTheme.white),
@@ -410,183 +416,171 @@ class DashboardView extends GetWidget<DashboardController> {
             const SizedBox(
               height: 8,
             ),
-            DataTable(
-              border: TableBorder(
-                  horizontalInside: BorderSide(color: appTheme.grayScale2)),
-              columns: <DataColumn>[
-                DataColumn(
-                  label: SizedBox(
-                    width: 20,
-                    child: Text(
+            SizedBox(
+              width: double.infinity,
+              child: DataTable(
+                border: TableBorder(
+                    horizontalInside: BorderSide(color: appTheme.grayScale2)),
+                columns: <DataColumn>[
+                  DataColumn(
+                    label: Text(
                       '',
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
+                  DataColumn(
+                    label: Text(
                       '회차',
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
+                  DataColumn(
+                    label: Text(
                       '완료 회원 수',
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
+                  DataColumn(
+                    label: Text(
                       '참여 회원 수',
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
+                  DataColumn(
+                    label: Text(
                       '완료율',
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
-                ),
-              ],
-              rows: <DataRow>[
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '1',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '1회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '2',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '2회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '3',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '3회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '4',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '4회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '5',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '5회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-              ],
+                ],
+                rows: <DataRow>[
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text(
+                        '1',
+                        style: CustomTextStyles.bodyLargeSkyBlue,
+                      )),
+                      DataCell(Text(
+                        '1회차',
+                        style: CustomTextStyles.bodyLargeBlack
+                            .copyWith(decoration: TextDecoration.underline),
+                      )),
+                      DataCell(Text(
+                        '3,456',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '3,920',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '88.1%',
+                        style: CustomTextStyles.bodyLargeGreen,
+                      )),
+                    ],
+                  ),
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text(
+                        '2',
+                        style: CustomTextStyles.bodyLargeSkyBlue,
+                      )),
+                      DataCell(Text(
+                        '2회차',
+                        style: CustomTextStyles.bodyLargeBlack
+                            .copyWith(decoration: TextDecoration.underline),
+                      )),
+                      DataCell(Text(
+                        '3,456',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '3,920',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '88.1%',
+                        style: CustomTextStyles.bodyLargeGreen,
+                      )),
+                    ],
+                  ),
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text(
+                        '3',
+                        style: CustomTextStyles.bodyLargeSkyBlue,
+                      )),
+                      DataCell(Text(
+                        '3회차',
+                        style: CustomTextStyles.bodyLargeBlack
+                            .copyWith(decoration: TextDecoration.underline),
+                      )),
+                      DataCell(Text(
+                        '3,456',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '3,920',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '88.1%',
+                        style: CustomTextStyles.bodyLargeGreen,
+                      )),
+                    ],
+                  ),
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text(
+                        '4',
+                        style: CustomTextStyles.bodyLargeSkyBlue,
+                      )),
+                      DataCell(Text(
+                        '4회차',
+                        style: CustomTextStyles.bodyLargeBlack
+                            .copyWith(decoration: TextDecoration.underline),
+                      )),
+                      DataCell(Text(
+                        '3,456',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '3,920',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '88.1%',
+                        style: CustomTextStyles.bodyLargeGreen,
+                      )),
+                    ],
+                  ),
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text(
+                        '5',
+                        style: CustomTextStyles.bodyLargeSkyBlue,
+                      )),
+                      DataCell(Text(
+                        '5회차',
+                        style: CustomTextStyles.bodyLargeBlack
+                            .copyWith(decoration: TextDecoration.underline),
+                      )),
+                      DataCell(Text(
+                        '3,456',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '3,920',
+                        style: CustomTextStyles.bodyLargeBlack,
+                      )),
+                      DataCell(Text(
+                        '88.1%',
+                        style: CustomTextStyles.bodyLargeGreen,
+                      )),
+                    ],
+                  ),
+                ],
+              ),
             )
           ],
         ));
@@ -631,66 +625,72 @@ class DashboardView extends GetWidget<DashboardController> {
             ),
             Row(
               children: [
-                Column(
-                  children: [
-                    _challengeItemBuilder(1),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      height: 1,
-                      width: 468,
-                      decoration: BoxDecoration(color: appTheme.grayScale2),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    _challengeItemBuilder(2),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      height: 1,
-                      width: 468,
-                      decoration: BoxDecoration(color: appTheme.grayScale2),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    _challengeItemBuilder(3),
-                  ],
+                Expanded(
+                  flex:1,
+                  child: Column(
+                    children: [
+                      _challengeItemBuilder(1),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: appTheme.grayScale2),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _challengeItemBuilder(2),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: appTheme.grayScale2),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _challengeItemBuilder(3),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   width: 32,
                 ),
-                Column(
-                  children: [
-                    _challengeItemBuilder(4),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      height: 1,
-                      width: 468,
-                      decoration: BoxDecoration(color: appTheme.grayScale2),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    _challengeItemBuilder(5),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      height: 1,
-                      width: 468,
-                      decoration: BoxDecoration(color: appTheme.grayScale2),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    _challengeItemBuilder(6),
-                  ],
+                Expanded(
+                  flex:1,
+                  child: Column(
+                    children: [
+                      _challengeItemBuilder(4),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: appTheme.grayScale2),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _challengeItemBuilder(5),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: appTheme.grayScale2),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _challengeItemBuilder(6),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -699,83 +699,81 @@ class DashboardView extends GetWidget<DashboardController> {
   }
 
   Widget _challengeItemBuilder(int index) {
-    return SizedBox(
-        width: 468,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Text(index.toString(), style: CustomTextStyles.labelLargeSkyBlue),
+        const SizedBox(
+          width: 16,
+        ),
+        CustomImageView(
+          imagePath: "assets/challenge_example.png",
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Column(
           children: [
-            Text(index.toString(), style: CustomTextStyles.labelLargeSkyBlue),
+            Text('Help Digestion', style: CustomTextStyles.titleSmallBlack),
             const SizedBox(
-              width: 16,
+              height: 4,
             ),
-            CustomImageView(
-              imagePath: "assets/challenge_example.png",
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            Column(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Help Digestion', style: CustomTextStyles.titleSmallBlack),
-                const SizedBox(
-                  height: 4,
+                Padding(
+                  padding: const EdgeInsets.only(left: 6, right: 6),
+                  child: Text(
+                    // "${model.duration![index]} ${"min".tr}",
+                    '8 - 11 min',
+                    style: CustomTextStyles.labelLargeGray,
+                  ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 6),
-                      child: Text(
-                        // "${model.duration![index]} ${"min".tr}",
-                        '8 - 11 min',
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
+                Container(
+                  height: 2,
+                  width: 2,
+                  decoration: BoxDecoration(
+                    color: appTheme.grayScale6,
+                    borderRadius: BorderRadius.circular(
+                      1,
                     ),
-                    Container(
-                      height: 2,
-                      width: 2,
-                      decoration: BoxDecoration(
-                        color: appTheme.grayScale6,
-                        borderRadius: BorderRadius.circular(
-                          1,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 6),
-                      child: Text(
-                        '14 days',
-                        // "${model.daysTotal![index]} days",
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
-                    ),
-                  ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 6),
+                  child: Text(
+                    '14 days',
+                    // "${model.daysTotal![index]} days",
+                    style: CustomTextStyles.labelLargeGray,
+                  ),
                 ),
               ],
             ),
-            Spacer(),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                children: [
-                  CustomImageView(
-                    imagePath: IconConstant.user,
-                  ),
-                  SizedBox(
-                    width: 48,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        '1,643',
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
           ],
-        ));
+        ),
+        Spacer(),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Row(
+            children: [
+              CustomImageView(
+                imagePath: IconConstant.user,
+              ),
+              SizedBox(
+                width: 48,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    '1,643',
+                    style: CustomTextStyles.labelLargeGray,
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
+      ],
+    );
   }
 }
 

@@ -9,38 +9,41 @@ class MemberManageView extends GetWidget<MemberManageController> {
     return Obx(
       () => Scaffold(
         extendBodyBehindAppBar: true,
-        body: ResponsiveWidget(
-          largeScreen: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SideMenu(),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(48.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const TobBarSearch(
-                            name: "회원 목록",
-                            searchShow: true,
-                            viewCount: true,
-                            searchText: "이메일 주소, 사용자 이름 검색",
-                          ),
-                          const SizedBox(height: 32),
-                          _buildFirstContainer(),
-                          const SizedBox(height: 16),
-                          _pageView(),
-                        ],
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value ? ResponsiveWidget(
+            largeScreen: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SideMenu(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(48.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const TobBarSearch(
+                              name: "회원 목록",
+                              searchShow: true,
+                              viewCount: true,
+                              searchText: "이메일 주소, 사용자 이름 검색",
+                            ),
+                            const SizedBox(height: 32),
+                            _buildFirstContainer(),
+                            const SizedBox(height: 16),
+                            _pageView(),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ) : const SizedBox.shrink(),
         ),
       ),
     );
@@ -157,12 +160,12 @@ class MemberManageView extends GetWidget<MemberManageController> {
                         style: CustomTextStyles.bodyLargeSkyBlue,
                       )),
                       DataCell(GestureDetector(
+                        onTap: controller.onMemberTap,
                         child: Text(
                           '1회차',
                           style: CustomTextStyles.bodyLargeBlack
                               .copyWith(decoration: TextDecoration.underline),
                         ),
-                        onTap: controller.onMemberTap,
                       )),
                       DataCell(Text(
                         '3,456',

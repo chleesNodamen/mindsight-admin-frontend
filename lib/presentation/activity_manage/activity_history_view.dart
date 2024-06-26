@@ -8,66 +8,69 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: ResponsiveWidget(
-        largeScreen: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SideMenu(),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                child: ListView(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(48.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const TobBarSearch(
-                            name: "활동 기록 상세",
-                            searchShow: false,
-                            viewCount: false,
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              GestureDetector(
-                                child: Text(
-                                  "활동 기록 관리",
-                                  style: CustomTextStyles.bodyMediumSkyBlue
-                                      .copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: appTheme.skyBlue,
+      body: PageLoadingIndicator(
+        isLoading: controller.isLoading.value,
+        child: controller.isInited.value ? ResponsiveWidget(
+          largeScreen: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SideMenu(),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(48.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const TobBarSearch(
+                              name: "활동 기록 상세",
+                              searchShow: false,
+                              viewCount: false,
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  child: Text(
+                                    "활동 기록 관리",
+                                    style: CustomTextStyles.bodyMediumSkyBlue
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: appTheme.skyBlue,
+                                    ),
                                   ),
+                                  onTap: () => Get.back(),
                                 ),
-                                onTap: () => Get.back(),
-                              ),
-                              CustomImageView(
-                                imagePath: IconConstant.arrowRight,
-                              ),
-                              Text('활동 기록 상세',
-                                  style: CustomTextStyles.bodyMediumGray),
-                            ],
-                          ),
-                          const SizedBox(height: 32),
-                          _buildFirstContainer(),
-                          const SizedBox(height: 16),
-                          controller.type == Type.practice
-                              ? _buildPracticeContainer()
-                              : _buildChallengeContainer(),
-                          const SizedBox(height: 16),
-                          _buildThirdContainer(),
-                        ],
+                                CustomImageView(
+                                  imagePath: IconConstant.arrowRight,
+                                ),
+                                Text('활동 기록 상세',
+                                    style: CustomTextStyles.bodyMediumGray),
+                              ],
+                            ),
+                            const SizedBox(height: 32),
+                            _buildFirstContainer(),
+                            const SizedBox(height: 16),
+                            controller.type == Type.practice
+                                ? _buildPracticeContainer()
+                                : _buildChallengeContainer(),
+                            const SizedBox(height: 16),
+                            _buildThirdContainer(),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ) : const SizedBox.shrink(),
       ),
     );
   }

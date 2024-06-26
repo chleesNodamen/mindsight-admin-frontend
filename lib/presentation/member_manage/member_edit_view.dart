@@ -6,9 +6,11 @@ class MemberEditView extends GetWidget<MemberEditController> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        extendBodyBehindAppBar: true,
-        body: ResponsiveWidget(
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      body: PageLoadingIndicator(
+        isLoading: controller.isLoading.value,
+        child: controller.isInited.value ? ResponsiveWidget(
           largeScreen: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -74,8 +76,8 @@ class MemberEditView extends GetWidget<MemberEditController> {
               ),
             ],
           ),
-        ),
-      
+        ) : const SizedBox.shrink(),
+      ),
     );
   }
 

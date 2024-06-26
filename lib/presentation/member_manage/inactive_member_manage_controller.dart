@@ -9,6 +9,17 @@ class InactiveMemberManageController extends GetxController {
   ];
   RxInt activePage = 1.obs;
   RxList<bool> membershipValues = List<bool>.filled(3, true).obs;
+
+  RxBool isLoading = true.obs;
+  RxBool isInited = false.obs;
+  
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    isLoading.value = false;
+    isInited.value = true;
+  }
+
   void toggleMembership(int index, bool value) {
     membershipValues[index] = value;
   }

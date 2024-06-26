@@ -68,12 +68,15 @@ class ContentManageController extends GetxController {
   }
 
   var data = [].obs;
-  var isLoading = true.obs;
 
+  RxBool isLoading = true.obs;
+  RxBool isInited = false.obs;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     fetchData();
+    isLoading.value = false;
+    isInited.value = true;
   }
 
   RxBool selected = false.obs;

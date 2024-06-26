@@ -1,6 +1,14 @@
 import 'package:mindsight_admin_page/app_export.dart';
 
 class MemberEditController extends GetxController {
+  RxBool isLoading = true.obs;
+  RxBool isInited = false.obs;
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    isLoading.value = false;
+    isInited.value = true;
+  }
   List<String> membershipLabels = [
     "Nodamen",
     "UNHCR",

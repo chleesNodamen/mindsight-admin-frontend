@@ -8,18 +8,24 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: ResponsiveWidget(
-        largeScreen: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SideMenu(),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                child: const Column()),
-            ),
-          ],
-        ),
+      body: PageLoadingIndicator(
+        isLoading: controller.isLoading.value,
+        child: controller.isInited.value ? ResponsiveWidget(
+          largeScreen: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SideMenu(),
+              Expanded(
+                child: Center(
+            child: SizedBox(
+                width: 30.adaptSize,
+                height: 30.adaptSize,
+                child: const CircularProgressIndicator()),
+          ),
+              ),
+            ],
+          ),
+        ) : const SizedBox.shrink(),
       ),
     );
   }

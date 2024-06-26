@@ -5,6 +5,7 @@ enum Type { practice, challenge }
 class ActivityManageController extends GetxController {
   static ActivityManageController get to =>
       Get.find<ActivityManageController>();
+
   //  FIRST CONTAINER //
   List<String> typeLabels = [
     "Practice plan",
@@ -34,6 +35,15 @@ class ActivityManageController extends GetxController {
   RxList<bool> feedbackValues = List<bool>.filled(2, true).obs;
   Rx<Type> type = Type.practice.obs;
   RxInt activePage = 1.obs;
+
+  RxBool isLoading = true.obs;
+  RxBool isInited = false.obs;
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    isLoading.value = false;
+    isInited.value = true;
+  }
 
   void toggleMembership(int index, bool value) {
     membershipValues[index] = value;
