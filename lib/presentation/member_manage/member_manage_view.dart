@@ -11,40 +11,43 @@ class MemberManageView extends GetWidget<MemberManageController> {
         extendBodyBehindAppBar: true,
         body: PageLoadingIndicator(
           isLoading: controller.isLoading.value,
-          child: controller.isInited.value ? ResponsiveWidget(
-            largeScreen: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SideMenu(),
-                Expanded(
-                  child: ListView(
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.all(48.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                      const SideMenu(),
+                      Expanded(
+                        child: ListView(
                           children: [
-                            const TobBarSearch(
-                              name: "회원 목록",
-                              searchShow: true,
-                              memberShow: true,
+
+                            Container(
+                              margin: const EdgeInsets.all(48.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const TobBarSearch(
+                                    name: "회원 목록",
+                                    searchShow: true,
+                                    memberShow: true,
                               memberCount: 7814,
-                              searchText: "이메일 주소, 사용자 이름 검색",
+                                    searchText: "이메일 주소, 사용자 이름 검색",
+                                  ),
+                                  const SizedBox(height: 32),
+                                  _buildFirstContainer(),
+                                  const SizedBox(height: 16),
+                                  _pageView(),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 32),
-                            _buildFirstContainer(),
-                            const SizedBox(height: 16),
-                            _pageView(),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ) : const SizedBox.shrink(),
+                )
+              : const SizedBox.shrink(),
         ),
       ),
     );
