@@ -19,6 +19,10 @@ class MenuController extends GetxController {
       [contentManageContentDisplayName, AppRoutes.contentManage],
       [contentPracticePlanDisplayName, AppRoutes.contentPracticePlanManage],
       [contentChallengeDisplayName, AppRoutes.contentChallengeManage]
+    ],
+    adminSettingsPageDisplayName: [
+      [myAccountManageDisplayName, AppRoutes.adminSettings],
+      [subAdminSettingsDisplayName, AppRoutes.subAdminSettings]
     ]
   };
 

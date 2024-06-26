@@ -3,6 +3,8 @@ import 'package:mindsight_admin_page/presentation/activity_manage/activity_histo
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/authentication/auth_binding.dart';
 import 'package:mindsight_admin_page/presentation/authentication/auth_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
@@ -41,6 +43,7 @@ class AppRoutes {
   static const String activityManage = "/activity_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
+  static const String subAdminSettings = '/sub_admin_settings';
   static const String activityHistory = "/activity_history";
 
   static const String initialRoute = activityHistory;
@@ -110,6 +113,10 @@ class AppRoutes {
       page: () => const AdminSettingsView(),
       bindings: [AdminSettingsBinding()],
     ),
+    GetPage(
+        name: subAdminSettings,
+        page: () => const SubAdminSettingsView(),
+        bindings: [SubAdminSettingsBinding()]),
   ];
 }
 
@@ -150,6 +157,8 @@ const activityHistoryPageDisplayName = "활동 기록 상세";
 const activityHistoryPageRoute = "/activity_history";
 
 const adminSettingsPageDisplayName = "관리자 설정";
+const myAccountManageDisplayName = "내 계정 관리";
+const subAdminSettingsDisplayName = "서브 관리자 관리";
 const adminSettingsPageRoute = "/admin_settings";
 
 const authenticationPageDisplayName = "Log out";
