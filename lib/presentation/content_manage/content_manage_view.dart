@@ -247,12 +247,51 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                     const SizedBox(
                                       height: 32,
                                     ),
-                                    Pages(
-                                        pages: 100,
-                                        activePage: controller.activePage.value,
-                                        onTap: (int pageNum) {
-                                          controller.loadNewPage(pageNum);
-                                        })
+                                    Stack(
+                                      alignment: Alignment.centerLeft,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            CustomElevatedButton(
+                                              text: '상태 변경',
+                                              buttonTextStyle: CustomTextStyles
+                                                  .bodyMediumSkyBlue
+                                                  .copyWith(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                              buttonStyle: CustomButtonStyles
+                                                  .fillPrimaryTransparent,
+                                              margin: const EdgeInsets.only(
+                                                  right: 16),
+                                              width: 107,
+                                              height: 44,
+                                              onPressed: () {},
+                                            ),
+                                            CustomElevatedButton(
+                                              text: '삭제',
+                                              buttonTextStyle: CustomTextStyles
+                                                  .bodyMediumRed
+                                                  .copyWith(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                              buttonStyle: CustomButtonStyles
+                                                  .fillRedTransparent
+                                                  .copyWith(),
+                                              width: 76,
+                                              height: 44,
+                                              onPressed: () {},
+                                            ),
+                                          ],
+                                        ),
+                                        Pages(
+                                            pages: 100,
+                                            activePage:
+                                                controller.activePage.value,
+                                            onTap: (int pageNum) {
+                                              controller.loadNewPage(pageNum);
+                                            }),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),

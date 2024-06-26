@@ -3,7 +3,8 @@ import 'package:mindsight_admin_page/presentation/activity_manage/activity_histo
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_binding.dart';
-import 'package:mindsight_admin_page/presentation/authentication/auth__binding.dart';
+import 'package:mindsight_admin_page/presentation/authentication/auth_binding.dart';
+import 'package:mindsight_admin_page/presentation/authentication/auth_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
@@ -19,13 +20,11 @@ import 'package:mindsight_admin_page/presentation/member_manage/member_edit_view
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_view.dart';
 
-
-
-class AppRoutes{
+class AppRoutes {
   static const String rootRoute = "/";
 
   static const String auth = "/auth";
-  static const String dashboard= "/dashboard";
+  static const String dashboard = "/dashboard";
   static const String memberManage = "/member_manage";
   static const String inactiveMemberManage = "/inactive_member_manage";
   static const String memberDetails = "/member_details";
@@ -39,7 +38,7 @@ class AppRoutes{
   static const String initialRoute = activityHistory;
 
   static List<GetPage> pages = [
-     GetPage(
+    GetPage(
       name: rootRoute,
       page: () {
         return SiteLayout();
@@ -103,8 +102,8 @@ class MenuItem {
   final String route;
 
   MenuItem(this.name, this.route);
-  
 }
+
 const rootRoute = "/";
 const dashboardPageRoute = "/dashboard";
 const dashboardPageDisplayName = "대시보드";
@@ -136,7 +135,6 @@ const adminSettingsPageRoute = "/admin_settings";
 
 const authenticationPageDisplayName = "Log out";
 const authenticationPageRoute = "/auth";
-
 
 List<MenuItem> sideMenuItemRoutes = [
   MenuItem(dashboardPageDisplayName, AppRoutes.dashboard),
