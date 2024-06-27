@@ -188,37 +188,96 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
     );
   }
 
-  SingleChildScrollView _buildSecondContainer() {
-    return SingleChildScrollView(
-      child: Container(
-          decoration: BoxDecoration(
-            color: appTheme.white,
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-          ),
-          // height: 1016,
-          width: double.infinity,
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                height: 32,
-              ),
-              Stack(alignment: Alignment.centerLeft, children: [
-                CustomElevatedButton(
-                  text: '저장',
-                  buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                  buttonStyle: CustomButtonStyles.fillPrimary,
-                  // margin: const EdgeInsets.symmetric(
-                  //     vertical: 11, horizontal: 24),
-                  width: 90,
-                  height: 44,
+  Container _buildSecondContainer() {
+    return Container(
+        decoration: BoxDecoration(
+          color: appTheme.white,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        // height: 1016,
+        width: double.infinity,
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('비밀번호 변경', style: CustomTextStyles.labelLargeBlack),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('현재 비밀번호', style: CustomTextStyles.labelLargeBlack),
+                    const SizedBox(height: 8),
+                    CustomTextFormField(
+                        width: 353,
+                        hintText: "Input text",
+                        hintStyle: CustomTextStyles.bodyMediumGray,
+                        suffix: InkWell(
+                            onTap: () {
+                              controller.isShowPassword.value =
+                                  !controller.isShowPassword.value;
+                            },
+                            child: Container(
+                                margin: EdgeInsets.fromLTRB(30, 16, 16, 16),
+                                child: CustomImageView(
+                                    imagePath: IconConstant.visibilityFalse,
+                                    color: controller.isShowPassword.value
+                                        ? appTheme.grayScale5
+                                        : appTheme.black,
+                                    height: 24.adaptSize,
+                                    width: 24.adaptSize))),
+                        suffixConstraints: BoxConstraints(maxHeight: 56),
+                        onChange: (value) {
+                          controller.checkPasswordValid(value, false);
+                        },
+                        validator: (value) {
+                          if (value == null ||
+                              !controller.checkPasswordValid(value, true) ||
+                              !controller.authPasswordResetModel.isSuccess) {
+                            return "Code is invalid or has expired".tr;
+                          }
+                          return null;
+                        },
+                        obscureText: controller.isShowPassword.value,
+                        contentPadding:
+                            EdgeInsets.only(left: 16, top: 17, bottom: 17),
+                        // focusedBorderDecoration:
+                        //     TextFormFieldStyleHelper.outlineSkyBlue,
+                        filled: true),
+                  ],
                 ),
-              ])
-            ],
-          )),
-    );
+                const SizedBox(width: 24),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('변경할 비밀번호', style: CustomTextStyles.labelLargeBlack),
+                    const SizedBox(height: 8),
+                    CustomTextFormField(
+                      width: 353,
+                      hintText: "Input text",
+                      hintStyle: CustomTextStyles.bodyMediumGray,
+                    )
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            CustomElevatedButton(
+              text: '저장',
+              buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+              buttonStyle: CustomButtonStyles.fillPrimary,
+              // margin: const EdgeInsets.symmetric(
+              //     vertical: 11, horizontal: 24),
+              width: 90,
+              height: 44,
+            )
+          ],
+        ));
   }
 }

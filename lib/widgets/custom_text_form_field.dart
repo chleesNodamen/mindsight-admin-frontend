@@ -4,7 +4,7 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
       {super.key,
       this.alignment,
-      this.width,
+      required this.width,
       this.scrollPadding,
       this.controller,
       this.focusNode,
@@ -196,9 +196,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         errorStyle: TextStyle(
-            color: appTheme.red,
-            fontSize: 12,
-            fontWeight: FontWeight.w500),
+            color: appTheme.red, fontSize: 12, fontWeight: FontWeight.w500),
       );
 }
 
