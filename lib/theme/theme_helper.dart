@@ -151,6 +151,7 @@ class ThemeHelper {
         _supportedColorScheme[_appTheme] ?? ColorSchemes.primaryColorScheme;
     return ThemeData(
       visualDensity: VisualDensity.standard,
+      useMaterial3: false,
       colorScheme: colorScheme,
       textTheme: TextThemes.textTheme(colorScheme),
       scaffoldBackgroundColor: appTheme.background,

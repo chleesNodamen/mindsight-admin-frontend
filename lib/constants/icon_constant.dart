@@ -28,4 +28,5 @@ class IconConstant {
   static String visibilityTrue = '$iconPath/icon_visibility_true.svg';
   static String user = '$iconPath/icon_user_20.svg';
   static String more = '$iconPath/icon_more.svg';
+  static String close = '$iconPath/icon_close.svg';
 }

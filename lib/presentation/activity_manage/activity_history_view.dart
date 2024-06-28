@@ -10,67 +10,72 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
       extendBodyBehindAppBar: true,
       body: PageLoadingIndicator(
         isLoading: controller.isLoading.value,
-        child: controller.isInited.value ? ResponsiveWidget(
-          largeScreen: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SideMenu(),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ListView(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(48.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+        child: controller.isInited.value
+            ? ResponsiveWidget(
+                largeScreen: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SideMenu(),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        child: ListView(
                           children: [
-                            const TobBarSearch(
-                              name: "활동 기록 상세",
-                              searchShow: false,
-                              viewCount: false,
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  child: Text(
-                                    "활동 기록 관리",
-                                    style: CustomTextStyles.bodyMediumSkyBlue
-                                        .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: appTheme.skyBlue,
-                                    ),
+                            Container(
+                              margin: const EdgeInsets.all(48.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const TobBarSearch(
+                                    name: "활동 기록 상세",
+                                    searchShow: false,
+                                    viewCount: false,
                                   ),
-                                  onTap: () => Get.back(),
-                                ),
-                                CustomImageView(
-                                  imagePath: IconConstant.arrowRight,
-                                ),
-                                Text('활동 기록 상세',
-                                    style: CustomTextStyles.bodyMediumGray),
-                              ],
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        child: Text(
+                                          "활동 기록 관리",
+                                          style: CustomTextStyles
+                                              .bodyMediumSkyBlue
+                                              .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor: appTheme.skyBlue,
+                                          ),
+                                        ),
+                                        onTap: () => Get.back(),
+                                      ),
+                                      CustomImageView(
+                                        imagePath: IconConstant.arrowRight,
+                                      ),
+                                      Text('활동 기록 상세',
+                                          style:
+                                              CustomTextStyles.bodyMediumGray),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 32),
+                                  _buildFirstContainer(),
+                                  const SizedBox(height: 16),
+                                  controller.type == Type.practice
+                                      ? _buildPracticeContainer()
+                                      : _buildChallengeContainer(),
+                                  const SizedBox(height: 16),
+                                  _buildThirdContainer(),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 32),
-                            _buildFirstContainer(),
-                            const SizedBox(height: 16),
-                            controller.type == Type.practice
-                                ? _buildPracticeContainer()
-                                : _buildChallengeContainer(),
-                            const SizedBox(height: 16),
-                            _buildThirdContainer(),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        ) : const SizedBox.shrink(),
+              )
+            : const SizedBox.shrink(),
       ),
     );
   }
@@ -462,11 +467,29 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           const SizedBox(
             height: 24,
           ),
-          Text('전문가 피드백', style: CustomTextStyles.labelLargeGray),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('전문가 피드백', style: CustomTextStyles.labelLargeGray),
+              controller.feedback
+                  ? const SizedBox.shrink()
+                  : GestureDetector(
+                      child: Text(
+                        '작성',
+                        style: CustomTextStyles.labelLargeSkyBlue.copyWith(
+                            decoration: TextDecoration.underline,
+                            decorationColor: appTheme.skyBlue),
+                      ),
+                      onTap: () {
+                        _buildFeedbackModal();
+                      },
+                    ),
+            ],
+          ),
           const SizedBox(
             height: 16,
           ),
-          controller.chatBot
+          controller.feedback
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -514,7 +537,142 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
     );
   }
 
-  Widget _buildChatModal() {
-    return Container();
+  Future<dynamic> _buildFeedbackModal() {
+    return Get.defaultDialog(
+        title: '',
+        backgroundColor: appTheme.background,
+        radius: 12,
+        content: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: appTheme.background),
+          width: 794,
+          padding: const EdgeInsets.only(left: 32, right: 32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '전문가 피드백 작성',
+                    style: CustomTextStyles.bodyLargeBlack,
+                  ),
+                  CustomImageView(
+                    imagePath: IconConstant.close,
+                    onTap: () => Get.back(),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              CustomTextFormField(
+                width: 730,
+                controller: controller.feedbackController,
+                hintText: "Input Text".tr,
+                contentPadding: const EdgeInsets.all(16),
+                maxLines: 6,
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomElevatedButton(
+                    text: '저장',
+                    buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    buttonStyle: CustomButtonStyles.fillPrimary,
+                    width: 90,
+                    height: 44,
+                  ),
+                  CustomElevatedButton(
+                    text: '취소',
+                    buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    buttonStyle: CustomButtonStyles.fillRedTransparent,
+                    margin: const EdgeInsets.only(left: 16),
+                    width: 90,
+                    height: 44,
+                    onPressed: () => Get.back(),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ));
+  }
+
+  Future<dynamic> _buildChatModal() {
+    return Get.defaultDialog(
+      title: '',
+      backgroundColor: appTheme.background,
+      radius: 12,
+      content: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: appTheme.background),
+        width: 762,
+        padding: const EdgeInsets.only(left: 32, right: 32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '챗봇 기록',
+                  style: CustomTextStyles.bodyLargeBlack,
+                ),
+                CustomImageView(
+                  imagePath: IconConstant.close,
+                  onTap: () => Get.back(),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              '2024-03-13-10:09:34',
+              style: CustomTextStyles.bodyLargeGray,
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: appTheme.white),
+              width: 698,
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '대화 평가',
+                    style: CustomTextStyles.labelLargeGray,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    '만족',
+                    style: CustomTextStyles.labelLargeBlack,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
