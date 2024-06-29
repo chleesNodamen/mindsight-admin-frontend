@@ -60,7 +60,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                   const SizedBox(height: 32),
                                   _buildFirstContainer(),
                                   const SizedBox(height: 16),
-                                  controller.type == Type.practice
+                                  controller.type == "Practice plan"
                                       ? _buildPracticeContainer()
                                       : _buildChallengeContainer(),
                                   const SizedBox(height: 16),
@@ -94,13 +94,13 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             children: [
               Text('회원 정보', style: CustomTextStyles.labelLargeBlack),
               GestureDetector(
-                child: Text(
-                  '상세',
-                  style: CustomTextStyles.labelLargeSkyBlue.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: appTheme.skyBlue),
-                ),
-              )
+                  onTap: controller.onMemberTap,
+                  child: Text(
+                    '상세',
+                    style: CustomTextStyles.labelLargeSkyBlue.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: appTheme.skyBlue),
+                  ))
             ],
           ),
           const SizedBox(
@@ -118,7 +118,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('akdlsemtkdlxm@nodamen.com',
+                  Text(controller.activityDetailsModel.email ?? "",
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -133,7 +133,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('dbwjspdla', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.activityDetailsModel.username ?? "",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -147,7 +148,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('2024-04-25', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.activityDetailsModel.registrationDate ?? "",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               )
             ],
@@ -171,6 +173,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 children: [
                   Text('세션 정보', style: CustomTextStyles.labelLargeBlack),
                   GestureDetector(
+                    onTap: controller.onPracticeTap,
                     child: Text(
                       '상세',
                       style: CustomTextStyles.labelLargeSkyBlue.copyWith(
@@ -187,7 +190,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               const SizedBox(
                 height: 16,
               ),
-              Text('36회차', style: CustomTextStyles.labelLargeBlack),
+              Text(controller.activityDetailsModel.level ?? "",
+                  style: CustomTextStyles.labelLargeBlack),
               const SizedBox(
                 height: 24,
               ),
@@ -218,12 +222,12 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Sunrise 10-Minute Morning Yoga A',
+                      Text(controller.activityDetailsModel.body ?? "",
                           style: CustomTextStyles.labelLargeBlack),
                       const SizedBox(
                         height: 16,
                       ),
-                      Text('Sunrise 10-Minute Morning Yoga B',
+                      Text(controller.activityDetailsModel.breath ?? "",
                           style: CustomTextStyles.labelLargeBlack),
                     ],
                   )
@@ -246,6 +250,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 children: [
                   Text('세션 정보', style: CustomTextStyles.labelLargeBlack),
                   GestureDetector(
+                    onTap: controller.onChallengeTap,
                     child: Text(
                       '상세',
                       style: CustomTextStyles.labelLargeSkyBlue.copyWith(
@@ -262,7 +267,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               const SizedBox(
                 height: 16,
               ),
-              Text('30-Day Challenge to Strengthen Your Legs',
+              Text(controller.activityDetailsModel.title ?? "",
                   style: CustomTextStyles.labelLargeBlack),
               const SizedBox(
                 height: 24,
@@ -281,7 +286,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text('Improve health',
+                      Text(controller.activityDetailsModel.goal ?? "",
                           style: CustomTextStyles.labelLargeBlack),
                     ],
                   ),
@@ -292,7 +297,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text('30일', style: CustomTextStyles.labelLargeBlack),
+                      Text(controller.activityDetailsModel.days ?? "",
+                          style: CustomTextStyles.labelLargeBlack),
                     ],
                   )
                 ],
@@ -313,8 +319,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   ),
                   Container(
                       width: 698,
-                      child: Text(
-                          'This is a 30-Day challenge to Strengthen your legs.Strengthen your legs will increase muscle mass throughout the body, which helps boost metabolism such as breathing and blood circulation.',
+                      child: Text(controller.activityDetailsModel.intro ?? "",
                           maxLines: null,
                           overflow: TextOverflow.visible,
                           style: CustomTextStyles.labelLargeBlack)),
@@ -348,7 +353,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Practice plan',
+                  Text(controller.activityDetailsModel.type ?? "",
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -360,14 +365,15 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                      controller.type == Type.practice
+                      controller.type == "Practice plan"
                           ? '변화된 감정 (기록 1)'
                           : '난이도 (기록 1)',
                       style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Stressed', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.activityDetailsModel.recordOne ?? "",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -378,14 +384,14 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                      controller.type == Type.practice
+                      controller.type == "Practice plan"
                           ? '변화 요인 (기록 2)'
                           : '만족도 (기록 2)',
                       style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Feeling fatigued, Distracted mind',
+                  Text(controller.activityDetailsModel.recordTwo ?? "",
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               )
@@ -414,7 +420,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text('2024-03-13-10:09:34',
+                  Text(controller.activityDetailsModel.sessionStartDate ?? "",
                       style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     width: 32,
@@ -430,7 +436,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text('2024-03-13-10:26:12',
+                  Text(controller.activityDetailsModel.sessionEndDate ?? "",
                       style: CustomTextStyles.labelLargeGray),
                 ],
               )),
@@ -447,15 +453,16 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           ),
           GestureDetector(
             child: Text(
-              controller.chatBot ? '있음' : '없음',
-              style: controller.chatBot
+              controller.chatBot! ? '있음' : '없음',
+              style: controller.chatBot!
                   ? CustomTextStyles.labelLargeSkyBlue.copyWith(
                       decoration: TextDecoration.underline,
                       decorationColor: appTheme.skyBlue)
                   : CustomTextStyles.labelLargeBlack,
             ),
-            onTap: () {
-              if (controller.chatBot) {
+            onTap: () async {
+              if (controller.chatBot!) {
+                await controller.onChat();
                 _buildChatModal();
               }
             },
@@ -471,7 +478,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('전문가 피드백', style: CustomTextStyles.labelLargeGray),
-              controller.feedback
+              controller.feedback!
                   ? const SizedBox.shrink()
                   : GestureDetector(
                       child: Text(
@@ -489,14 +496,14 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           const SizedBox(
             height: 16,
           ),
-          controller.feedback
+          controller.feedback!
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 698,
                       child: Text(
-                          'You are shining a bit brighter now! We\'re so happy to see the positive changes in your mood! Let\'s keep this beautiful journey and uncover even more wonderful insights.',
+                          controller.activityDetailsModel.expertMessage ?? "",
                           maxLines: null,
                           overflow: TextOverflow.visible,
                           style: CustomTextStyles.labelLargeBlack),
@@ -525,7 +532,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                             const SizedBox(
                               width: 8,
                             ),
-                            Text('2024-03-17-10:09:34',
+                            Text(
+                                controller.activityDetailsModel
+                                        .expertMessageDate ??
+                                    "",
                                 style: CustomTextStyles.labelLargeGray),
                           ],
                         )),
@@ -589,6 +599,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                     buttonStyle: CustomButtonStyles.fillPrimary,
                     width: 90,
                     height: 44,
+                    onPressed: () => controller.onFeedback(),
                   ),
                   CustomElevatedButton(
                     text: '취소',
@@ -646,6 +657,54 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             const SizedBox(
               height: 32,
             ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:
+                  List.generate(controller.activityChatModel.length, (index) {
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            width: 80,
+                            child: Text(
+                              controller
+                                      .activityChatModel.chatlog![index].role ??
+                                  "",
+                              style: CustomTextStyles.labelLargeGray,
+                            )),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        SizedBox(
+                          width: 560,
+                          child: Text(
+                            controller.activityChatModel.chatlog![index]
+                                    .content ??
+                                "",
+                            maxLines: null,
+                            overflow: TextOverflow.visible,
+                            style: CustomTextStyles.bodyMediumBlack
+                                .copyWith(height: 2.0),
+                            textHeightBehavior: const TextHeightBehavior(
+                                applyHeightToFirstAscent: false),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                  ],
+                );
+              }),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -664,7 +723,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                     height: 16,
                   ),
                   Text(
-                    '만족',
+                    controller.activityChatModel.reaction ?? "",
                     style: CustomTextStyles.labelLargeBlack,
                   ),
                 ],
