@@ -102,189 +102,133 @@ class InactiveMemberManageView
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            DataTable(
-              columnSpacing: 0,
-              checkboxHorizontalMargin: 0,
-              dataRowMaxHeight: 80,
-              border: TableBorder(
-                  horizontalInside: BorderSide(color: appTheme.grayScale2)),
-              columns: <DataColumn>[
-                DataColumn(
-                  label: SizedBox(
-                    width: 20,
-                    child: Text(
-                      '',
-                      style: CustomTextStyles.labelLargeGray,
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
-                      '회차',
-                      style: CustomTextStyles.labelLargeGray,
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
-                      '완료 회원 수',
-                      style: CustomTextStyles.labelLargeGray,
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
-                      '참여 회원 수',
-                      style: CustomTextStyles.labelLargeGray,
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: SizedBox(
-                    width: 80,
-                    child: Text(
-                      '완료율',
-                      style: CustomTextStyles.labelLargeGray,
-                    ),
-                  ),
-                ),
-              ],
-              rows: <DataRow>[
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '1',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(GestureDetector(
-                      child: Text(
-                        '1회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      ),
-                      onTap: controller.onMemberTap,
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '2',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '2회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '3',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '3회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '4',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '4회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-                DataRow(
-                  cells: <DataCell>[
-                    DataCell(Text(
-                      '5',
-                      style: CustomTextStyles.bodyLargeSkyBlue,
-                    )),
-                    DataCell(Text(
-                      '5회차',
-                      style: CustomTextStyles.bodyLargeBlack
-                          .copyWith(decoration: TextDecoration.underline),
-                    )),
-                    DataCell(Text(
-                      '3,456',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '3,920',
-                      style: CustomTextStyles.bodyLargeBlack,
-                    )),
-                    DataCell(Text(
-                      '88.1%',
-                      style: CustomTextStyles.bodyLargeGreen,
-                    )),
-                  ],
-                ),
-              ],
+            SizedBox(
+              width: double.infinity,
+              child: DataTable(
+                columnSpacing: 0,
+                checkboxHorizontalMargin: 0,
+                dataRowMaxHeight: 80,
+                border: TableBorder(
+                    horizontalInside: BorderSide(color: appTheme.grayScale2)),
+                columns: [
+                  // DataColumn(
+                  //   label: Checkbox(
+                  //       activeColor: appTheme.skyBlue,
+                  //       checkColor: Colors.white,
+                  //       fillColor: MaterialStateProperty.resolveWith(
+                  //         (states) {
+                  //           if (!states
+                  //               .contains(MaterialState.selected)) {
+                  //             return Colors.transparent;
+                  //           }
+                  //           return null;
+                  //         },
+                  //       ),
+                  //       value: false,
+                  //       onChanged: (bool? value) {}),
+                  // ),
+                  DataColumn(
+                      label:
+                          Text('소속', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('이메일 주소',
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('사용자 이름',
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('전환일', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                ],
+                rows: List.generate(controller.membersModel.length, (index) {
+                  return DataRow(
+                      selected: controller.selectedMembers[index],
+                      onSelectChanged: (bool? value) {
+                        controller.updateValue(index);
+                      },
+                      cells: [
+                        // DataCell(
+                        //   Padding(
+                        //     padding: const EdgeInsets.only(right: 8.0),
+                        //     child: Checkbox(
+                        //       value: controller.selected.value,
+                        //       onChanged: (bool? value) {
+                        //         controller.updateValue();
+                        //       },
+                        //     ),
+                        //   ),
+                        // ), // Checkbox cell
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
+                              controller.membersModel.affiliation![index],
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(controller.membersModel.email![index],
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(controller.membersModel.username![index],
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(controller.membersModel.createdAt![index],
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+                        DataCell(DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              width: 1,
+                              color: appTheme.grayScale2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 6, right: 0, top: 0, bottom: 0),
+                            child: DropdownButton<String>(
+                              value:
+                                  controller.memberState![index] ? '활성' : '비활성',
+                              underline: Container(),
+                              padding: const EdgeInsets.only(left: 6),
+                              borderRadius: BorderRadius.circular(12),
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  controller.memberState![index] =
+                                      !controller.memberState![index];
+                                  controller.onStatusChange(index);
+                                }
+                              },
+                              items: <String>[
+                                '활성',
+                                '비활성'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: value == "활성"
+                                        ? CustomTextStyles.labelLargeGreen
+                                        : CustomTextStyles.labelLargeRed,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        )),
+                      ]);
+                }).toList(),
+              ),
             ),
             const SizedBox(
               height: 32,
@@ -306,22 +250,23 @@ class InactiveMemberManageView
                         //     vertical: 11, horizontal: 24),
                         width: 90,
                         height: 44,
+                        onPressed: controller.onButtonPressed,
                       ),
-                      CustomElevatedButton(
-                        text: '비활성',
-                        buttonTextStyle:
-                            CustomTextStyles.bodyMediumRed.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                        buttonStyle: CustomButtonStyles.fillRedTransparent,
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        width: 90,
-                        height: 44,
-                      ),
+                      // CustomElevatedButton(
+                      //   text: '비활성',
+                      //   buttonTextStyle:
+                      //       CustomTextStyles.bodyMediumRed.copyWith(
+                      //     fontWeight: FontWeight.w700,
+                      //   ),
+                      //   buttonStyle: CustomButtonStyles.fillRedTransparent,
+                      //   margin: const EdgeInsets.symmetric(horizontal: 16),
+                      //   width: 90,
+                      //   height: 44,
+                      // ),
                     ],
                   ),
                   Pages(
-                      pages: 100,
+                      pages: (controller.membersModel.number! / 10).ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
                         controller.loadNewPage(pageNum);

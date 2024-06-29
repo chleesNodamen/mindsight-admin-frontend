@@ -7,7 +7,7 @@ class MembersModel extends BaseModel {
   List<String>? email;
   List<String>? username;
   List<String>? createdAt;
-  List<String>? status;
+  List<bool>? status;
   int? number;
 
   MembersModel({
@@ -26,7 +26,7 @@ class MembersModel extends BaseModel {
     List<String>? email,
     List<String>? username,
     List<String>? createdAt,
-    List<String>? status,
+    List<bool>? status,
     int? number,
   }) =>
       MembersModel(
@@ -58,7 +58,7 @@ class MembersModel extends BaseModel {
                 (x) => DateFormat('yyyy-MM-dd').format(DateTime.parse(x)))),
         status: json["status"] == null
             ? []
-            : List<String>.from(json["status"]!.map((x) => x)),
+            : List<bool>.from(json["status"]!.map((x) => x)),
         number: json["number"],
       );
 
