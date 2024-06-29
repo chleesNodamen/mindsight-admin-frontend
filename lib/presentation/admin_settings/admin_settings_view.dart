@@ -212,24 +212,29 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                     Text('현재 비밀번호', style: CustomTextStyles.labelLargeBlack),
                     const SizedBox(height: 8),
                     CustomTextFormField(
+                        controller: controller.passwordController,
                         width: 353,
                         hintText: "Input text",
                         hintStyle: CustomTextStyles.bodyMediumGray,
                         suffix: InkWell(
                             onTap: () {
-                              controller.isShowPassword.value =
-                                  !controller.isShowPassword.value;
+                              controller.isShowPasswordOne.value =
+                                  !controller.isShowPasswordOne.value;
                             },
                             child: Container(
-                                margin: EdgeInsets.fromLTRB(30, 16, 16, 16),
+                                margin:
+                                    const EdgeInsets.fromLTRB(30, 16, 16, 16),
                                 child: CustomImageView(
-                                    imagePath: IconConstant.visibilityFalse,
-                                    color: controller.isShowPassword.value
+                                    imagePath:
+                                        controller.isShowPasswordOne.value
+                                            ? IconConstant.visibilityFalse
+                                            : IconConstant.visibilityTrue,
+                                    color: controller.isShowPasswordOne.value
                                         ? appTheme.grayScale5
                                         : appTheme.black,
                                     height: 24.adaptSize,
                                     width: 24.adaptSize))),
-                        suffixConstraints: BoxConstraints(maxHeight: 56),
+                        suffixConstraints: const BoxConstraints(maxHeight: 56),
                         onChange: (value) {
                           controller.checkPasswordValid(value, false);
                         },
@@ -241,9 +246,9 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                           }
                           return null;
                         },
-                        obscureText: controller.isShowPassword.value,
-                        contentPadding:
-                            EdgeInsets.only(left: 16, top: 17, bottom: 17),
+                        obscureText: controller.isShowPasswordOne.value,
+                        contentPadding: const EdgeInsets.only(
+                            left: 16, top: 17, bottom: 17),
                         // focusedBorderDecoration:
                         //     TextFormFieldStyleHelper.outlineSkyBlue,
                         filled: true),
@@ -257,10 +262,44 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                     Text('변경할 비밀번호', style: CustomTextStyles.labelLargeBlack),
                     const SizedBox(height: 8),
                     CustomTextFormField(
-                      width: 353,
-                      hintText: "Input text",
-                      hintStyle: CustomTextStyles.bodyMediumGray,
-                    )
+                        controller: controller.passwordConfirmController,
+                        width: 353,
+                        hintText: "Input text",
+                        hintStyle: CustomTextStyles.bodyMediumGray,
+                        suffix: InkWell(
+                            onTap: () {
+                              controller.isShowPasswordTwo.value =
+                                  !controller.isShowPasswordTwo.value;
+                            },
+                            child: Container(
+                                margin:
+                                    const EdgeInsets.fromLTRB(30, 16, 16, 16),
+                                child: CustomImageView(
+                                    imagePath:
+                                        controller.isShowPasswordTwo.value
+                                            ? IconConstant.visibilityFalse
+                                            : IconConstant.visibilityTrue,
+                                    color: appTheme.grayScale5,
+                                    height: 24.adaptSize,
+                                    width: 24.adaptSize))),
+                        suffixConstraints: const BoxConstraints(maxHeight: 56),
+                        onChange: (value) {
+                          controller.checkPasswordValid(value, false);
+                        },
+                        validator: (value) {
+                          if (value == null ||
+                              !controller.checkPasswordValid(value, true) ||
+                              !controller.authPasswordResetModel.isSuccess) {
+                            return "Code is invalid or has expired".tr;
+                          }
+                          return null;
+                        },
+                        obscureText: controller.isShowPasswordTwo.value,
+                        contentPadding: const EdgeInsets.only(
+                            left: 16, top: 17, bottom: 17),
+                        // focusedBorderDecoration:
+                        //     TextFormFieldStyleHelper.outlineSkyBlue,
+                        filled: true),
                   ],
                 ),
               ],

@@ -123,11 +123,11 @@ class CustomTextFormField extends StatelessWidget {
                 child: Icon(Icons.error, size: 24)),
         suffixIconConstraints: suffixConstraints,
         suffixIconColor:
-            MaterialStateColor.resolveWith((Set<MaterialState> states) {
-          if (states.contains(MaterialState.focused)) {
+            WidgetStateColor.resolveWith((Set<WidgetState> states) {
+          if (states.contains(WidgetState.focused)) {
             return const Color.fromARGB(0, 76, 175, 80);
           }
-          if (states.contains(MaterialState.error)) {
+          if (states.contains(WidgetState.error)) {
             return appTheme.alertNegative;
           }
           return const Color.fromARGB(0, 76, 175, 80);
@@ -139,11 +139,11 @@ class CustomTextFormField extends StatelessWidget {
               vertical: 18,
             ),
         fillColor: fillColor ??
-            MaterialStateColor.resolveWith((Set<MaterialState> states) {
-              if (states.contains(MaterialState.focused)) {
+            WidgetStateColor.resolveWith((Set<WidgetState> states) {
+              if (states.contains(WidgetState.focused)) {
                 return appTheme.white;
               }
-              if (states.contains(MaterialState.error)) {
+              if (states.contains(WidgetState.error)) {
                 return const Color.fromARGB(255, 255, 231, 231);
               }
               return appTheme.white;

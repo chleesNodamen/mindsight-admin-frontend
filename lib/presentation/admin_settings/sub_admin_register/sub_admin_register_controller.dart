@@ -2,7 +2,7 @@ import 'package:mindsight_admin_page/app_export.dart';
 
 enum PasswordValidEnum { waiting, valid, invalid }
 
-class AdminSettingsController extends GetxController {
+class SubAdminRegisterController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   @override
@@ -12,20 +12,21 @@ class AdminSettingsController extends GetxController {
     isInited.value = true;
   }
 
-  String email = 'random@gmail.com';
-  String code = 'randomcode';
+  // dropdown  button
+  RxString selectedOrder = 'Select Option'.obs;
+  void updateSelectedOrder(String newOrder) {
+    selectedOrder.value = newOrder;
+  }
+
+  //
+  RxBool isShowPasswordOne = true.obs;
 
   late AuthPasswordResetModel authPasswordResetModel;
 
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController passwordConfirmController =
-      TextEditingController();
 
   final CorrectWordChecker _wordChecker = CorrectWordChecker('');
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  RxBool isShowPasswordOne = true.obs;
-  RxBool isShowPasswordTwo = true.obs;
 
   List<Rx<PasswordValidEnum>> isPasswordValid = [
     PasswordValidEnum.waiting.obs,
@@ -73,26 +74,7 @@ class AdminSettingsController extends GetxController {
         _wordChecker.is1Symbol;
   }
 
-  Future<void> onContinue() async {
-    if (!checkPasswordValid(passwordController.text, false)) {
-      return;
-    }
-
-    isLoading.value = true;
-
-    // authPasswordResetModel = await AuthPasswordResetRepository().put(
-    //     AuthPasswordResetReqPost(
-    //             email: email, code: code, password: passwordController.text)
-    //         .toJson());
-
-    isLoading.value = false;
-
-    if (!formKey.currentState!.validate()) {
-      return;
-    }
-
-    if (authPasswordResetModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.adminSettings);
-    }
+  void saveChanges() {
+    Get.toNamed(AppRoutes.subAdminSettings);
   }
 }
