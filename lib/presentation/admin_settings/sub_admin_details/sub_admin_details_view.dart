@@ -230,7 +230,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "관리자 상세",
       searchShow: false,
       viewCount: false,

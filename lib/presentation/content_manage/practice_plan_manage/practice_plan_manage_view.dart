@@ -56,7 +56,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "Practice plan 관리",
       searchShow: true,
       viewCount: false,

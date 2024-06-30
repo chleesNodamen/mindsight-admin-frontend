@@ -27,7 +27,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  const TobBarSearch(
+                                  TobBarSearch(
                                     name: "활동 기록 상세",
                                     searchShow: false,
                                     viewCount: false,

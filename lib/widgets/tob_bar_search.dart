@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 
 class TobBarSearch extends StatelessWidget {
-  const TobBarSearch({
+  TobBarSearch({
     super.key,
     this.name,
     this.viewCount = false,
@@ -11,6 +11,7 @@ class TobBarSearch extends StatelessWidget {
     this.memberCount = 0,
     this.searchText,
     this.searchShow = true,
+    this.onSearch,
   });
 
   final String? name;
@@ -20,6 +21,8 @@ class TobBarSearch extends StatelessWidget {
   final int? memberCount;
   final String? searchText;
   final bool? searchShow;
+  final TextEditingController textController = TextEditingController();
+  final Future<void> Function({String? search})? onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,7 @@ class TobBarSearch extends StatelessWidget {
                 height: 45,
                 width: 266,
                 child: TextFormField(
-                  // controller: controller.emailController,
+                  controller: textController,
                   decoration: InputDecoration(
                     labelText: searchText,
                     labelStyle: CustomTextStyles.bodyMediumGray,

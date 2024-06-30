@@ -11,51 +11,54 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
         extendBodyBehindAppBar: true,
         body: PageLoadingIndicator(
           isLoading: controller.isLoading.value,
-          child: controller.isInited.value ? ResponsiveWidget(
-            largeScreen: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SideMenu(),
-                Expanded(
-                  // flex: 5,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: ListView(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(48.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SideMenu(),
+                      Expanded(
+                        // flex: 5,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView(
                             children: [
-                              const TobBarSearch(
-                                name: "활동 기록 관리",
-                                searchShow: true,
-                                viewCount: false,
-                                searchText: "회원, 기록 내용 검색",
+                              Container(
+                                margin: const EdgeInsets.all(48.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    TobBarSearch(
+                                      name: "활동 기록 관리",
+                                      searchShow: true,
+                                      viewCount: false,
+                                      searchText: "회원, 기록 내용 검색",
+                                    ),
+                                    const SizedBox(height: 32),
+                                    CustomElevatedButton(
+                                      text: "신규 등록",
+                                      height: 44,
+                                      width: 107,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                    ),
+                                    const SizedBox(height: 32),
+                                    buildFirstContainer(),
+                                    const SizedBox(height: 32),
+                                    _pageView(),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(height: 32),
-                              CustomElevatedButton(
-                                text: "신규 등록",
-                                height: 44,
-                                width: 107,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12)),
-                              ),
-                              const SizedBox(height: 32),
-                              buildFirstContainer(),
-                              const SizedBox(height: 32),
-                              _pageView(),
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ) : const SizedBox.shrink(),
+                )
+              : const SizedBox.shrink(),
         ),
       ),
     );

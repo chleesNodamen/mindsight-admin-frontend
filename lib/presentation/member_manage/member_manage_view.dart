@@ -20,19 +20,20 @@ class MemberManageView extends GetWidget<MemberManageController> {
                       Expanded(
                         child: ListView(
                           children: [
-
                             Container(
                               margin: const EdgeInsets.all(48.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  const TobBarSearch(
+                                  TobBarSearch(
                                     name: "회원 목록",
                                     searchShow: true,
-                                    memberShow: true,
-                              memberCount: 7814,
+                                    viewCount: false,
                                     searchText: "이메일 주소, 사용자 이름 검색",
+                                    memberShow: true,
+                                    memberCount: controller.membersModel.number,
+                                    onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
                                   _buildFirstContainer(),
@@ -93,224 +94,189 @@ class MemberManageView extends GetWidget<MemberManageController> {
   SingleChildScrollView _pageView() {
     return SingleChildScrollView(
       child: Container(
-          decoration: BoxDecoration(
-            color: appTheme.white,
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-          ),
-          // height: 1016,
-          width: double.infinity,
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DataTable(
+        decoration: BoxDecoration(
+          color: appTheme.white,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        // height: 1016,
+        width: double.infinity,
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: DataTable(
                 columnSpacing: 0,
                 checkboxHorizontalMargin: 0,
                 dataRowMaxHeight: 80,
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
-                columns: <DataColumn>[
+                columns: [
+                  // DataColumn(
+                  //   label: Checkbox(
+                  //       activeColor: appTheme.skyBlue,
+                  //       checkColor: Colors.white,
+                  //       fillColor: MaterialStateProperty.resolveWith(
+                  //         (states) {
+                  //           if (!states
+                  //               .contains(MaterialState.selected)) {
+                  //             return Colors.transparent;
+                  //           }
+                  //           return null;
+                  //         },
+                  //       ),
+                  //       value: false,
+                  //       onChanged: (bool? value) {}),
+                  // ),
                   DataColumn(
-                    label: SizedBox(
-                      width: 20,
-                      child: Text(
-                        '',
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
-                    ),
-                  ),
+                      label:
+                          Text('소속', style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                    label: SizedBox(
-                      width: 80,
-                      child: Text(
-                        '회차',
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
-                    ),
-                  ),
+                      label: Text('이메일 주소',
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                    label: SizedBox(
-                      width: 80,
-                      child: Text(
-                        '완료 회원 수',
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
-                    ),
-                  ),
+                      label: Text('사용자 이름',
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                    label: SizedBox(
-                      width: 80,
-                      child: Text(
-                        '참여 회원 수',
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
-                    ),
-                  ),
+                      label:
+                          Text('전환일', style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                    label: SizedBox(
-                      width: 80,
-                      child: Text(
-                        '완료율',
-                        style: CustomTextStyles.labelLargeGray,
-                      ),
-                    ),
-                  ),
+                      label:
+                          Text('상태', style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows: <DataRow>[
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '1',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(GestureDetector(
-                        onTap: controller.onMemberTap,
-                        child: Text(
-                          '1회차',
-                          style: CustomTextStyles.bodyLargeBlack
-                              .copyWith(decoration: TextDecoration.underline),
-                        ),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
+                rows: List.generate(controller.membersModel.length, (index) {
+                  return DataRow(
+                      selected: controller.selectedMembers[index],
+                      onSelectChanged: (bool? value) {
+                        controller.updateValue(index);
+                      },
+                      cells: [
+                        // DataCell(
+                        //   Padding(
+                        //     padding: const EdgeInsets.only(right: 8.0),
+                        //     child: Checkbox(
+                        //       value: controller.selected.value,
+                        //       onChanged: (bool? value) {
+                        //         controller.updateValue();
+                        //       },
+                        //     ),
+                        //   ),
+                        // ), // Checkbox cell
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
+                              controller.membersModel.affiliation![index],
+                              style: controller.memberState![index]
+                                  ? CustomTextStyles.bodyLargeBlack
+                                  : CustomTextStyles.bodyLargeGray),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: InkWell(
+                            child: Text(controller.membersModel.email![index],
+                                style: controller.memberState![index]
+                                    ? CustomTextStyles.bodyLargeBlack.copyWith(
+                                        decoration: TextDecoration.underline)
+                                    : CustomTextStyles.bodyLargeGray.copyWith(
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: appTheme.grayScale5)),
+                            onTap: () {
+                              controller.onMemberTap(
+                                  controller.membersModel.id![index]);
+                            },
+                          ),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(controller.membersModel.username![index],
+                              style: controller.memberState![index]
+                                  ? CustomTextStyles.bodyLargeBlack
+                                  : CustomTextStyles.bodyLargeGray),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(controller.membersModel.createdAt![index],
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+                        DataCell(DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              width: 1,
+                              color: appTheme.grayScale2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 6, right: 0, top: 0, bottom: 0),
+                            child: DropdownButton<String>(
+                              value:
+                                  controller.memberState![index] ? '활성' : '비활성',
+                              underline: Container(),
+                              padding: const EdgeInsets.only(left: 6),
+                              borderRadius: BorderRadius.circular(12),
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  controller.memberState![index] =
+                                      !controller.memberState![index];
+                                  controller.onStatusChange(index);
+                                }
+                              },
+                              items: <String>[
+                                '활성',
+                                '비활성'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: value == "활성"
+                                        ? CustomTextStyles.labelLargeGreen
+                                        : CustomTextStyles.labelLargeRed,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        )),
+                      ]);
+                }).toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            Obx(
+              () => Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  CustomElevatedButton(
+                    text: '비활성',
+                    buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    buttonStyle: CustomButtonStyles.fillRedTransparent,
+                    // margin: const EdgeInsets.symmetric(
+                    //     vertical: 11, horizontal: 24),
+                    width: 90,
+                    height: 44,
                   ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '2',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '2회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '3',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '3회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '4',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '4회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '5',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '5회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
+                  Pages(
+                      pages: (controller.membersModel.number! / 10).ceil(),
+                      activePage: controller.activePage.value,
+                      onTap: (int pageNum) {
+                        controller.loadNewPage(pageNum);
+                      }),
                 ],
               ),
-              const SizedBox(
-                height: 32,
-              ),
-              Obx(() => Stack(alignment: Alignment.centerLeft, children: [
-                    CustomElevatedButton(
-                      text: '비활성',
-                      buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                      buttonStyle: CustomButtonStyles.fillRedTransparent,
-                      // margin: const EdgeInsets.symmetric(
-                      //     vertical: 11, horizontal: 24),
-                      width: 90,
-                      height: 44,
-                    ),
-                    Pages(
-                        pages: 100,
-                        activePage: controller.activePage.value,
-                        onTap: (int pageNum) {
-                          controller.loadNewPage(pageNum);
-                        }),
-                  ]))
-            ],
-          )),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

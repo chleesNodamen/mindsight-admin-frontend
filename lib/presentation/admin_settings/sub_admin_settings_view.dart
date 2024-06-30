@@ -60,7 +60,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "서브 관리자 관리",
       searchShow: false,
       viewCount: false,

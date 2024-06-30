@@ -52,7 +52,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "Challenge 관리",
       searchShow: true,
       viewCount: false,

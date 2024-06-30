@@ -47,7 +47,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "내 계정 관리",
       searchShow: false,
       memberShow: false,

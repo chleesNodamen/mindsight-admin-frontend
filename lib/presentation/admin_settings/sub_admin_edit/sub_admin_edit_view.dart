@@ -354,7 +354,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "관리자 계정 수정",
       searchShow: false,
       viewCount: false,

@@ -89,7 +89,7 @@ class InactiveMemberManageController extends GetxController {
     membershipValues[index] = value;
   }
 
-  Future<void> onSearch(String search) async {
+  Future<void> onSearch({String? search}) async {
     if (AppConstant.chleesTest) {
       List<String> affiliation = [
         for (int i = 0; i < membershipLabels.length; i++)
@@ -115,9 +115,8 @@ class InactiveMemberManageController extends GetxController {
     activePage.value = pageNum;
   }
 
-  void onMemberTap() {
-    menuController.changeActiveItemTo(activityHistoryPageDisplayName);
-    navigationController.navigateTo(activityHistoryPageRoute);
+  void onMemberTap(String id) {
+    Get.toNamed(AppRoutes.memberDetails, arguments: {RouteArguments.id: id});
   }
 
   void updateValue(int index) {
@@ -129,6 +128,28 @@ class InactiveMemberManageController extends GetxController {
         MembersStatusReqPut(
                 ids: [membersModel.id![index]], status: memberState![index])
             .toJson());
+    if (membersStatusModel.isSuccess) {
+      isLoading.value = true;
+      selectedMembers = [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ].obs;
+      membersModel = await MembersRepository().get(MembersReqGet(
+        page: 1,
+        disabled: true,
+      ).toJson());
+      memberState = membersModel.status!.obs;
+      isLoading.value = false;
+      isInited.value = true;
+    }
   }
 
   Future<void> onButtonPressed() async {

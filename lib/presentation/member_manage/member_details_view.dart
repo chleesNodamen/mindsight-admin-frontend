@@ -25,7 +25,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const TobBarSearch(
+                                TobBarSearch(
                                   name: "회원 상세",
                                   searchShow: false,
                                   viewCount: false,
@@ -109,7 +109,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Nodamen', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.affiliation ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -123,7 +124,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Product Biz Dept.',
+                  Text(controller.membersDataModel.department ?? "-",
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -138,7 +139,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Team leader', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.position ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               )
             ],
@@ -163,7 +165,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Aiden', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.firstName ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -177,7 +180,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Kim', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.firstName ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -191,7 +195,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Male', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.gender ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -205,7 +210,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('1992', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.yearOfBirth ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               )
             ],
@@ -229,7 +235,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('akdlsemtkdlxm@nodamen.com',
+                  Text(controller.membersDataModel.email ?? "-",
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -244,7 +250,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('dbwjspdla', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.username ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -258,7 +265,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('2024-04-25', style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.membersDataModel.createdAt ?? "-",
+                      style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
             ],
@@ -286,7 +294,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('2024-03-13-10:09:34',
+                Text(controller.membersDataModel.lastLogin ?? "-",
                     style: CustomTextStyles.labelLargeGray),
               ],
             ),
@@ -317,7 +325,12 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('34', style: CustomTextStyles.headlineLargeBlack),
+                      Text(
+                          controller.membersDataModel.sessionsCompleted == null
+                              ? "-"
+                              : controller.membersDataModel.sessionsCompleted
+                                  .toString(),
+                          style: CustomTextStyles.headlineLargeBlack),
                       const SizedBox(
                         height: 16,
                       ),
@@ -331,7 +344,12 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('421', style: CustomTextStyles.headlineLargeBlack),
+                      Text(
+                          controller.membersDataModel.minutesMeditated == null
+                              ? "-"
+                              : controller.membersDataModel.minutesMeditated
+                                  .toString(),
+                          style: CustomTextStyles.headlineLargeBlack),
                       const SizedBox(
                         height: 16,
                       ),
@@ -345,7 +363,12 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('16', style: CustomTextStyles.headlineLargeBlack),
+                      Text(
+                          controller.membersDataModel.mindfulStreak == null
+                              ? "-"
+                              : controller.membersDataModel.mindfulStreak
+                                  .toString(),
+                          style: CustomTextStyles.headlineLargeBlack),
                       const SizedBox(
                         height: 16,
                       ),
@@ -359,7 +382,12 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('421', style: CustomTextStyles.headlineLargeBlack),
+                      Text(
+                          controller.membersDataModel.mindfulDays == null
+                              ? "-"
+                              : controller.membersDataModel.mindfulDays
+                                  .toString(),
+                          style: CustomTextStyles.headlineLargeBlack),
                       const SizedBox(
                         height: 16,
                       ),

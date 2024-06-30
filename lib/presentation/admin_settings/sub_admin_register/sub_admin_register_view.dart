@@ -417,7 +417,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "관리자 신규 등록",
       searchShow: false,
       viewCount: false,

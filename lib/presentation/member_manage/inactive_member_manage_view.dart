@@ -27,11 +27,14 @@ class InactiveMemberManageView
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  const TobBarSearch(
+                                  TobBarSearch(
                                     name: "비활성 회원 관리",
                                     searchShow: true,
                                     viewCount: false,
                                     searchText: "이메일 주소, 사용자 이름 검색",
+                                    memberShow: true,
+                                    memberCount: controller.membersModel.number,
+                                    onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
                                   _buildFirstContainer(),
@@ -165,17 +168,32 @@ class InactiveMemberManageView
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
                               controller.membersModel.affiliation![index],
-                              style: CustomTextStyles.bodyLargeBlack),
+                              style: controller.memberState![index]
+                                  ? CustomTextStyles.bodyLargeBlack
+                                  : CustomTextStyles.bodyLargeGray),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(controller.membersModel.email![index],
-                              style: CustomTextStyles.bodyLargeBlack),
+                          child: InkWell(
+                            child: Text(controller.membersModel.email![index],
+                                style: controller.memberState![index]
+                                    ? CustomTextStyles.bodyLargeBlack.copyWith(
+                                        decoration: TextDecoration.underline)
+                                    : CustomTextStyles.bodyLargeGray.copyWith(
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: appTheme.grayScale5)),
+                            onTap: () {
+                              controller.onMemberTap(
+                                  controller.membersModel.id![index]);
+                            },
+                          ),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(controller.membersModel.username![index],
-                              style: CustomTextStyles.bodyLargeBlack),
+                              style: controller.memberState![index]
+                                  ? CustomTextStyles.bodyLargeBlack
+                                  : CustomTextStyles.bodyLargeGray),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),

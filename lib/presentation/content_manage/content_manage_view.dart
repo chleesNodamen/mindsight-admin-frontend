@@ -64,7 +64,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
   }
 
   TobBarSearch buildTopBar() {
-    return const TobBarSearch(
+    return TobBarSearch(
       name: "콘텐츠 목록",
       searchShow: true,
       viewCount: true,
