@@ -391,8 +391,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 children: [
                   TextSpan(
                       text: "이메일 주소 ",
-                      style: CustomTextStyles.labelLargeBlack
-                          .copyWith(fontWeight: FontWeight.w600)),
+                      style: CustomTextStyles.labelLargeBlack),
                   TextSpan(text: "*", style: TextStyle(color: appTheme.red))
                 ],
               ),
