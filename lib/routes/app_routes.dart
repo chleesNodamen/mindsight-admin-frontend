@@ -22,6 +22,12 @@ import 'package:mindsight_admin_page/presentation/content_manage/challenge_manag
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_edit/challenge_edit_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_edit/challenge_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_register/content_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_register/content_register_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_view.dart';
@@ -49,6 +55,9 @@ class AppRoutes {
   static const String memberEdit = "/member_edit";
   static const String contentManage = "/content_manage";
   static const String contentManageList = "/content_manage_list";
+  static const String contentRegister = "/content_register";
+  static const String contentEdit = "/content_edit";
+  static const String contentDetails = "/content_details";
   static const String contentPracticePlanManage =
       "/content_practice_plan_manage";
   static const String practiceRegister = "/practice_register";
@@ -109,9 +118,15 @@ class AppRoutes {
       bindings: [ContentManageBinding()],
     ),
     GetPage(
-        name: contentPracticePlanManage,
-        page: () => const PracticePlanManageView(),
-        bindings: [PracticePlanManageBinding()]),
+      name: contentRegister,
+      page: () => const ContentRegisterView(),
+      bindings: [ContentRegisterBinding()],
+    ),
+    GetPage(
+      name: contentEdit,
+      page: () => const ContentEditView(),
+      bindings: [ContentEditBinding()],
+    ),
     GetPage(
         name: practiceRegister,
         page: () => const PracticeRegisterView(),
@@ -121,13 +136,30 @@ class AppRoutes {
         page: () => const ChallengeManageView(),
         bindings: [ChallengeManageBinding()]),
     GetPage(
-        name: challengeDetails,
-        page: () => const ChallengeDetailsView(),
-        bindings: [ChallengeDetailsBinding()]),
+      name: contentDetails,
+      page: () => const ContentDetailsView(),
+      bindings: [ContentDetailsBinding()],
+    ),
     GetPage(
-        name: challengeEdit,
-        page: () => const ChallengeEditView(),
-        bindings: [ChallengeEditBinding()]),
+      name: contentPracticePlanManage,
+      page: () => const PracticePlanManageView(),
+      bindings: [PracticePlanManageBinding()],
+    ),
+    GetPage(
+      name: contentChallengeManage,
+      page: () => const ChallengeManageView(),
+      bindings: [ChallengeManageBinding()],
+    ),
+    GetPage(
+      name: challengeDetails,
+      page: () => const ChallengeDetailsView(),
+      bindings: [ChallengeDetailsBinding()],
+    ),
+    GetPage(
+      name: challengeEdit,
+      page: () => const ChallengeEditView(),
+      bindings: [ChallengeEditBinding()],
+    ),
     GetPage(
       name: activityManage,
       page: () => const ActivityManageView(),
@@ -144,21 +176,25 @@ class AppRoutes {
       bindings: [AdminSettingsBinding()],
     ),
     GetPage(
-        name: subAdminSettings,
-        page: () => const SubAdminSettingsView(),
-        bindings: [SubAdminSettingsBinding()]),
+      name: subAdminSettings,
+      page: () => const SubAdminSettingsView(),
+      bindings: [SubAdminSettingsBinding()],
+    ),
     GetPage(
-        name: subAdminRegister,
-        page: () => const SubAdminRegisterView(),
-        bindings: [SubAdminRegisterBinding()]),
+      name: subAdminRegister,
+      page: () => const SubAdminRegisterView(),
+      bindings: [SubAdminRegisterBinding()],
+    ),
     GetPage(
-        name: subAdminEdit,
-        page: () => const SubAdminEditView(),
-        bindings: [SubAdminEditBinding()]),
+      name: subAdminEdit,
+      page: () => const SubAdminEditView(),
+      bindings: [SubAdminEditBinding()],
+    ),
     GetPage(
-        name: subAdminDetails,
-        page: () => const SubAdminDetailsView(),
-        bindings: [SubAdminDetailsBinding()]),
+      name: subAdminDetails,
+      page: () => const SubAdminDetailsView(),
+      bindings: [SubAdminDetailsBinding()],
+    ),
   ];
 }
 

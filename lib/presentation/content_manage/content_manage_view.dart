@@ -56,6 +56,9 @@ class ContentManageView extends GetWidget<ContentManageController> {
 
   CustomElevatedButton buildBlueButton() {
     return CustomElevatedButton(
+      onPressed: () {
+        Get.toNamed(AppRoutes.contentRegister);
+      },
       text: "신규 등록",
       height: 44,
       width: 107,

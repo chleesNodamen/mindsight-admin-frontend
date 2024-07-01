@@ -29,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
       this.filled = true,
       this.enabled,
       this.validator,
+      this.onSubmitted,
       this.onChange});
 
   final Alignment? alignment;
@@ -79,6 +80,7 @@ class CustomTextFormField extends StatelessWidget {
 
   final FormFieldValidator<String>? validator;
   final void Function(String)? onChange;
+  final void Function(String)? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +112,9 @@ class CustomTextFormField extends StatelessWidget {
             validator: validator,
             onChanged: (value) {
               onChange?.call(value);
+            },
+            onFieldSubmitted: (value) {
+              onSubmitted?.call(value);
             }),
       );
   InputDecoration get decoration => InputDecoration(
