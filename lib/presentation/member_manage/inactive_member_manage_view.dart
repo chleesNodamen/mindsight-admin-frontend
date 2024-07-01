@@ -114,22 +114,6 @@ class InactiveMemberManageView
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
-                  // DataColumn(
-                  //   label: Checkbox(
-                  //       activeColor: appTheme.skyBlue,
-                  //       checkColor: Colors.white,
-                  //       fillColor: MaterialStateProperty.resolveWith(
-                  //         (states) {
-                  //           if (!states
-                  //               .contains(MaterialState.selected)) {
-                  //             return Colors.transparent;
-                  //           }
-                  //           return null;
-                  //         },
-                  //       ),
-                  //       value: false,
-                  //       onChanged: (bool? value) {}),
-                  // ),
                   DataColumn(
                       label:
                           Text('소속', style: CustomTextStyles.labelLargeGray)),
@@ -153,17 +137,6 @@ class InactiveMemberManageView
                         controller.updateValue(index);
                       },
                       cells: [
-                        // DataCell(
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(right: 8.0),
-                        //     child: Checkbox(
-                        //       value: controller.selected.value,
-                        //       onChanged: (bool? value) {
-                        //         controller.updateValue();
-                        //       },
-                        //     ),
-                        //   ),
-                        // ), // Checkbox cell
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
