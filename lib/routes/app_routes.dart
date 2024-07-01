@@ -17,6 +17,8 @@ import 'package:mindsight_admin_page/presentation/activity_manage/activity_manag
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_binding.dart';
@@ -46,6 +48,8 @@ class AppRoutes {
   static const String contentPracticePlanManage =
       "/content_practice_plan_manage";
   static const String contentChallengeManage = "/content_challenge_manage";
+  static const String challengeDetails = "/challenge_details";
+  static const String challengeEdit = "/challenge_edit";
   static const String activityManage = "/activity_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
@@ -107,6 +111,14 @@ class AppRoutes {
         name: contentChallengeManage,
         page: () => const ChallengeManageView(),
         bindings: [ChallengeManageBinding()]),
+    GetPage(
+        name: challengeDetails,
+        page: () => const ChallengeDetailsView(),
+        bindings: [ChallengeDetailsBinding()]),
+    GetPage(
+        name: challengeEdit,
+        page: () => const ChallengeDetailsView(),
+        bindings: [ChallengeDetailsBinding()]),
     GetPage(
       name: activityManage,
       page: () => const ActivityManageView(),

@@ -104,4 +104,8 @@ class ChallengeManageController extends GetxController {
       isLoading(false);
     }
   }
+
+  void goToEdit() {
+    Get.toNamed(AppRoutes.challengeDetails);
+  }
 }

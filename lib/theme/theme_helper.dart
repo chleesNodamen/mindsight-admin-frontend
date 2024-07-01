@@ -94,7 +94,6 @@ class PrimaryColors {
   Color get black => const Color(0XFF000204);
   Color get red => const Color(0xFFEE2F2F);
   Color get green => const Color(0xFF14AE5C);
-
   // gray scale
   Color get grayScale11 => const Color(0XFF000204);
   Color get grayScale10 => const Color(0XFF1A1C1E);

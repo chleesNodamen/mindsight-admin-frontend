@@ -147,8 +147,15 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['title'],
-                              style: CustomTextStyles.bodyLargeBlack),
+                          child: GestureDetector(
+                            onTap: controller.goToEdit,
+                            child: Text(item['title'],
+                                style:
+                                    CustomTextStyles.bodyMediumBlack.copyWith(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
