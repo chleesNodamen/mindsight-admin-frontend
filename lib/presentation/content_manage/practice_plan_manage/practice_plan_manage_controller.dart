@@ -4,6 +4,11 @@ class PracticePlanManageController extends GetxController {
   static PracticePlanManageController get to =>
       Get.find<PracticePlanManageController>();
 
+//REGISTER BUTTON
+  void onRegisterTap() {
+    Get.toNamed(AppRoutes.practiceRegister);
+  }
+
   //DROPDOWN BUTTON
   RxString selectedOrder = '회차순'.obs;
   void updateSelectedOrder(String newOrder) {

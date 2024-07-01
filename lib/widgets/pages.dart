@@ -47,16 +47,13 @@ class Pages extends StatelessWidget {
               onTap(activePage - 1);
             }
           }),
-      const SizedBox(
-        width: 8,
-      ),
       pages <= 6
           ? Wrap(
               runSpacing: 8,
               children: List.generate(pages, (index) {
                 return CustomElevatedButton(
                   text: '${index + 1}',
-                  margin: const EdgeInsets.symmetric(horizontal: 12),
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
                   width: 31,
                   height: 30,
                   buttonStyle: (index + 1) == activePage
@@ -79,7 +76,7 @@ class Pages extends StatelessWidget {
                         children: [
                           CustomElevatedButton(
                             text: '1',
-                            margin: const EdgeInsets.symmetric(horizontal: 12),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
                             width: 31,
                             height: 30,
                             buttonStyle:
@@ -96,9 +93,6 @@ class Pages extends StatelessWidget {
                                   width: 20,
                                   height: 20,
                                 ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
                               ],
                             ),
                           ),
@@ -110,7 +104,7 @@ class Pages extends StatelessWidget {
                         children: List.generate(5, (index) {
                           return CustomElevatedButton(
                             text: '${index + pages - 4}',
-                            margin: const EdgeInsets.symmetric(horizontal: 12),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
                             width: 31,
                             height: 30,
                             buttonStyle: (index + pages - 4) == activePage
@@ -134,7 +128,7 @@ class Pages extends StatelessWidget {
                               return CustomElevatedButton(
                                 text: '${activePage + index}',
                                 margin:
-                                    const EdgeInsets.symmetric(horizontal: 12),
+                                    const EdgeInsets.symmetric(horizontal: 8),
                                 width: 31,
                                 height: 30,
                                 buttonStyle: (activePage + index) == activePage
@@ -155,9 +149,6 @@ class Pages extends StatelessWidget {
                               ? const SizedBox.shrink()
                               : Row(
                                   children: [
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
                                     CustomImageView(
                                       imagePath: IconConstant.more,
                                       width: 20,
@@ -167,7 +158,7 @@ class Pages extends StatelessWidget {
                                 ),
                           CustomElevatedButton(
                             text: '$pages',
-                            margin: const EdgeInsets.symmetric(horizontal: 12),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
                             width: 31,
                             height: 30,
                             buttonStyle:
@@ -179,9 +170,6 @@ class Pages extends StatelessWidget {
                       ),
               ],
             ),
-      const SizedBox(
-        width: 8,
-      ),
       GestureDetector(
           child: CustomImageView(
             imagePath: IconConstant.nextPage,

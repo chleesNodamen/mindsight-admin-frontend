@@ -52,6 +52,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
       height: 44,
       width: 107,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+      onPressed: controller.onRegisterTap,
     );
   }
 

@@ -25,6 +25,8 @@ import 'package:mindsight_admin_page/presentation/content_manage/content_manage_
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_register/practice_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_register/practice_register_view.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_binding.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_binding.dart';
@@ -49,6 +51,7 @@ class AppRoutes {
   static const String contentManageList = "/content_manage_list";
   static const String contentPracticePlanManage =
       "/content_practice_plan_manage";
+  static const String practiceRegister = "/practice_register";
   static const String contentChallengeManage = "/content_challenge_manage";
   static const String challengeDetails = "/challenge_details";
   static const String challengeEdit = "/challenge_edit";
@@ -109,6 +112,10 @@ class AppRoutes {
         name: contentPracticePlanManage,
         page: () => const PracticePlanManageView(),
         bindings: [PracticePlanManageBinding()]),
+    GetPage(
+        name: practiceRegister,
+        page: () => const PracticeRegisterView(),
+        bindings: [PracticeRegisterBinding()]),
     GetPage(
         name: contentChallengeManage,
         page: () => const ChallengeManageView(),
