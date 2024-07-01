@@ -61,6 +61,8 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                               const SizedBox(height: 24),
                               buildThirdRow(),
                               const SizedBox(height: 24),
+                              _enterMaster(),
+                              const SizedBox(height: 24),
                               _enterTags(),
                               const SizedBox(height: 24),
                               _enterIntro(),
@@ -115,6 +117,53 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         ));
   }
 
+  Widget _enterMaster() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text('마스터', style: CustomTextStyles.labelLargeBlack),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: DropdownButton<String>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: "",
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadius.circular(12),
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                //TODO
+              }
+            },
+            items: <String>[""].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _enterTitle() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -138,12 +187,10 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               // controller.checkPasswordValid(value, false);
             },
             validator: (value) {
-              // if (value == null ||
-              //     !controller.checkPasswordValid(value, true) ||
-              //     !controller.authPasswordResetModel.isSuccess) {
-              //   return "Code is invalid or has expired".tr;
-              // }
-              // return null;
+              if (value == null) {
+                return "필수 입력 항목입니다.".tr;
+              }
+              return null;
             },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 
 class ContentRegisterController extends GetxController {
@@ -18,6 +17,7 @@ class ContentRegisterController extends GetxController {
 
   final TextEditingController tagController = TextEditingController();
   final TextEditingController introController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
   late final focusNode = FocusNode();
 
   RxString selectedCategory = "".obs;
