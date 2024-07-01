@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/route_arguments.dart';
+import 'package:mindsight_admin_page/data/activity/activity_model.dart';
 
 enum Type { practice, challenge }
 
@@ -38,8 +40,26 @@ class ActivityManageController extends GetxController {
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+
+  late ActivityModel activityModel;
+
   @override
   Future<void> onInit() async {
+    if (AppConstant.chleesTest) {
+    } else {
+      activityModel = ActivityModel().copyWith(
+        type: List.generate(10, (_) => 'Practice plan'),
+        memberId: List.generate(10, (_) => ''),
+        email: List.generate(10, (_) => 'aiden@nodamen.com'),
+        sessionId: List.generate(10, (_) => '3회차'),
+        sessionName: List.generate(10, (_) => '3회차'),
+        recordId: List.generate(10, (_) => 'Practice plan'),
+        record: List.generate(10, (_) => 'Easy to follow some of them, 4'),
+        feedback: List.generate(10, (_) => false),
+        total: 10,
+      );
+    }
+    activityModel.length = activityModel.recordId!.length;
     super.onInit();
     isLoading.value = false;
     isInited.value = true;
@@ -64,6 +84,17 @@ class ActivityManageController extends GetxController {
   void onHistoryTap() {
     // menuController.changeActiveItemTo(activityHistoryPageDisplayName);
     // navigationController.navigateTo(activityHistoryPageRoute, arguments: {"hello": "hello"});
-    Get.toNamed(AppRoutes.activityHistory, arguments: {"hello": "hello"});
+    Get.toNamed(AppRoutes.activityHistory,
+        arguments: {RouteArguments.id: activityModel.recordId});
+  }
+
+  void onMemberTap() {
+    Get.toNamed(AppRoutes.memberDetails,
+        arguments: {RouteArguments.id: activityModel.memberId});
+  }
+
+  void onSessionTap() {
+    Get.toNamed(AppRoutes.memberDetails,
+        arguments: {RouteArguments.id: activityModel.recordId}); //TODO
   }
 }
