@@ -213,11 +213,14 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
   Row buildSubHeader() {
     return Row(
       children: [
-        Text("관리자 등록",
-            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: appTheme.skyBlue,
-            )),
+        GestureDetector(
+          onTap: () => Get.back(),
+          child: Text("관리자 등록",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              )),
+        ),
         CustomImageView(
           width: 20,
           height: 20,

@@ -29,6 +29,10 @@ import 'package:mindsight_admin_page/presentation/content_manage/content_manage_
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_register/content_register_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_register/content_register_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_edit/practice_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_edit/practice_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_register/practice_register_binding.dart';
@@ -54,13 +58,15 @@ class AppRoutes {
   static const String memberDetails = "/member_details";
   static const String memberEdit = "/member_edit";
   static const String contentManage = "/content_manage";
+  static const String contentDetails = "/content_details";
   static const String contentManageList = "/content_manage_list";
   static const String contentRegister = "/content_register";
   static const String contentEdit = "/content_edit";
-  static const String contentDetails = "/content_details";
   static const String contentPracticePlanManage =
       "/content_practice_plan_manage";
   static const String practiceRegister = "/practice_register";
+  static const String practiceEdit = "/practice_edit";
+  static const String practiceDetails = "/practice_details";
   static const String contentChallengeManage = "/content_challenge_manage";
   static const String challengeDetails = "/challenge_details";
   static const String challengeEdit = "/challenge_edit";
@@ -128,9 +134,22 @@ class AppRoutes {
       bindings: [ContentEditBinding()],
     ),
     GetPage(
+      name: contentDetails,
+      page: () => const ContentDetailsView(),
+      bindings: [ContentDetailsBinding()],
+    ),
+    GetPage(
         name: practiceRegister,
         page: () => const PracticeRegisterView(),
         bindings: [PracticeRegisterBinding()]),
+    GetPage(
+        name: practiceDetails,
+        page: () => const PracticeDetailsView(),
+        bindings: [PracticeDetailsBinding()]),
+    GetPage(
+        name: practiceEdit,
+        page: () => const PracticeEditView(),
+        bindings: [PracticeEditBinding()]),
     GetPage(
         name: contentChallengeManage,
         page: () => const ChallengeManageView(),

@@ -145,4 +145,8 @@ class ContentManageController extends GetxController {
       isLoading(false);
     }
   }
+
+  void goToDetails() {
+    Get.toNamed(AppRoutes.contentDetails);
+  }
 }

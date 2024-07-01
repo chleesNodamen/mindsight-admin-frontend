@@ -355,11 +355,14 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
   Row buildSubHeader() {
     return Row(
       children: [
-        Text("Challenge 관리",
-            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: appTheme.skyBlue,
-            )),
+        GestureDetector(
+          onTap: () => Get.back(),
+          child: Text("Challenge 관리",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              )),
+        ),
         CustomImageView(
           width: 20,
           height: 20,

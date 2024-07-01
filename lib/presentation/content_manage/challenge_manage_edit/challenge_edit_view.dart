@@ -476,22 +476,28 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
   Row buildSubHeader() {
     return Row(
       children: [
-        Text("Challenge 관리",
-            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: appTheme.skyBlue,
-            )),
+        GestureDetector(
+          onTap: controller.goToChallenge,
+          child: Text("Challenge 관리",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              )),
+        ),
         CustomImageView(
           width: 20,
           height: 20,
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Challenge 상세",
-            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: appTheme.skyBlue,
-            )),
+        GestureDetector(
+          onTap: () => Get.back(),
+          child: Text("Challenge 상세",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              )),
+        ),
         CustomImageView(
           width: 20,
           height: 20,

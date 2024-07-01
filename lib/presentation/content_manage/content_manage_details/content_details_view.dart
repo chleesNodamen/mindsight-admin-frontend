@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
 
 class ContentDetailsView extends GetWidget<ContentDetailsController> {
@@ -7,6 +6,320 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return const Column();
+    return Obx(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SideMenu(),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.all(48.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                buildTopBar(),
+                                const SizedBox(height: 32),
+                                buildSubHeader(),
+                                const SizedBox(height: 32),
+                                buildFirstContainer(),
+                                const SizedBox(height: 16),
+                                buildSecondContainer(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ),
+    );
+  }
+
+  Container buildSecondContainer() {
+    return Container(
+      decoration: BoxDecoration(
+        color: appTheme.white,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      // height: 340,
+      width: double.infinity,
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text("사용자 데이터", style: CustomTextStyles.labelLargeBlack),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("99,999", style: CustomTextStyles.headlineLargeBlack),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text("조회수", style: CustomTextStyles.labelLargeGray)
+                ],
+              ),
+              const SizedBox(width: 50),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("4,221", style: CustomTextStyles.headlineLargeBlack),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text("좋아요 수", style: CustomTextStyles.labelLargeGray)
+                ],
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildFirstContainer() {
+    return Container(
+      decoration: BoxDecoration(
+        color: appTheme.white,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      // height: 340,
+      width: double.infinity,
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("기본 정보",
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              GestureDetector(
+                onTap: controller.goToEdit,
+                child: Text("수정",
+                    style: CustomTextStyles.labelLargeSkyBlue.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: appTheme.skyBlue)),
+              )
+            ],
+          ),
+          const SizedBox(height: 24),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('제목',
+                  style: CustomTextStyles.labelMediumGray
+                      .copyWith(fontWeight: FontWeight.w600)),
+              const SizedBox(height: 16),
+              Text("Spine & Lower Body",
+                  style: CustomTextStyles.bodyMediumBlack),
+            ],
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
+          const SizedBox(
+            height: 24,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('카테고리', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text("Body", style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('타입', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text("Basic body", style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('마스터', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text("Mindsight master",
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
+          const SizedBox(
+            height: 24,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('태그', style: CustomTextStyles.labelMediumGray),
+              const SizedBox(height: 16),
+              Text("sleep, good night, bed, calm, relax",
+                  style: CustomTextStyles.bodyMediumBlack),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
+          const SizedBox(
+            height: 24,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('소개', style: CustomTextStyles.labelMediumBlack),
+              const SizedBox(height: 16),
+              Text(
+                  "This exercise strengthen the lower body and straigthen the spine. The mountain pose and lunge pose help strengthen the lower body and relieve stress. Back rolls aid in stimulating the spine and improving internal function.",
+                  style: CustomTextStyles.bodyMediumBlack)
+            ],
+          ),
+          const SizedBox(height: 24),
+          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
+          const SizedBox(height: 24),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("파일", style: CustomTextStyles.labelLargeBlack),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('동영상 파일', style: CustomTextStyles.labelLargeGray),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Text("동영상 재생",
+                              style: CustomTextStyles.bodyMediumSkyBlue
+                                  .copyWith(
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: appTheme.skyBlue)),
+                          const SizedBox(width: 4),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 60),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('썸네일 파일', style: CustomTextStyles.labelLargeGray),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Text("이미지 보기",
+                              style: CustomTextStyles.bodyMediumSkyBlue
+                                  .copyWith(
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: appTheme.skyBlue)),
+                          const SizedBox(width: 4),
+                          CustomImageView(
+                            imagePath: IconConstant.download,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 60),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('자막 파일', style: CustomTextStyles.labelLargeGray),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Text("파일 보기",
+                              style: CustomTextStyles.bodyMediumSkyBlue
+                                  .copyWith(
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: appTheme.skyBlue)),
+                          const SizedBox(width: 4),
+                          CustomImageView(
+                            imagePath: IconConstant.download,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row buildSubHeader() {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () => Get.back(),
+          child: Text("콘텐츠 목록",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              )),
+        ),
+        CustomImageView(
+          width: 20,
+          height: 20,
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          imagePath: IconConstant.arrowRight,
+        ),
+        Text("콘텐츠 상세", style: CustomTextStyles.bodyMediumGray)
+      ],
+    );
+  }
+
+  TobBarSearch buildTopBar() {
+    return TobBarSearch(
+      name: "콘텐츠 상세",
+      searchShow: false,
+      viewCount: false,
+      searchText: "",
+    );
   }
 }

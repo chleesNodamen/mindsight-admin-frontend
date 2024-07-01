@@ -74,4 +74,8 @@ class PracticePlanManageController extends GetxController {
       isLoading(false);
     }
   }
+
+  void goToDetails() {
+    Get.toNamed(AppRoutes.practiceDetails);
+  }
 }

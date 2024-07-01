@@ -16,4 +16,8 @@ class ChallengeEditController extends GetxController {
   void setActiveNumber(int number) {
     activeNumber.value = number;
   }
+
+  void goToChallenge() {
+    Get.toNamed(AppRoutes.contentChallengeManage);
+  }
 }

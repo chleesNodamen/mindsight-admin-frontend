@@ -160,10 +160,15 @@ class ContentManageView extends GetWidget<ContentManageController> {
                           child: Text(item['type'],
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['title'],
-                              style: CustomTextStyles.bodyLargeBlack),
+                        DataCell(GestureDetector(
+                          onTap: controller.goToDetails,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: Text(item['title'],
+                                style: CustomTextStyles.bodyLargeBlack.copyWith(
+                                  decoration: TextDecoration.underline,
+                                )),
+                          ),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),

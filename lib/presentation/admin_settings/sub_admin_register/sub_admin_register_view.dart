@@ -400,11 +400,14 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
   Row buildSubHeader() {
     return Row(
       children: [
-        Text("서브 관리자 관리",
-            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: appTheme.skyBlue,
-            )),
+        GestureDetector(
+          onTap: () => Get.back(),
+          child: Text("서브 관리자 관리",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              )),
+        ),
         CustomImageView(
           width: 20,
           height: 20,

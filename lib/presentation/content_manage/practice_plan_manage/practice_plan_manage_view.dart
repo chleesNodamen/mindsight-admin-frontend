@@ -31,7 +31,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
                             const SizedBox(height: 32),
                             dropdownButton(),
                             const SizedBox(height: 16),
-                            buildSecondContainer()
+                            buildDataContainer()
                           ],
                         ),
                       ],
@@ -105,7 +105,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
     );
   }
 
-  SingleChildScrollView buildSecondContainer() {
+  SingleChildScrollView buildDataContainer() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -179,12 +179,15 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
                     //     ),
                     //   ),
                     // ), // Checkbox cell
-                    DataCell(Padding(
-                      padding: const EdgeInsets.only(left: 64.0),
-                      child: Text(
-                        item['level'],
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
+                    DataCell(GestureDetector(
+                      onTap: controller.goToDetails,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 64.0),
+                        child: Text(
+                          item['level'],
+                          style: CustomTextStyles.bodyLargeBlack
+                              .copyWith(decoration: TextDecoration.underline),
+                        ),
                       ),
                     )),
                     DataCell(Text(item['completed'],
