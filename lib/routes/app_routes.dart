@@ -19,6 +19,8 @@ import 'package:mindsight_admin_page/presentation/content_manage/challenge_manag
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_edit/challenge_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_edit/challenge_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_binding.dart';
@@ -117,8 +119,8 @@ class AppRoutes {
         bindings: [ChallengeDetailsBinding()]),
     GetPage(
         name: challengeEdit,
-        page: () => const ChallengeDetailsView(),
-        bindings: [ChallengeDetailsBinding()]),
+        page: () => const ChallengeEditView(),
+        bindings: [ChallengeEditBinding()]),
     GetPage(
       name: activityManage,
       page: () => const ActivityManageView(),

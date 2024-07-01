@@ -54,14 +54,14 @@ class TextThemes {
           color: appTheme.black.withOpacity(0.4),
           fontSize: 16,
           fontFamily: 'Pretendard',
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           height: 1.37,
         ),
         bodySmall: TextStyle(
           color: appTheme.black.withOpacity(0.4),
           fontSize: 15,
           fontFamily: 'Pretendard',
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           height: 1.33,
         ),
         labelLarge: TextStyle(
