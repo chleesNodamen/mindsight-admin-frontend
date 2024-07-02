@@ -7,7 +7,8 @@ class AdminDeleteRepository extends BaseRepository {
     Logger.log(query.toString());
     // req
     String endpoint = "admin/delete?";
-    Response response = await httpClient.put(endpoint, query);
+    endpoint += addGetParam(query);
+    Response response = await httpClient.delete(endpoint);
 
     // result
     AdminDeleteModel model =
