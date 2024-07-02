@@ -1,5 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_controller.dart';
+import 'package:video_player/video_player.dart';
 
 class ContentEditView extends GetWidget<ContentEditController> {
   const ContentEditView({super.key});
@@ -20,108 +21,127 @@ class ContentEditView extends GetWidget<ContentEditController> {
                     children: [
                       Container(
                         margin: const EdgeInsets.all(48.0),
-                        child: Form(
-                          key: formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              TobBarSearch(
-                                name: "콘텐츠 수정",
-                                searchShow: false,
-                                viewCount: false,
-                              ),
-                              const SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                      child: Text(
-                                        "콘텐츠 목록",
-                                        style: CustomTextStyles
-                                            .bodyMediumSkyBlue
-                                            .copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          decoration: TextDecoration.underline,
-                                          decorationColor: appTheme.skyBlue,
-                                        ),
-                                      ),
-                                      onTap: () =>
-                                          Get.toNamed(AppRoutes.contentManage)),
-                                  CustomImageView(
-                                    imagePath: IconConstant.arrowRight,
-                                  ),
-                                  GestureDetector(
-                                      child: Text(
-                                        "콘텐츠 상세",
-                                        style: CustomTextStyles
-                                            .bodyMediumSkyBlue
-                                            .copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          decoration: TextDecoration.underline,
-                                          decorationColor: appTheme.skyBlue,
-                                        ),
-                                      ),
-                                      onTap: () => Get.back()),
-                                  CustomImageView(
-                                    imagePath: IconConstant.arrowRight,
-                                  ),
-                                  Text('콘텐츠 수정',
-                                      style: CustomTextStyles.bodyMediumGray),
-                                ],
-                              ),
-                              const SizedBox(height: 32),
-                              Text('기본 정보',
-                                  style: CustomTextStyles.bodyMediumBlack),
-                              const SizedBox(height: 24),
-                              _enterTitle(),
-                              const SizedBox(height: 24),
-                              buildThirdRow(),
-                              const SizedBox(height: 24),
-                              _enterMaster(),
-                              const SizedBox(height: 24),
-                              _enterTags(),
-                              const SizedBox(height: 24),
-                              _enterIntro(),
-                              const SizedBox(height: 32),
-                              buildLastRow(),
-                              const SizedBox(height: 32),
-                              Row(
+                        child: Column(
+                          children: [
+                            Form(
+                              key: formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  CustomElevatedButton(
-                                    text: '저장',
-                                    buttonTextStyle: CustomTextStyles
-                                        .bodyMediumWhite
-                                        .copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                    buttonStyle: CustomButtonStyles.fillPrimary,
-                                    width: 90,
-                                    height: 44,
-                                    onPressed: () {
-                                      if (formKey.currentState!.validate()) {
-                                        // controller.saveChanges();
-                                        Get.back();
-                                      }
-                                    },
+                                  TobBarSearch(
+                                    name: "콘텐츠 수정",
+                                    searchShow: false,
+                                    viewCount: false,
                                   ),
-                                  CustomElevatedButton(
-                                    text: '취소',
-                                    buttonTextStyle:
-                                        CustomTextStyles.bodyMediumRed.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                    buttonStyle:
-                                        CustomButtonStyles.fillRedTransparent,
-                                    margin: const EdgeInsets.only(left: 16),
-                                    width: 90,
-                                    height: 44,
-                                    onPressed: () => Get.back(),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                          child: Text(
+                                            "콘텐츠 목록",
+                                            style: CustomTextStyles
+                                                .bodyMediumSkyBlue
+                                                .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationColor: appTheme.skyBlue,
+                                            ),
+                                          ),
+                                          onTap: () => Get.toNamed(
+                                              AppRoutes.contentManage)),
+                                      CustomImageView(
+                                        imagePath: IconConstant.arrowRight,
+                                      ),
+                                      GestureDetector(
+                                          child: Text(
+                                            "콘텐츠 상세",
+                                            style: CustomTextStyles
+                                                .bodyMediumSkyBlue
+                                                .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationColor: appTheme.skyBlue,
+                                            ),
+                                          ),
+                                          onTap: () => Get.toNamed(
+                                                  AppRoutes.contentDetails,
+                                                  arguments: {
+                                                    RouteArguments.id:
+                                                        controller.id
+                                                  })),
+                                      CustomImageView(
+                                        imagePath: IconConstant.arrowRight,
+                                      ),
+                                      Text('콘텐츠 수정',
+                                          style:
+                                              CustomTextStyles.bodyMediumGray),
+                                    ],
                                   ),
+                                  const SizedBox(height: 32),
+                                  Text('기본 정보',
+                                      style: CustomTextStyles.bodyMediumBlack),
+                                  const SizedBox(height: 24),
+                                  _enterTitle(),
+                                  const SizedBox(height: 24),
+                                  buildThirdRow(),
+                                  const SizedBox(height: 24),
+                                  _enterMaster(),
+                                  const SizedBox(height: 24),
+                                  _enterTags(),
+                                  const SizedBox(height: 24),
+                                  _enterIntro(),
+                                  const SizedBox(height: 32),
+                                  buildLastRow(),
+                                  const SizedBox(height: 32),
                                 ],
-                              )
-                            ],
-                          ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CustomElevatedButton(
+                                  text: '저장',
+                                  buttonTextStyle:
+                                      CustomTextStyles.bodyMediumWhite.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  buttonStyle: CustomButtonStyles.fillPrimary,
+                                  width: 90,
+                                  height: 44,
+                                  onPressed: () {
+                                    if (formKey.currentState!.validate() &&
+                                        controller.isSaveOk()) {
+                                      controller.onSave();
+                                      Get.toNamed(AppRoutes.contentDetails,
+                                          arguments: {
+                                            RouteArguments.id: controller.id
+                                          });
+                                    }
+                                  },
+                                ),
+                                CustomElevatedButton(
+                                  text: '취소',
+                                  buttonTextStyle:
+                                      CustomTextStyles.bodyMediumRed.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  buttonStyle:
+                                      CustomButtonStyles.fillRedTransparent,
+                                  margin: const EdgeInsets.only(left: 16),
+                                  width: 90,
+                                  height: 44,
+                                  onPressed: () => Get.toNamed(
+                                      AppRoutes.contentDetails,
+                                      arguments: {
+                                        RouteArguments.id: controller.id
+                                      }),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ),
                     ],
@@ -148,21 +168,16 @@ class ContentEditView extends GetWidget<ContentEditController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            // controller: controller.passwordController,
+            controller: controller.titleController,
             width: 353,
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
             validator: (value) {
-              if (value == null) {
+              if (controller.titleController.text == '') {
                 return "필수 입력 항목입니다.".tr;
               }
               return null;
             },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
             filled: true),
       ],
     );
@@ -189,9 +204,13 @@ class ContentEditView extends GetWidget<ContentEditController> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
-                  color: appTheme.grayScale3,
+                  color: controller.enableCategoryError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3,
                 ),
-                color: appTheme.white,
+                color: controller.enableCategoryError.value
+                    ? appTheme.alertNegative.withOpacity(0.1)
+                    : appTheme.white,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: DropdownButton<String>(
@@ -205,7 +224,6 @@ class ContentEditView extends GetWidget<ContentEditController> {
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
                 borderRadius: BorderRadius.circular(12),
-                // icon: const Icon(Icons.),
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
@@ -224,6 +242,15 @@ class ContentEditView extends GetWidget<ContentEditController> {
                 }).toList(),
               ),
             ),
+            controller.enableCategoryError.value
+                ? Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text('필수 입력 항목입니다.',
+                          style: CustomTextStyles.labelMediumRed),
+                    ],
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(width: 24),
@@ -245,9 +272,13 @@ class ContentEditView extends GetWidget<ContentEditController> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
-                  color: appTheme.grayScale3,
+                  color: controller.enableTypeError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3,
                 ),
-                color: appTheme.white,
+                color: controller.enableTypeError.value
+                    ? appTheme.alertNegative.withOpacity(0.1)
+                    : appTheme.white,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: DropdownButton<String>(
@@ -267,6 +298,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   onChanged: (String? newValue) {
                     if (newValue != null) {
                       controller.selectedType.value = newValue;
+                      controller.enableTypeError.value = false;
                     }
                   },
                   items: controller.categorySelected.value
@@ -280,7 +312,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                             ),
                           );
                         }).toList()
-                      : <String>[""]
+                      : <String>[]
                           .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -291,6 +323,15 @@ class ContentEditView extends GetWidget<ContentEditController> {
                           );
                         }).toList()),
             ),
+            controller.enableTypeError.value
+                ? Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text('필수 입력 항목입니다.',
+                          style: CustomTextStyles.labelMediumRed),
+                    ],
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
       ],
@@ -361,7 +402,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         Text('태그 입력 후 ‘+’ 버튼 또는 Enter로 태그를 등록해주세요.',
             style: CustomTextStyles.labelLargeGray),
         const SizedBox(height: 8),
-        controller.tags == [] ? const SizedBox.shrink() : buildChips(),
+        controller.tags.isEmpty ? const SizedBox.shrink() : buildChips(),
         CustomTextFormField(
             controller: controller.tagController,
             width: 730,
@@ -376,19 +417,14 @@ class ContentEditView extends GetWidget<ContentEditController> {
                 controller.addTag(controller.tagController.text);
               },
             ),
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
             onSubmitted: (value) {
               controller.addTag(value);
             },
             validator: (value) {
-              // if (value == null ||
-              //     !controller.checkPasswordValid(value, true) ||
-              //     !controller.authPasswordResetModel.isSuccess) {
-              //   return "Code is invalid or has expired".tr;
-              // }
-              // return null;
+              if (controller.tags.isEmpty) {
+                return "필수 입력 항목입니다.".tr;
+              }
+              return null;
             },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
@@ -487,7 +523,36 @@ class ContentEditView extends GetWidget<ContentEditController> {
       children: [
         Text("파일", style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        _enterVideo(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "동영상 파일 ",
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+            ])),
+            const SizedBox(height: 8),
+            Text('사전 등록 후 저장된 링크를 입력해주세요.',
+                style: CustomTextStyles.labelLargeGray),
+            const SizedBox(height: 8),
+            CustomTextFormField(
+                controller: controller.videoController,
+                width: 730,
+                validator: (value) {
+                  if (controller.videoController.text == '') {
+                    return "필수 입력 항목입니다.".tr;
+                  }
+                  return null;
+                },
+                contentPadding:
+                    const EdgeInsets.only(left: 16, top: 17, bottom: 17),
+                filled: true),
+          ],
+        ),
         const SizedBox(height: 24),
         Row(
           children: [
@@ -506,20 +571,43 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   width: 353,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: appTheme.grayScale3),
-                      color: appTheme.white),
+                      border: Border.all(
+                          color: controller.enableThumbnailError.value
+                              ? appTheme.alertNegative
+                              : appTheme.grayScale3),
+                      color: controller.enableThumbnailError.value
+                          ? appTheme.alertNegative.withOpacity(0.1)
+                          : appTheme.white),
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('https://nodamen.akamaized.net/Mi...',
-                          style: CustomTextStyles.bodyMediumBlack),
+                      SizedBox(
+                        width: 280,
+                        child: Text(
+                          'https://nodamen.akamaized.net/Miffffffffffffffff',
+                          style: CustomTextStyles.bodyMediumBlack,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       CustomImageView(
                         imagePath: IconConstant.upload,
+                        onTap: () {
+                          controller.pickFile("thumbnail");
+                        },
                       )
                     ],
                   ),
                 ),
+                controller.enableThumbnailError.value
+                    ? Column(
+                        children: [
+                          const SizedBox(height: 8),
+                          Text('필수 입력 항목입니다.',
+                              style: CustomTextStyles.labelMediumRed),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
             const SizedBox(
@@ -541,10 +629,19 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('https://nodamen.akamaized.net/Mi...',
-                          style: CustomTextStyles.bodyMediumBlack),
+                      SizedBox(
+                        width: 280,
+                        child: Text(
+                          'https://nodamen.akamaized.net/Middddddddddddddddddd',
+                          style: CustomTextStyles.bodyMediumBlack,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       CustomImageView(
                         imagePath: IconConstant.upload,
+                        onTap: () {
+                          controller.pickFile("cc");
+                        },
                       )
                     ],
                   ),
@@ -553,50 +650,6 @@ class ContentEditView extends GetWidget<ContentEditController> {
             ),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _enterVideo() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "동영상 파일 ",
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        Text('사전 등록 후 저장된 링크를 입력해주세요.', style: CustomTextStyles.labelLargeGray),
-        const SizedBox(height: 8),
-        CustomTextFormField(
-            controller: controller.tagController,
-            width: 730,
-            hintText: "Input text",
-            hintStyle: CustomTextStyles.bodyMediumGray,
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
-            onSubmitted: (value) {
-              controller.addTag(value);
-            },
-            validator: (value) {
-              // if (value == null ||
-              //     !controller.checkPasswordValid(value, true) ||
-              //     !controller.authPasswordResetModel.isSuccess) {
-              //   return "Code is invalid or has expired".tr;
-              // }
-              // return null;
-            },
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
-            filled: true),
       ],
     );
   }

@@ -313,7 +313,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                             ),
                           );
                         }).toList()
-                      : <String>[""]
+                      : <String>[]
                           .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
