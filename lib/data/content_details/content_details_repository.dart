@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/content_details/content_details_model.
 class ContentDetailsRepository extends BaseRepository {
   Future<ContentDetailsModel> get(String? id) async {
     // req
-    String endpoint = "contents/$id?";
+    String endpoint = "contents/$id";
     Response response = await httpClient.get(endpoint);
 
     // result
