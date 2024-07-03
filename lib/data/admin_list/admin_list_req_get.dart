@@ -19,5 +19,5 @@ class AdminListReqGet {
 
   Map<String, dynamic> toJson() => {
         "page": page,
-      };
+      }.map((key, value) => MapEntry(key, value.toString()));
 }

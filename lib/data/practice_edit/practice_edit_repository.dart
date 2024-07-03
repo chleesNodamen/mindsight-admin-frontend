@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
-import 'package:mindsight_admin_page/data/practice_register/practice_edit_model.dart';
+import 'package:mindsight_admin_page/data/practice_edit/practice_edit_model.dart';
 
 class PracticeEditRepository extends BaseRepository {
   Future<PracticeEditModel> put(String? id, Map<String, dynamic> body) async {
