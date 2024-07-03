@@ -6,7 +6,7 @@ class MembersModel extends BaseModel {
   List<String>? affiliation;
   List<String>? email;
   List<String>? username;
-  List<String>? createdAt;
+  List<DateTime>? createdAt;
   List<bool>? status;
   int? number;
 
@@ -25,7 +25,7 @@ class MembersModel extends BaseModel {
     List<String>? affiliation,
     List<String>? email,
     List<String>? username,
-    List<String>? createdAt,
+    List<DateTime>? createdAt,
     List<bool>? status,
     int? number,
   }) =>
@@ -54,8 +54,8 @@ class MembersModel extends BaseModel {
             : List<String>.from(json["username"]!.map((x) => x)),
         createdAt: json["createdAt"] == null
             ? []
-            : List<String>.from(json["createdAt"]!.map(
-                (x) => DateFormat('yyyy-MM-dd').format(DateTime.parse(x)))),
+            : List<DateTime>.from(
+                json["createdAt"]!.map((x) => DateTime.parse(x))),
         status: json["status"] == null
             ? []
             : List<bool>.from(json["status"]!.map((x) => x)),
@@ -72,7 +72,7 @@ class MembersModel extends BaseModel {
             username == null ? [] : List<dynamic>.from(username!.map((x) => x)),
         "createdAt": createdAt == null
             ? []
-            : List<dynamic>.from(createdAt!.map((x) => x)),
+            : List<dynamic>.from(createdAt!.map((x) => x.toIso8601String())),
         "status":
             status == null ? [] : List<dynamic>.from(status!.map((x) => x)),
         "number": number,

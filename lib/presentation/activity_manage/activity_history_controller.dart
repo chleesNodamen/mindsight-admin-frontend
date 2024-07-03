@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/activity_chat.dart/activity_chat_model.dart';
 import 'package:mindsight_admin_page/data/activity_chat.dart/activity_chat_repository.dart';
@@ -24,6 +25,10 @@ class ActivityHistoryController extends GetxController {
   RxBool isInited = false.obs;
   bool? chatBot;
   bool? feedback;
+  String registrationDate = "";
+  String sessionStartDate = "";
+  String sessionEndDate = "";
+  String expertMessageDate = "";
 
   late ActivityDetailsModel activityDetailsModel;
   late ActivityExpertModel activityExpertModel;
@@ -41,7 +46,7 @@ class ActivityHistoryController extends GetxController {
           email: 'akdlsemtkdlxm@nodamen.com',
           username: 'dbwjspdla',
           // "registrationDate": '2023-04-01T12:00:00.000Z',
-          registrationDate: '2023-04-01',
+          registrationDate: DateTime.now(),
           level: '36회차',
           body: 'Sunrise 10-Minute Morning Yoga A',
           breath: 'Sunrise 10-Minute Morning Yoga B',
@@ -53,14 +58,29 @@ class ActivityHistoryController extends GetxController {
           type: "Practice plan",
           recordOne: 'Stressed',
           recordTwo: 'Feeling fatigued, Distracted mind',
-          sessionStartDate: '2024-03-13-10:09:34',
-          sessionEndDate: '2024-03-13-10:09:34',
+          sessionStartDate: DateTime.now(),
+          sessionEndDate: DateTime.now(),
           chatbot: 'chatbot',
           expertMessage:
               'You are shining a bit brighter now! We\'re so happy to see the positive changes in your mood! Let\'s keep this beautiful journey and uncover even more wonderful insights.',
-          expertMessageDate: '2024-03-13-10:09:34');
+          expertMessageDate: DateTime.now());
     }
-
+    if (activityDetailsModel.registrationDate != null) {
+      registrationDate = DateFormat('yyyy-MM-dd')
+          .format(activityDetailsModel.registrationDate!);
+    }
+    if (activityDetailsModel.sessionStartDate != null) {
+      sessionStartDate = DateFormat('yyyy-MM-dd-HH:mm:ss')
+          .format(activityDetailsModel.sessionStartDate!);
+    }
+    if (activityDetailsModel.sessionEndDate != null) {
+      sessionEndDate = DateFormat('yyyy-MM-dd-HH:mm:ss')
+          .format(activityDetailsModel.sessionEndDate!);
+    }
+    if (activityDetailsModel.expertMessageDate != null) {
+      expertMessageDate = DateFormat('yyyy-MM-dd-HH:mm:ss')
+          .format(activityDetailsModel.expertMessageDate!);
+    }
     chatBot = activityDetailsModel.chatbot != null;
     feedback = activityDetailsModel.expertMessage != null;
     isLoading.value = false;
@@ -111,9 +131,12 @@ class ActivityHistoryController extends GetxController {
   }
 
   void onPracticeTap() {
-    //TODO
+    Get.toNamed(AppRoutes.practiceDetails,
+        arguments: {RouteArguments.id: activityDetailsModel.sessionId});
   }
+
   void onChallengeTap() {
-    //TODO
+    Get.toNamed(AppRoutes.challengeDetails,
+        arguments: {RouteArguments.id: activityDetailsModel.sessionId});
   }
 }

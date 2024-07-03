@@ -1,6 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_controller.dart';
-import 'package:video_player/video_player.dart';
 
 class ContentEditView extends GetWidget<ContentEditController> {
   const ContentEditView({super.key});
@@ -115,10 +114,6 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                     if (formKey.currentState!.validate() &&
                                         controller.isSaveOk()) {
                                       controller.onSave();
-                                      Get.toNamed(AppRoutes.contentDetails,
-                                          arguments: {
-                                            RouteArguments.id: controller.id
-                                          });
                                     }
                                   },
                                 ),
@@ -358,7 +353,9 @@ class ContentEditView extends GetWidget<ContentEditController> {
           child: DropdownButton<String>(
             hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: "",
+            value: controller.selectedMaster.value == ""
+                ? null
+                : controller.selectedMaster.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -367,10 +364,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
             elevation: 16,
             onChanged: (String? newValue) {
               if (newValue != null) {
-                //TODO
+                controller.selectedMaster.value = newValue;
               }
             },
-            items: <String>[""].map<DropdownMenuItem<String>>((String value) {
+            items: controller.masters
+                .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(
@@ -585,7 +583,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                       SizedBox(
                         width: 280,
                         child: Text(
-                          'https://nodamen.akamaized.net/Miffffffffffffffff',
+                          controller.thumbnailName.value,
                           style: CustomTextStyles.bodyMediumBlack,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -632,7 +630,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                       SizedBox(
                         width: 280,
                         child: Text(
-                          'https://nodamen.akamaized.net/Middddddddddddddddddd',
+                          controller.ccName.value,
                           style: CustomTextStyles.bodyMediumBlack,
                           overflow: TextOverflow.ellipsis,
                         ),

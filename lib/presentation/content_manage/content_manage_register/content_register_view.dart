@@ -83,9 +83,9 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                                     width: 90,
                                     height: 44,
                                     onPressed: () {
-                                      if (formKey.currentState!.validate()) {
-                                        // controller.saveChanges();
-                                        Get.back();
+                                      if (formKey.currentState!.validate() &&
+                                          controller.isSaveOk()) {
+                                        controller.onSave();
                                       }
                                     },
                                   ),
@@ -137,7 +137,9 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           child: DropdownButton<String>(
             hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: "",
+            value: controller.selectedMaster.value == ""
+                ? null
+                : controller.selectedMaster.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -146,10 +148,11 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             elevation: 16,
             onChanged: (String? newValue) {
               if (newValue != null) {
-                //TODO
+                controller.selectedMaster.value = newValue;
               }
             },
-            items: <String>[""].map<DropdownMenuItem<String>>((String value) {
+            items: controller.masters
+                .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(
@@ -179,13 +182,10 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            // controller: controller.passwordController,
+            controller: controller.titleController,
             width: 353,
             hintText: "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
             validator: (value) {
               if (value == null) {
                 return "필수 입력 항목입니다.".tr;
@@ -194,8 +194,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
             filled: true),
       ],
     );
@@ -222,9 +220,13 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
-                  color: appTheme.grayScale3,
+                  color: controller.enableCategoryError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3,
                 ),
-                color: appTheme.white,
+                color: controller.enableCategoryError.value
+                    ? appTheme.alertNegative.withOpacity(0.1)
+                    : appTheme.white,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: DropdownButton<String>(
@@ -238,7 +240,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
                 borderRadius: BorderRadius.circular(12),
-                // icon: const Icon(Icons.),
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
@@ -257,6 +258,15 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 }).toList(),
               ),
             ),
+            controller.enableCategoryError.value
+                ? Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text('필수 입력 항목입니다.',
+                          style: CustomTextStyles.labelMediumRed),
+                    ],
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(width: 24),
@@ -278,9 +288,13 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
-                  color: appTheme.grayScale3,
+                  color: controller.enableTypeError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3,
                 ),
-                color: appTheme.white,
+                color: controller.enableTypeError.value
+                    ? appTheme.alertNegative.withOpacity(0.1)
+                    : appTheme.white,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: DropdownButton<String>(
@@ -300,6 +314,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   onChanged: (String? newValue) {
                     if (newValue != null) {
                       controller.selectedType.value = newValue;
+                      controller.enableTypeError.value = false;
                     }
                   },
                   items: controller.categorySelected.value
@@ -324,6 +339,15 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                           );
                         }).toList()),
             ),
+            controller.enableTypeError.value
+                ? Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text('필수 입력 항목입니다.',
+                          style: CustomTextStyles.labelMediumRed),
+                    ],
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
       ],
@@ -362,19 +386,14 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 controller.addTag(controller.tagController.text);
               },
             ),
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
             onSubmitted: (value) {
               controller.addTag(value);
             },
             validator: (value) {
-              // if (value == null ||
-              //     !controller.checkPasswordValid(value, true) ||
-              //     !controller.authPasswordResetModel.isSuccess) {
-              //   return "Code is invalid or has expired".tr;
-              // }
-              // return null;
+              if (controller.tags.isEmpty) {
+                return "필수 입력 항목입니다.".tr;
+              }
+              return null;
             },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
@@ -473,7 +492,36 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       children: [
         Text("파일", style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        _enterVideo(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "동영상 파일 ",
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+            ])),
+            const SizedBox(height: 8),
+            Text('사전 등록 후 저장된 링크를 입력해주세요.',
+                style: CustomTextStyles.labelLargeGray),
+            const SizedBox(height: 8),
+            CustomTextFormField(
+                controller: controller.videoController,
+                width: 730,
+                validator: (value) {
+                  if (controller.videoController.text == '') {
+                    return "필수 입력 항목입니다.".tr;
+                  }
+                  return null;
+                },
+                contentPadding:
+                    const EdgeInsets.only(left: 16, top: 17, bottom: 17),
+                filled: true),
+          ],
+        ),
         const SizedBox(height: 24),
         Row(
           children: [
@@ -492,20 +540,47 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   width: 353,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: appTheme.grayScale3),
-                      color: appTheme.white),
+                      border: Border.all(
+                          color: controller.enableThumbnailError.value
+                              ? appTheme.alertNegative
+                              : appTheme.grayScale3),
+                      color: controller.enableThumbnailError.value
+                          ? appTheme.alertNegative.withOpacity(0.1)
+                          : appTheme.white),
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('https://nodamen.akamaized.net/Mi...',
-                          style: CustomTextStyles.bodyMediumBlack),
+                      SizedBox(
+                        width: 280,
+                        child: Text(
+                          controller.thumbnailName == "".obs
+                              ? '파일 추가 혹은 여기로 드래그 (.jpg)'
+                              : controller.thumbnailName.value,
+                          style: controller.thumbnailName == "".obs
+                              ? CustomTextStyles.bodyMediumGray
+                              : CustomTextStyles.bodyMediumBlack,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       CustomImageView(
                         imagePath: IconConstant.upload,
+                        onTap: () {
+                          controller.pickFile("thumbnail");
+                        },
                       )
                     ],
                   ),
                 ),
+                controller.enableThumbnailError.value
+                    ? Column(
+                        children: [
+                          const SizedBox(height: 8),
+                          Text('필수 입력 항목입니다.',
+                              style: CustomTextStyles.labelMediumRed),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
             const SizedBox(
@@ -527,11 +602,24 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('https://nodamen.akamaized.net/Mi...',
-                          style: CustomTextStyles.bodyMediumBlack),
+                      SizedBox(
+                        width: 280,
+                        child: Text(
+                          controller.ccName == "".obs
+                              ? '파일 추가 혹은 여기로 드래그 (.jpg)'
+                              : controller.ccName.value,
+                          style: controller.ccName == "".obs
+                              ? CustomTextStyles.bodyMediumGray
+                              : CustomTextStyles.bodyMediumBlack,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       CustomImageView(
                         imagePath: IconConstant.upload,
-                      )
+                        onTap: () {
+                          controller.pickFile("cc");
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -539,50 +627,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             ),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _enterVideo() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "동영상 파일 ",
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        Text('사전 등록 후 저장된 링크를 입력해주세요.', style: CustomTextStyles.labelLargeGray),
-        const SizedBox(height: 8),
-        CustomTextFormField(
-            controller: controller.tagController,
-            width: 730,
-            hintText: "Input text",
-            hintStyle: CustomTextStyles.bodyMediumGray,
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
-            onSubmitted: (value) {
-              controller.addTag(value);
-            },
-            validator: (value) {
-              // if (value == null ||
-              //     !controller.checkPasswordValid(value, true) ||
-              //     !controller.authPasswordResetModel.isSuccess) {
-              //   return "Code is invalid or has expired".tr;
-              // }
-              // return null;
-            },
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
-            filled: true),
       ],
     );
   }

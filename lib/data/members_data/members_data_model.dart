@@ -10,8 +10,8 @@ class MembersDataModel extends BaseModel {
   String? lastName;
   String? gender;
   String? yearOfBirth;
-  String? createdAt;
-  String? lastLogin;
+  DateTime? createdAt;
+  DateTime? lastLogin;
   String? username;
   String? email;
   int? mindfulStreak;
@@ -47,8 +47,8 @@ class MembersDataModel extends BaseModel {
     String? lastName,
     String? gender,
     String? yearOfBirth,
-    String? createdAt,
-    String? lastLogin,
+    DateTime? createdAt,
+    DateTime? lastLogin,
     String? username,
     String? email,
     int? mindfulStreak,
@@ -85,15 +85,12 @@ class MembersDataModel extends BaseModel {
         lastName: json["lastName"],
         gender: json["gender"],
         yearOfBirth: json["yearOfBirth"],
-        createdAt:
-            DateFormat('yyyy-MM-dd').format(DateTime.parse(json["createdAt"])),
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
         lastLogin: json["lastLogin"] == null
             ? null
-            : (json["createdAt"] as DateTime)
-                .toString()
-                .substring(0, 19)
-                .replaceAll(' ', '-')
-                .replaceAll(':', '-'),
+            : DateTime.parse(json["lastLogin"]),
         username: json["username"],
         email: json["email"],
         mindfulStreak: json["mindfulStreak"],
@@ -111,8 +108,8 @@ class MembersDataModel extends BaseModel {
         "lastName": lastName,
         "gender": gender,
         "yearOfBirth": yearOfBirth,
-        "createdAt": createdAt,
-        "lastLogin": lastLogin,
+        "createdAt": createdAt!.toIso8601String(),
+        "lastLogin": lastLogin!.toIso8601String(),
         "username": username,
         "email": email,
         "mindfulStreak": mindfulStreak,

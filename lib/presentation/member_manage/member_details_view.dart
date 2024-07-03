@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
@@ -265,7 +266,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.createdAt ?? "-",
+                  Text(
+                      controller.membersDataModel.createdAt != null
+                          ? DateFormat('yyyy-MM-dd')
+                              .format(controller.membersDataModel.createdAt!)
+                          : "-",
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -294,7 +299,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text(controller.membersDataModel.lastLogin ?? "-",
+                Text(
+                    controller.membersDataModel.lastLogin != null
+                        ? DateFormat('yyyy-MM-dd-HH:mm:ss')
+                            .format(controller.membersDataModel.lastLogin!)
+                        : "-",
                     style: CustomTextStyles.labelLargeGray),
               ],
             ),

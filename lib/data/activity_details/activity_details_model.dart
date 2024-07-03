@@ -5,7 +5,7 @@ class ActivityDetailsModel extends BaseModel {
   String? id;
   String? email;
   String? username;
-  String? registrationDate;
+  DateTime? registrationDate;
   String? level;
   String? body;
   String? breath;
@@ -16,11 +16,12 @@ class ActivityDetailsModel extends BaseModel {
   String? type;
   String? recordOne;
   String? recordTwo;
-  String? sessionStartDate;
-  String? sessionEndDate;
+  String? sessionId;
+  DateTime? sessionStartDate;
+  DateTime? sessionEndDate;
   String? chatbot;
   String? expertMessage;
-  String? expertMessageDate;
+  DateTime? expertMessageDate;
 
   ActivityDetailsModel({
     this.id,
@@ -37,6 +38,7 @@ class ActivityDetailsModel extends BaseModel {
     this.type,
     this.recordOne,
     this.recordTwo,
+    this.sessionId,
     this.sessionStartDate,
     this.sessionEndDate,
     this.chatbot,
@@ -48,7 +50,7 @@ class ActivityDetailsModel extends BaseModel {
           {String? id,
           String? email,
           String? username,
-          String? registrationDate,
+          DateTime? registrationDate,
           String? level,
           String? body,
           String? breath,
@@ -59,11 +61,12 @@ class ActivityDetailsModel extends BaseModel {
           String? type,
           String? recordOne,
           String? recordTwo,
-          String? sessionStartDate,
-          String? sessionEndDate,
+          String? sessionId,
+          DateTime? sessionStartDate,
+          DateTime? sessionEndDate,
           String? chatbot,
           String? expertMessage,
-          String? expertMessageDate}) =>
+          DateTime? expertMessageDate}) =>
       ActivityDetailsModel(
         id: id ?? this.id,
         email: email ?? this.email,
@@ -79,6 +82,7 @@ class ActivityDetailsModel extends BaseModel {
         type: type ?? this.type,
         recordOne: recordOne ?? this.recordOne,
         recordTwo: recordTwo ?? this.recordTwo,
+        sessionId: sessionId ?? this.sessionId,
         sessionStartDate: sessionStartDate ?? this.sessionStartDate,
         sessionEndDate: sessionEndDate ?? this.sessionEndDate,
         chatbot: chatbot ?? this.chatbot,
@@ -91,8 +95,9 @@ class ActivityDetailsModel extends BaseModel {
         id: json["id"],
         email: json["email"],
         username: json["username"],
-        registrationDate: DateFormat('yyyy-MM-dd')
-            .format(DateTime.parse(json["registrationDate"])),
+        registrationDate: json["registrationDate"] == null
+            ? null
+            : DateTime.parse(json["registrationDate"]),
         level: json["level"],
         body: json["body"],
         breath: json["breath"],
@@ -103,36 +108,25 @@ class ActivityDetailsModel extends BaseModel {
         type: json["type"],
         recordOne: json["recordOne"],
         recordTwo: json["recordTwo"],
+        sessionId: json["sessionId"],
         sessionStartDate: json["sessionStartDate"] == null
             ? null
-            : (json["sessionStartDate"] as DateTime)
-                .toString()
-                .substring(0, 19)
-                .replaceAll(' ', '-')
-                .replaceAll(':', '-'),
+            : DateTime.parse(json["sessionStartDate"]),
         sessionEndDate: json["sessionEndDate"] == null
             ? null
-            : (json["sessionEndDate"] as DateTime)
-                .toString()
-                .substring(0, 19)
-                .replaceAll(' ', '-')
-                .replaceAll(':', '-'),
+            : DateTime.parse(json["sessionEndDate"]),
         chatbot: json["chatbot"],
         expertMessage: json["expertMessage"],
         expertMessageDate: json["expertMessageDate"] == null
             ? null
-            : (json["expertMessageDate"] as DateTime)
-                .toString()
-                .substring(0, 19)
-                .replaceAll(' ', '-')
-                .replaceAll(':', '-'),
+            : DateTime.parse(json["expertMessageDate"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "email": email,
         "username": username,
-        "registrationDate": registrationDate,
+        "registrationDate": registrationDate?.toIso8601String(),
         "level": level,
         "body": body,
         "breath": breath,
@@ -143,10 +137,11 @@ class ActivityDetailsModel extends BaseModel {
         "type": type,
         "recordOne": recordOne,
         "recordTwo": recordTwo,
-        "sessionStartDate": sessionStartDate,
-        "sessionEndDate": sessionEndDate,
+        "sessionId": sessionId,
+        "sessionStartDate": sessionStartDate?.toIso8601String(),
+        "sessionEndDate": sessionEndDate?.toIso8601String(),
         "chatbot": chatbot,
         "expertMessage": expertMessage,
-        "expertMessageDate": expertMessageDate,
+        "expertMessageDate": expertMessageDate?.toIso8601String(),
       };
 }

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_controller.dart';
 
@@ -170,7 +171,11 @@ class InactiveMemberManageView
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(controller.membersModel.createdAt![index],
+                          child: Text(
+                              controller.membersModel.createdAt != null
+                                  ? DateFormat('yyyy-MM-dd').format(
+                                      controller.membersModel.createdAt![index])
+                                  : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(DecoratedBox(

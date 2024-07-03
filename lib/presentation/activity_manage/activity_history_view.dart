@@ -148,7 +148,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.activityDetailsModel.registrationDate ?? "",
+                  Text(controller.registrationDate,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               )
@@ -420,7 +420,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(controller.activityDetailsModel.sessionStartDate ?? "",
+                  Text(controller.sessionStartDate,
                       style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     width: 32,
@@ -436,7 +436,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(controller.activityDetailsModel.sessionEndDate ?? "",
+                  Text(controller.sessionEndDate,
                       style: CustomTextStyles.labelLargeGray),
                 ],
               )),
@@ -532,10 +532,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                             const SizedBox(
                               width: 8,
                             ),
-                            Text(
-                                controller.activityDetailsModel
-                                        .expertMessageDate ??
-                                    "",
+                            Text(controller.expertMessageDate,
                                 style: CustomTextStyles.labelLargeGray),
                           ],
                         )),

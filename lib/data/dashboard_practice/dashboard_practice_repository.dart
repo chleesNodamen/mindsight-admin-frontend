@@ -6,13 +6,13 @@ class DashboardPracticeRepository extends BaseRepository {
   Future<DashboardPracticeModel> get(Map<String, dynamic>? query) async {
     Logger.log(query.toString());
     // req
-    String endpoint = "dashboard/practice";
+    String endpoint = "dashboard/practice?";
     endpoint += addGetParam(query);
     Response response = await httpClient.get(endpoint);
 
     // result
-    DashboardPracticeModel model =
-        fetchJsonData<DashboardPracticeModel>(response, DashboardPracticeModel.fromJson);
+    DashboardPracticeModel model = fetchJsonData<DashboardPracticeModel>(
+        response, DashboardPracticeModel.fromJson);
     model.length = model.id?.length ?? model.length;
 
     return model;

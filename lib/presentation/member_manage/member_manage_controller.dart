@@ -60,7 +60,7 @@ class MemberManageController extends GetxController {
         affiliation: List.generate(10, (_) => 'Nodamen'),
         email: List.generate(10, (_) => 'akdlsemtkdlxm@nodamen.com'),
         username: List.generate(10, (_) => 'dbwjspdla'),
-        createdAt: List.generate(10, (_) => '2024-04-25'),
+        createdAt: List.generate(10, (_) => DateTime.now()),
         status: List.generate(10, (_) => true),
         number: 10,
       );

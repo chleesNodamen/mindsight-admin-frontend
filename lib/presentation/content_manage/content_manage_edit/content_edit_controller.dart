@@ -1,4 +1,6 @@
 import 'dart:html';
+import 'package:mindsight_admin_page/data/content_master/master_model.dart';
+import 'package:mindsight_admin_page/data/content_master/master_repository.dart';
 import 'package:mindsight_admin_page/data/upload/upload_request.dart';
 import 'package:video_player/video_player.dart';
 
@@ -32,8 +34,6 @@ class ContentEditController extends GetxController {
   final TextEditingController introController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController videoController = TextEditingController();
-  final TextEditingController thumbnailController = TextEditingController();
-  final TextEditingController ccController = TextEditingController();
   VideoPlayerController? videoPlayerController;
   late final focusNode = FocusNode();
 
@@ -42,6 +42,9 @@ class ContentEditController extends GetxController {
   RxString selectedType = "".obs;
   RxList<String> tags = <String>[].obs;
   RxString selectedMaster = "".obs;
+  List<String> masters = <String>[];
+  RxString thumbnailName = "".obs;
+  RxString ccName = "".obs;
 
   RxBool enableCategoryError = false.obs;
   RxBool enableTypeError = false.obs;
@@ -57,13 +60,17 @@ class ContentEditController extends GetxController {
 
   late ContentDetailsModel contentDetailsModel;
   late ContentEditModel contentEditModel;
+  late MasterModel masterModel;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     if (AppConstant.chleesTest) {
+      masterModel = await MasterRepository().get();
       contentDetailsModel = await ContentDetailsRepository().get(id);
     } else {
+      masterModel =
+          MasterModel().copyWith(id: [""], name: ["Mindsight master"]);
       contentDetailsModel = ContentDetailsModel().copyWith(
         id: id,
         category: "Body",
@@ -82,6 +89,9 @@ class ContentEditController extends GetxController {
       );
     }
     introController.addListener(formatText);
+    if (masterModel.name != null) {
+      masters = masterModel.name!;
+    }
     if (contentDetailsModel.intro != null) {
       introController.text = contentDetailsModel.intro!;
     } else {
@@ -111,14 +121,10 @@ class ContentEditController extends GetxController {
       videoController.text = "";
     }
     if (contentDetailsModel.thumbnail != null) {
-      thumbnailController.text = contentDetailsModel.thumbnail!;
-    } else {
-      thumbnailController.text = "";
+      thumbnailName.value = contentDetailsModel.thumbnail!;
     }
     if (contentDetailsModel.cc != null) {
-      ccController.text = contentDetailsModel.cc!;
-    } else {
-      ccController.text = "";
+      ccName.value = contentDetailsModel.cc!;
     }
     isLoading.value = false;
     isInited.value = true;
@@ -189,7 +195,7 @@ class ContentEditController extends GetxController {
     } else {
       enableTypeError.value = false;
     }
-    if (thumbnailFile == null && thumbnailController.text == "") {
+    if (thumbnailFile == null && thumbnailName.value == "") {
       enableThumbnailError.value = true;
     } else {
       enableThumbnailError.value = false;
@@ -224,9 +230,9 @@ class ContentEditController extends GetxController {
           master: selectedMaster.value,
           tags: tags,
           intro: introController.text,
-          thumbnail: thumbnailUrl ?? thumbnailController.text,
+          thumbnail: thumbnailUrl ?? thumbnailName.value,
           video: videoController.text,
-          cc: ccUrl ?? ccController.text,
+          cc: ccUrl ?? ccName.value,
           name: titleController.text,
           durationTime: duration ?? 0,
         ).toJson());
@@ -237,15 +243,25 @@ class ContentEditController extends GetxController {
   }
 
   void pickFile(String type) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    List<String> extensions;
+    if (type == "cc") {
+      extensions = ['srt'];
+    } else {
+      extensions = ['jpg'];
+    }
+
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: extensions,
+    );
 
     if (result != null) {
       PlatformFile file = result.files.first;
       if (type == "cc") {
-        ccController.text = file.name;
+        ccName.value = file.name;
         ccFile = File([file.bytes!], file.name);
       } else {
-        thumbnailController.text = file.name;
+        thumbnailName.value = file.name;
         thumbnailFile = File([file.bytes!], file.name);
       }
     } else {
