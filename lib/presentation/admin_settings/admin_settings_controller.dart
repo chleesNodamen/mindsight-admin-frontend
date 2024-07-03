@@ -1,25 +1,46 @@
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_model.dart';
+import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_repository.dart';
+import 'package:mindsight_admin_page/data/admin_password/admin_password_model.dart';
+import 'package:mindsight_admin_page/data/admin_password/admin_password_repository.dart';
+import 'package:mindsight_admin_page/data/admin_password/admin_password_req_put.dart';
 
 enum PasswordValidEnum { waiting, valid, invalid }
 
 class AdminSettingsController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+
+  late AdminMyDataModel adminMyDataModel;
+  late AdminPasswordModel adminPasswordModel;
+
+  DateFormat formatter = DateFormat('yyyy-MM-dd-HH:mm:ss');
+  RxString formattedDate = "".obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
+    if (AppConstant.chleesTest) {
+      adminMyDataModel = await AdminMydataRepository().get();
+    } else {
+      adminMyDataModel = AdminMyDataModel().copyWith(
+        id: "ms_content@nodamen.com",
+        department: "Mindsight Content Dept.",
+        role: "마스터 (변경불가)",
+        manager: "이진아",
+        phone: "01012345678",
+        adminEmail: "jalee@nodamen.com",
+        lastActivity: DateTime.parse("2024-06-01T12:02:21"),
+      );
+      formattedDate = formatter.format(adminMyDataModel.lastActivity!).obs;
+    }
     isLoading.value = false;
     isInited.value = true;
   }
 
-  String email = 'random@gmail.com';
-  String code = 'randomcode';
-
-  late AuthPasswordResetModel authPasswordResetModel;
-
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController passwordConfirmController =
-      TextEditingController();
+  final TextEditingController oldPasswordController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
 
   final CorrectWordChecker _wordChecker = CorrectWordChecker('');
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -74,16 +95,17 @@ class AdminSettingsController extends GetxController {
   }
 
   Future<void> onContinue() async {
-    if (!checkPasswordValid(passwordController.text, false)) {
+    if (!checkPasswordValid(oldPasswordController.text, false)) {
       return;
     }
 
     isLoading.value = true;
 
-    // authPasswordResetModel = await AuthPasswordResetRepository().put(
-    //     AuthPasswordResetReqPost(
-    //             email: email, code: code, password: passwordController.text)
-    //         .toJson());
+    adminPasswordModel = await AdminPasswordRepository().put(
+        AdminPasswordReqPut(
+                previousPassword: oldPasswordController.text,
+                newPassword: newPasswordController.text)
+            .toJson());
 
     isLoading.value = false;
 
@@ -91,8 +113,8 @@ class AdminSettingsController extends GetxController {
       return;
     }
 
-    if (authPasswordResetModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.adminSettings);
+    if (adminPasswordModel.isSuccess) {
+      // Get.offAllNamed(AppRoutes.adminSettings);
     }
   }
 }

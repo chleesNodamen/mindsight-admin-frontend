@@ -83,7 +83,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('아이디', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("ms_content@nodamen.com",
+                  Text(controller.adminMyDataModel.id ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
@@ -96,7 +96,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('담당 부서', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("Mindsight Content Dept.",
+                  Text(controller.adminMyDataModel.department ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
@@ -109,7 +109,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('권한', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("마스터 (변경불가)", style: CustomTextStyles.bodyLargeBlack),
+                  Text(controller.adminMyDataModel.role ?? "-",
+                      style: CustomTextStyles.bodyLargeBlack),
                 ],
               )
             ],
@@ -127,7 +128,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('담당자', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("이진아", style: CustomTextStyles.bodyLargeBlack),
+                  Text(controller.adminMyDataModel.manager ?? "-",
+                      style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -139,7 +141,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('연락처', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("01012345678", style: CustomTextStyles.bodyLargeBlack),
+                  Text(controller.adminMyDataModel.phone ?? "-",
+                      style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
               const SizedBox(
@@ -151,7 +154,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('이메일주소', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("jalee@nodamen.com",
+                  Text(controller.adminMyDataModel.adminEmail ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               )
@@ -178,7 +181,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('2024-03-13-10:09:34',
+                Text(controller.formattedDate.value ?? '-',
                     style: CustomTextStyles.labelLargeGray),
               ],
             ),
@@ -212,7 +215,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                     Text('현재 비밀번호', style: CustomTextStyles.labelLargeBlack),
                     const SizedBox(height: 8),
                     CustomTextFormField(
-                        controller: controller.passwordController,
+                        controller: controller.oldPasswordController,
                         width: 353,
                         hintText: "Input text",
                         hintStyle: CustomTextStyles.bodyMediumGray,
@@ -241,7 +244,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                         validator: (value) {
                           if (value == null ||
                               !controller.checkPasswordValid(value, true) ||
-                              !controller.authPasswordResetModel.isSuccess) {
+                              !controller.adminPasswordModel.isSuccess) {
                             return "Code is invalid or has expired".tr;
                           }
                           return null;
@@ -262,7 +265,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                     Text('변경할 비밀번호', style: CustomTextStyles.labelLargeBlack),
                     const SizedBox(height: 8),
                     CustomTextFormField(
-                        controller: controller.passwordConfirmController,
+                        controller: controller.newPasswordController,
                         width: 353,
                         hintText: "Input text",
                         hintStyle: CustomTextStyles.bodyMediumGray,
@@ -289,7 +292,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                         validator: (value) {
                           if (value == null ||
                               !controller.checkPasswordValid(value, true) ||
-                              !controller.authPasswordResetModel.isSuccess) {
+                              !controller.adminPasswordModel.isSuccess) {
                             return "Code is invalid or has expired".tr;
                           }
                           return null;

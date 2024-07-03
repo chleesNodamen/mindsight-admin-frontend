@@ -122,29 +122,19 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                       label:
                           Text('권한', style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows: controller.data.map((item) {
+                rows: List.generate(controller.adminListModel.length, (index) {
+                  String id = controller.adminListModel.id![index];
                   return DataRow(
                       selected: controller.selected.value,
                       onSelectChanged: (bool? value) {
-                        controller.updateValue();
+                        controller.updateSelected(id, value ?? false);
                       },
                       cells: [
-                        // DataCell(
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(right: 8.0),
-                        //     child: Checkbox(
-                        //       value: controller.selected.value,
-                        //       onChanged: (bool? value) {
-                        //         controller.updateValue();
-                        //       },
-                        //     ),
-                        //   ),
-                        // ), // Checkbox cell
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: GestureDetector(
                             onTap: controller.goToEdit,
-                            child: Text(item['email'],
+                            child: Text(controller.adminListModel.email![index],
                                 style:
                                     CustomTextStyles.bodyMediumBlack.copyWith(
                                   decoration: TextDecoration.underline,
@@ -154,21 +144,22 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['department'],
+                          child: Text(
+                              controller.adminListModel.department![index],
                               style: CustomTextStyles.bodyMediumBlack.copyWith(
                                 fontWeight: FontWeight.w500,
                               )),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['id'],
+                          child: Text(controller.adminListModel.manager![index],
                               style: CustomTextStyles.bodyMediumBlack.copyWith(
                                 fontWeight: FontWeight.w500,
                               )),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['role'],
+                          child: Text(controller.adminListModel.role![index],
                               style: CustomTextStyles.bodyMediumBlack.copyWith(
                                 fontWeight: FontWeight.w500,
                               )),
@@ -191,7 +182,9 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                   buttonStyle: CustomButtonStyles.fillRedTransparent.copyWith(),
                   width: 76,
                   height: 44,
-                  onPressed: () {},
+                  onPressed: () async {
+                    await controller.deleteSelected();
+                  },
                 ),
                 Pages(
                     pages: 1,

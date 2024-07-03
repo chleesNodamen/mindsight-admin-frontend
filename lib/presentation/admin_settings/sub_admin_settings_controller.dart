@@ -1,12 +1,57 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/admin_delete/admin_delete_model.dart';
+import 'package:mindsight_admin_page/data/admin_delete/admin_delete_repository.dart';
+import 'package:mindsight_admin_page/data/admin_delete/admin_delete_req_delete.dart';
+import 'package:mindsight_admin_page/data/admin_list/admin_list_model.dart';
+import 'package:mindsight_admin_page/data/admin_list/admin_list_repository.dart';
+import 'package:mindsight_admin_page/data/admin_list/admin_list_req_get.dart';
 
 class SubAdminSettingsController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+  RxList<String> selectedIds = <String>[].obs;
+  RxBool selected = false.obs;
+  RxInt activePage = 1.obs;
+
+  late AdminListModel adminListModel;
+  late AdminDeleteModel adminDeleteModel;
+
   @override
   Future<void> onInit() async {
     super.onInit();
-    fetchData();
+    if (AppConstant.chleesTest) {
+      adminListModel = await AdminListRepository().get(AdminListReqGet(
+        page: 1,
+      ).toJson());
+    } else {
+      adminListModel = AdminListModel().copyWith(email: [
+        "ms_content@nodamen.com",
+        "ms_meditation@nodamen.com",
+        "ms_product@nodamen.com",
+        "ms_development@nodamen.com"
+      ], department: [
+        "Mindsight Content Dept.",
+        "Mindsight Meditation Dept.",
+        "Mindsight Product Dept.",
+        "Mindsight Development Dept."
+      ], role: [
+        "마스터 (변경불가)",
+        "운영",
+        "제품 관리",
+        "개발"
+      ], manager: [
+        "이진아",
+        "이장희",
+        "김조왕",
+        "최레오"
+      ], id: [
+        "content",
+        "meditation",
+        "product",
+        "development"
+      ]);
+      adminListModel.length = adminListModel.email!.length;
+    }
     isLoading.value = false;
     isInited.value = true;
   }
@@ -17,57 +62,33 @@ class SubAdminSettingsController extends GetxController {
     dataTableButtonText.value = newText;
   }
 
-  RxInt activePage = 1.obs;
   void loadNewPage(int pageNum) {
     activePage.value = pageNum;
   }
 
-  var data = [].obs;
+  void updateSelected(String id, bool isSelected) {
+    if (isSelected) {
+      selectedIds.add(id);
+    } else {
+      selectedIds.remove(id);
+    }
+  }
 
-  RxBool selected = false.obs;
+  Future<void> deleteSelected() async {
+    if (selectedIds.isEmpty) return;
+    // adminDeleteModel = await AdminDeleteRepository()
+    //     .delete(AdminDeleteReqDelete(ids: selectedIds.toList()));
+    selectedIds.clear();
+    // Reload data if needed after deletion
+    onInit();
+  }
+
   void updateValue() {
     selected.value = !selected.value;
   }
 
   void onRegisterTap() {
     Get.toNamed(AppRoutes.subAdminRegister);
-  }
-
-  void fetchData() async {
-    try {
-      isLoading(true);
-      // Simulate API call
-      await Future.delayed(Duration(seconds: 1));
-      var fetchedData = [
-        {
-          "email": "ms_content@nodamen.com",
-          "department": "Mindsight Content Dept.",
-          "id": "이진아",
-          "role": "마스터 (변경불가)",
-        },
-        {
-          "email": "ms_content@nodamen.com",
-          "department": "Mindsight Content Dept.",
-          "id": "이진아",
-          "role": "마스터 (변경불가)",
-        },
-        {
-          "email": "ms_content@nodamen.com",
-          "department": "Mindsight Content Dept.",
-          "id": "이진아",
-          "role": "마스터 (변경불가)",
-        },
-        {
-          "email": "ms_content@nodamen.com",
-          "department": "Mindsight Content Dept.",
-          "id": "이진아",
-          "role": "마스터 (변경불가)",
-        },
-      ];
-      data.assignAll(fetchedData);
-    } finally {
-      isLoading(false);
-    }
   }
 
   void goToEdit() {
