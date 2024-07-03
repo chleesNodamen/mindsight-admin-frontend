@@ -3,10 +3,10 @@ import 'package:mindsight_admin_page/data/admin_register/admin_register_model.da
 import 'package:mindsight_admin_page/data/base_repository.dart';
 
 class AdminRegisterRepository extends BaseRepository {
-  Future<AdminRegisterModel> put(Map<String, dynamic> body) async {
+  Future<AdminRegisterModel> post(Map<String, dynamic> body) async {
     // req
     String endpoint = "admin";
-    Response response = await httpClient.put(endpoint, body);
+    Response response = await httpClient.post(endpoint, body);
 
     // result
     AdminRegisterModel model = fetchJsonData<AdminRegisterModel>(

@@ -1,37 +1,43 @@
 import 'package:mindsight_admin_page/data/base_model.dart';
 
-class DashboardPracticeModel extends BaseModel {
+class PracticesModel extends BaseModel {
   List<String>? id;
   List<int>? level;
   List<int>? finished;
   List<int>? participated;
   List<String>? ratio;
+  List<int>? liked;
+  List<int>? total;
 
-  DashboardPracticeModel({
+  PracticesModel({
     this.id,
     this.level,
     this.finished,
     this.participated,
     this.ratio,
+    this.liked,
+    this.total,
   });
 
-  DashboardPracticeModel copyWith({
+  PracticesModel copyWith({
     List<String>? id,
     List<int>? level,
     List<int>? finished,
     List<int>? participated,
     List<String>? ratio,
+    List<int>? liked,
+    List<int>? total,
   }) =>
-      DashboardPracticeModel(
-        id: id ?? this.id,
-        level: level ?? this.level,
-        finished: finished ?? this.finished,
-        participated: participated ?? this.participated,
-        ratio: ratio ?? this.ratio,
-      );
+      PracticesModel(
+          id: id ?? this.id,
+          level: level ?? this.level,
+          finished: finished ?? this.finished,
+          participated: participated ?? this.participated,
+          ratio: ratio ?? this.ratio,
+          liked: liked ?? this.liked,
+          total: total ?? this.total);
 
-  factory DashboardPracticeModel.fromJson(Map<String, dynamic> json) =>
-      DashboardPracticeModel(
+  factory PracticesModel.fromJson(Map<String, dynamic> json) => PracticesModel(
         id: json["id"] == null
             ? []
             : List<String>.from(json["id"]!.map((x) => x)),
@@ -47,6 +53,12 @@ class DashboardPracticeModel extends BaseModel {
         ratio: json["ratio"] == null
             ? []
             : List<String>.from(json["ratio"]!.map((x) => x)),
+        liked: json["liked"] == null
+            ? []
+            : List<int>.from(json["liked"].map((x) => x)),
+        total: json["total"] == null
+            ? []
+            : List<int>.from(json["total"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,5 +70,7 @@ class DashboardPracticeModel extends BaseModel {
             ? []
             : List<dynamic>.from(participated!.map((x) => x)),
         "ratio": ratio == null ? [] : List<dynamic>.from(ratio!.map((x) => x)),
+        "liked": liked == null ? [] : List<dynamic>.from(liked!.map((x) => x)),
+        "total": total == null ? [] : List<dynamic>.from(total!.map((x) => x)),
       };
 }
