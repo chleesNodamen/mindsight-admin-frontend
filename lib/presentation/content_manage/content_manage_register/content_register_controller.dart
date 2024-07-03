@@ -44,6 +44,7 @@ class ContentRegisterController extends GetxController {
   void selectCategory(String category) {
     selectedCategory.value = category;
     categorySelected.value = true;
+    selectedType.value = "";
   }
 
   void addTag(String tag) {

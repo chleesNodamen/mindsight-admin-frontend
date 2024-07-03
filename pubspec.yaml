@@ -45,6 +45,9 @@ dependencies:
   flutter_svg: ^2.0.9
   syncfusion_flutter_charts: ^25.2.4
   intl: ^0.18.1
+  file_picker: ^5.2.10
+  video_player: ^2.8.7
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
