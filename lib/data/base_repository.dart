@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/custom_http_client.dart';
 import 'base_model.dart';
 
 class BaseRepository {
