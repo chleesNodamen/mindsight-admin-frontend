@@ -172,7 +172,6 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                 text: "로그인",
                 onPressed: () {
                   controller.onContinue();
-                  Get.offAllNamed(AppRoutes.dashboard);
                 },
               ),
               const SizedBox(
