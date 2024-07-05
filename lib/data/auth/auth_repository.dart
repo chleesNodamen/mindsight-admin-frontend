@@ -8,17 +8,18 @@ class AuthRepository extends BaseRepository {
     // req
     String endpoint = "admin/signin";
     Response response = await httpClient.post(endpoint, dto.toJson());
+    print(response.body);
+    print(response.statusCode);
 
     // result
-    AuthModel model =
-        fetchJsonData<AuthModel>(response, AuthModel.fromJson);
+    AuthModel model = fetchJsonData<AuthModel>(response, AuthModel.fromJson);
 
     if (model.isSuccess) {
       httpClient.setBearerAuthorization(model.accessToken!);
 
       PrefUtils.to.setSigninId(dto.email!);
       PrefUtils.to.setSigninTime();
-    } else { 
+    } else {
       print("log in unsuccessful"); //TODO
     }
 

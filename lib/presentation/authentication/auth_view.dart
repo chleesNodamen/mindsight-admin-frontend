@@ -11,9 +11,10 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
         child: Container(
           decoration: BoxDecoration(
               color: appTheme.white, borderRadius: BorderRadius.circular(32)),
-          constraints: const BoxConstraints(maxWidth: 420, maxHeight: 441),
+          constraints: const BoxConstraints(maxWidth: 420),
           padding: const EdgeInsets.all(24),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
@@ -102,11 +103,13 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                   suffixIcon: CustomImageView(
                     onTap: () {
                       controller.isObscured.value =
-                            !controller.isObscured.value;
+                          !controller.isObscured.value;
                     },
                     margin: const EdgeInsets.only(
                         right: 16, left: 12, top: 16, bottom: 16),
-                    imagePath: controller.isObscured.value ? IconConstant.visibilityFalse : IconConstant.visibilityTrue,
+                    imagePath: controller.isObscured.value
+                        ? IconConstant.visibilityFalse
+                        : IconConstant.visibilityTrue,
                   ),
                   // floatingLabelStyle: TextStyle(color: appTheme.black),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -169,7 +172,7 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                 text: "로그인",
                 onPressed: () {
                   controller.onContinue();
-                  Get.offAllNamed(AppRoutes.rootRoute);
+                  Get.offAllNamed(AppRoutes.dashboard);
                 },
               ),
               const SizedBox(

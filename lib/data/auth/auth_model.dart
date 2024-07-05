@@ -9,15 +9,12 @@ class AuthModel extends BaseModel {
 
   AuthModel copyWith({
     String? accessToken,
-    String? refreshToken,
-    int? attemptsLeft,
   }) =>
       AuthModel(
         accessToken: accessToken ?? this.accessToken,
       );
 
-  factory AuthModel.fromJson(Map<String, dynamic> json) =>
-      AuthModel(
+  factory AuthModel.fromJson(Map<String, dynamic> json) => AuthModel(
         accessToken: json["accessToken"],
       );
 

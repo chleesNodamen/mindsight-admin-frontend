@@ -3,7 +3,6 @@ import 'package:mindsight_admin_page/data/auth/auth_model.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 
-
 class AuthenticationController extends GetxController {
   late AuthModel authModel;
 
@@ -36,15 +35,12 @@ class AuthenticationController extends GetxController {
     isTextNotEmpty.value = emailController.text.isNotEmpty;
   }
 
-
   String? emailValidator(String? value) {
     if (value == null ||
         !isValidEmail(value, isRequired: true) ||
         authModel.compareErrorCode(ApiErrorCode.credentialsInvalid) ||
-        authModel.compareErrorCode(ApiErrorCode.emailNotVerified)
-        ) {
-      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요. "
-          .tr;
+        authModel.compareErrorCode(ApiErrorCode.emailNotVerified)) {
+      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요. ".tr;
     }
 
     return null;
@@ -53,10 +49,8 @@ class AuthenticationController extends GetxController {
   String? passwordValidator(String? value) {
     if (value == null ||
         !isValidPassword(value, isRequired: true) ||
-        authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)
-        ) {
-      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요."
-          .tr;
+        authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
+      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요.".tr;
     }
     return null;
   }
@@ -70,10 +64,9 @@ class AuthenticationController extends GetxController {
     isLoading.value = false;
 
     if (authModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.rootRoute);
+      Get.offAllNamed(AppRoutes.dashboard);
     } else {
       formKey.currentState!.validate();
-
       if (authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
         return false;
       }
