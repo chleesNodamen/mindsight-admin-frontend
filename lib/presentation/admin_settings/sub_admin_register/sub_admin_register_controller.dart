@@ -21,8 +21,6 @@ class SubAdminRegisterController extends GetxController {
   //
   RxBool isShowPasswordOne = true.obs;
 
-  late AuthPasswordResetModel authPasswordResetModel;
-
   final TextEditingController passwordController = TextEditingController();
 
   final CorrectWordChecker _wordChecker = CorrectWordChecker('');

@@ -379,8 +379,8 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 },
                 validator: (value) {
                   if (value == null ||
-                      !controller.checkPasswordValid(value, true) ||
-                      !controller.authPasswordResetModel.isSuccess) {
+                      !controller.checkPasswordValid(value, true)
+                      ) {
                     return "Code is invalid or has expired".tr;
                   }
                   return null;
