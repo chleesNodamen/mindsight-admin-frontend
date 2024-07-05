@@ -8,10 +8,6 @@ class AuthRepository extends BaseRepository {
     // req
     String endpoint = "admin/signin";
     Response response = await httpClient.post(endpoint, dto.toJson());
-    print(dto.email);
-    print(dto.password);
-    print(response.body);
-    print(response.statusCode);
 
     // result
     AuthModel model = fetchJsonData<AuthModel>(response, AuthModel.fromJson);
