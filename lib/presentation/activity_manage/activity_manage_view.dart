@@ -157,7 +157,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                   const SizedBox(height: 15),
                   Wrap(
                     runSpacing: 18,
-                    children: List.generate(3, (index) {
+                    children: List.generate(controller.membershipLabels.length,
+                        (index) {
                       return CustomCheckboxWidget(
                         isChecked: controller.membershipValues[index],
                         label: controller.membershipLabels[index],
@@ -297,9 +298,13 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                         onTap: () {
                           controller.onHistoryTap(index);
                         },
-                        child: Text(controller.activityModel.record![index],
-                            style: CustomTextStyles.bodyLargeBlack.copyWith(
-                                decoration: TextDecoration.underline)),
+                        child: SizedBox(
+                          width: 280,
+                          child: Text(controller.activityModel.record![index],
+                              overflow: TextOverflow.ellipsis,
+                              style: CustomTextStyles.bodyLargeBlack.copyWith(
+                                  decoration: TextDecoration.underline)),
+                        ),
                       ),
                     )),
                     DataCell(Padding(

@@ -77,26 +77,26 @@ class MembersDataModel extends BaseModel {
 
   factory MembersDataModel.fromJson(Map<String, dynamic> json) =>
       MembersDataModel(
-        id: json["id"],
-        affiliation: json["affiliation"],
-        department: json["department"],
-        position: json["position"],
-        firstName: json["firstName"],
-        lastName: json["lastName"],
-        gender: json["gender"],
-        yearOfBirth: json["yearOfBirth"],
+        id: json["id"] ?? "-",
+        affiliation: json["affiliation"] ?? "-",
+        department: json["department"] ?? "-",
+        position: json["position"] ?? "-",
+        firstName: json["firstName"] ?? "-",
+        lastName: json["lastName"] ?? "-",
+        gender: json["gender"] ?? "-",
+        yearOfBirth: json["yearOfBirth"] ?? "-",
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
         lastLogin: json["lastLogin"] == null
             ? null
             : DateTime.parse(json["lastLogin"]),
-        username: json["username"],
-        email: json["email"],
-        mindfulStreak: json["mindfulStreak"],
-        mindfulDays: json["mindfulDays"],
-        sessionsCompleted: json["sessionsCompleted"],
-        minutesMeditated: json["minutesMeditated"],
+        username: json["username"] ?? "-",
+        email: json["email"] ?? "-",
+        mindfulStreak: json["mindfulStreak"] ?? 0,
+        mindfulDays: json["mindfulDays"] ?? 0,
+        sessionsCompleted: json["sessionsCompleted"] ?? 0,
+        minutesMeditated: json["minutesMeditated"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

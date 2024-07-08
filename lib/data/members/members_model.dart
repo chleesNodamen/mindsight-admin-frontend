@@ -44,13 +44,14 @@ class MembersModel extends BaseModel {
             : List<String>.from(json["id"]!.map((x) => x)),
         affiliation: json["affiliation"] == null
             ? []
-            : List<String>.from(json["affiliation"]!.map((x) => x)),
+            : List<String>.from(json["affiliation"]!
+                .map((x) => x == null || x == "" ? "-" : x)),
         email: json["email"] == null
             ? []
             : List<String>.from(json["email"]!.map((x) => x)),
         username: json["username"] == null
             ? []
-            : List<String>.from(json["username"]!.map((x) => x)),
+            : List<String>.from(json["username"]!.map((x) => x ?? "-")),
         createdAt: json["createdAt"] == null
             ? []
             : List<DateTime>.from(

@@ -66,6 +66,18 @@ class MemberManageController extends GetxController {
       );
       membersModel.length = membersModel.id!.length;
     }
+    print(
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    print(membersModel.id);
+    print(membersModel.affiliation);
+    print(membersModel.email);
+    print(membersModel.username);
+    print(membersModel.createdAt);
+    print(membersModel.status);
+    print(membersModel.total);
+    print(membersModel.length);
+    print(
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     memberState = membersModel.status!.obs;
     isLoading.value = false;
     isInited.value = true;

@@ -58,6 +58,9 @@ class ActivityManageController extends GetxController {
       affiliationModel = await AffiliationRepository().get();
       membershipLabels = affiliationModel.affiliation!;
       membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
+      print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      print(membershipValues);
+      print(membershipLabels);
     } else {
       activityModel = ActivityModel().copyWith(
         type: List.generate(10, (_) => 'Practice plan'),
@@ -107,6 +110,7 @@ class ActivityManageController extends GetxController {
       type: type.value.name,
     ).toJson());
     activePage.value = pageNum;
+    isLoading.value = false;
   }
 
   void onHistoryTap(int index) {

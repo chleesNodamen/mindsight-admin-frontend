@@ -167,7 +167,9 @@ class MemberManageView extends GetWidget<MemberManageController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller.membersModel.affiliation![index],
+                              controller.membersModel.affiliation == null
+                                  ? "-"
+                                  : controller.membersModel.affiliation![index],
                               style: controller.memberState![index]
                                   ? CustomTextStyles.bodyLargeBlack
                                   : CustomTextStyles.bodyLargeGray),

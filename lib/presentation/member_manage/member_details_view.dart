@@ -7,67 +7,71 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: PageLoadingIndicator(
-        isLoading: controller.isLoading.value,
-        child: controller.isInited.value
-            ? ResponsiveWidget(
-                largeScreen: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SideMenu(),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(48.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                TobBarSearch(
-                                  name: "회원 상세",
-                                  searchShow: false,
-                                  viewCount: false,
-                                ),
-                                const SizedBox(height: 16),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      child: Text(
-                                        "회원 목록",
-                                        style: CustomTextStyles
-                                            .bodyMediumSkyBlue
-                                            .copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          decoration: TextDecoration.underline,
-                                          decorationColor: appTheme.skyBlue,
+    return Obx(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SideMenu(),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(48.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TobBarSearch(
+                                    name: "회원 상세",
+                                    searchShow: false,
+                                    viewCount: false,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        child: Text(
+                                          "회원 목록",
+                                          style: CustomTextStyles
+                                              .bodyMediumSkyBlue
+                                              .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor: appTheme.skyBlue,
+                                          ),
                                         ),
+                                        onTap: () => Get.back(),
                                       ),
-                                      onTap: () => Get.back(),
-                                    ),
-                                    CustomImageView(
-                                      imagePath: IconConstant.arrowRight,
-                                    ),
-                                    Text('회원 상세',
-                                        style: CustomTextStyles.bodyMediumGray),
-                                  ],
-                                ),
-                                const SizedBox(height: 32),
-                                _buildFirstContainer(),
-                                const SizedBox(height: 16),
-                                _buildSecondContainer()
-                              ],
+                                      CustomImageView(
+                                        imagePath: IconConstant.arrowRight,
+                                      ),
+                                      Text('회원 상세',
+                                          style:
+                                              CustomTextStyles.bodyMediumGray),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 32),
+                                  _buildFirstContainer(),
+                                  const SizedBox(height: 16),
+                                  _buildSecondContainer()
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            : const SizedBox.shrink(),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
       ),
     );
   }

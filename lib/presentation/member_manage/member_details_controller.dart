@@ -12,7 +12,6 @@ class MemberDetailsController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    super.onInit();
     if (AppConstant.chleesTest) {
       membersDataModel = await MembersDataRepository().get(id);
     } else {
@@ -35,7 +34,7 @@ class MemberDetailsController extends GetxController {
         minutesMeditated: 421,
       );
     }
-
+    super.onInit();
     isLoading.value = false;
     isInited.value = true;
   }

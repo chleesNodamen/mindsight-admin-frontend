@@ -1,7 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/activity_details/activity_details_model.dart';
-import 'package:mindsight_admin_page/data/activity_details/activity_details_repository.dart';
-import 'package:mindsight_admin_page/data/activity_details/activity_details_req_get.dart';
 
 class PracticeDetailsController extends GetxController {
   RxBool isLoading = true.obs;
