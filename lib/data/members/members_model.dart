@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 
 class MembersModel extends BaseModel {
@@ -8,7 +7,7 @@ class MembersModel extends BaseModel {
   List<String>? username;
   List<DateTime>? createdAt;
   List<bool>? status;
-  int? number;
+  int? total;
 
   MembersModel({
     this.id,
@@ -17,7 +16,7 @@ class MembersModel extends BaseModel {
     this.username,
     this.createdAt,
     this.status,
-    this.number,
+    this.total,
   });
 
   MembersModel copyWith({
@@ -27,7 +26,7 @@ class MembersModel extends BaseModel {
     List<String>? username,
     List<DateTime>? createdAt,
     List<bool>? status,
-    int? number,
+    int? total,
   }) =>
       MembersModel(
         id: id ?? this.id,
@@ -36,7 +35,7 @@ class MembersModel extends BaseModel {
         username: username ?? this.username,
         createdAt: createdAt ?? this.createdAt,
         status: status ?? this.status,
-        number: number ?? this.number,
+        total: total ?? this.total,
       );
 
   factory MembersModel.fromJson(Map<String, dynamic> json) => MembersModel(
@@ -59,7 +58,7 @@ class MembersModel extends BaseModel {
         status: json["status"] == null
             ? []
             : List<bool>.from(json["status"]!.map((x) => x)),
-        number: json["number"],
+        total: json["total"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,6 +74,6 @@ class MembersModel extends BaseModel {
             : List<dynamic>.from(createdAt!.map((x) => x.toIso8601String())),
         "status":
             status == null ? [] : List<dynamic>.from(status!.map((x) => x)),
-        "number": number,
+        "total": total,
       };
 }

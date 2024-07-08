@@ -1,6 +1,10 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/constants/route_arguments.dart';
 import 'package:mindsight_admin_page/data/activity/activity_model.dart';
+import 'package:mindsight_admin_page/data/activity/activity_repository.dart';
+import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
 
 enum Type { practice, challenge }
 
@@ -42,10 +46,18 @@ class ActivityManageController extends GetxController {
   RxBool isInited = false.obs;
 
   late ActivityModel activityModel;
+  late AffiliationModel affiliationModel;
 
   @override
   Future<void> onInit() async {
     if (AppConstant.chleesTest) {
+      activityModel = await ActivityRepository().get(ActivityReqGet(
+        page: 1,
+        type: "practice",
+      ).toJson());
+      affiliationModel = await AffiliationRepository().get();
+      membershipLabels = affiliationModel.affiliation!;
+      membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
     } else {
       activityModel = ActivityModel().copyWith(
         type: List.generate(10, (_) => 'Practice plan'),
@@ -65,7 +77,18 @@ class ActivityManageController extends GetxController {
     isInited.value = true;
   }
 
-  void toggleMembership(int index, bool value) {
+  Future<void> toggleMembership(int index, bool value) async {
+    List<String> chosenAffiliation = [
+      for (int i = 0; i < membershipLabels.length; i++)
+        if (membershipValues[i]) membershipLabels[i]
+    ];
+    activityModel = await ActivityRepository().get(ActivityReqGet(
+      page: 1,
+      type: "practice",
+      affiliation: chosenAffiliation,
+      chatbot: chatbotValues.contains(false) ? chatbotValues[0] : null,
+      feedback: feedbackValues.contains(false) ? feedbackValues[1] : null,
+    ).toJson());
     membershipValues[index] = value;
   }
 
@@ -77,24 +100,67 @@ class ActivityManageController extends GetxController {
     feedbackValues[index] = value;
   }
 
-  void loadNewPage(int pageNum) {
+  Future<void> loadNewPage(int pageNum) async {
+    isLoading.value = true;
+    activityModel = await ActivityRepository().get(ActivityReqGet(
+      page: pageNum,
+      type: type.value.name,
+    ).toJson());
     activePage.value = pageNum;
   }
 
-  void onHistoryTap() {
-    // menuController.changeActiveItemTo(activityHistoryPageDisplayName);
-    // navigationController.navigateTo(activityHistoryPageRoute, arguments: {"hello": "hello"});
-    Get.toNamed(AppRoutes.activityHistory,
-        arguments: {RouteArguments.id: activityModel.recordId});
+  void onHistoryTap(int index) {
+    Get.toNamed(AppRoutes.activityHistory, arguments: {
+      RouteArguments.id: activityModel.recordId![index],
+      RouteArguments.type: activityModel.type![index],
+      RouteArguments.memberId: activityModel.memberId![index]
+    });
   }
 
-  void onMemberTap() {
+  void onMemberTap(int index) {
     Get.toNamed(AppRoutes.memberDetails,
-        arguments: {RouteArguments.id: activityModel.memberId});
+        arguments: {RouteArguments.id: activityModel.memberId![index]});
   }
 
-  void onSessionTap() {
-    Get.toNamed(AppRoutes.memberDetails,
-        arguments: {RouteArguments.id: activityModel.recordId}); //TODO
+  void onSessionTap(int index) {
+    if (type.value == Type.practice) {
+      Get.toNamed(AppRoutes.practiceDetails,
+          arguments: {RouteArguments.id: activityModel.sessionId![index]});
+    } else {
+      Get.toNamed(AppRoutes.challengeDetails,
+          arguments: {RouteArguments.id: activityModel.sessionId![index]});
+    }
+  }
+
+  Future<void> changeType(Type? newType) async {
+    if (newType == null) {
+      return;
+    }
+    isLoading.value = true;
+    activityModel = await ActivityRepository().get(ActivityReqGet(
+      page: 1,
+      type: newType.name,
+    ).toJson());
+    type.value = newType;
+    activePage.value = 1;
+    isLoading.value = false;
+  }
+
+  Future<void> onSearch({String? search}) async {
+    isLoading.value = true;
+    List<String> chosenAffiliation = [
+      for (int i = 0; i < membershipLabels.length; i++)
+        if (membershipValues[i]) membershipLabels[i]
+    ];
+    activityModel = await ActivityRepository().get(ActivityReqGet(
+            page: 1,
+            type: "practice",
+            affiliation: chosenAffiliation,
+            chatbot: chatbotValues.contains(false) ? chatbotValues[0] : null,
+            feedback: feedbackValues.contains(false) ? feedbackValues[1] : null,
+            search: search)
+        .toJson());
+    isLoading.value = false;
+    activePage.value = 1;
   }
 }

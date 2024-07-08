@@ -64,7 +64,7 @@ class InactiveMemberManageController extends GetxController {
         username: List.generate(10, (_) => 'dbwjspdla'),
         createdAt: List.generate(10, (_) => DateTime.now()),
         status: List.generate(10, (_) => false),
-        number: 10,
+        total: 10,
       );
       membersModel.length = membersModel.id!.length;
     }

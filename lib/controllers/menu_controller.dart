@@ -29,19 +29,18 @@ class MenuController extends GetxController {
   var hoverItem = "".obs;
 
   changeActiveItemTo(String itemName) {
-    switch (itemName) {
-      case contentManagePageDisplayName:
-        Get.lazyPut(() => ContentManageController());
-      case activityManagePageDisplayName:
-        Get.lazyPut(() => ActivityManageController());
-        Get.lazyPut(() => ActivityHistoryController());
-      case memberManagePageDisplayName:
-        Get.lazyPut(() => MemberManageController());
-      case memberDetailsPageDisplayName:
-        Get.lazyPut(() => MemberDetailsController());
-      case memberEditPageDisplayName:
-        Get.lazyPut(() => MemberEditController());
-    }
+    // switch (itemName) {
+    //   case contentManagePageDisplayName:
+    //     Get.lazyPut(() => ContentManageController());
+    //   case activityManagePageDisplayName:
+    //     Get.lazyPut(() => ActivityManageController());
+    //   case memberManagePageDisplayName:
+    //     Get.lazyPut(() => MemberManageController());
+    //   case memberDetailsPageDisplayName:
+    //     Get.lazyPut(() => MemberDetailsController());
+    //   case memberEditPageDisplayName:
+    //     Get.lazyPut(() => MemberEditController());
+    // }
     activeItem.value = itemName;
   }
 

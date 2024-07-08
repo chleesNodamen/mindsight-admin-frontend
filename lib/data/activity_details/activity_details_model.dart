@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 
 class ActivityDetailsModel extends BaseModel {

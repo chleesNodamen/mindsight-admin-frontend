@@ -1,4 +1,4 @@
-class DashboardChallengeReqGet {
+class ActivityReqGet {
   int? page;
   String? type;
   List<String>? affiliation;
@@ -6,7 +6,7 @@ class DashboardChallengeReqGet {
   bool? feedback;
   String? search;
 
-  DashboardChallengeReqGet({
+  ActivityReqGet({
     this.page,
     this.type,
     this.affiliation,
@@ -15,14 +15,14 @@ class DashboardChallengeReqGet {
     this.search,
   });
 
-  DashboardChallengeReqGet copyWith(
+  ActivityReqGet copyWith(
           {int? page,
           String? type,
           List<String>? affiliation,
           bool? chatbot,
           bool? feedback,
           String? search}) =>
-      DashboardChallengeReqGet(
+      ActivityReqGet(
         page: page ?? this.page,
         type: type ?? this.type,
         affiliation: affiliation ?? this.affiliation,
@@ -31,8 +31,7 @@ class DashboardChallengeReqGet {
         search: search ?? this.search,
       );
 
-  factory DashboardChallengeReqGet.fromJson(Map<String, dynamic> json) =>
-      DashboardChallengeReqGet(
+  factory ActivityReqGet.fromJson(Map<String, dynamic> json) => ActivityReqGet(
         page: json["page"],
         type: json["type"],
         affiliation: json["affiliation"] == null

@@ -6,76 +6,78 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: PageLoadingIndicator(
-        isLoading: controller.isLoading.value,
-        child: controller.isInited.value
-            ? ResponsiveWidget(
-                largeScreen: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SideMenu(),
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        child: ListView(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.all(48.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  TobBarSearch(
-                                    name: "활동 기록 상세",
-                                    searchShow: false,
-                                    viewCount: false,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      GestureDetector(
-                                        child: Text(
-                                          "활동 기록 관리",
-                                          style: CustomTextStyles
-                                              .bodyMediumSkyBlue
-                                              .copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationColor: appTheme.skyBlue,
+    return Obx(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SideMenu(),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(48.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    TobBarSearch(
+                                      name: "활동 기록 상세",
+                                      searchShow: false,
+                                      viewCount: false,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          child: Text(
+                                            "활동 기록 관리",
+                                            style: CustomTextStyles
+                                                .bodyMediumSkyBlue
+                                                .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationColor: appTheme.skyBlue,
+                                            ),
                                           ),
+                                          onTap: () => Get.back(),
                                         ),
-                                        onTap: () => Get.back(),
-                                      ),
-                                      CustomImageView(
-                                        imagePath: IconConstant.arrowRight,
-                                      ),
-                                      Text('활동 기록 상세',
-                                          style:
-                                              CustomTextStyles.bodyMediumGray),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 32),
-                                  _buildFirstContainer(),
-                                  const SizedBox(height: 16),
-                                  controller.type == "Practice plan"
-                                      ? _buildPracticeContainer()
-                                      : _buildChallengeContainer(),
-                                  const SizedBox(height: 16),
-                                  _buildThirdContainer(),
-                                ],
+                                        CustomImageView(
+                                          imagePath: IconConstant.arrowRight,
+                                        ),
+                                        Text('활동 기록 상세',
+                                            style: CustomTextStyles
+                                                .bodyMediumGray),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 32),
+                                    _buildFirstContainer(),
+                                    const SizedBox(height: 16),
+                                    controller.type == "practice"
+                                        ? _buildPracticeContainer()
+                                        : _buildChallengeContainer(),
+                                    const SizedBox(height: 16),
+                                    _buildThirdContainer(),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            : const SizedBox.shrink(),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
       ),
     );
   }
@@ -365,7 +367,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                      controller.type == "Practice plan"
+                      controller.type == "practice"
                           ? '변화된 감정 (기록 1)'
                           : '난이도 (기록 1)',
                       style: CustomTextStyles.labelLargeGray),
@@ -384,7 +386,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                      controller.type == "Practice plan"
+                      controller.type == "practice"
                           ? '변화 요인 (기록 2)'
                           : '만족도 (기록 2)',
                       style: CustomTextStyles.labelLargeGray),
@@ -478,7 +480,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('전문가 피드백', style: CustomTextStyles.labelLargeGray),
-              controller.feedback!
+              controller.feedback.value
                   ? const SizedBox.shrink()
                   : GestureDetector(
                       child: Text(
@@ -496,7 +498,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           const SizedBox(
             height: 16,
           ),
-          controller.feedback!
+          controller.feedback.value
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

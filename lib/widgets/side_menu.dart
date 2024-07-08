@@ -101,14 +101,14 @@ class SideMenu extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'ms_content@nodamen.com',
-                        // PrefUtils.to.getSigninId(),
+                        // 'ms_content@nodamen.com',
+                        PrefUtils.to.getSigninId(),
                         style: CustomTextStyles.labelLargeBlack,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '2024-01-12-11:32:23',
-// PrefUtils.to.getSigninTime(),
+                        // '2024-01-12-11:32:23',
+                        PrefUtils.to.getSigninTime(),
                         style: CustomTextStyles.labelLargeGray,
                       ),
                       const SizedBox(

@@ -34,7 +34,7 @@ class InactiveMemberManageView
                                     viewCount: false,
                                     searchText: "이메일 주소, 사용자 이름 검색",
                                     memberShow: true,
-                                    memberCount: controller.membersModel.number,
+                                    memberCount: controller.membersModel.total,
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
@@ -262,7 +262,7 @@ class InactiveMemberManageView
                     ],
                   ),
                   Pages(
-                      pages: (controller.membersModel.number! / 10).ceil(),
+                      pages: (controller.membersModel.total! / 10).ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
                         controller.loadNewPage(pageNum);

@@ -90,6 +90,8 @@ class BaseRepository {
         for (int i = 0; i < value.length; i++) {
           add += "$key=${value[i]}&";
         }
+      } else if (value == null) {
+        return;
       } else {
         add += "$key=$value&";
       }

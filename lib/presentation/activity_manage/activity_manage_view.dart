@@ -34,6 +34,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                       searchShow: true,
                                       viewCount: false,
                                       searchText: "회원, 기록 내용 검색",
+                                      onSearch: controller.onSearch,
                                     ),
                                     const SizedBox(height: 32),
                                     CustomElevatedButton(
@@ -102,7 +103,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                         value: Type.practice,
                                         groupValue: controller.type.value,
                                         onChanged: (Type? value) {
-                                          controller.type.value = value!;
+                                          controller.changeType(value);
                                         },
                                       ),
                                       Text(controller.typeLabels[0],
@@ -125,7 +126,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                       value: Type.challenge,
                                       groupValue: controller.type.value,
                                       onChanged: (Type? value) {
-                                        controller.type.value = value!;
+                                        controller.changeType(value);
                                       },
                                     ),
                                     Text(controller.typeLabels[1],
@@ -260,13 +261,19 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                   return DataRow(cells: [
                     DataCell(Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: Text(controller.activityModel.type![index],
+                      child: Text(
+                          controller.activityModel.type![index] ==
+                                  Type.practice.name
+                              ? controller.typeLabels[0]
+                              : controller.typeLabels[1],
                           style: CustomTextStyles.bodyLargeBlack),
                     )),
                     DataCell(Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: GestureDetector(
-                        onTap: controller.onMemberTap,
+                        onTap: () {
+                          controller.onMemberTap(index);
+                        },
                         child: Text(controller.activityModel.email![index],
                             style: CustomTextStyles.bodyLargeBlack.copyWith(
                                 decoration: TextDecoration.underline)),
@@ -275,7 +282,9 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                     DataCell(Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: GestureDetector(
-                        onTap: controller.onSessionTap,
+                        onTap: () {
+                          controller.onSessionTap(index);
+                        },
                         child: Text(
                             controller.activityModel.sessionName![index],
                             style: CustomTextStyles.bodyLargeBlack.copyWith(
@@ -285,7 +294,9 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                     DataCell(Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: GestureDetector(
-                        onTap: controller.onHistoryTap,
+                        onTap: () {
+                          controller.onHistoryTap(index);
+                        },
                         child: Text(controller.activityModel.record![index],
                             style: CustomTextStyles.bodyLargeBlack.copyWith(
                                 decoration: TextDecoration.underline)),

@@ -11,20 +11,18 @@ import 'package:mindsight_admin_page/data/activity_expert/activity_expert_reposi
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_req_put.dart';
 
 class ActivityHistoryController extends GetxController {
-  static ActivityHistoryController get to =>
-      Get.find<ActivityHistoryController>();
+  final id = Get.arguments[RouteArguments.id];
+  final type = Get.arguments[RouteArguments.type];
+  final memberId = Get.arguments[RouteArguments.memberId];
 
-  // final id = Get.arguments[RouteArguments.id];
-  // final type = Get.arguments[RouteArguments.type];
-
-  final id = "";
-  final type = "Practice plan";
+  // final id = "";
+  // final type = "practice";
 
   final TextEditingController feedbackController = TextEditingController();
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   bool? chatBot;
-  bool? feedback;
+  RxBool feedback = false.obs;
   String registrationDate = "";
   String sessionStartDate = "";
   String sessionEndDate = "";
@@ -36,7 +34,6 @@ class ActivityHistoryController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    super.onInit();
     if (AppConstant.chleesTest) {
       activityDetailsModel = await ActivityDetailsRepository()
           .get(id, ActivityDetailsReqGet(type: type).toJson());
@@ -55,7 +52,7 @@ class ActivityHistoryController extends GetxController {
           days: '30일',
           intro:
               'This is a 30-Day challenge to Strengthen your legs.Strengthen your legs will increase muscle mass throughout the body, which helps boost metabolism such as breathing and blood circulation.',
-          type: "Practice plan",
+          type: "practice",
           recordOne: 'Stressed',
           recordTwo: 'Feeling fatigued, Distracted mind',
           sessionStartDate: DateTime.now(),
@@ -82,7 +79,8 @@ class ActivityHistoryController extends GetxController {
           .format(activityDetailsModel.expertMessageDate!);
     }
     chatBot = activityDetailsModel.chatbot != null;
-    feedback = activityDetailsModel.expertMessage != null;
+    feedback.value = activityDetailsModel.expertMessage != null;
+    super.onInit();
     isLoading.value = false;
     isInited.value = true;
   }
@@ -94,6 +92,11 @@ class ActivityHistoryController extends GetxController {
           id,
           ActivityExpertReqPut(type: type, feedback: feedbackController.text)
               .toJson());
+      if (activityExpertModel.isSuccess) {
+        activityDetailsModel = await ActivityDetailsRepository()
+            .get(id, ActivityDetailsReqGet(type: type).toJson());
+        feedback.value = true;
+      }
       isLoading.value = false;
     }
     Get.back();
@@ -126,7 +129,7 @@ class ActivityHistoryController extends GetxController {
 
   void onMemberTap() {
     Get.toNamed(AppRoutes.memberDetails, arguments: {
-      RouteArguments.id: id,
+      RouteArguments.id: memberId,
     });
   }
 
