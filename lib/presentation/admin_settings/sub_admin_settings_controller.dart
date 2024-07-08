@@ -9,8 +9,7 @@ import 'package:mindsight_admin_page/data/admin_list/admin_list_req_get.dart';
 class SubAdminSettingsController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
-  RxList<String> selectedIds = <String>[].obs;
-  RxBool selected = false.obs;
+  RxMap<String, bool> selectedIds = <String, bool>{}.obs;
   RxInt activePage = 1.obs;
 
   late AdminListModel adminListModel;
@@ -67,31 +66,30 @@ class SubAdminSettingsController extends GetxController {
   }
 
   void updateSelected(String id, bool isSelected) {
-    if (isSelected) {
-      selectedIds.add(id);
-    } else {
-      selectedIds.remove(id);
-    }
+    selectedIds[id] = isSelected;
   }
 
   Future<void> deleteSelected() async {
-    if (selectedIds.isEmpty) return;
-    // adminDeleteModel = await AdminDeleteRepository()
-    //     .delete(AdminDeleteReqDelete(ids: selectedIds.toList()));
-    selectedIds.clear();
-    // Reload data if needed after deletion
-    onInit();
-  }
+    List<String> idsToDelete = selectedIds.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
 
-  void updateValue() {
-    selected.value = !selected.value;
+    if (idsToDelete.isEmpty) return;
+    adminDeleteModel = await AdminDeleteRepository()
+        .delete(AdminDeleteReqDelete(ids: idsToDelete).toJson());
+    selectedIds.clear();
+    Get.toNamed(AppRoutes.subAdminDetails);
+    // Reload data if needed after deletion
   }
 
   void onRegisterTap() {
     Get.toNamed(AppRoutes.subAdminRegister);
   }
 
-  void goToEdit() {
-    Get.toNamed(AppRoutes.subAdminDetails);
+  void goToEdit(int index) {
+    Get.toNamed(AppRoutes.subAdminDetails, arguments: {
+      RouteArguments.id: Uri.encodeComponent(adminListModel.id![index])
+    });
   }
 }

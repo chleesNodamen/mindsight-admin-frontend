@@ -125,7 +125,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                 rows: List.generate(controller.adminListModel.length, (index) {
                   String id = controller.adminListModel.id![index];
                   return DataRow(
-                      selected: controller.selected.value,
+                      selected: controller.selectedIds[id] ?? false,
                       onSelectChanged: (bool? value) {
                         controller.updateSelected(id, value ?? false);
                       },
@@ -133,7 +133,9 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: GestureDetector(
-                            onTap: controller.goToEdit,
+                            onTap: () {
+                              controller.goToEdit(index);
+                            },
                             child: Text(controller.adminListModel.email![index],
                                 style:
                                     CustomTextStyles.bodyMediumBlack.copyWith(

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_details/sub_admin_details_controller.dart';
 
@@ -83,7 +84,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
-                  Text("ms_content@nodamen.com",
+                  Text(controller.adminDetailsModel.email!,
                       style: CustomTextStyles.bodyMediumBlack
                           .copyWith(fontWeight: FontWeight.w600)),
                 ],
@@ -99,7 +100,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
-                  Text("Mindsight Content Dept.",
+                  Text(controller.adminDetailsModel.department!,
                       style: CustomTextStyles.bodyMediumBlack
                           .copyWith(fontWeight: FontWeight.w600)),
                 ],
@@ -115,7 +116,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
-                  Text("마스터 (변경불가)",
+                  Text(controller.adminDetailsModel.role!,
                       style: CustomTextStyles.bodyMediumBlack
                           .copyWith(fontWeight: FontWeight.w600)),
                 ],
@@ -137,7 +138,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
-                  Text("이진아",
+                  Text(controller.adminDetailsModel.manager!,
                       style: CustomTextStyles.bodyMediumBlack
                           .copyWith(fontWeight: FontWeight.w600)),
                 ],
@@ -153,7 +154,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
-                  Text("01012345678",
+                  Text(controller.adminDetailsModel.phone!,
                       style: CustomTextStyles.bodyMediumBlack
                           .copyWith(fontWeight: FontWeight.w600)),
                 ],
@@ -169,7 +170,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
-                  Text("jalee@nodamen.com",
+                  Text(controller.adminDetailsModel.adminEmail!,
                       style: CustomTextStyles.bodyMediumBlack
                           .copyWith(fontWeight: FontWeight.w600)),
                 ],
@@ -199,7 +200,11 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('2024-03-13-10:09:34',
+                Text(
+                    controller.adminDetailsModel.lastActivity != null
+                        ? DateFormat('yyyy-MM-dd-HH:mm:ss')
+                            .format(controller.adminDetailsModel.lastActivity!)
+                        : "-",
                     style: CustomTextStyles.labelLargeGray
                         .copyWith(fontWeight: FontWeight.w600)),
               ],

@@ -73,7 +73,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            // controller: controller.passwordController,
+            controller: controller.adminEmailController,
             width: 353,
             hintText: "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,
@@ -141,7 +141,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.managerController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -177,7 +177,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.phoneController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -273,7 +273,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.departmentController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -325,7 +325,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                   border: Border.all(color: appTheme.grayScale3),
                   color: appTheme.grayScale2),
               padding: const EdgeInsets.all(16),
-              child: Text('ms_meditation@nodamen.com',
+              child: Text(controller.adminDetailsModel.email!,
                   style: CustomTextStyles.bodyMediumGray),
             ),
           ],

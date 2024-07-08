@@ -2,6 +2,7 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 
 class AdminMyDataModel extends BaseModel {
   String? id;
+  String? email;
   String? department;
   String? role;
   String? manager;
@@ -11,6 +12,7 @@ class AdminMyDataModel extends BaseModel {
 
   AdminMyDataModel({
     this.id,
+    this.email,
     this.department,
     this.role,
     this.manager,
@@ -21,6 +23,7 @@ class AdminMyDataModel extends BaseModel {
 
   AdminMyDataModel copyWith({
     String? id,
+    String? email,
     String? department,
     String? role,
     String? manager,
@@ -30,6 +33,7 @@ class AdminMyDataModel extends BaseModel {
   }) =>
       AdminMyDataModel(
           id: id ?? this.id,
+          email: email ?? this.email,
           department: department ?? this.department,
           role: role ?? this.role,
           manager: manager ?? this.manager,
@@ -40,6 +44,7 @@ class AdminMyDataModel extends BaseModel {
   factory AdminMyDataModel.fromJson(Map<String, dynamic> json) =>
       AdminMyDataModel(
         id: json["id"],
+        email: json["email"],
         department: json["department"],
         role: json["role"],
         manager: json["manager"],
@@ -47,11 +52,12 @@ class AdminMyDataModel extends BaseModel {
         adminEmail: json["adminEmail"],
         lastActivity: json["lastActivity"] == null
             ? null
-            : DateTime.parse(json["createdAt"]),
+            : DateTime.parse(json["lastActivity"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "email": email,
         "department": department,
         "role": role,
         "manager": manager,

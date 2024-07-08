@@ -73,7 +73,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            // controller: controller.passwordController,
+            controller: controller.adminEmailController,
             width: 353,
             hintText: "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,
@@ -141,7 +141,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.managerController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -177,7 +177,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.phoneController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -273,7 +273,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.departmentController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -316,7 +316,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.idController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -353,7 +353,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.passwordController,
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
@@ -375,16 +375,16 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                             width: 24.adaptSize))),
                 suffixConstraints: const BoxConstraints(maxHeight: 56),
                 onChange: (value) {
-                  controller.checkPasswordValid(value, false);
+                  // controller.checkPasswordValid(value, false); //TODO
                 },
-                validator: (value) {
-                  if (value == null ||
-                      !controller.checkPasswordValid(value, true)
-                      ) {
-                    return "Code is invalid or has expired".tr;
-                  }
-                  return null;
-                },
+                // validator: (value) { //TODO
+                //   if (value == null ||
+                //       !controller.checkPasswordValid(value, true)
+                //       ) {
+                //     return "Code is invalid or has expired".tr;
+                //   }
+                //   return null;
+                // },
                 obscureText: controller.isShowPasswordOne.value,
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),

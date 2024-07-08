@@ -115,6 +115,9 @@ class SideMenu extends StatelessWidget {
                         height: 16,
                       ),
                       CustomElevatedButton(
+                        onPressed: () {
+                          _logout();
+                        },
                         height: 30,
                         text: '로그아웃',
                         buttonTextStyle: CustomTextStyles.labelLargeBlack,
@@ -127,5 +130,10 @@ class SideMenu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _logout() async {
+    PrefUtils.to.setIsLogined(false);
+    await Get.offAllNamed(AppRoutes.auth);
   }
 }

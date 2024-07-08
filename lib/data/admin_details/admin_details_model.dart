@@ -51,7 +51,7 @@ class AdminDetailsModel extends BaseModel {
         adminEmail: json["adminEmail"],
         lastActivity: json["lastActivity"] == null
             ? null
-            : DateTime.parse(json["createdAt"]),
+            : DateTime.parse(json["lastActivity"]),
       );
 
   Map<String, dynamic> toJson() => {

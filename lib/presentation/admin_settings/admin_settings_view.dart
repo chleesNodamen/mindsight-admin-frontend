@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_controller.dart';
 
@@ -83,7 +84,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('아이디', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.adminMyDataModel.id ?? "-",
+                  Text(controller.adminMyDataModel.email ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
@@ -181,7 +182,11 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text(controller.formattedDate.value ?? '-',
+                Text(
+                    controller.adminMyDataModel.lastActivity != null
+                        ? DateFormat('yyyy-MM-dd-HH:mm:ss')
+                            .format(controller.adminMyDataModel.lastActivity!)
+                        : "-",
                     style: CustomTextStyles.labelLargeGray),
               ],
             ),
@@ -239,16 +244,16 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                                     width: 24.adaptSize))),
                         suffixConstraints: const BoxConstraints(maxHeight: 56),
                         onChange: (value) {
-                          controller.checkPasswordValid(value, false);
+                          // controller.checkPasswordValid(value, false);
                         },
-                        validator: (value) {
-                          if (value == null ||
-                              !controller.checkPasswordValid(value, true) ||
-                              !controller.adminPasswordModel.isSuccess) {
-                            return "Code is invalid or has expired".tr;
-                          }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value == null ||
+                        //       !controller.checkPasswordValid(value, true) ||
+                        //       !controller.adminPasswordModel.isSuccess) {
+                        //     return "Code is invalid or has expired".tr;
+                        //   }
+                        //   return null;
+                        // },
                         obscureText: controller.isShowPasswordOne.value,
                         contentPadding: const EdgeInsets.only(
                             left: 16, top: 17, bottom: 17),
@@ -287,16 +292,16 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                                     width: 24.adaptSize))),
                         suffixConstraints: const BoxConstraints(maxHeight: 56),
                         onChange: (value) {
-                          controller.checkPasswordValid(value, false);
+                          // controller.checkPasswordValid(value, false);
                         },
-                        validator: (value) {
-                          if (value == null ||
-                              !controller.checkPasswordValid(value, true) ||
-                              !controller.adminPasswordModel.isSuccess) {
-                            return "Code is invalid or has expired".tr;
-                          }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value == null ||
+                        //       !controller.checkPasswordValid(value, true) ||
+                        //       !controller.adminPasswordModel.isSuccess) {
+                        //     return "Code is invalid or has expired".tr;
+                        //   }
+                        //   return null;
+                        // },
                         obscureText: controller.isShowPasswordTwo.value,
                         contentPadding: const EdgeInsets.only(
                             left: 16, top: 17, bottom: 17),
@@ -314,10 +319,9 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 fontWeight: FontWeight.w700,
               ),
               buttonStyle: CustomButtonStyles.fillPrimary,
-              // margin: const EdgeInsets.symmetric(
-              //     vertical: 11, horizontal: 24),
               width: 90,
               height: 44,
+              onPressed: controller.onContinue,
             )
           ],
         ));

@@ -20,8 +20,9 @@ class AuthenticationController extends GetxController {
   void onInit() {
     super.onInit();
     emailController.addListener(_updateTextStatus);
-
     isInited.value = true;
+    emailController.text = "admin@mindsight.com";
+    passwordController.text = "1234";
   }
 
   @override
@@ -65,6 +66,7 @@ class AuthenticationController extends GetxController {
 
     if (authModel.isSuccess) {
       Get.offAllNamed(AppRoutes.dashboard);
+      PrefUtils.to.setIsLogined(true);
     } else {
       formKey.currentState!.validate();
       if (authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {

@@ -40,7 +40,8 @@ class PrefUtils {
   }
 
   Future<bool> setSigninTime() {
-    return _sharedPreferences!.setString("SigninTime", DateTime.now().toString());
+    return _sharedPreferences!
+        .setString("SigninTime", DateTime.now().toString());
   }
 
   String getSigninTime() {
@@ -65,4 +66,7 @@ class PrefUtils {
     }
   }
 
+  Future<bool> setIsLogined(bool value) {
+    return _sharedPreferences!.setBool("IsLogined", value);
+  }
 }

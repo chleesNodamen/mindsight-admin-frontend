@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_model.dart';
 import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_repository.dart';
@@ -15,9 +15,6 @@ class AdminSettingsController extends GetxController {
   late AdminMyDataModel adminMyDataModel;
   late AdminPasswordModel adminPasswordModel;
 
-  DateFormat formatter = DateFormat('yyyy-MM-dd-HH:mm:ss');
-  RxString formattedDate = "".obs;
-
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -33,10 +30,16 @@ class AdminSettingsController extends GetxController {
         adminEmail: "jalee@nodamen.com",
         lastActivity: DateTime.parse("2024-06-01T12:02:21"),
       );
-      formattedDate = formatter.format(adminMyDataModel.lastActivity!).obs;
     }
     isLoading.value = false;
     isInited.value = true;
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    oldPasswordController.dispose();
+    newPasswordController.dispose();
   }
 
   final TextEditingController oldPasswordController = TextEditingController();
@@ -54,50 +57,50 @@ class AdminSettingsController extends GetxController {
     PasswordValidEnum.waiting.obs
   ];
 
-  bool checkPasswordValid(String value, bool showInvalidRedColor) {
-    _wordChecker.check(value);
+  // bool checkPasswordValid(String value, bool showInvalidRedColor) {
+  //   _wordChecker.check(value);
 
-    Logger.log("$value ${_wordChecker.is8Characters}");
+  //   Logger.log("$value ${_wordChecker.is8Characters}");
 
-    if (_wordChecker.is8Characters) {
-      isPasswordValid[0].value = PasswordValidEnum.valid;
-    } else {
-      if (showInvalidRedColor) {
-        isPasswordValid[0].value = PasswordValidEnum.invalid;
-      } else {
-        isPasswordValid[0].value = PasswordValidEnum.waiting;
-      }
-    }
+  //   if (_wordChecker.is8Characters) {
+  //     isPasswordValid[0].value = PasswordValidEnum.valid;
+  //   } else {
+  //     if (showInvalidRedColor) {
+  //       isPasswordValid[0].value = PasswordValidEnum.invalid;
+  //     } else {
+  //       isPasswordValid[0].value = PasswordValidEnum.waiting;
+  //     }
+  //   }
 
-    if (_wordChecker.isUpperLowerLetter) {
-      isPasswordValid[1].value = PasswordValidEnum.valid;
-    } else {
-      if (showInvalidRedColor) {
-        isPasswordValid[1].value = PasswordValidEnum.invalid;
-      } else {
-        isPasswordValid[1].value = PasswordValidEnum.waiting;
-      }
-    }
+  //   if (_wordChecker.isUpperLowerLetter) {
+  //     isPasswordValid[1].value = PasswordValidEnum.valid;
+  //   } else {
+  //     if (showInvalidRedColor) {
+  //       isPasswordValid[1].value = PasswordValidEnum.invalid;
+  //     } else {
+  //       isPasswordValid[1].value = PasswordValidEnum.waiting;
+  //     }
+  //   }
 
-    if (_wordChecker.is1Symbol) {
-      isPasswordValid[2].value = PasswordValidEnum.valid;
-    } else {
-      if (showInvalidRedColor) {
-        isPasswordValid[2].value = PasswordValidEnum.invalid;
-      } else {
-        isPasswordValid[2].value = PasswordValidEnum.waiting;
-      }
-    }
+  //   if (_wordChecker.is1Symbol) {
+  //     isPasswordValid[2].value = PasswordValidEnum.valid;
+  //   } else {
+  //     if (showInvalidRedColor) {
+  //       isPasswordValid[2].value = PasswordValidEnum.invalid;
+  //     } else {
+  //       isPasswordValid[2].value = PasswordValidEnum.waiting;
+  //     }
+  //   }
 
-    return _wordChecker.is8Characters &&
-        _wordChecker.isUpperLowerLetter &&
-        _wordChecker.is1Symbol;
-  }
+  //   return _wordChecker.is8Characters &&
+  //       _wordChecker.isUpperLowerLetter &&
+  //       _wordChecker.is1Symbol;
+  // }
 
   Future<void> onContinue() async {
-    if (!checkPasswordValid(oldPasswordController.text, false)) {
-      return;
-    }
+    // if (!checkPasswordValid(oldPasswordController.text, false)) {
+    //   return;
+    // }
 
     isLoading.value = true;
 
@@ -109,12 +112,12 @@ class AdminSettingsController extends GetxController {
 
     isLoading.value = false;
 
-    if (!formKey.currentState!.validate()) {
-      return;
-    }
+    // if (!formKey.currentState!.validate()) {
+    //   return;
+    // }
 
     if (adminPasswordModel.isSuccess) {
-      // Get.offAllNamed(AppRoutes.adminSettings);
+      Get.offAllNamed(AppRoutes.adminSettings);
     }
   }
 }
