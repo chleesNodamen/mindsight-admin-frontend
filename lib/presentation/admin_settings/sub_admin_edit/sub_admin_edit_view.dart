@@ -105,7 +105,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,
-              // onPressed: controller.saveChanges,
+              onPressed: controller.saveChanges,
             ),
             CustomElevatedButton(
               text: '취소',
@@ -231,7 +231,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
               ),
               child: DropdownButton<String>(
                 isExpanded: true,
-                // value: controller.selectedOrder.value,
+                value: controller.selectedOrder.value,
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
@@ -240,11 +240,10 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
-                    // controller.updateSelectedOrder(newValue);
-                    // controller.updateStyle();
+                    controller.updateSelectedOrder(newValue);
                   }
                 },
-                items: <String>['Select Option', '운영', '제품 관리', '개발']
+                items: <String>['role', '운영', '제품 관리', '개발']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -279,14 +278,6 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                 hintStyle: CustomTextStyles.bodyMediumGray,
                 onChange: (value) {
                   // controller.checkPasswordValid(value, false);
-                },
-                validator: (value) {
-                  // if (value == null ||
-                  //     !controller.checkPasswordValid(value, true) ||
-                  //     !controller.authPasswordResetModel.isSuccess) {
-                  //   return "Code is invalid or has expired".tr;
-                  // }
-                  // return null;
                 },
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),

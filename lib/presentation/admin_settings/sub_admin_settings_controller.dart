@@ -79,7 +79,7 @@ class SubAdminSettingsController extends GetxController {
     adminDeleteModel = await AdminDeleteRepository()
         .delete(AdminDeleteReqDelete(ids: idsToDelete).toJson());
     selectedIds.clear();
-    Get.toNamed(AppRoutes.subAdminDetails);
+    Get.toNamed(AppRoutes.subAdminSettings);
     // Reload data if needed after deletion
   }
 
