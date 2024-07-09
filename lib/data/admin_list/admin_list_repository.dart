@@ -6,7 +6,7 @@ class AdminListRepository extends BaseRepository {
   Future<AdminListModel> get(Map<String, dynamic>? query) async {
     Logger.log(query.toString());
     // req
-    String endpoint = "admin/list?";
+    String endpoint = "list?";
     endpoint += addGetParam(query);
     Response response = await httpClient.get(endpoint);
 

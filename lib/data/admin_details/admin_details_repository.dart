@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/base_repository.dart';
 class AdminDetailsRepository extends BaseRepository {
   Future<AdminDetailsModel> get(String? id) async {
     // req
-    String endpoint = "admin/$id";
+    String endpoint = "$id";
     Response response = await httpClient.get(endpoint);
 
     // result
