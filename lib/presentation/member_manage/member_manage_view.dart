@@ -76,7 +76,8 @@ class MemberManageView extends GetWidget<MemberManageController> {
             children: [
               Wrap(
                 runSpacing: 18,
-                children: List.generate(3, (index) {
+                children:
+                    List.generate(controller.membershipValues.length, (index) {
                   return CustomCheckboxWidget(
                     isChecked: controller.membershipValues[index],
                     label: controller.membershipLabels[index],
@@ -271,6 +272,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                     //     vertical: 11, horizontal: 24),
                     width: 90,
                     height: 44,
+                    onPressed: controller.onButtonPressed,
                   ),
                   Pages(
                       pages: (controller.membersModel.total! / 10).ceil(),

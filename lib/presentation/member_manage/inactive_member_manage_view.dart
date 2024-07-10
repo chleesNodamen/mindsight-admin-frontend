@@ -77,7 +77,8 @@ class InactiveMemberManageView
             children: [
               Wrap(
                 runSpacing: 18,
-                children: List.generate(3, (index) {
+                children:
+                    List.generate(controller.membershipValues.length, (index) {
                   return CustomCheckboxWidget(
                     isChecked: controller.membershipValues[index],
                     label: controller.membershipLabels[index],

@@ -22,7 +22,7 @@ class TobBarSearch extends StatelessWidget {
   final String? searchText;
   final bool? searchShow;
   final TextEditingController textController = TextEditingController();
-  final Future<void> Function({String? search})? onSearch;
+  final Future<void> Function(String? search)? onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,9 @@ class TobBarSearch extends StatelessWidget {
                       topRight: Radius.circular(12),
                     )),
                 child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      onSearch != null ? onSearch!(textController.text) : null;
+                    },
                     child: Text("검색", style: CustomTextStyles.bodyMediumWhite)),
               )
             ],

@@ -19,6 +19,8 @@ class InactiveMemberManageController extends GetxController {
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+  RxBool searchOn = false.obs;
+  RxString searchValue = "".obs;
 
   late MembersModel membersModel;
   late MembersStatusModel membersStatusModel;
@@ -68,12 +70,16 @@ class InactiveMemberManageController extends GetxController {
       );
       membersModel.length = membersModel.id!.length;
     }
-    memberState = membersModel.status!.obs;
+    memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     isLoading.value = false;
     isInited.value = true;
   }
 
   Future<void> toggleMembership(int index, bool value) async {
+    searchOn.value = false;
+    searchValue.value = "";
+    isLoading.value = true;
+    membershipValues[index] = value;
     if (AppConstant.chleesTest) {
       List<String> affiliation = [
         for (int i = 0; i < membershipLabels.length; i++)
@@ -85,16 +91,23 @@ class InactiveMemberManageController extends GetxController {
         disabled: true,
       ).toJson());
     }
+    memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     activePage.value = 1;
-    membershipValues[index] = value;
+    isLoading.value = false;
   }
 
-  Future<void> onSearch({String? search}) async {
+  Future<void> onSearch(String? search) async {
+    searchOn.value = true;
+    searchValue.value = search!;
+    isLoading.value = true;
     if (AppConstant.chleesTest) {
       List<String> affiliation = [
         for (int i = 0; i < membershipLabels.length; i++)
           if (membershipValues[i]) membershipLabels[i]
       ];
+      if (membershipValues.every((element) => element == true)) {
+        affiliation = [];
+      } //TODO remove later
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,
         affiliation: affiliation,
@@ -102,17 +115,31 @@ class InactiveMemberManageController extends GetxController {
         disabled: true,
       ).toJson());
     }
+    memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     activePage.value = 1;
+    isLoading.value = false;
   }
 
   Future<void> loadNewPage(int pageNum) async {
+    List<String> affiliation = [
+      for (int i = 0; i < membershipLabels.length; i++)
+        if (membershipValues[i]) membershipLabels[i]
+    ];
+    if (membershipValues.every((element) => element == true)) {
+      affiliation = [];
+    } //TODO remove later
     if (AppConstant.chleesTest) {
+      isLoading.value = true;
       membersModel = await MembersRepository().get(MembersReqGet(
-        page: pageNum,
-        disabled: true,
-      ).toJson());
+              page: pageNum,
+              disabled: true,
+              search: searchOn.value == true ? searchValue.value : null,
+              affiliation: affiliation)
+          .toJson());
     }
+    memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     activePage.value = pageNum;
+    isLoading.value = false;
   }
 
   void onMemberTap(String id) {
@@ -124,10 +151,21 @@ class InactiveMemberManageController extends GetxController {
   }
 
   Future<void> onStatusChange(int index) async {
+    isLoading.value = true;
     membersStatusModel = await MembersStatusRepository().put(
         MembersStatusReqPut(
-                ids: [membersModel.id![index]], status: memberState![index])
+                ids: [membersModel.id![index]], status: !memberState![index])
             .toJson());
+    isLoading.value = false;
+  }
+
+  Future<void> onButtonPressed() async {
+    List<String> ids = [
+      for (int i = 0; i < membersModel.length; i++)
+        if (selectedMembers[i]) membersModel.id![i]
+    ];
+    membersStatusModel = await MembersStatusRepository()
+        .put(MembersStatusReqPut(ids: ids, status: false).toJson());
     if (membersStatusModel.isSuccess) {
       isLoading.value = true;
       selectedMembers = [
@@ -146,18 +184,10 @@ class InactiveMemberManageController extends GetxController {
         page: 1,
         disabled: true,
       ).toJson());
-      memberState = membersModel.status!.obs;
+      memberState =
+          (membersModel.status!.map((status) => !status).toList()).obs;
       isLoading.value = false;
       isInited.value = true;
     }
-  }
-
-  Future<void> onButtonPressed() async {
-    List<String> ids = [
-      for (int i = 0; i < membersModel.length; i++)
-        if (selectedMembers[i]) membersModel.id![i]
-    ];
-    membersStatusModel = await MembersStatusRepository()
-        .put(MembersStatusReqPut(ids: ids, status: true).toJson());
   }
 }

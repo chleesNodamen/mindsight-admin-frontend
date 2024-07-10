@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
 import 'package:mindsight_admin_page/data/members/members_model.dart';
 import 'package:mindsight_admin_page/data/members/members_repository.dart';
 import 'package:mindsight_admin_page/data/members/members_req_get.dart';
@@ -17,9 +19,12 @@ class MemberManageController extends GetxController {
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+  RxBool searchOn = false.obs;
+  RxString searchValue = "".obs;
 
   late MembersModel membersModel;
   late MembersStatusModel membersStatusModel;
+  late AffiliationModel affiliationModel;
 
   RxList<bool> selectedMembers = [
     false,
@@ -43,6 +48,9 @@ class MemberManageController extends GetxController {
         page: 1,
         disabled: false,
       ).toJson());
+      affiliationModel = await AffiliationRepository().get();
+      membershipLabels = affiliationModel.affiliation!;
+      membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
     } else {
       membersModel = MembersModel().copyWith(
         id: [
@@ -78,13 +86,17 @@ class MemberManageController extends GetxController {
     print(membersModel.length);
     print(
         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    memberState = membersModel.status!.obs;
+    memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     isLoading.value = false;
     isInited.value = true;
   }
 
   Future<void> toggleMembership(int index, bool value) async {
+    searchOn.value = false;
+    searchValue.value = "";
     if (AppConstant.chleesTest) {
+      isLoading.value = true;
+      membershipValues[index] = value;
       List<String> affiliation = [
         for (int i = 0; i < membershipLabels.length; i++)
           if (membershipValues[i]) membershipLabels[i]
@@ -94,38 +106,59 @@ class MemberManageController extends GetxController {
         affiliation: affiliation,
         disabled: false,
       ).toJson());
-      memberState = membersModel.status!.obs;
+      memberState =
+          (membersModel.status!.map((status) => !status).toList()).obs;
     }
     activePage.value = 1;
-    membershipValues[index] = value;
+    isLoading.value = false;
   }
 
-  Future<void> onSearch({String? search}) async {
+  Future<void> onSearch(String? search) async {
+    searchOn.value = true;
+    searchValue.value = search!;
     if (AppConstant.chleesTest) {
+      isLoading.value = true;
       List<String> affiliation = [
         for (int i = 0; i < membershipLabels.length; i++)
           if (membershipValues[i]) membershipLabels[i]
       ];
+      if (membershipValues.every((element) => element == true)) {
+        affiliation = [];
+      } //TODO remove later
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,
         affiliation: affiliation,
         search: search,
         disabled: false,
       ).toJson());
-      memberState = membersModel.status!.obs;
+      memberState =
+          (membersModel.status!.map((status) => !status).toList()).obs;
     }
     activePage.value = 1;
+    isLoading.value = false;
   }
 
   Future<void> loadNewPage(int pageNum) async {
     if (AppConstant.chleesTest) {
+      isLoading.value = true;
+      List<String> affiliation = [
+        for (int i = 0; i < membershipLabels.length; i++)
+          if (membershipValues[i]) membershipLabels[i]
+      ];
+      if (membershipValues.every((element) => element == true)) {
+        affiliation = [];
+      } //TODO remove later
       membersModel = await MembersRepository().get(MembersReqGet(
+        affiliation: affiliation,
         page: pageNum,
+        search: searchOn.value == true ? searchValue.value : null,
         disabled: false,
       ).toJson());
-      memberState = membersModel.status!.obs;
+      memberState =
+          (membersModel.status!.map((status) => !status).toList()).obs;
     }
     activePage.value = pageNum;
+    isLoading.value = false;
   }
 
   void onMemberTap(String id) {
@@ -139,8 +172,39 @@ class MemberManageController extends GetxController {
   Future<void> onStatusChange(int index) async {
     membersStatusModel = await MembersStatusRepository().put(
         MembersStatusReqPut(
-                ids: [membersModel.id![index]], status: memberState![index])
+                ids: [membersModel.id![index]], status: !memberState![index])
             .toJson());
+    // if (membersStatusModel.isSuccess) {
+    //   isLoading.value = true;
+    //   selectedMembers = [
+    //     false,
+    //     false,
+    //     false,
+    //     false,
+    //     false,
+    //     false,
+    //     false,
+    //     false,
+    //     false,
+    //     false,
+    //   ].obs;
+    //   membersModel = await MembersRepository().get(MembersReqGet(
+    //     page: 1,
+    //     disabled: false,
+    //   ).toJson());
+    //   memberState = membersModel.status!.obs;
+    //   isLoading.value = false;
+    //   isInited.value = true;
+    // }
+  }
+
+  Future<void> onButtonPressed() async {
+    List<String> ids = [
+      for (int i = 0; i < membersModel.length; i++)
+        if (selectedMembers[i]) membersModel.id![i]
+    ];
+    membersStatusModel = await MembersStatusRepository()
+        .put(MembersStatusReqPut(ids: ids, status: true).toJson());
     if (membersStatusModel.isSuccess) {
       isLoading.value = true;
       selectedMembers = [
@@ -159,18 +223,10 @@ class MemberManageController extends GetxController {
         page: 1,
         disabled: false,
       ).toJson());
-      memberState = membersModel.status!.obs;
+      memberState =
+          (membersModel.status!.map((status) => !status).toList()).obs;
       isLoading.value = false;
       isInited.value = true;
     }
-  }
-
-  Future<void> onButtonPressed() async {
-    List<String> ids = [
-      for (int i = 0; i < membersModel.length; i++)
-        if (selectedMembers[i]) membersModel.id![i]
-    ];
-    membersStatusModel = await MembersStatusRepository()
-        .put(MembersStatusReqPut(ids: ids, status: false).toJson());
   }
 }

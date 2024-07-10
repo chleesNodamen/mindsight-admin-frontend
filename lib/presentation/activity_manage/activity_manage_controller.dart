@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/route_arguments.dart';
 import 'package:mindsight_admin_page/data/activity/activity_model.dart';
 import 'package:mindsight_admin_page/data/activity/activity_repository.dart';
 import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
@@ -44,6 +43,8 @@ class ActivityManageController extends GetxController {
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+  RxBool searchOn = false.obs;
+  RxString searchValue = "".obs;
 
   late ActivityModel activityModel;
   late AffiliationModel affiliationModel;
@@ -81,32 +82,80 @@ class ActivityManageController extends GetxController {
   }
 
   Future<void> toggleMembership(int index, bool value) async {
+    isLoading.value = true;
+    membershipValues[index] = value;
+    if (await loadData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> toggleChatbot(int index, bool value) async {
+    isLoading.value = true;
+    chatbotValues[index] = value;
+    if (await loadData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> toggleFeedback(int index, bool value) async {
+    isLoading.value = true;
+    feedbackValues[index] = value;
+    if (await loadData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
+  }
+
+  Future<bool> loadData() async {
+    searchOn.value = false;
+    searchValue.value = "";
+    if (feedbackValues.every((element) => element == false) ||
+        chatbotValues.every((element) => element == false)) {
+      activityModel = ActivityModel().copyWith(
+        type: null,
+        memberId: null,
+        email: null,
+        sessionId: null,
+        sessionName: null,
+        recordId: null,
+        record: null,
+        feedback: null,
+        total: 0,
+      );
+      return true;
+    }
     List<String> chosenAffiliation = [
       for (int i = 0; i < membershipLabels.length; i++)
         if (membershipValues[i]) membershipLabels[i]
     ];
+    if (membershipValues.every((element) => element == true)) {
+      chosenAffiliation = [];
+    } //TODO remove later
     activityModel = await ActivityRepository().get(ActivityReqGet(
       page: 1,
-      type: "practice",
+      type: type.value.name,
       affiliation: chosenAffiliation,
       chatbot: chatbotValues.contains(false) ? chatbotValues[0] : null,
       feedback: feedbackValues.contains(false) ? feedbackValues[1] : null,
     ).toJson());
-    membershipValues[index] = value;
-  }
-
-  void toggleChatbot(int index, bool value) {
-    chatbotValues[index] = value;
-  }
-
-  void toggleFeedback(int index, bool value) {
-    feedbackValues[index] = value;
+    return activityModel.isSuccess;
   }
 
   Future<void> loadNewPage(int pageNum) async {
+    List<String> chosenAffiliation = [
+      for (int i = 0; i < membershipLabels.length; i++)
+        if (membershipValues[i]) membershipLabels[i]
+    ];
+    if (membershipValues.every((element) => element == true)) {
+      chosenAffiliation = [];
+    } //TODO remove later
     isLoading.value = true;
     activityModel = await ActivityRepository().get(ActivityReqGet(
       page: pageNum,
+      search: searchOn.value ? searchValue.value : null,
+      affiliation: chosenAffiliation,
       type: type.value.name,
     ).toJson());
     activePage.value = pageNum;
@@ -137,6 +186,8 @@ class ActivityManageController extends GetxController {
   }
 
   Future<void> changeType(Type? newType) async {
+    searchOn.value = false;
+    searchValue.value = "";
     if (newType == null) {
       return;
     }
@@ -146,19 +197,26 @@ class ActivityManageController extends GetxController {
       type: newType.name,
     ).toJson());
     type.value = newType;
+    membershipValues.value =
+        List.generate(membershipValues.length, (_) => true);
+    feedbackValues.value = List.generate(feedbackValues.length, (_) => true);
+    chatbotValues.value = List.generate(chatbotValues.length, (_) => true);
     activePage.value = 1;
     isLoading.value = false;
   }
 
-  Future<void> onSearch({String? search}) async {
+  Future<void> onSearch(String? search) async {
+    searchOn.value = true;
+    searchValue.value = search!;
     isLoading.value = true;
     List<String> chosenAffiliation = [
       for (int i = 0; i < membershipLabels.length; i++)
         if (membershipValues[i]) membershipLabels[i]
     ];
+    //TODO remove later
     activityModel = await ActivityRepository().get(ActivityReqGet(
             page: 1,
-            type: "practice",
+            type: type.value.name,
             affiliation: chosenAffiliation,
             chatbot: chatbotValues.contains(false) ? chatbotValues[0] : null,
             feedback: feedbackValues.contains(false) ? feedbackValues[1] : null,
