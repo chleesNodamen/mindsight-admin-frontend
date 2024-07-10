@@ -69,10 +69,19 @@ class TobBarSearch extends StatelessWidget {
           visible: searchShow!,
           child: Row(
             children: [
-              SizedBox(
+              Container(
+                decoration: BoxDecoration(
+                  color: appTheme.white,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(12),
+                    topLeft: Radius.circular(12),
+                  ),
+                ),
                 height: 45,
                 width: 266,
                 child: TextFormField(
+                  textAlignVertical: TextAlignVertical.center,
+                  textAlign: TextAlign.start,
                   controller: textController,
                   decoration: InputDecoration(
                     labelText: searchText,
@@ -80,70 +89,6 @@ class TobBarSearch extends StatelessWidget {
                     // floatingLabelStyle: TextStyle(color: appTheme.black),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     // hintText: "abc@domain.com",
-                    border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        topLeft: Radius.circular(12),
-                      ),
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        topLeft: Radius.circular(12),
-                      ),
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        topLeft: Radius.circular(12),
-                      ),
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        topLeft: Radius.circular(12),
-                      ),
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 2,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        topLeft: Radius.circular(12),
-                      ),
-                      borderSide: BorderSide(
-                        color: appTheme.red,
-                        width: 2,
-                      ),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        topLeft: Radius.circular(12),
-                      ),
-                      borderSide: BorderSide(
-                        color: appTheme.red,
-                        width: 2,
-                      ),
-                    ),
-                    errorStyle: TextStyle(
-                        color: appTheme.red,
-                        fontSize: 12.fSize,
-                        fontWeight: FontWeight.w500),
                   ),
                 ),
               ),

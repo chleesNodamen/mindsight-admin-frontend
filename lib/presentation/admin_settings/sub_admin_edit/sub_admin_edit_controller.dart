@@ -30,7 +30,6 @@ class SubAdminEditController extends GetxController {
     if (AppConstant.chleesTest) {
       adminDetailsModel = await AdminDetailsRepository().get(id);
     }
-    print(id);
     departmentController.text = adminDetailsModel.department!;
     managerController.text = adminDetailsModel.manager!;
     phoneController.text = adminDetailsModel.phone!;

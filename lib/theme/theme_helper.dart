@@ -149,6 +149,73 @@ class ThemeHelper {
     var colorScheme =
         _supportedColorScheme[_appTheme] ?? ColorSchemes.primaryColorScheme;
     return ThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: const EdgeInsets.all(11),
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12),
+            topLeft: Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            color: appTheme.grayScale3,
+            width: 1,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12),
+            topLeft: Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            color: appTheme.grayScale3,
+            width: 1,
+          ),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12),
+            topLeft: Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            color: appTheme.grayScale3,
+            width: 1,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12),
+            topLeft: Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            color: appTheme.grayScale3,
+            width: 2,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12),
+            topLeft: Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            color: appTheme.red,
+            width: 2,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12),
+            topLeft: Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            color: appTheme.red,
+            width: 2,
+          ),
+        ),
+        errorStyle: TextStyle(
+            color: appTheme.red,
+            fontSize: 12.fSize,
+            fontWeight: FontWeight.w500),
+      ),
       visualDensity: VisualDensity.standard,
       useMaterial3: false,
       colorScheme: colorScheme,
