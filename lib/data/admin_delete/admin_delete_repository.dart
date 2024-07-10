@@ -6,7 +6,7 @@ class AdminDeleteRepository extends BaseRepository {
   Future<AdminDeleteModel> delete(Map<String, dynamic> query) async {
     Logger.log(query.toString());
     // req
-    String endpoint = "delete?";
+    String endpoint = "admin/delete?";
     endpoint += addGetParam(query);
     Response response = await httpClient.delete(endpoint);
 
