@@ -8,74 +8,86 @@ class DashboardView extends GetWidget<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: PageLoadingIndicator(
-        isLoading: controller.isLoading.value,
-        child: controller.isInited.value ? ResponsiveWidget(
-          largeScreen: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SideMenu(),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    left: 32,
-                    right: 48,
-                  ),
-                  child: ListView(
+    return Obx(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Text('대시보드', style: CustomTextStyles.headlineLargeBlack),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(flex: 1, child: _buildFirstContainer()),
-                          const SizedBox(
-                            width: 16,
+                      const SideMenu(),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                            left: 32,
+                            right: 48,
                           ),
-                          Expanded(flex: 1, child: _buildSecondContainer()),
-                          const SizedBox(
-                            width: 16,
+                          child: ListView(
+                            children: [
+                              const SizedBox(
+                                height: 80,
+                              ),
+                              Text('대시보드',
+                                  style: CustomTextStyles.headlineLargeBlack),
+                              const SizedBox(
+                                height: 32,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: _buildFirstContainer()),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Expanded(
+                                      flex: 1, child: _buildSecondContainer()),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Expanded(
+                                      flex: 1, child: _buildThirdContainer()),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: _buildMembersGraph()),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Expanded(
+                                      flex: 2,
+                                      child: _buildPracticePlanContainer()),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: _buildChallengeContainer()),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 80,
+                              ),
+                            ],
                           ),
-                          Expanded(flex: 1, child: _buildThirdContainer()),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(flex: 1, child: _buildMembersGraph()),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Expanded(
-                              flex: 2, child: _buildPracticePlanContainer()),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(flex: 1, child: _buildChallengeContainer()),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 80,
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ) : const SizedBox.shrink(),
+                )
+              : const SizedBox.shrink(),
+        ),
       ),
     );
   }
@@ -287,7 +299,8 @@ class DashboardView extends GetWidget<DashboardController> {
               height: 8,
             ),
             Text(
-              '10,016',
+              NumberFormat('#,###')
+                  .format(controller.registeredModel.totalMembers),
               style: CustomTextStyles.headlineLargeBlack,
             ),
             const SizedBox(
@@ -404,6 +417,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 GestureDetector(
+                  onTap: controller.onPracticeMore,
                   child: Text(
                     '모두보기',
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
@@ -453,133 +467,41 @@ class DashboardView extends GetWidget<DashboardController> {
                     ),
                   ),
                 ],
-                rows: <DataRow>[
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '1',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '1회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '2',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '2회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '3',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '3회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '4',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '4회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(
-                        '5',
-                        style: CustomTextStyles.bodyLargeSkyBlue,
-                      )),
-                      DataCell(Text(
-                        '5회차',
-                        style: CustomTextStyles.bodyLargeBlack
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                      DataCell(Text(
-                        '3,456',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '3,920',
-                        style: CustomTextStyles.bodyLargeBlack,
-                      )),
-                      DataCell(Text(
-                        '88.1%',
-                        style: CustomTextStyles.bodyLargeGreen,
-                      )),
-                    ],
-                  ),
-                ],
+                rows: List.generate(controller.practiceModel.length, (index) {
+                  return DataRow(cells: [
+                    DataCell(Text('${index + 1}',
+                        style: CustomTextStyles.labelLargeSkyBlue)),
+                    DataCell(
+                      GestureDetector(
+                        onTap: () {
+                          controller.onPracticeTap(index);
+                        },
+                        child: Text(
+                          "${controller.practiceModel.level![index]}회차",
+                          style: CustomTextStyles.bodyMediumBlack
+                              .copyWith(decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ),
+                    DataCell(Text(
+                        NumberFormat('#,###').format(
+                            controller.practiceModel.finished != null
+                                ? controller.practiceModel.finished![index]
+                                : 0),
+                        style: CustomTextStyles.bodyMediumBlack)),
+                    DataCell(Text(
+                        NumberFormat('#,###').format(
+                            controller.practiceModel.participated != null
+                                ? controller.practiceModel.participated![index]
+                                : 0),
+                        style: CustomTextStyles.bodyMediumBlack)),
+                    DataCell(Text(
+                        controller.practiceModel.ratio != null
+                            ? controller.practiceModel.ratio![index]
+                            : '-',
+                        style: CustomTextStyles.bodyMediumGreen)),
+                  ]);
+                }).toList(),
               ),
             )
           ],
@@ -605,6 +527,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 GestureDetector(
+                  onTap: controller.onChallengeMore,
                   child: Text(
                     '모두보기',
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
@@ -626,70 +549,102 @@ class DashboardView extends GetWidget<DashboardController> {
             Row(
               children: [
                 Expanded(
-                  flex:1,
+                  flex: 1,
                   child: Column(
-                    children: [
-                      _challengeItemBuilder(1),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        height: 1,
-                        width: double.infinity,
-                        decoration: BoxDecoration(color: appTheme.grayScale2),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      _challengeItemBuilder(2),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        height: 1,
-                        width: double.infinity,
-                        decoration: BoxDecoration(color: appTheme.grayScale2),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      _challengeItemBuilder(3),
-                    ],
+                    children: List.generate(3, (index) {
+                      return Column(
+                        children: [
+                          index < controller.challengeModel.length
+                              ? _challengeItemBuilder(index)
+                              : SizedBox(
+                                  height: 56,
+                                  child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text((index + 1).toString(),
+                                            style: CustomTextStyles
+                                                .labelLargeSkyBlue),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Text('집계된 데이터가 없습니다.',
+                                            style:
+                                                CustomTextStyles.labelLargeGray)
+                                      ])),
+                          index < 2
+                              ? Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Container(
+                                      height: 1,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          color: appTheme.grayScale2),
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      );
+                    }).toList(),
                   ),
                 ),
                 const SizedBox(
                   width: 32,
                 ),
                 Expanded(
-                  flex:1,
+                  flex: 1,
                   child: Column(
-                    children: [
-                      _challengeItemBuilder(4),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        height: 1,
-                        width: double.infinity,
-                        decoration: BoxDecoration(color: appTheme.grayScale2),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      _challengeItemBuilder(5),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        height: 1,
-                        width: double.infinity,
-                        decoration: BoxDecoration(color: appTheme.grayScale2),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      _challengeItemBuilder(6),
-                    ],
+                    children: List.generate(3, (index) {
+                      return Column(
+                        children: [
+                          index + 3 < controller.challengeModel.length
+                              ? _challengeItemBuilder(index + 3)
+                              : SizedBox(
+                                  height: 56,
+                                  child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text((index + 4).toString(),
+                                            style: CustomTextStyles
+                                                .labelLargeSkyBlue),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Text('집계된 데이터가 없습니다.',
+                                            style:
+                                                CustomTextStyles.labelLargeGray)
+                                      ])),
+                          index < 2
+                              ? Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Container(
+                                      height: 1,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          color: appTheme.grayScale2),
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      );
+                    }).toList(),
                   ),
                 ),
               ],
@@ -699,80 +654,96 @@ class DashboardView extends GetWidget<DashboardController> {
   }
 
   Widget _challengeItemBuilder(int index) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Text(index.toString(), style: CustomTextStyles.labelLargeSkyBlue),
-        const SizedBox(
-          width: 16,
-        ),
-        CustomImageView(
-          imagePath: "assets/challenge_example.png",
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Column(
-          children: [
-            Text('Help Digestion', style: CustomTextStyles.titleSmallBlack),
-            const SizedBox(
-              height: 4,
+    return GestureDetector(
+      onTap: () {
+        controller.onChallengeTap(index);
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text((index + 1).toString(),
+              style: CustomTextStyles.labelLargeSkyBlue),
+          const SizedBox(
+            width: 16,
+          ),
+          CustomImageView(
+            imagePath: controller.challengeModel.image![index],
+            height: 56,
+            width: 56,
+            radius: BorderRadius.circular(
+              8,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 6, right: 6),
-                  child: Text(
-                    // "${model.duration![index]} ${"min".tr}",
-                    '8 - 11 min',
-                    style: CustomTextStyles.labelLargeGray,
-                  ),
-                ),
-                Container(
-                  height: 2,
-                  width: 2,
-                  decoration: BoxDecoration(
-                    color: appTheme.grayScale6,
-                    borderRadius: BorderRadius.circular(
-                      1,
+            // margin: EdgeInsets.only(
+            //   top: 2,
+            // ),
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Column(
+            children: [
+              Text(controller.challengeModel.name![index],
+                  style: CustomTextStyles.titleSmallBlack),
+              const SizedBox(
+                height: 4,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6, right: 6),
+                    child: Text(
+                      // "${model.duration![index]} ${"min".tr}",
+                      '${controller.challengeModel.duration![index]} min',
+                      style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 6),
-                  child: Text(
-                    '14 days',
-                    // "${model.daysTotal![index]} days",
-                    style: CustomTextStyles.labelLargeGray,
+                  Container(
+                    height: 2,
+                    width: 2,
+                    decoration: BoxDecoration(
+                      color: appTheme.grayScale6,
+                      borderRadius: BorderRadius.circular(
+                        1,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Spacer(),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Row(
-            children: [
-              CustomImageView(
-                imagePath: IconConstant.user,
+                  Padding(
+                    padding: EdgeInsets.only(left: 6),
+                    child: Text(
+                      '${controller.challengeModel.daysTotal![index]} days',
+                      // "${model.daysTotal![index]} days",
+                      style: CustomTextStyles.labelLargeGray,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: 48,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    '1,643',
-                    style: CustomTextStyles.labelLargeGray,
-                  ),
-                ),
-              )
             ],
           ),
-        )
-      ],
+          Spacer(),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Row(
+              children: [
+                CustomImageView(
+                  imagePath: IconConstant.user,
+                ),
+                SizedBox(
+                  width: 48,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      NumberFormat('#,###').format(
+                          controller.challengeModel.participants![index]),
+                      style: CustomTextStyles.labelLargeGray,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

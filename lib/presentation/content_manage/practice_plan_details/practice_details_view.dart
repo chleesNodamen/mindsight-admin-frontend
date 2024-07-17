@@ -152,8 +152,8 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           const SizedBox(
             height: 16,
           ),
-          Text(controller.activityDetailsModel.level ?? "",
-              style: CustomTextStyles.labelLargeBlack),
+          // Text(controller.activityDetailsModel.level ?? "",
+          //     style: CustomTextStyles.labelLargeBlack),
           const SizedBox(
             height: 24,
           ),
@@ -184,13 +184,13 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(controller.activityDetailsModel.body ?? "",
-                      style: CustomTextStyles.labelLargeBlack),
+                  // Text(controller.activityDetailsModel.body ?? "",
+                  //     style: CustomTextStyles.labelLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.activityDetailsModel.breath ?? "",
-                      style: CustomTextStyles.labelLargeBlack),
+                  // Text(controller.activityDetailsModel.breath ?? "",
+                  //     style: CustomTextStyles.labelLargeBlack),
                 ],
               )
             ],

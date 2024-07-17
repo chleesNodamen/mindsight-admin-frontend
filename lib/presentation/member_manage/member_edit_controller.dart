@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_model.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_repository.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
@@ -6,18 +8,18 @@ import 'package:mindsight_admin_page/data/members_edit/members_edit_repository.d
 import 'package:mindsight_admin_page/data/members_edit/members_edit_req_put.dart';
 
 class MemberEditController extends GetxController {
-  // final id = Get.arguments[RouteArguments.id];
-  final id = "";
+  final id = Get.arguments[RouteArguments.id];
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   List<String> membershipLabels = [
+    "affiliation",
     "Nodamen",
     "UNHCR",
     "UN Women",
-  ];
-  RxString? affiliation;
-  RxString? gender;
+  ]; //TODO
+  RxString affiliation = "".obs;
+  RxString gender = "".obs;
 
   final TextEditingController yearController = TextEditingController();
   final TextEditingController positionController = TextEditingController();
@@ -27,6 +29,7 @@ class MemberEditController extends GetxController {
 
   late MembersDataModel membersDataModel;
   late MembersEditModel membersEditModel;
+  late AffiliationModel affiliationModel;
 
   @override
   Future<void> onInit() async {
@@ -88,6 +91,8 @@ class MemberEditController extends GetxController {
     } else {
       yearController.text = membersDataModel.yearOfBirth!;
     }
+    affiliationModel = await AffiliationRepository().get(); //TODO
+    membershipLabels = affiliationModel.affiliation!;
 
     isLoading.value = false;
     isInited.value = true;

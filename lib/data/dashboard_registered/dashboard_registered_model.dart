@@ -2,8 +2,8 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 
 class DashboardRegisteredModel extends BaseModel {
   int? totalMembers;
-  int? verifiedPercentage;
-  int? unverifiedPercentage;
+  double? verifiedPercentage;
+  double? unverifiedPercentage;
 
   DashboardRegisteredModel({
     this.totalMembers,
@@ -12,9 +12,9 @@ class DashboardRegisteredModel extends BaseModel {
   });
 
   DashboardRegisteredModel copyWith({
-  int? totalMembers,
-  int? verifiedPercentage,
-  int? unverifiedPercentage,
+    int? totalMembers,
+    double? verifiedPercentage,
+    double? unverifiedPercentage,
   }) =>
       DashboardRegisteredModel(
         totalMembers: totalMembers ?? this.totalMembers,

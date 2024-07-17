@@ -18,13 +18,38 @@ class DashboardController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    // challengeModel = await DashboardChallengeRepository()
-    //     .get(DashboardChallengeReqGet(page: 1).toJson());
-    // practiceModel = await DashboardPracticeRepository()
-    //     .get(DashboardPracticeReqGet(page: 1).toJson());
-    // registeredModel = await DashboardRegisteredRepository().get();
+    challengeModel = await DashboardChallengeRepository()
+        .get(DashboardChallengeReqGet(page: 1).toJson());
+    practiceModel = await DashboardPracticeRepository()
+        .get(DashboardPracticeReqGet(page: 1).toJson());
+    registeredModel = await DashboardRegisteredRepository().get();
     isLoading.value = false;
     isInited.value = true;
   }
 
+  void onPracticeTap(int index) {
+    Get.toNamed(AppRoutes.practiceDetails,
+        arguments: {RouteArguments.id: practiceModel.id![index]});
+    menuController.changeActiveItemTo(contentManagePageDisplayName);
+    menuController.changeActiveSubItem(contentPracticePlanDisplayName);
+  }
+
+  void onPracticeMore() {
+    Get.toNamed(AppRoutes.contentPracticePlanManage);
+    menuController.changeActiveItemTo(contentManagePageDisplayName);
+    menuController.changeActiveSubItem(contentPracticePlanDisplayName);
+  }
+
+  void onChallengeMore() {
+    Get.toNamed(AppRoutes.contentChallengeManage);
+    menuController.changeActiveItemTo(contentManagePageDisplayName);
+    menuController.changeActiveSubItem(contentChallengeDisplayName);
+  }
+
+  void onChallengeTap(int index) {
+    Get.toNamed(AppRoutes.challengeDetails,
+        arguments: {RouteArguments.id: challengeModel.id![index]});
+    menuController.changeActiveItemTo(contentManagePageDisplayName);
+    menuController.changeActiveSubItem(contentChallengeDisplayName);
+  }
 }

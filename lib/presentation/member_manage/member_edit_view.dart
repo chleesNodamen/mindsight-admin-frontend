@@ -7,39 +7,59 @@ class MemberEditView extends GetWidget<MemberEditController> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: PageLoadingIndicator(
-        isLoading: controller.isLoading.value,
-        child: controller.isInited.value
-            ? ResponsiveWidget(
-                largeScreen: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SideMenu(),
-                    Obx(
-                      () => Expanded(
-                        child: ListView(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.all(48.0),
-                              child: Form(
-                                key: formKey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    TobBarSearch(
-                                      name: "사전 정보 수정",
-                                      searchShow: false,
-                                      viewCount: false,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Row(
-                                      children: [
-                                        GestureDetector(
+    return Obx(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SideMenu(),
+                      Obx(
+                        () => Expanded(
+                          child: ListView(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(48.0),
+                                child: Form(
+                                  key: formKey,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TobBarSearch(
+                                        name: "사전 정보 수정",
+                                        searchShow: false,
+                                        viewCount: false,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Row(
+                                        children: [
+                                          GestureDetector(
+                                              child: Text(
+                                                "회원 목록",
+                                                style: CustomTextStyles
+                                                    .bodyMediumSkyBlue
+                                                    .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor:
+                                                      appTheme.skyBlue,
+                                                ),
+                                              ),
+                                              onTap: () => Get.toNamed(
+                                                  AppRoutes.memberManage)),
+                                          CustomImageView(
+                                            imagePath: IconConstant.arrowRight,
+                                          ),
+                                          GestureDetector(
                                             child: Text(
-                                              "회원 목록",
+                                              "회원 상세",
                                               style: CustomTextStyles
                                                   .bodyMediumSkyBlue
                                                   .copyWith(
@@ -50,96 +70,80 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                                     appTheme.skyBlue,
                                               ),
                                             ),
-                                            onTap: () => Get.toNamed(
-                                                AppRoutes.memberManage)),
-                                        CustomImageView(
-                                          imagePath: IconConstant.arrowRight,
-                                        ),
-                                        GestureDetector(
-                                          child: Text(
-                                            "회원 상세",
-                                            style: CustomTextStyles
-                                                .bodyMediumSkyBlue
+                                            onTap: () => Get.back(),
+                                          ),
+                                          CustomImageView(
+                                            imagePath: IconConstant.arrowRight,
+                                          ),
+                                          Text('사전 정보 수정',
+                                              style: CustomTextStyles
+                                                  .bodyMediumGray),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 24),
+                                      _companySelect(),
+                                      const SizedBox(height: 24),
+                                      buildFirstRow(),
+                                      const SizedBox(height: 24),
+                                      buildSecondRow(),
+                                      const SizedBox(height: 24),
+                                      buildThirdRow(),
+                                      const SizedBox(height: 24),
+                                      buildLastRow(),
+                                      const SizedBox(height: 32),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          CustomElevatedButton(
+                                            text: '저장',
+                                            buttonTextStyle: CustomTextStyles
+                                                .bodyMediumWhite
                                                 .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              decorationColor: appTheme.skyBlue,
+                                              fontWeight: FontWeight.w700,
                                             ),
+                                            buttonStyle:
+                                                CustomButtonStyles.fillPrimary,
+                                            width: 90,
+                                            height: 44,
+                                            onPressed: () {
+                                              if (formKey.currentState!
+                                                  .validate()) {
+                                                controller.saveChanges();
+                                                Get.back();
+                                              }
+                                            },
                                           ),
-                                          onTap: () => Get.back(),
-                                        ),
-                                        CustomImageView(
-                                          imagePath: IconConstant.arrowRight,
-                                        ),
-                                        Text('사전 정보 수정',
-                                            style: CustomTextStyles
-                                                .bodyMediumGray),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 24),
-                                    _companySelect(),
-                                    const SizedBox(height: 24),
-                                    buildFirstRow(),
-                                    const SizedBox(height: 24),
-                                    buildSecondRow(),
-                                    const SizedBox(height: 24),
-                                    buildThirdRow(),
-                                    const SizedBox(height: 24),
-                                    buildLastRow(),
-                                    const SizedBox(height: 32),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        CustomElevatedButton(
-                                          text: '저장',
-                                          buttonTextStyle: CustomTextStyles
-                                              .bodyMediumWhite
-                                              .copyWith(
-                                            fontWeight: FontWeight.w700,
+                                          CustomElevatedButton(
+                                            text: '취소',
+                                            buttonTextStyle: CustomTextStyles
+                                                .bodyMediumRed
+                                                .copyWith(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                            buttonStyle: CustomButtonStyles
+                                                .fillRedTransparent,
+                                            margin:
+                                                const EdgeInsets.only(left: 16),
+                                            width: 90,
+                                            height: 44,
+                                            onPressed: () => Get.back(),
                                           ),
-                                          buttonStyle:
-                                              CustomButtonStyles.fillPrimary,
-                                          width: 90,
-                                          height: 44,
-                                          onPressed: () {
-                                            if (formKey.currentState!
-                                                .validate()) {
-                                              controller.saveChanges();
-                                              Get.back();
-                                            }
-                                          },
-                                        ),
-                                        CustomElevatedButton(
-                                          text: '취소',
-                                          buttonTextStyle: CustomTextStyles
-                                              .bodyMediumRed
-                                              .copyWith(
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                          buttonStyle: CustomButtonStyles
-                                              .fillRedTransparent,
-                                          margin:
-                                              const EdgeInsets.only(left: 16),
-                                          width: 90,
-                                          height: 44,
-                                          onPressed: () => Get.back(),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            : const SizedBox.shrink(),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
       ),
     );
   }
@@ -162,8 +166,12 @@ class MemberEditView extends GetWidget<MemberEditController> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: DropdownButton<String>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: controller.affiliation!.value,
+            value: controller.affiliation.value == "-" ||
+                    controller.affiliation.value == ""
+                ? null
+                : controller.affiliation.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -172,7 +180,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
             elevation: 16,
             onChanged: (String? newValue) {
               if (newValue != null) {
-                controller.affiliation!.value = newValue;
+                controller.affiliation.value = newValue;
               }
             },
             items: controller.membershipLabels
@@ -211,8 +219,13 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: DropdownButton<String>(
+                hint: Text('Select Option',
+                    style: CustomTextStyles.bodyMediumGray),
                 isExpanded: true,
-                value: controller.gender!.value,
+                value: controller.gender.value == "" ||
+                        controller.gender.value == "-"
+                    ? null
+                    : controller.gender.value,
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
@@ -221,7 +234,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
-                    controller.gender!.value = newValue;
+                    controller.gender.value = newValue;
                   }
                 },
                 items: <String>['Male', 'Female', 'Nonbinary']
@@ -390,8 +403,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                      text: "이메일 주소 ",
-                      style: CustomTextStyles.labelLargeBlack),
+                      text: "이메일 주소 ", style: CustomTextStyles.labelLargeBlack),
                   TextSpan(text: "*", style: TextStyle(color: appTheme.red))
                 ],
               ),

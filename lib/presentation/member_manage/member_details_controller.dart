@@ -34,6 +34,8 @@ class MemberDetailsController extends GetxController {
         minutesMeditated: 421,
       );
     }
+    print(membersDataModel.email!);
+    print(membersDataModel.id!);
     super.onInit();
     isLoading.value = false;
     isInited.value = true;
