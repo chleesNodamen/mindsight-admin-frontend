@@ -2,28 +2,71 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
+
+class SubMenuItem {
+  final String name;
+  final String route;
+  final Function inited;
+
+  SubMenuItem(this.name, this.route, this.inited);
+}
 
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
   var activeItem = dashboardPageDisplayName.obs;
   Rx<String>? activeSubItem;
-  Map<String, List<List<String>>> subMenuItems = {
+  Map<String, List<SubMenuItem>> subMenuItems = {
     memberManagePageDisplayName: [
-      [memberManagePageSubMenuDisplayName, AppRoutes.memberManage],
-      [inactiveMemberManagePageDisplayName, AppRoutes.inactiveMemberManage]
+      SubMenuItem(memberManagePageSubMenuDisplayName, AppRoutes.memberManage,
+          () {
+        if (Get.isRegistered<MemberManageController>()) {
+          Get.find<MemberManageController>().loadData();
+        }
+      }),
+      SubMenuItem(
+          inactiveMemberManagePageDisplayName, AppRoutes.inactiveMemberManage,
+          () {
+        if (Get.isRegistered<InactiveMemberManageController>()) {
+          Get.find<InactiveMemberManageController>().loadData();
+        }
+      }),
     ],
     contentManagePageDisplayName: [
-      [contentManageContentDisplayName, AppRoutes.contentManage],
-      [contentPracticePlanDisplayName, AppRoutes.contentPracticePlanManage],
-      [contentChallengeDisplayName, AppRoutes.contentChallengeManage]
+      SubMenuItem(contentManageContentDisplayName, AppRoutes.contentManage, () {
+        if (Get.isRegistered<MemberManageController>()) {
+          Get.find<MemberManageController>().loadData(); //TODO
+        }
+      }),
+      SubMenuItem(
+          contentPracticePlanDisplayName, AppRoutes.contentPracticePlanManage,
+          () {
+        if (Get.isRegistered<InactiveMemberManageController>()) {
+          Get.find<InactiveMemberManageController>().loadData();
+        }
+      }),
+      SubMenuItem(contentChallengeDisplayName, AppRoutes.contentChallengeManage,
+          () {
+        if (Get.isRegistered<InactiveMemberManageController>()) {
+          Get.find<InactiveMemberManageController>().loadData();
+        }
+      }),
     ],
     adminSettingsPageDisplayName: [
-      [myAccountManageDisplayName, AppRoutes.adminSettings],
-      [subAdminSettingsDisplayName, AppRoutes.subAdminSettings]
-    ]
+      SubMenuItem(myAccountManageDisplayName, AppRoutes.adminSettings, () {
+        if (Get.isRegistered<MemberManageController>()) {
+          Get.find<MemberManageController>().loadData();
+        }
+      }),
+      SubMenuItem(subAdminSettingsDisplayName, AppRoutes.subAdminSettings, () {
+        if (Get.isRegistered<InactiveMemberManageController>()) {
+          Get.find<InactiveMemberManageController>().loadData();
+        }
+      }),
+    ],
   };
 
   var hoverItem = "".obs;
@@ -45,7 +88,7 @@ class MenuController extends GetxController {
   }
 
   setActiveSubItem(String itemName) {
-    activeSubItem = subMenuItems[itemName]![0][0].obs;
+    activeSubItem = subMenuItems[itemName]![0].name.obs;
   }
 
   changeActiveSubItem(String itemName) {

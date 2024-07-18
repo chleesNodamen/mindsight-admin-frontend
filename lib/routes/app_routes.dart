@@ -2,7 +2,9 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_binding.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_controller.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_details/sub_admin_details_bindin.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_details/sub_admin_details_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_edit/sub_admin_edit_binding.dart';
@@ -22,6 +24,7 @@ import 'package:mindsight_admin_page/presentation/content_manage/challenge_manag
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_edit/challenge_edit_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_edit/challenge_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_binding.dart';
@@ -38,6 +41,7 @@ import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_m
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_register/practice_register_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_register/practice_register_view.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_binding.dart';
+import 'package:mindsight_admin_page/presentation/dashboard/dashboard_controller.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_view.dart';
@@ -46,6 +50,7 @@ import 'package:mindsight_admin_page/presentation/member_manage/member_details_v
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_view.dart';
 
 class AppRoutes {
@@ -220,8 +225,9 @@ class AppRoutes {
 class MenuItem {
   final String name;
   final String route;
+  final Function inited;
 
-  MenuItem(this.name, this.route);
+  MenuItem(this.name, this.route, this.inited);
 }
 
 const rootRoute = "/";
@@ -262,10 +268,30 @@ const authenticationPageDisplayName = "Log out";
 const authenticationPageRoute = "/auth";
 
 List<MenuItem> sideMenuItemRoutes = [
-  MenuItem(dashboardPageDisplayName, AppRoutes.dashboard),
-  MenuItem(memberManagePageDisplayName, AppRoutes.memberManage),
-  MenuItem(contentManagePageDisplayName, AppRoutes.contentManage),
-  MenuItem(activityManagePageDisplayName, AppRoutes.activityManage),
-  MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings),
+  MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {
+    if (Get.isRegistered<DashboardController>()) {
+      Get.find<DashboardController>().loadData();
+    }
+  }),
+  MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {
+    if (Get.isRegistered<MemberManageController>()) {
+      Get.find<MemberManageController>().loadData();
+    }
+  }),
+  MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {
+    if (Get.isRegistered<ContentManageController>()) {
+      Get.find<ContentManageController>().loadData();
+    }
+  }),
+  MenuItem(activityManagePageDisplayName, AppRoutes.activityManage, () {
+    if (Get.isRegistered<ActivityManageController>()) {
+      Get.find<ActivityManageController>().loadData();
+    }
+  }),
+  MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings, () {
+    if (Get.isRegistered<AdminSettingsController>()) {
+      Get.find<AdminSettingsController>().loadData();
+    }
+  }),
   // MenuItem(authenticationPageDisplayName, authenticationPageRoute),
 ];

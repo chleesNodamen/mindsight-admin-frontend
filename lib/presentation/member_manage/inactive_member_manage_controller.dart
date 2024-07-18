@@ -42,6 +42,12 @@ class InactiveMemberManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
     if (AppConstant.chleesTest) {
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,

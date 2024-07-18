@@ -6,6 +6,7 @@ import 'package:mindsight_admin_page/data/members_data/members_data_repository.d
 import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_repository.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_req_put.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
 class MemberEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -31,6 +32,9 @@ class MemberEditController extends GetxController {
   late MembersEditModel membersEditModel;
   late AffiliationModel affiliationModel;
 
+  MemberDetailsController memberDetailsController =
+      Get.find<MemberDetailsController>();
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -45,7 +49,7 @@ class MemberEditController extends GetxController {
         firstName: "Aiden",
         lastName: "Kim",
         gender: "Male",
-        yearOfBirth: "1992",
+        yearOfBirth: 1992,
         createdAt: DateTime.now(),
         lastLogin: DateTime.now(),
         username: "dbwjspdla",
@@ -57,39 +61,39 @@ class MemberEditController extends GetxController {
       );
     }
     if (membersDataModel.affiliation == null) {
-      affiliation = "-".obs;
+      affiliation = "".obs;
     } else {
       affiliation = membersDataModel.affiliation!.obs;
     }
     if (membersDataModel.gender == null) {
-      gender = "-".obs;
+      gender = "".obs;
     } else {
       gender = membersDataModel.gender!.obs;
     }
     if (membersDataModel.firstName == null) {
-      firstNameController.text = "-";
+      firstNameController.text = "";
     } else {
       firstNameController.text = membersDataModel.firstName!;
     }
     if (membersDataModel.lastName == null) {
-      lastNameController.text = "-";
+      lastNameController.text = "";
     } else {
       lastNameController.text = membersDataModel.lastName!;
     }
     if (membersDataModel.department == null) {
-      departmentController.text = "-";
+      departmentController.text = "";
     } else {
       departmentController.text = membersDataModel.department!;
     }
     if (membersDataModel.position == null) {
-      positionController.text = "-";
+      positionController.text = "";
     } else {
       positionController.text = membersDataModel.position!;
     }
     if (membersDataModel.yearOfBirth == null) {
-      yearController.text = "-";
+      yearController.text = "";
     } else {
-      yearController.text = membersDataModel.yearOfBirth!;
+      yearController.text = membersDataModel.yearOfBirth!.toString();
     }
     affiliationModel = await AffiliationRepository().get(); //TODO
     membershipLabels = affiliationModel.affiliation!;
@@ -100,8 +104,18 @@ class MemberEditController extends GetxController {
 
   Future<void> saveChanges() async {
     if (AppConstant.chleesTest) {
-      membersEditModel =
-          await MembersEditRepository().put(id, MembersEditReqPut().toJson());
+      membersEditModel = await MembersEditRepository().put(
+          id,
+          MembersEditReqPut(
+            affiliation: affiliation.value,
+            department: departmentController.text,
+            position: positionController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            gender: gender.value,
+            yearOfBirth: int.parse(yearController.text),
+          ).toJson());
     }
+    memberDetailsController.loadData();
   }
 }

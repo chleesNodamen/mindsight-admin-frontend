@@ -71,6 +71,7 @@ class SideMenu extends StatelessWidget {
                             menuController.setActiveSubItem(item.name);
                           }
                           Get.toNamed(item.route);
+                          item.inited;
                         }
                       }))
                   .toList(),

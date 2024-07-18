@@ -18,6 +18,12 @@ class AdminSettingsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
     if (AppConstant.chleesTest) {
       adminMyDataModel = await AdminMydataRepository().get();
     } else {

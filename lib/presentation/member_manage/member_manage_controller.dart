@@ -43,6 +43,12 @@ class MemberManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
     if (AppConstant.chleesTest) {
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,
@@ -74,18 +80,6 @@ class MemberManageController extends GetxController {
       );
       membersModel.length = membersModel.id!.length;
     }
-    print(
-        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    print(membersModel.id);
-    print(membersModel.affiliation);
-    print(membersModel.email);
-    print(membersModel.username);
-    print(membersModel.createdAt);
-    print(membersModel.status);
-    print(membersModel.total);
-    print(membersModel.length);
-    print(
-        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     isLoading.value = false;
     isInited.value = true;

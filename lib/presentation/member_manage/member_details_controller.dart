@@ -4,7 +4,7 @@ import 'package:mindsight_admin_page/data/members_data/members_data_repository.d
 
 class MemberDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
-
+  String dash = "-";
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
@@ -12,6 +12,13 @@ class MemberDetailsController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    loadData();
+    super.onInit();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
     if (AppConstant.chleesTest) {
       membersDataModel = await MembersDataRepository().get(id);
     } else {
@@ -23,7 +30,7 @@ class MemberDetailsController extends GetxController {
         firstName: "Aiden",
         lastName: "Kim",
         gender: "Male",
-        yearOfBirth: "1992",
+        yearOfBirth: 1992,
         createdAt: DateTime.now(),
         lastLogin: DateTime.now(),
         username: "dbwjspdla",
@@ -34,7 +41,6 @@ class MemberDetailsController extends GetxController {
         minutesMeditated: 421,
       );
     }
-    super.onInit();
     isLoading.value = false;
     isInited.value = true;
   }

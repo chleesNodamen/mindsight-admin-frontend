@@ -74,7 +74,7 @@ class ContentManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    fetchData();
+    loadData();
     isLoading.value = false;
     isInited.value = true;
   }
@@ -84,7 +84,7 @@ class ContentManageController extends GetxController {
     selected.value = !selected.value;
   }
 
-  void fetchData() async {
+  void loadData() async {
     try {
       isLoading(true);
       // Simulate API call

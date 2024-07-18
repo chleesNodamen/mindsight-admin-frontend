@@ -262,11 +262,10 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 controller: controller.yearController,
                 width: 353,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a value';
-                  }
                   final RegExp regex = RegExp(r'^\d{4}$');
-                  if (!regex.hasMatch(value)) {
+                  if (value != null &&
+                      value.isNotEmpty &&
+                      !regex.hasMatch(value)) {
                     return 'Please enter a 4-digit integer';
                   }
                   return null;
@@ -293,10 +292,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 controller: controller.departmentController,
                 width: 353,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  if (value.length > 25) {
+                  if (value != null && value.isNotEmpty && value.length > 25) {
                     return "Input is too long".tr;
                   }
                   return null;
@@ -319,10 +315,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 controller: controller.positionController,
                 width: 353,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  if (value.length > 25) {
+                  if (value != null && value.isNotEmpty && value.length > 25) {
                     return "Input is too long".tr;
                   }
                   return null;
@@ -351,10 +344,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 controller: controller.firstNameController,
                 width: 353,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  if (value.length > 10) {
+                  if (value != null && value.isNotEmpty && value.length > 10) {
                     return "Input is too long".tr;
                   }
                   return null;
@@ -375,10 +365,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 controller: controller.lastNameController,
                 width: 353,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  if (value.length > 10) {
+                  if (value != null && value.isNotEmpty && value.length > 10) {
                     return "Input is too long".tr;
                   }
                   return null;

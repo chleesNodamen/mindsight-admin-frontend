@@ -64,12 +64,13 @@ class SideMenuItem extends StatelessWidget {
                               children: [
                                 InkWell(
                                   child: Container(
-                                      color: menuController.isHovering(item[0])
-                                          ? appTheme.white.withOpacity(0.4)
-                                          : Colors.transparent,
-                                      child: Text(item[0],
+                                      color:
+                                          menuController.isHovering(item.name)
+                                              ? appTheme.white.withOpacity(0.4)
+                                              : Colors.transparent,
+                                      child: Text(item.name,
                                           style: menuController
-                                                  .isActiveSubItem(item[0])
+                                                  .isActiveSubItem(item.name)
                                               ? CustomTextStyles.bodyMediumWhite
                                                   .copyWith(
                                                   fontWeight: FontWeight.w700,
@@ -80,8 +81,9 @@ class SideMenuItem extends StatelessWidget {
                                                       .withOpacity(0.75),
                                                 ))),
                                   onTap: () {
-                                    Get.toNamed(item[1]);
-                                    menuController.changeActiveSubItem(item[0]);
+                                    Get.toNamed(item.route);
+                                    menuController
+                                        .changeActiveSubItem(item.name);
                                   },
                                 ),
                                 const SizedBox(

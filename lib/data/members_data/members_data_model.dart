@@ -8,7 +8,7 @@ class MembersDataModel extends BaseModel {
   String? firstName;
   String? lastName;
   String? gender;
-  String? yearOfBirth;
+  int? yearOfBirth;
   DateTime? createdAt;
   DateTime? lastLogin;
   String? username;
@@ -45,7 +45,7 @@ class MembersDataModel extends BaseModel {
     String? firstName,
     String? lastName,
     String? gender,
-    String? yearOfBirth,
+    int? yearOfBirth,
     DateTime? createdAt,
     DateTime? lastLogin,
     String? username,

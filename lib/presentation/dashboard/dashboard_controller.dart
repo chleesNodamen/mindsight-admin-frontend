@@ -18,6 +18,12 @@ class DashboardController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
     challengeModel = await DashboardChallengeRepository()
         .get(DashboardChallengeReqGet(page: 1).toJson());
     practiceModel = await DashboardPracticeRepository()

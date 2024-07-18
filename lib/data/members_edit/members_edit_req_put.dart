@@ -5,7 +5,7 @@ class MembersEditReqPut {
   String? firstName;
   String? lastName;
   String? gender;
-  String? yearOfBirth;
+  int? yearOfBirth;
 
   MembersEditReqPut({
     this.affiliation,
@@ -24,7 +24,7 @@ class MembersEditReqPut {
     String? firstName,
     String? lastName,
     String? gender,
-    String? yearOfBirth,
+    int? yearOfBirth,
   }) =>
       MembersEditReqPut(
         affiliation: affiliation ?? this.affiliation,

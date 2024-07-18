@@ -114,7 +114,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.affiliation ?? "-",
+                  Text(
+                      (controller.membersDataModel.affiliation == null ||
+                              controller.membersDataModel.affiliation == "")
+                          ? "-"
+                          : controller.membersDataModel.affiliation!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -129,7 +133,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.department ?? "-",
+                  Text(
+                      (controller.membersDataModel.department == null ||
+                              controller.membersDataModel.department == "")
+                          ? "-"
+                          : controller.membersDataModel.department!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -144,7 +152,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.position ?? "-",
+                  Text(
+                      (controller.membersDataModel.position == null ||
+                              controller.membersDataModel.position == "")
+                          ? "-"
+                          : controller.membersDataModel.position!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               )
@@ -170,7 +182,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.firstName ?? "-",
+                  Text(
+                      (controller.membersDataModel.firstName == null ||
+                              controller.membersDataModel.firstName == "")
+                          ? "-"
+                          : controller.membersDataModel.firstName!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -185,7 +201,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.firstName ?? "-",
+                  Text(
+                      (controller.membersDataModel.lastName == null ||
+                              controller.membersDataModel.lastName == "")
+                          ? "-"
+                          : controller.membersDataModel.lastName!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -200,7 +220,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.gender ?? "-",
+                  Text(
+                      (controller.membersDataModel.gender == null ||
+                              controller.membersDataModel.gender == "")
+                          ? "-"
+                          : controller.membersDataModel.gender!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -215,7 +239,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.yearOfBirth ?? "-",
+                  Text(
+                      "${controller.membersDataModel.yearOfBirth ?? controller.dash}",
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               )
@@ -240,7 +265,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.email ?? "-",
+                  Text(
+                      (controller.membersDataModel.email == null ||
+                              controller.membersDataModel.email == "")
+                          ? "-"
+                          : controller.membersDataModel.email!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -255,7 +284,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.membersDataModel.username ?? "-",
+                  Text(
+                      (controller.membersDataModel.username == null ||
+                              controller.membersDataModel.username == "")
+                          ? "-"
+                          : controller.membersDataModel.username!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
