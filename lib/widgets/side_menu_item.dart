@@ -82,6 +82,7 @@ class SideMenuItem extends StatelessWidget {
                                                 ))),
                                   onTap: () {
                                     Get.toNamed(item.route);
+                                    item.inited();
                                     menuController
                                         .changeActiveSubItem(item.name);
                                   },
