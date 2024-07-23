@@ -1,5 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContentDetailsView extends GetWidget<ContentDetailsController> {
   const ContentDetailsView({super.key});
@@ -67,7 +68,8 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("99,999", style: CustomTextStyles.headlineLargeBlack),
+                  Text(controller.contentDetailsModel.seen!.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
@@ -79,7 +81,8 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("4,221", style: CustomTextStyles.headlineLargeBlack),
+                  Text(controller.contentDetailsModel.liked!.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
@@ -130,7 +133,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   style: CustomTextStyles.labelMediumGray
                       .copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 16),
-              Text("Spine & Lower Body",
+              Text(controller.contentDetailsModel.name!,
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
@@ -151,7 +154,8 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('카테고리', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("Body", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.contentDetailsModel.category!,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
               const SizedBox(width: 70),
@@ -161,7 +165,8 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('타입', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("Basic body", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.contentDetailsModel.type!,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
               const SizedBox(width: 70),
@@ -171,7 +176,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('마스터', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("Mindsight master",
+                  Text(controller.contentDetailsModel.master!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -190,7 +195,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
             children: [
               Text('태그', style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
-              Text("sleep, good night, bed, calm, relax",
+              Text(controller.contentDetailsModel.tags!.toString(),
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
@@ -205,8 +210,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
             children: [
               Text('소개', style: CustomTextStyles.labelMediumBlack),
               const SizedBox(height: 16),
-              Text(
-                  "This exercise strengthen the lower body and straigthen the spine. The mountain pose and lunge pose help strengthen the lower body and relieve stress. Back rolls aid in stimulating the spine and improving internal function.",
+              Text(controller.contentDetailsModel.intro!,
                   style: CustomTextStyles.bodyMediumBlack)
             ],
           ),
@@ -229,12 +233,17 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          Text("동영상 재생",
+                          InkWell(
+                            child: Text(
+                              "동영상 재생",
                               style: CustomTextStyles.bodyMediumSkyBlue
                                   .copyWith(
                                       decoration: TextDecoration.underline,
-                                      decorationColor: appTheme.skyBlue)),
-                          const SizedBox(width: 4),
+                                      decorationColor: appTheme.skyBlue),
+                            ),
+                            onTap: () => launchUrl(Uri.parse(
+                                controller.contentDetailsModel.video!)),
+                          ),
                         ],
                       ),
                     ],
@@ -248,11 +257,17 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          Text("이미지 보기",
+                          InkWell(
+                            child: Text(
+                              "이미지 보기",
                               style: CustomTextStyles.bodyMediumSkyBlue
                                   .copyWith(
                                       decoration: TextDecoration.underline,
-                                      decorationColor: appTheme.skyBlue)),
+                                      decorationColor: appTheme.skyBlue),
+                            ),
+                            onTap: () => launchUrl(Uri.parse(
+                                controller.contentDetailsModel.thumbnail!)),
+                          ),
                           const SizedBox(width: 4),
                           CustomImageView(
                             imagePath: IconConstant.download,
@@ -270,13 +285,21 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          Text("파일 보기",
+                          InkWell(
+                            child: Text(
+                              "파일 보기",
                               style: CustomTextStyles.bodyMediumSkyBlue
                                   .copyWith(
                                       decoration: TextDecoration.underline,
-                                      decorationColor: appTheme.skyBlue)),
+                                      decorationColor: appTheme.skyBlue),
+                            ),
+                            onTap: () => launchUrl(
+                                Uri.parse(controller.contentDetailsModel.cc!)),
+                          ),
                           const SizedBox(width: 4),
                           CustomImageView(
+                            onTap: () => controller
+                                .downloadFile(controller.ccLink.value),
                             imagePath: IconConstant.download,
                           )
                         ],

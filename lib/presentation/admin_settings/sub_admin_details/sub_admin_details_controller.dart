@@ -6,7 +6,6 @@ class SubAdminDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
-
   late AdminDetailsModel adminDetailsModel;
 
   @override
@@ -15,7 +14,6 @@ class SubAdminDetailsController extends GetxController {
     if (AppConstant.chleesTest) {
       adminDetailsModel = await AdminDetailsRepository().get(id);
     }
-
     isLoading.value = false;
     isInited.value = true;
   }

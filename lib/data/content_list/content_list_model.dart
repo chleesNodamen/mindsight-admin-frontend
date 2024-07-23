@@ -52,10 +52,10 @@ class ContentListModel extends BaseModel {
             : List<String>.from(json["name"]!.map((x) => x)),
         seen: json["seen"] == null
             ? []
-            : List<int>.from(json["seen"]!.map((x) => x ?? "-")),
+            : List<int>.from(json["seen"]!.map((x) => x)),
         liked: json["liked"] == null
             ? []
-            : List<int>.from(json["liked"]!.map((x) => int.parse(x))),
+            : List<int>.from(json["liked"]!.map((x) => x)),
         status: json["status"] == null
             ? []
             : List<bool>.from(json["status"]!.map((x) => x)),

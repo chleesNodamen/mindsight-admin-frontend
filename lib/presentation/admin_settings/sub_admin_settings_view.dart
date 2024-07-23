@@ -189,7 +189,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                   },
                 ),
                 Pages(
-                    pages: 1,
+                    pages: (controller.adminListModel.length / 10).ceil(),
                     activePage: controller.activePage.value,
                     onTap: (int pageNum) {
                       controller.loadNewPage(pageNum);
