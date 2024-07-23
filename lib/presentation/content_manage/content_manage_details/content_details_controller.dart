@@ -15,17 +15,24 @@ class ContentDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
     if (AppConstant.chleesTest) {
       contentDetailsModel = await ContentDetailsRepository().get(id);
     }
     if (contentDetailsModel.isSuccess) {
-      ccLink.value = contentDetailsModel.cc!;
-      thumbnailLink.value = contentDetailsModel.thumbnail!;
-      videoLink.value = contentDetailsModel.video!;
+      ccLink.value = contentDetailsModel.cc ?? "";
+      thumbnailLink.value = contentDetailsModel.thumbnail ?? "";
+      videoLink.value = contentDetailsModel.video ?? "";
     }
     print(contentDetailsModel.video);
     print(contentDetailsModel.thumbnail);
-    print(contentDetailsModel.cc);
+    // print(contentDetailsModel.cc);
+    print('check check');
 
     isLoading.value = false;
     isInited.value = true;

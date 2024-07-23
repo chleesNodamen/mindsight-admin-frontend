@@ -73,6 +73,49 @@ class ContentManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    loadData();
+  }
+
+  //DROPDOWN BUTTON
+  RxString selectedOrder = '등록순'.obs;
+  void updateSelectedOrder(String newOrder) {
+    selectedOrder.value = newOrder;
+  }
+
+  //DATA TABLE
+  RxString dataTableButtonText = '정상'.obs;
+  void updateDTText(String newText) {
+    dataTableButtonText.value = newText;
+  }
+
+  RxInt activePage = 1.obs;
+  Future<void> loadNewPage(int pageNum) async {
+    if (AppConstant.chleesTest) {
+      isLoading.value = true;
+      // List<String> type = [
+      //   for (int i = 0; i < membershipLabels.length; i++)
+      //     if (membershipValues[i]) membershipLabels[i]
+      // ];
+      // if (membershipValues.every((element) => element == true)) {
+      //   type = [];
+      // } //TODO remove later
+      contentListModel = await ContentListRepository().get(ContentListReqGet(
+        // type: type,
+        page: pageNum,
+        search: searchOn.value == true ? searchValue.value : null,
+        // status: false,
+      ).toJson());
+      contentState =
+          (contentListModel.status!.map((status) => !status).toList()).obs;
+    }
+    activePage.value = pageNum;
+  }
+
+  void updateValue() {
+    selected.value = !selected.value;
+  }
+
+  void loadData() async {
     if (AppConstant.chleesTest) {
       contentListModel = await ContentListRepository().get(ContentListReqGet(
         page: 1,
@@ -124,118 +167,6 @@ class ContentManageController extends GetxController {
     //   isLoading.value = false;
     //   isInited.value = true;
     // }
-  }
-
-  //DROPDOWN BUTTON
-  RxString selectedOrder = '등록순'.obs;
-  void updateSelectedOrder(String newOrder) {
-    selectedOrder.value = newOrder;
-  }
-
-  //DATA TABLE
-  RxString dataTableButtonText = '정상'.obs;
-  void updateDTText(String newText) {
-    dataTableButtonText.value = newText;
-  }
-
-  RxInt activePage = 1.obs;
-  Future<void> loadNewPage(int pageNum) async {
-    if (AppConstant.chleesTest) {
-      isLoading.value = true;
-      // List<String> type = [
-      //   for (int i = 0; i < membershipLabels.length; i++)
-      //     if (membershipValues[i]) membershipLabels[i]
-      // ];
-      // if (membershipValues.every((element) => element == true)) {
-      //   type = [];
-      // } //TODO remove later
-      contentListModel = await ContentListRepository().get(ContentListReqGet(
-        // type: type,
-        page: pageNum,
-        search: searchOn.value == true ? searchValue.value : null,
-        // status: false,
-      ).toJson());
-      contentState =
-          (contentListModel.status!.map((status) => !status).toList()).obs;
-    }
-    activePage.value = pageNum;
-  }
-
-  var data = [].obs;
-
-  RxBool isLoading = true.obs;
-  RxBool isInited = false.obs;
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    fetchData();
-    isLoading.value = false;
-  }
-
-  void updateValue() {
-    selected.value = !selected.value;
-  }
-
-  void loadData() async {
-    try {
-      isLoading(true);
-      // Simulate API call
-      await Future.delayed(Duration(seconds: 1));
-      var fetchedData = [
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        {
-          "type": "Focus breathing",
-          "title": "Sunrise 10-Minute Morning Yoga",
-          "views": "999,999",
-          "likes": "9,999",
-          "preview": "재생",
-          "status": "정상"
-        },
-        // Add more items as needed
-      ];
-      data.assignAll(fetchedData);
-    } finally {
-      isLoading(false);
-    }
   }
 
   void goToDetails() {
