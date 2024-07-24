@@ -41,3 +41,5 @@ export 'package:mindsight_admin_page/widgets/pages.dart';
 export 'package:mindsight_admin_page/widgets/page_loading_indicator.dart';
 export 'package:mindsight_admin_page/utils/correct_word_checker.dart';
 export 'package:mindsight_admin_page/constants/route_arguments.dart';
+export 'package:mindsight_admin_page/helpers/native.dart';
+export 'package:mindsight_admin_page/helpers/switch_native_web.dart';

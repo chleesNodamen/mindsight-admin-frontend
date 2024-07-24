@@ -108,6 +108,7 @@ class ContentManageController extends GetxController {
       contentState =
           (contentListModel.status!.map((status) => !status).toList()).obs;
     }
+    isLoading.value = false;
     activePage.value = pageNum;
   }
 
@@ -169,10 +170,6 @@ class ContentManageController extends GetxController {
     // }
   }
 
-  void goToDetails() {
-    Get.toNamed(AppRoutes.contentDetails);
-  }
-
   // SEARCH BAR
 
   Future<void> onSearch(String? search) async {
@@ -201,7 +198,7 @@ class ContentManageController extends GetxController {
     }
   }
 
-  void goToEdit(int index) {
+  void goToDetails(int index) {
     Get.toNamed(AppRoutes.contentDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(contentListModel.id![index])
     });

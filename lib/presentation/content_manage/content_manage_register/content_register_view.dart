@@ -606,7 +606,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                         width: 280,
                         child: Text(
                           controller.ccName == "".obs
-                              ? '파일 추가 혹은 여기로 드래그 (.jpg)'
+                              ? '파일 추가 혹은 여기로 드래그 (.srt)'
                               : controller.ccName.value,
                           style: controller.ccName == "".obs
                               ? CustomTextStyles.bodyMediumGray

@@ -241,8 +241,10 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                                       decoration: TextDecoration.underline,
                                       decorationColor: appTheme.skyBlue),
                             ),
-                            onTap: () => launchUrl(Uri.parse(
-                                controller.contentDetailsModel.video!)),
+                            onTap: () => SwitchNativeWeb.downloadFile(
+                                url: controller.videoLink.value,
+                                fileName: "download.mp4",
+                                dataType: "data:video/MPEG-4"),
                           ),
                         ],
                       ),
@@ -270,6 +272,10 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                           ),
                           const SizedBox(width: 4),
                           CustomImageView(
+                            onTap: () => SwitchNativeWeb.downloadFile(
+                                url: controller.thumbnailLink.value,
+                                fileName: "download.jpg",
+                                dataType: "data:image/jpeg"),
                             imagePath: IconConstant.download,
                           )
                         ],
@@ -298,8 +304,10 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                           ),
                           const SizedBox(width: 4),
                           CustomImageView(
-                            onTap: () => controller
-                                .downloadFile(controller.ccLink.value),
+                            onTap: () => SwitchNativeWeb.downloadFile(
+                                url: controller.ccLink.value,
+                                fileName: "download.txt",
+                                dataType: "data:text/txt"),
                             imagePath: IconConstant.download,
                           )
                         ],

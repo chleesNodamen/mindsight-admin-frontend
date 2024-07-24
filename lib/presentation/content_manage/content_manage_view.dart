@@ -152,23 +152,21 @@ class ContentManageView extends GetWidget<ContentManageController> {
                           child: Text(controller.contentListModel.type![index],
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        DataCell(GestureDetector(
-                          onTap: controller.goToDetails,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 24.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                controller.goToEdit(index);
-                              },
+                        DataCell(
+                          GestureDetector(
+                            onTap: () => controller.goToDetails(index),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 24.0),
                               child: Text(
-                                  controller.contentListModel.name![index],
-                                  style:
-                                      CustomTextStyles.bodyLargeBlack.copyWith(
-                                    decoration: TextDecoration.underline,
-                                  )),
+                                controller.contentListModel.name![index],
+                                style: CustomTextStyles.bodyLargeBlack.copyWith(
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
                             ),
                           ),
-                        )),
+                        ),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
@@ -294,7 +292,6 @@ class ContentManageView extends GetWidget<ContentManageController> {
           color: appTheme.grayScale2,
         ),
       ),
-      height: controller.showMore.value ? 308 : 268,
       width: double.infinity,
       padding: const EdgeInsets.all(32.0),
       child: Column(
@@ -390,14 +387,12 @@ class ContentManageView extends GetWidget<ContentManageController> {
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[0],
                 label: '정상',
-                onChanged: (value) => controller.toggleServiceValues(
-                    0, value), // Adjust as needed
+                onChanged: (value) => controller.toggleServiceValues(0, value),
               ),
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[1],
                 label: '서비스 안함',
-                onChanged: (value) => controller.toggleServiceValues(
-                    1, value), // Adjust as needed
+                onChanged: (value) => controller.toggleServiceValues(1, value),
               ),
             ],
           ),

@@ -52,17 +52,17 @@ class ContentRegisterController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  late MasterModel masterModel;
+  // late MasterModel masterModel;
   late ContentRegisterModel contentRegisterModel;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     if (AppConstant.chleesTest) {
-      masterModel = await MasterRepository().get();
+      // masterModel = await MasterRepository().get();
     } else {
-      masterModel =
-          MasterModel().copyWith(id: [""], name: ["Mindsight master"]);
+      // masterModel =
+      //     MasterModel().copyWith(id: [""], name: ["Mindsight master"]);
     }
     introController.addListener(formatText);
     isLoading.value = false;
