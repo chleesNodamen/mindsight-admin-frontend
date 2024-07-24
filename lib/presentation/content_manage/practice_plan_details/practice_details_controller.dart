@@ -21,6 +21,8 @@ class PracticeDetailsController extends GetxController {
     isInited.value = true;
   }
 
+  Future<void> loadData() async {}
+
   void onPracticeTap() {
     Get.toNamed(AppRoutes.practiceEdit);
   }

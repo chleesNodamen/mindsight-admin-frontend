@@ -382,7 +382,9 @@ class DashboardView extends GetWidget<DashboardController> {
                       )
                     ]),
                   ),
-                  Text('78.05%', style: CustomTextStyles.titleSmallSkyBlue)
+                  Text(
+                      '${controller.registeredModel.verifiedPercentage!.toStringAsFixed(2)}%',
+                      style: CustomTextStyles.titleSmallSkyBlue)
                 ],
               ),
             ),
@@ -392,9 +394,16 @@ class DashboardView extends GetWidget<DashboardController> {
 
   List<MembersData> getChartData() {
     final List<MembersData> chartData = [
-      MembersData('not registered', 18.00, appTheme.background),
-      MembersData('inactive', 3.95, appTheme.alertNegative),
-      MembersData('registered', 78.05, appTheme.skyBlue),
+      MembersData(
+          'not registered',
+          controller.registeredModel.unverifiedPercentage!,
+          appTheme.background),
+      MembersData(
+          'inactive',
+          controller.registeredModel.disabledMembersPercentage!,
+          appTheme.alertNegative),
+      MembersData('registered', controller.registeredModel.verifiedPercentage!,
+          appTheme.skyBlue),
     ];
     return chartData;
   }
@@ -680,47 +689,52 @@ class DashboardView extends GetWidget<DashboardController> {
           const SizedBox(
             width: 16,
           ),
-          Column(
-            children: [
-              Text(controller.challengeModel.name![index],
-                  style: CustomTextStyles.titleSmallBlack),
-              const SizedBox(
-                height: 4,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6, right: 6),
-                    child: Text(
-                      // "${model.duration![index]} ${"min".tr}",
-                      '${controller.challengeModel.duration![index]} min',
-                      style: CustomTextStyles.labelLargeGray,
-                    ),
-                  ),
-                  Container(
-                    height: 2,
-                    width: 2,
-                    decoration: BoxDecoration(
-                      color: appTheme.grayScale6,
-                      borderRadius: BorderRadius.circular(
-                        1,
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.challengeModel.name![index],
+                  style: CustomTextStyles.titleSmallBlack,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Row(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 6),
+                      child: Text(
+                        '${controller.challengeModel.duration![index]} min',
+                        style: CustomTextStyles.labelLargeGray,
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 6),
-                    child: Text(
-                      '${controller.challengeModel.daysTotal![index]} days',
-                      // "${model.daysTotal![index]} days",
-                      style: CustomTextStyles.labelLargeGray,
+                    Container(
+                      height: 2,
+                      width: 2,
+                      decoration: BoxDecoration(
+                        color: appTheme.grayScale6,
+                        borderRadius: BorderRadius.circular(
+                          1,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Padding(
+                      padding: EdgeInsets.only(left: 6),
+                      child: Text(
+                        '${controller.challengeModel.daysTotal![index]} days',
+                        // "${model.daysTotal![index]} days",
+                        style: CustomTextStyles.labelLargeGray,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          Spacer(),
+          // Spacer(),
           Align(
             alignment: Alignment.centerRight,
             child: Row(

@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
+import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
 import 'package:mindsight_admin_page/data/members/members_model.dart';
 import 'package:mindsight_admin_page/data/members/members_repository.dart';
 import 'package:mindsight_admin_page/data/members/members_req_get.dart';
@@ -24,6 +26,7 @@ class InactiveMemberManageController extends GetxController {
 
   late MembersModel membersModel;
   late MembersStatusModel membersStatusModel;
+  late AffiliationModel affiliationModel;
 
   RxList<bool> selectedMembers = [
     false,
@@ -48,11 +51,17 @@ class InactiveMemberManageController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+    searchOn = false.obs;
+    searchValue = "".obs;
+    activePage = 1.obs;
     if (AppConstant.chleesTest) {
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,
         disabled: true,
       ).toJson());
+      affiliationModel = await AffiliationRepository().get();
+      membershipLabels = affiliationModel.affiliation!;
+      membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
     } else {
       membersModel = MembersModel().copyWith(
         id: [

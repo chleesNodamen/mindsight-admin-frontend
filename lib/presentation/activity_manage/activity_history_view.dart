@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
 
@@ -623,112 +624,120 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
       title: '',
       backgroundColor: appTheme.background,
       radius: 12,
-      content: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: appTheme.background),
-        width: 762,
-        padding: const EdgeInsets.only(left: 32, right: 32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '챗봇 기록',
-                  style: CustomTextStyles.bodyLargeBlack,
-                ),
-                CustomImageView(
-                  imagePath: IconConstant.close,
-                  onTap: () => Get.back(),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              '2024-03-13-10:09:34',
-              style: CustomTextStyles.bodyLargeGray,
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-            Column(
+      content: Expanded(
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: appTheme.background),
+            width: 762,
+            padding: const EdgeInsets.only(left: 32, right: 32),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:
-                  List.generate(controller.activityChatModel.length, (index) {
-                return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            width: 80,
-                            child: Text(
-                              controller
-                                      .activityChatModel.chatlog![index].role ??
-                                  "",
-                              style: CustomTextStyles.labelLargeGray,
-                            )),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        SizedBox(
-                          width: 560,
-                          child: Text(
-                            controller.activityChatModel.chatlog![index]
-                                    .content ??
-                                "",
-                            maxLines: null,
-                            overflow: TextOverflow.visible,
-                            style: CustomTextStyles.bodyMediumBlack
-                                .copyWith(height: 2.0),
-                            textHeightBehavior: const TextHeightBehavior(
-                                applyHeightToFirstAscent: false),
-                          ),
-                        )
-                      ],
+                    Text(
+                      '챗봇 기록',
+                      style: CustomTextStyles.bodyLargeBlack,
                     ),
-                    const SizedBox(
-                      height: 24,
+                    CustomImageView(
+                      imagePath: IconConstant.close,
+                      onTap: () => Get.back(),
                     ),
                   ],
-                );
-              }),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  '2024-03-13-10:09:34',
+                  style: CustomTextStyles.bodyLargeGray,
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(controller.activityChatModel.length,
+                      (index) {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                width: 80,
+                                child: Text(
+                                  controller.activityChatModel.chatlog![index]
+                                          .role ??
+                                      "",
+                                  style: CustomTextStyles.labelLargeGray,
+                                )),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            SizedBox(
+                              width: 560,
+                              child: Text(
+                                controller.activityChatModel.chatlog![index]
+                                        .content ??
+                                    "",
+                                maxLines: null,
+                                overflow: TextOverflow.visible,
+                                style: CustomTextStyles.bodyMediumBlack
+                                    .copyWith(height: 2.0),
+                                textHeightBehavior: const TextHeightBehavior(
+                                    applyHeightToFirstAscent: false),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: appTheme.white),
+                  width: 698,
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '대화 평가',
+                        style: CustomTextStyles.labelLargeGray,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        controller.activityChatModel.reaction == "DISLIKED"
+                            ? "불만족"
+                            : controller.activityChatModel.reaction == "LIKED"
+                                ? "만족"
+                                : "없음",
+                        style: CustomTextStyles.labelLargeBlack,
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-            const SizedBox(
-              height: 32,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: appTheme.white),
-              width: 698,
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '대화 평가',
-                    style: CustomTextStyles.labelLargeGray,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    controller.activityChatModel.reaction ?? "",
-                    style: CustomTextStyles.labelLargeBlack,
-                  ),
-                ],
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

@@ -71,7 +71,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
         color: appTheme.white,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
-      height: controller.showMore.value ? 308 : 268,
+      height: 268,
       width: double.infinity,
       padding: const EdgeInsets.all(32.0),
       child: Column(

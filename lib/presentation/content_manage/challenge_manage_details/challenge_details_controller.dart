@@ -10,6 +10,8 @@ class ChallengeDetailsController extends GetxController {
     isInited.value = true;
   }
 
+  Future<void> loadData() async {}
+
   var numbers = List.generate(30, (index) => index + 1).obs;
   var contents = <String>[
     "Sunrise 10-Minute Morning Yoga A",

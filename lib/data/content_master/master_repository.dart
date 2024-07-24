@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/content_master/master_model.dart';
 class MasterRepository extends BaseRepository {
   Future<MasterModel> get() async {
     // req
-    String endpoint = "contents/master";
+    String endpoint = "contents/master/list";
     Response response = await httpClient.get(endpoint);
 
     // result

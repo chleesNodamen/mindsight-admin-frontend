@@ -5,6 +5,7 @@ import 'package:mindsight_admin_page/data/content_register/content_register_mode
 import 'package:mindsight_admin_page/data/content_register/content_register_repository.dart';
 import 'package:mindsight_admin_page/data/content_register/content_register_req_post.dart';
 import 'package:mindsight_admin_page/data/upload/upload_request.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:mindsight_admin_page/app_export.dart';
@@ -28,7 +29,7 @@ class ContentRegisterController extends GetxController {
   final TextEditingController introController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController videoController = TextEditingController();
-  VideoPlayerController? videoPlayerController;
+  late VideoPlayerController videoPlayerController;
   late final focusNode = FocusNode();
 
   RxString selectedCategory = "".obs;
@@ -36,7 +37,7 @@ class ContentRegisterController extends GetxController {
   RxString selectedType = "".obs;
   RxList<String> tags = <String>[].obs;
   RxString selectedMaster = "".obs;
-  List<String> masters = <String>[];
+  RxList<String> masters = <String>[].obs;
   RxString thumbnailName = "".obs;
   RxString ccName = "".obs;
 
@@ -64,6 +65,7 @@ class ContentRegisterController extends GetxController {
       // masterModel =
       //     MasterModel().copyWith(id: [""], name: ["Mindsight master"]);
     }
+    masters.value = masterModel.name!;
     introController.addListener(formatText);
     isLoading.value = false;
     isInited.value = true;
@@ -77,7 +79,8 @@ class ContentRegisterController extends GetxController {
   }
 
   void addTag(String tag) {
-    tags.add(tag.toLowerCase().replaceAll(' ', ''));
+    // tags.add(tag.toLowerCase());
+    tags.add(tag);
     tagController.text = "";
   }
 
@@ -149,34 +152,43 @@ class ContentRegisterController extends GetxController {
   }
 
   Future<void> onSave() async {
-    if (ccFile != null) {
-      ccUrl =
-          await UploadRepository().uploadFile(ccFile!, "mindsight.im/upload");
-    }
-    if (thumbnailFile != null) {
-      thumbnailUrl = await UploadRepository()
-          .uploadFile(thumbnailFile!, "mindsight.im/upload");
-    }
-    videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(videoController.text));
-    await videoPlayerController?.initialize();
-    int? duration = videoPlayerController?.value.duration.inMinutes;
-    contentRegisterModel =
-        await ContentRegisterRepository().post(ContentRegisterReqPost(
-      category: selectedCategory.value,
-      type: selectedType.value,
-      master: selectedMaster.value,
-      tags: tags,
-      intro: introController.text,
-      thumbnail: thumbnailUrl,
-      video: videoController.text,
-      cc: ccUrl,
-      name: titleController.text,
-      durationTime: duration ?? 0,
-    ).toJson());
+    try {
+      if (ccFile != null) {
+        ccUrl = await UploadRepository().uploadFile(ccFile!, "upload");
+      }
+      if (thumbnailFile != null) {
+        thumbnailUrl =
+            await UploadRepository().uploadFile(thumbnailFile!, "upload");
+      }
+      videoPlayerController =
+          VideoPlayerController.networkUrl(Uri.parse(videoController.text));
+      await videoPlayerController.initialize();
+      int duration = videoPlayerController.value.duration.inMinutes;
+      contentRegisterModel =
+          await ContentRegisterRepository().post(ContentRegisterReqPost(
+        category: selectedCategory.value,
+        type: selectedType.value,
+        master: selectedMaster.value,
+        tags: tags,
+        intro: introController.text,
+        thumbnail: thumbnailUrl,
+        video: videoController.text,
+        cc: ccUrl,
+        name: titleController.text,
+        durationTime: duration,
+      ).toJson());
 
-    if (contentRegisterModel.isSuccess) {
-      Get.toNamed(AppRoutes.contentManage);
+      if (contentRegisterModel.isSuccess) {
+        Get.toNamed(AppRoutes.contentManage);
+        if (Get.isRegistered<ContentManageController>()) {
+          Get.find<ContentManageController>().loadData();
+        }
+      }
+    } catch (error) {
+      Logger.log('Error occurred: $error');
+      Get.snackbar('Error', 'Failed to save content: $error');
+    } finally {
+      videoPlayerController.dispose();
     }
   }
 

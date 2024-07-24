@@ -9,6 +9,9 @@ import 'package:mindsight_admin_page/data/activity_details/activity_details_req_
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_model.dart';
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_repository.dart';
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_req_put.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
 class ActivityHistoryController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -34,34 +37,16 @@ class ActivityHistoryController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    if (AppConstant.chleesTest) {
-      activityDetailsModel = await ActivityDetailsRepository()
-          .get(id, ActivityDetailsReqGet(type: type).toJson());
-    } else {
-      activityDetailsModel = ActivityDetailsModel().copyWith(
-          id: "",
-          email: 'akdlsemtkdlxm@nodamen.com',
-          username: 'dbwjspdla',
-          // "registrationDate": '2023-04-01T12:00:00.000Z',
-          registrationDate: DateTime.now(),
-          level: '36회차',
-          body: 'Sunrise 10-Minute Morning Yoga A',
-          breath: 'Sunrise 10-Minute Morning Yoga B',
-          title: '30-Day Challenge to Strengthen Your Legs',
-          goal: 'Improve health',
-          days: '30일',
-          intro:
-              'This is a 30-Day challenge to Strengthen your legs.Strengthen your legs will increase muscle mass throughout the body, which helps boost metabolism such as breathing and blood circulation.',
-          type: "practice",
-          recordOne: 'Stressed',
-          recordTwo: 'Feeling fatigued, Distracted mind',
-          sessionStartDate: DateTime.now(),
-          sessionEndDate: DateTime.now(),
-          chatbot: 'chatbot',
-          expertMessage:
-              'You are shining a bit brighter now! We\'re so happy to see the positive changes in your mood! Let\'s keep this beautiful journey and uncover even more wonderful insights.',
-          expertMessageDate: DateTime.now());
-    }
+    loadData();
+    super.onInit();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
+    activityDetailsModel = await ActivityDetailsRepository()
+        .get(id, ActivityDetailsReqGet(type: type).toJson());
+
     if (activityDetailsModel.registrationDate != null) {
       registrationDate = DateFormat('yyyy-MM-dd')
           .format(activityDetailsModel.registrationDate!);
@@ -95,6 +80,10 @@ class ActivityHistoryController extends GetxController {
       if (activityExpertModel.isSuccess) {
         activityDetailsModel = await ActivityDetailsRepository()
             .get(id, ActivityDetailsReqGet(type: type).toJson());
+        if (activityDetailsModel.expertMessageDate != null) {
+          expertMessageDate = DateFormat('yyyy-MM-dd-HH:mm:ss')
+              .format(activityDetailsModel.expertMessageDate!);
+        }
         feedback.value = true;
       }
       isLoading.value = false;
@@ -106,7 +95,7 @@ class ActivityHistoryController extends GetxController {
     if (AppConstant.chleesTest) {
       isLoading.value = true;
       activityChatModel = await ActivityChatRepository().get(
-        id,
+        activityDetailsModel.chatbot!,
       );
       isLoading.value = false;
     } else {
@@ -131,15 +120,30 @@ class ActivityHistoryController extends GetxController {
     Get.toNamed(AppRoutes.memberDetails, arguments: {
       RouteArguments.id: memberId,
     });
+    if (Get.isRegistered<MemberDetailsController>()) {
+      Get.find<MemberDetailsController>().loadData();
+    }
+    menuController.changeActiveItemTo(memberManagePageDisplayName);
+    menuController.changeActiveSubItem(memberDetailsPageDisplayName);
   }
 
   void onPracticeTap() {
     Get.toNamed(AppRoutes.practiceDetails,
         arguments: {RouteArguments.id: activityDetailsModel.sessionId});
+    if (Get.isRegistered<PracticeDetailsController>()) {
+      Get.find<PracticeDetailsController>().loadData();
+    }
+    menuController.changeActiveItemTo(contentManagePageDisplayName);
+    menuController.changeActiveSubItem(contentPracticePlanDisplayName);
   }
 
   void onChallengeTap() {
     Get.toNamed(AppRoutes.challengeDetails,
         arguments: {RouteArguments.id: activityDetailsModel.sessionId});
+    if (Get.isRegistered<ChallengeDetailsController>()) {
+      Get.find<ChallengeDetailsController>().loadData();
+    }
+    menuController.changeActiveItemTo(contentManagePageDisplayName);
+    menuController.changeActiveSubItem(contentChallengeDisplayName);
   }
 }

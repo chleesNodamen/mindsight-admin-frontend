@@ -49,6 +49,9 @@ class MemberManageController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+    searchOn = false.obs;
+    searchValue = "".obs;
+    activePage = 1.obs;
     if (AppConstant.chleesTest) {
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,

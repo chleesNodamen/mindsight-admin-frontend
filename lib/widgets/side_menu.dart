@@ -66,12 +66,12 @@ class SideMenu extends StatelessWidget {
                               .changeActiveItemTo(dashboardPageDisplayName);
                         }
                         if (!menuController.isActive(item.name)) {
+                          item.inited();
                           menuController.changeActiveItemTo(item.name);
                           if (menuController.hasSubMenu(item.name)) {
                             menuController.setActiveSubItem(item.name);
                           }
                           Get.toNamed(item.route);
-                          item.inited;
                         }
                       }))
                   .toList(),

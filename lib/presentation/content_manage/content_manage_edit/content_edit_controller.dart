@@ -2,6 +2,7 @@ import 'dart:html';
 import 'package:mindsight_admin_page/data/content_master/master_model.dart';
 import 'package:mindsight_admin_page/data/content_master/master_repository.dart';
 import 'package:mindsight_admin_page/data/upload/upload_request.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
 import 'package:video_player/video_player.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -13,8 +14,7 @@ import 'package:mindsight_admin_page/data/content_edit/content_edit_repository.d
 import 'package:mindsight_admin_page/data/content_edit/content_edit_req_put.dart';
 
 class ContentEditController extends GetxController {
-  // final id = Get.arguments[RouteArguments.id];
-  final id = "";
+  final id = Get.arguments[RouteArguments.id];
 
   final List<String> categories = ["Body", "Breath", "Mindfulness"];
 
@@ -34,7 +34,7 @@ class ContentEditController extends GetxController {
   final TextEditingController introController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController videoController = TextEditingController();
-  VideoPlayerController? videoPlayerController;
+  late VideoPlayerController videoPlayerController;
   late final focusNode = FocusNode();
 
   RxString selectedCategory = "".obs;
@@ -138,7 +138,8 @@ class ContentEditController extends GetxController {
   }
 
   void addTag(String tag) {
-    tags.add(tag.toLowerCase().replaceAll(' ', ''));
+    // tags.add(tag.toLowerCase());
+    tags.add(tag);
     tagController.text = "";
   }
 
@@ -210,19 +211,21 @@ class ContentEditController extends GetxController {
   }
 
   Future<void> onSave() async {
-    if (ccFile != null) {
-      ccUrl =
-          await UploadRepository().uploadFile(ccFile!, "mindsight.im/upload");
-    }
-    if (thumbnailFile != null) {
-      thumbnailUrl = await UploadRepository()
-          .uploadFile(thumbnailFile!, "mindsight.im/upload");
-    }
-    videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(videoController.text));
-    await videoPlayerController?.initialize();
-    int? duration = videoPlayerController?.value.duration.inMinutes;
-    contentEditModel = await ContentEditRepository().put(
+    try {
+      if (ccFile != null) {
+        ccUrl = await UploadRepository().uploadFile(ccFile!, "upload");
+      }
+      if (thumbnailFile != null) {
+        thumbnailUrl =
+            await UploadRepository().uploadFile(thumbnailFile!, "upload");
+      }
+      videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
+        videoController.text,
+      ));
+      await videoPlayerController.initialize();
+
+      int duration = videoPlayerController.value.duration.inMinutes;
+      contentEditModel = await ContentEditRepository().put(
         id,
         ContentEditReqPut(
           category: selectedCategory.value,
@@ -234,11 +237,22 @@ class ContentEditController extends GetxController {
           video: videoController.text,
           cc: ccUrl ?? ccName.value,
           name: titleController.text,
-          durationTime: duration ?? 0,
-        ).toJson());
+          durationTime: duration,
+        ).toJson(),
+      );
 
-    if (contentEditModel.isSuccess) {
-      Get.toNamed(AppRoutes.contentDetails, arguments: {RouteArguments.id: id});
+      if (contentEditModel.isSuccess) {
+        Get.toNamed(AppRoutes.contentDetails,
+            arguments: {RouteArguments.id: id});
+        if (Get.isRegistered<ContentDetailsController>()) {
+          Get.find<ContentDetailsController>().loadData();
+        }
+      }
+    } catch (error) {
+      Logger.log('Error occurred: $error');
+      Get.snackbar('Error', 'Failed to save content: $error');
+    } finally {
+      videoPlayerController.dispose();
     }
   }
 

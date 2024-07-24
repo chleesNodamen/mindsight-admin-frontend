@@ -33,6 +33,7 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                   height: 32,
                 ),
                 TextFormField(
+                  style: CustomTextStyles.bodyMediumBlack,
                   controller: controller.emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -100,6 +101,7 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                 TextFormField(
                   controller: controller.passwordController,
                   obscureText: controller.isObscured.value,
+                  style: CustomTextStyles.bodyMediumBlack,
                   decoration: InputDecoration(
                     suffixIcon: CustomImageView(
                       onTap: () {

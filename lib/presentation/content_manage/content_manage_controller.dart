@@ -110,6 +110,7 @@ class ContentManageController extends GetxController {
     }
     isLoading.value = false;
     activePage.value = pageNum;
+    isLoading.value = false;
   }
 
   void updateValue() {

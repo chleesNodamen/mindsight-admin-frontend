@@ -4,6 +4,10 @@ import 'package:mindsight_admin_page/data/activity/activity_repository.dart';
 import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
+import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
 enum Type { practice, challenge }
 
@@ -34,8 +38,6 @@ class ActivityManageController extends GetxController {
 
   // Initial list of checkbox values
   RxList<bool> membershipValues = List<bool>.filled(3, true).obs;
-  RxBool showMore = false.obs;
-  RxBool isChecked = true.obs;
   RxList<bool> chatbotValues = List<bool>.filled(2, true).obs;
   RxList<bool> feedbackValues = List<bool>.filled(2, true).obs;
   Rx<Type> type = Type.practice.obs;
@@ -51,6 +53,18 @@ class ActivityManageController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    loadData();
+    super.onInit();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
+    searchOn = false.obs;
+    chatbotValues = List<bool>.filled(2, true).obs;
+    feedbackValues = List<bool>.filled(2, true).obs;
+    searchValue = "".obs;
+    activePage = 1.obs;
     if (AppConstant.chleesTest) {
       activityModel = await ActivityRepository().get(ActivityReqGet(
         page: 1,
@@ -59,9 +73,6 @@ class ActivityManageController extends GetxController {
       affiliationModel = await AffiliationRepository().get();
       membershipLabels = affiliationModel.affiliation!;
       membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
-      print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      print(membershipValues);
-      print(membershipLabels);
     } else {
       activityModel = ActivityModel().copyWith(
         type: List.generate(10, (_) => 'Practice plan'),
@@ -76,7 +87,6 @@ class ActivityManageController extends GetxController {
       );
     }
     activityModel.length = activityModel.recordId!.length;
-    super.onInit();
     isLoading.value = false;
     isInited.value = true;
   }
@@ -84,7 +94,7 @@ class ActivityManageController extends GetxController {
   Future<void> toggleMembership(int index, bool value) async {
     isLoading.value = true;
     membershipValues[index] = value;
-    if (await loadData()) {
+    if (await loadNewData()) {
       activePage.value = 1;
       isLoading.value = false;
     }
@@ -93,7 +103,7 @@ class ActivityManageController extends GetxController {
   Future<void> toggleChatbot(int index, bool value) async {
     isLoading.value = true;
     chatbotValues[index] = value;
-    if (await loadData()) {
+    if (await loadNewData()) {
       activePage.value = 1;
       isLoading.value = false;
     }
@@ -102,13 +112,13 @@ class ActivityManageController extends GetxController {
   Future<void> toggleFeedback(int index, bool value) async {
     isLoading.value = true;
     feedbackValues[index] = value;
-    if (await loadData()) {
+    if (await loadNewData()) {
       activePage.value = 1;
       isLoading.value = false;
     }
   }
 
-  Future<bool> loadData() async {
+  Future<bool> loadNewData() async {
     searchOn.value = false;
     searchValue.value = "";
     if (feedbackValues.every((element) => element == false) ||
@@ -168,20 +178,38 @@ class ActivityManageController extends GetxController {
       RouteArguments.type: activityModel.type![index],
       RouteArguments.memberId: activityModel.memberId![index]
     });
+    if (Get.isRegistered<ActivityHistoryController>()) {
+      Get.find<ActivityHistoryController>().loadData();
+    }
   }
 
   void onMemberTap(int index) {
     Get.toNamed(AppRoutes.memberDetails,
         arguments: {RouteArguments.id: activityModel.memberId![index]});
+    if (Get.isRegistered<MemberDetailsController>()) {
+      Get.find<MemberDetailsController>().loadData();
+    }
+    menuController.changeActiveItemTo(memberManagePageDisplayName);
+    menuController.changeActiveSubItem(memberDetailsPageDisplayName);
   }
 
   void onSessionTap(int index) {
     if (type.value == Type.practice) {
       Get.toNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
+      menuController.changeActiveItemTo(contentManagePageDisplayName);
+      menuController.changeActiveSubItem(contentPracticePlanDisplayName);
+      if (Get.isRegistered<PracticeDetailsController>()) {
+        Get.find<PracticeDetailsController>().loadData();
+      }
     } else {
       Get.toNamed(AppRoutes.challengeDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
+      menuController.changeActiveItemTo(contentManagePageDisplayName);
+      menuController.changeActiveSubItem(contentChallengeDisplayName);
+    }
+    if (Get.isRegistered<ChallengeDetailsController>()) {
+      Get.find<ChallengeDetailsController>().loadData();
     }
   }
 

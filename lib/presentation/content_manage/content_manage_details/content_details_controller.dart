@@ -42,13 +42,6 @@ class ContentDetailsController extends GetxController {
     Get.toNamed(AppRoutes.contentEdit, arguments: {
       RouteArguments.id: contentDetailsModel.id,
     });
-
-    var numbers = List.generate(30, (index) => index + 1).obs;
-    var contents = <String>[
-      "Sunrise 10-Minute Morning Yoga A",
-      "Sunrise 10-Minute Morning Yoga B",
-      "Sunrise 10-Minute Morning Yoga C"
-    ].obs;
   }
 
   void downloadFile(String url) {
