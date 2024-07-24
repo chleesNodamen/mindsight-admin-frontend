@@ -219,12 +219,12 @@ class ContentEditController extends GetxController {
         thumbnailUrl =
             await UploadRepository().uploadFile(thumbnailFile!, "upload");
       }
-      videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
-        videoController.text,
-      ));
-      await videoPlayerController.initialize();
+      // videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
+      //   videoController.text,
+      // ));
+      // await videoPlayerController.initialize();
 
-      int duration = videoPlayerController.value.duration.inMinutes;
+      // int duration = videoPlayerController.value.duration.inMinutes;
       contentEditModel = await ContentEditRepository().put(
         id,
         ContentEditReqPut(
@@ -237,7 +237,6 @@ class ContentEditController extends GetxController {
           video: videoController.text,
           cc: ccUrl ?? ccName.value,
           name: titleController.text,
-          durationTime: duration,
         ).toJson(),
       );
 

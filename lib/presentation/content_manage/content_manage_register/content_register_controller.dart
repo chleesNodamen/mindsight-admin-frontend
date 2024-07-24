@@ -53,17 +53,17 @@ class ContentRegisterController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  // late MasterModel masterModel;
+  late MasterModel masterModel;
   late ContentRegisterModel contentRegisterModel;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     if (AppConstant.chleesTest) {
-      // masterModel = await MasterRepository().get();
+      masterModel = await MasterRepository().get();
     } else {
-      // masterModel =
-      //     MasterModel().copyWith(id: [""], name: ["Mindsight master"]);
+      masterModel =
+          MasterModel().copyWith(id: [""], name: ["Mindsight master"]);
     }
     masters.value = masterModel.name!;
     introController.addListener(formatText);
@@ -160,10 +160,6 @@ class ContentRegisterController extends GetxController {
         thumbnailUrl =
             await UploadRepository().uploadFile(thumbnailFile!, "upload");
       }
-      videoPlayerController =
-          VideoPlayerController.networkUrl(Uri.parse(videoController.text));
-      await videoPlayerController.initialize();
-      int duration = videoPlayerController.value.duration.inMinutes;
       contentRegisterModel =
           await ContentRegisterRepository().post(ContentRegisterReqPost(
         category: selectedCategory.value,
@@ -175,7 +171,6 @@ class ContentRegisterController extends GetxController {
         video: videoController.text,
         cc: ccUrl,
         name: titleController.text,
-        durationTime: duration,
       ).toJson());
 
       if (contentRegisterModel.isSuccess) {

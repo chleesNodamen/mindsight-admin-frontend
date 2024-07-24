@@ -8,19 +8,18 @@ class ContentEditReqPut {
   String? video;
   String? cc;
   String? name;
-  int? durationTime;
 
-  ContentEditReqPut(
-      {this.category,
-      this.type,
-      this.master,
-      this.tags,
-      this.intro,
-      this.thumbnail,
-      this.video,
-      this.cc,
-      this.name,
-      this.durationTime});
+  ContentEditReqPut({
+    this.category,
+    this.type,
+    this.master,
+    this.tags,
+    this.intro,
+    this.thumbnail,
+    this.video,
+    this.cc,
+    this.name,
+  });
 
   ContentEditReqPut copyWith(
           {String? category,
@@ -43,7 +42,6 @@ class ContentEditReqPut {
         video: video ?? this.video,
         cc: cc ?? this.cc,
         name: name ?? this.name,
-        durationTime: durationTime ?? this.durationTime,
       );
 
   factory ContentEditReqPut.fromJson(Map<String, dynamic> json) =>
@@ -59,7 +57,6 @@ class ContentEditReqPut {
         video: json["video"],
         cc: json["cc"],
         name: json["name"],
-        durationTime: json["durationTime"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,6 +69,5 @@ class ContentEditReqPut {
         "video": video,
         "cc": cc,
         "name": name,
-        "durationTime": durationTime,
       };
 }

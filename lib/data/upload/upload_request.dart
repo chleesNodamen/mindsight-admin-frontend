@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'dart:html';
 import 'dart:typed_data';
 import 'package:mindsight_admin_page/data/base_repository.dart';
+import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
 
 class UploadRepository extends BaseRepository {
   Future<String> uploadFile(File file, String endpoint) async {
@@ -18,9 +21,11 @@ class UploadRepository extends BaseRepository {
     Response response =
         await httpClient.post<Map<String, dynamic>>(endpoint, formData);
 
-    if (response.statusCode == 200 && response.body != null) {
-      return response.body!['url'];
+    if (response.isOk) {
+      return response.body['url'];
     } else {
+      MembersEditModel model =
+          fetchJsonData<MembersEditModel>(response, MembersEditModel.fromJson);
       return "";
     }
   }

@@ -8,19 +8,18 @@ class ContentRegisterReqPost {
   String? video;
   String? cc;
   String? name;
-  int? durationTime;
 
-  ContentRegisterReqPost(
-      {this.category,
-      this.type,
-      this.master,
-      this.tags,
-      this.intro,
-      this.thumbnail,
-      this.video,
-      this.cc,
-      this.name,
-      this.durationTime});
+  ContentRegisterReqPost({
+    this.category,
+    this.type,
+    this.master,
+    this.tags,
+    this.intro,
+    this.thumbnail,
+    this.video,
+    this.cc,
+    this.name,
+  });
 
   ContentRegisterReqPost copyWith({
     String? category,
@@ -32,7 +31,6 @@ class ContentRegisterReqPost {
     String? video,
     String? cc,
     String? name,
-    int? durationTime,
   }) =>
       ContentRegisterReqPost(
         category: category ?? this.category,
@@ -44,7 +42,6 @@ class ContentRegisterReqPost {
         video: video ?? this.video,
         cc: cc ?? this.cc,
         name: name ?? this.name,
-        durationTime: durationTime ?? this.durationTime,
       );
 
   factory ContentRegisterReqPost.fromJson(Map<String, dynamic> json) =>
@@ -60,7 +57,6 @@ class ContentRegisterReqPost {
         video: json["video"],
         cc: json["cc"],
         name: json["name"],
-        durationTime: json["durationTime"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,6 +69,5 @@ class ContentRegisterReqPost {
         "video": video,
         "cc": cc,
         "name": name,
-        "durationTime": durationTime,
       };
 }
