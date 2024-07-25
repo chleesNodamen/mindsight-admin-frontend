@@ -77,7 +77,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(controller.practiceDetailsModel.body!,
+                Text(controller.selectedBodyName.value,
                     style: CustomTextStyles.bodyMediumBlack),
                 CustomImageView(
                   imagePath: IconConstant.search,
@@ -99,7 +99,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(controller.practiceDetailsModel.breath!,
+                Text(controller.selectedBreathName.value,
                     style: CustomTextStyles.bodyMediumBlack),
                 CustomImageView(
                   imagePath: IconConstant.search,
@@ -120,7 +120,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,
-              // onPressed: controller.saveChanges,
+              onPressed: () async => {
+                await controller.saveChanges(),
+              },
             ),
             CustomElevatedButton(
               text: '취소',
@@ -337,17 +339,19 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(right: 8.0),
-                                          child: Checkbox(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            value: controller.selected.value,
-                                            onChanged: (bool? value) {
-                                              controller.updateValue();
+                                          child: Radio<int>(
+                                            value: index,
+                                            groupValue:
+                                                controller.selectedIndex.value,
+                                            onChanged: (int? value) {
+                                              if (value != null) {
+                                                controller
+                                                    .updateSelectedIndex(value);
+                                              }
                                             },
                                           ),
                                         ),
-                                      ), // Checkbox cell
+                                      ), // Radio button cell
                                       DataCell(
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -393,17 +397,23 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                           Row(
                             children: [
                               CustomElevatedButton(
-                                text: '상태 변경',
-                                buttonTextStyle:
-                                    CustomTextStyles.bodyMediumWhite.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                buttonStyle: CustomButtonStyles.fillPrimary,
-                                margin: const EdgeInsets.only(right: 16),
-                                width: 107,
-                                height: 44,
-                                onPressed: () {},
-                              ),
+                                  text: '상태 변경',
+                                  buttonTextStyle:
+                                      CustomTextStyles.bodyMediumWhite.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  buttonStyle: CustomButtonStyles.fillPrimary,
+                                  margin: const EdgeInsets.only(right: 16),
+                                  width: 107,
+                                  height: 44,
+                                  onPressed: () async {
+                                    if (contentType) {
+                                      controller.onBodyButtonPressed();
+                                    } else {
+                                      controller.onBreathButtonPressed();
+                                    }
+                                    Get.back();
+                                  }),
                               Pages(
                                 pages: (controller.contentListModel.total! / 5)
                                     .ceil(),

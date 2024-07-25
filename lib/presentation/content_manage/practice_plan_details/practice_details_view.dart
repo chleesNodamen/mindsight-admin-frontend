@@ -208,7 +208,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => Get.back(),
+          onTap: controller.goToPractice,
           child: Text("Practice plan 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,

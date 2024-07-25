@@ -134,6 +134,7 @@ class ContentManageController extends GetxController {
     if (AppConstant.chleesTest) {
       contentListModel = await ContentListRepository().get(ContentListReqGet(
         page: 1,
+        pageSize: 20,
       ).toJson());
     } else {
       contentListModel = ContentListModel().copyWith(

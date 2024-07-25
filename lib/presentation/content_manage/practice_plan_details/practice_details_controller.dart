@@ -34,4 +34,8 @@ class PracticeDetailsController extends GetxController {
     }
     Get.toNamed(AppRoutes.practiceEdit, arguments: {RouteArguments.id: id});
   }
+
+  void goToPractice() {
+    Get.toNamed(AppRoutes.contentPracticePlanManage);
+  }
 }

@@ -66,7 +66,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
         ])),
         const SizedBox(height: 8),
         GestureDetector(
-          onTap: () => showCustomDialog(),
+          onTap: () => showCustomDialog(true),
           child: Container(
             width: 353,
             decoration: BoxDecoration(
@@ -77,7 +77,8 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Body 세션 등록', style: CustomTextStyles.bodyMediumGray),
+                Text(controller.selectedBodyName.value,
+                    style: CustomTextStyles.bodyMediumBlack),
                 CustomImageView(
                   imagePath: IconConstant.search,
                 )
@@ -87,7 +88,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
         ),
         const SizedBox(height: 8),
         GestureDetector(
-          onTap: () => showCustomDialog(),
+          onTap: () => showCustomDialog(false),
           child: Container(
             width: 353,
             decoration: BoxDecoration(
@@ -98,7 +99,8 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Breath 세션 등록', style: CustomTextStyles.bodyMediumGray),
+                Text(controller.selectedBreathName.value,
+                    style: CustomTextStyles.bodyMediumBlack),
                 CustomImageView(
                   imagePath: IconConstant.search,
                 )
@@ -118,7 +120,9 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,
-              // onPressed: controller.saveChanges,
+              onPressed: () async => {
+                await controller.saveChanges(),
+              },
             ),
             CustomElevatedButton(
               text: '취소',
@@ -137,7 +141,9 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
     );
   }
 
-  void showCustomDialog() {
+  // 1 body 0 breath
+  void showCustomDialog(bool contentType) {
+    controller.resetData();
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
@@ -172,9 +178,10 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
               Row(
                 children: [
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 45,
                       child: TextFormField(
+                        controller: controller.textController,
                         decoration: InputDecoration(
                           fillColor: appTheme.white,
                           filled: true,
@@ -263,7 +270,11 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        controller.fetchData();
+                        contentType == true
+                            ? controller
+                                .fetchBodyData(controller.textController.text)
+                            : controller.fetchBreathData(
+                                controller.textController.text);
                       },
                       child: Text(
                         "검색",
@@ -274,7 +285,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                 ],
               ),
               Obx(() {
-                if (controller.data.isEmpty) {
+                if (controller.fetchedData.value == false) {
                   return Center(
                     child: Text('', style: CustomTextStyles.bodyMediumGray),
                   );
@@ -319,30 +330,35 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                                       style: CustomTextStyles.labelLargeGray),
                                 ),
                               ],
-                              rows: controller.data.map(
-                                (item) {
+                              rows: List.generate(
+                                controller.contentListModel.length,
+                                (index) {
                                   return DataRow(
                                     cells: [
                                       DataCell(
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(right: 8.0),
-                                          child: Checkbox(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            value: controller.selected.value,
-                                            onChanged: (bool? value) {
-                                              controller.updateValue();
+                                          child: Radio<int>(
+                                            value: index,
+                                            groupValue:
+                                                controller.selectedIndex.value,
+                                            onChanged: (int? value) {
+                                              if (value != null) {
+                                                controller
+                                                    .updateSelectedIndex(value);
+                                              }
                                             },
                                           ),
                                         ),
-                                      ), // Checkbox cell
+                                      ), // Radio button cell
                                       DataCell(
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 24.0),
-                                          child: Text(item['type'],
+                                          child: Text(
+                                              controller.contentListModel
+                                                  .type![index],
                                               style: CustomTextStyles
                                                   .bodyLargeBlack),
                                         ),
@@ -351,7 +367,9 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 24.0),
-                                          child: Text(item['title'],
+                                          child: Text(
+                                              controller.contentListModel
+                                                  .name![index],
                                               style: CustomTextStyles
                                                   .bodyLargeBlack),
                                         ),
@@ -360,7 +378,11 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 24.0),
-                                          child: Text(item['status'],
+                                          child: Text(
+                                              controller.contentListModel
+                                                      .status![index]
+                                                  ? "정상"
+                                                  : "안함",
                                               style: CustomTextStyles
                                                   .bodyLargeBlack),
                                         ),
@@ -375,19 +397,26 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                           Row(
                             children: [
                               CustomElevatedButton(
-                                text: '상태 변경',
-                                buttonTextStyle:
-                                    CustomTextStyles.bodyMediumWhite.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                buttonStyle: CustomButtonStyles.fillPrimary,
-                                margin: const EdgeInsets.only(right: 16),
-                                width: 107,
-                                height: 44,
-                                onPressed: () {},
-                              ),
+                                  text: '상태 변경',
+                                  buttonTextStyle:
+                                      CustomTextStyles.bodyMediumWhite.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  buttonStyle: CustomButtonStyles.fillPrimary,
+                                  margin: const EdgeInsets.only(right: 16),
+                                  width: 107,
+                                  height: 44,
+                                  onPressed: () async {
+                                    if (contentType) {
+                                      controller.onBodyButtonPressed();
+                                    } else {
+                                      controller.onBreathButtonPressed();
+                                    }
+                                    Get.back();
+                                  }),
                               Pages(
-                                pages: 100,
+                                pages: (controller.contentListModel.total! / 5)
+                                    .ceil(),
                                 activePage: controller.activePage.value,
                                 onTap: (int pageNum) {
                                   controller.loadNewPage(pageNum);
@@ -435,11 +464,14 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
   Row buildSubHeader() {
     return Row(
       children: [
-        Text("Practice plan 관리",
-            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-              decoration: TextDecoration.underline,
-              decorationColor: appTheme.skyBlue,
-            )),
+        GestureDetector(
+          onTap: controller.goToPractice,
+          child: Text("Practice plan 관리",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              )),
+        ),
         CustomImageView(
           width: 20,
           height: 20,
