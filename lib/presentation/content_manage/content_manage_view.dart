@@ -269,7 +269,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   ],
                 ),
                 Pages(
-                    pages: (controller.contentListModel.total! / 10).ceil(),
+                    pages: (controller.contentListModel.total! / 20).ceil(),
                     activePage: controller.activePage.value,
                     onTap: (int pageNum) {
                       controller.loadNewPage(pageNum);

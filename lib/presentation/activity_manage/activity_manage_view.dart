@@ -325,7 +325,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
               height: 32,
             ),
             Pages(
-                pages: (controller.activityModel.total! / 10).ceil(),
+                pages: (controller.activityModel.total! / 20).ceil(),
                 activePage: controller.activePage.value,
                 onTap: (int pageNum) {
                   controller.loadNewPage(pageNum);

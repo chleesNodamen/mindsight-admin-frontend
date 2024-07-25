@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -327,7 +328,12 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () {
+            Get.toNamed(AppRoutes.contentManage);
+            if (Get.isRegistered<ContentManageController>()) {
+              Get.find<ContentManageController>().loadData();
+            }
+          },
           child: Text("콘텐츠 목록",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,

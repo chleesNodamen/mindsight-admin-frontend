@@ -263,7 +263,7 @@ class InactiveMemberManageView
                     ],
                   ),
                   Pages(
-                      pages: (controller.membersModel.total! / 10).ceil(),
+                      pages: (controller.membersModel.total! / 20).ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
                         controller.loadNewPage(pageNum);
