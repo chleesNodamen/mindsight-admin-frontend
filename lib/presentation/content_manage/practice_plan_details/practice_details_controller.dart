@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_edit/practice_edit_controller.dart';
 
 class PracticeDetailsController extends GetxController {
   RxBool isLoading = true.obs;
@@ -24,6 +25,9 @@ class PracticeDetailsController extends GetxController {
   Future<void> loadData() async {}
 
   void onPracticeTap() {
+    if (Get.isRegistered<PracticeEditController>()) {
+      Get.delete<PracticeEditController>();
+    }
     Get.toNamed(AppRoutes.practiceEdit);
   }
 }

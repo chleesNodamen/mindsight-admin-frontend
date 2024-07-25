@@ -38,28 +38,13 @@ class MemberEditController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    if (AppConstant.chleesTest) {
-      membersDataModel = await MembersDataRepository().get(id);
-    } else {
-      membersDataModel = MembersDataModel().copyWith(
-        id: "",
-        affiliation: "Nodamen",
-        department: "Product Biz Dept.",
-        position: "Team leader",
-        firstName: "Aiden",
-        lastName: "Kim",
-        gender: "Male",
-        yearOfBirth: 1992,
-        createdAt: DateTime.now(),
-        lastLogin: DateTime.now(),
-        username: "dbwjspdla",
-        email: "akdlsemtkdlxm@nodamen.com",
-        mindfulStreak: 16,
-        mindfulDays: 421,
-        sessionsCompleted: 34,
-        minutesMeditated: 421,
-      );
-    }
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
+    membersDataModel = await MembersDataRepository().get(id);
     if (membersDataModel.affiliation == null) {
       affiliation = "".obs;
     } else {
@@ -95,7 +80,7 @@ class MemberEditController extends GetxController {
     } else {
       yearController.text = membersDataModel.yearOfBirth!.toString();
     }
-    affiliationModel = await AffiliationRepository().get(); //TODO
+    affiliationModel = await AffiliationRepository().get();
     membershipLabels = affiliationModel.affiliation!;
 
     isLoading.value = false;

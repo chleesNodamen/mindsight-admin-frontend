@@ -7,6 +7,7 @@ import 'package:mindsight_admin_page/data/members/members_req_get.dart';
 import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
 import 'package:mindsight_admin_page/data/members_status/members_status_repository.dart';
 import 'package:mindsight_admin_page/data/members_status/members_status_req_put.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
 class InactiveMemberManageController extends GetxController {
   static InactiveMemberManageController get to =>
@@ -158,6 +159,9 @@ class InactiveMemberManageController extends GetxController {
   }
 
   void onMemberTap(String id) {
+    if (Get.isRegistered<MemberDetailsController>()) {
+      Get.delete<MemberDetailsController>();
+    }
     Get.toNamed(AppRoutes.memberDetails, arguments: {RouteArguments.id: id});
   }
 

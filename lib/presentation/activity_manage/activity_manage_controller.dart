@@ -173,43 +173,43 @@ class ActivityManageController extends GetxController {
   }
 
   void onHistoryTap(int index) {
+    if (Get.isRegistered<ActivityHistoryController>()) {
+      Get.delete<ActivityHistoryController>();
+    }
     Get.toNamed(AppRoutes.activityHistory, arguments: {
       RouteArguments.id: activityModel.recordId![index],
       RouteArguments.type: activityModel.type![index],
       RouteArguments.memberId: activityModel.memberId![index]
     });
-    if (Get.isRegistered<ActivityHistoryController>()) {
-      Get.find<ActivityHistoryController>().loadData();
-    }
   }
 
   void onMemberTap(int index) {
+    if (Get.isRegistered<MemberDetailsController>()) {
+      Get.delete<MemberDetailsController>();
+    }
     Get.toNamed(AppRoutes.memberDetails,
         arguments: {RouteArguments.id: activityModel.memberId![index]});
-    if (Get.isRegistered<MemberDetailsController>()) {
-      Get.find<MemberDetailsController>().loadData();
-    }
     menuController.changeActiveItemTo(memberManagePageDisplayName);
     menuController.changeActiveSubItem(memberDetailsPageDisplayName);
   }
 
   void onSessionTap(int index) {
     if (type.value == Type.practice) {
+      if (Get.isRegistered<PracticeDetailsController>()) {
+        Get.delete<PracticeDetailsController>();
+      }
       Get.toNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
       menuController.changeActiveItemTo(contentManagePageDisplayName);
       menuController.changeActiveSubItem(contentPracticePlanDisplayName);
-      if (Get.isRegistered<PracticeDetailsController>()) {
-        Get.find<PracticeDetailsController>().loadData();
-      }
     } else {
+      if (Get.isRegistered<ChallengeDetailsController>()) {
+        Get.delete<ChallengeDetailsController>();
+      }
       Get.toNamed(AppRoutes.challengeDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
       menuController.changeActiveItemTo(contentManagePageDisplayName);
       menuController.changeActiveSubItem(contentChallengeDisplayName);
-    }
-    if (Get.isRegistered<ChallengeDetailsController>()) {
-      Get.find<ChallengeDetailsController>().loadData();
     }
   }
 

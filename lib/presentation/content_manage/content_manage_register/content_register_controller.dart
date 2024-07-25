@@ -29,7 +29,6 @@ class ContentRegisterController extends GetxController {
   final TextEditingController introController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController videoController = TextEditingController();
-  late VideoPlayerController videoPlayerController;
   late final focusNode = FocusNode();
 
   RxString selectedCategory = "".obs;
@@ -152,38 +151,31 @@ class ContentRegisterController extends GetxController {
   }
 
   Future<void> onSave() async {
-    try {
-      if (ccFile != null) {
-        ccUrl = await UploadRepository().uploadFile(ccFile!, "upload");
-      }
-      if (thumbnailFile != null) {
-        thumbnailUrl =
-            await UploadRepository().uploadFile(thumbnailFile!, "upload");
-      }
-      contentRegisterModel =
-          await ContentRegisterRepository().post(ContentRegisterReqPost(
-        category: selectedCategory.value,
-        type: selectedType.value,
-        master: selectedMaster.value,
-        tags: tags,
-        intro: introController.text,
-        thumbnail: thumbnailUrl,
-        video: videoController.text,
-        cc: ccUrl,
-        name: titleController.text,
-      ).toJson());
+    if (ccFile != null) {
+      ccUrl = await UploadRepository().uploadFile(ccFile!, "upload");
+    }
+    if (thumbnailFile != null) {
+      thumbnailUrl =
+          await UploadRepository().uploadFile(thumbnailFile!, "upload");
+    }
+    contentRegisterModel =
+        await ContentRegisterRepository().post(ContentRegisterReqPost(
+      category: selectedCategory.value,
+      type: selectedType.value,
+      master: selectedMaster.value,
+      tags: tags,
+      intro: introController.text,
+      thumbnail: thumbnailUrl,
+      video: videoController.text,
+      cc: ccUrl,
+      name: titleController.text,
+    ).toJson());
 
-      if (contentRegisterModel.isSuccess) {
-        Get.toNamed(AppRoutes.contentManage);
-        if (Get.isRegistered<ContentManageController>()) {
-          Get.find<ContentManageController>().loadData();
-        }
+    if (contentRegisterModel.isSuccess) {
+      Get.toNamed(AppRoutes.contentManage);
+      if (Get.isRegistered<ContentManageController>()) {
+        Get.find<ContentManageController>().loadData();
       }
-    } catch (error) {
-      Logger.log('Error occurred: $error');
-      Get.snackbar('Error', 'Failed to save content: $error');
-    } finally {
-      videoPlayerController.dispose();
     }
   }
 

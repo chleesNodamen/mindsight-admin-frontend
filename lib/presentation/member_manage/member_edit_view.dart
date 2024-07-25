@@ -1,5 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
 
 class MemberEditView extends GetWidget<MemberEditController> {
   const MemberEditView({super.key});
@@ -52,8 +53,16 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                                       appTheme.skyBlue,
                                                 ),
                                               ),
-                                              onTap: () => Get.toNamed(
-                                                  AppRoutes.memberManage)),
+                                              onTap: () {
+                                                Get.toNamed(
+                                                    AppRoutes.memberManage);
+                                                if (Get.isRegistered<
+                                                    MemberManageController>()) {
+                                                  Get.find<
+                                                          MemberManageController>()
+                                                      .loadData();
+                                                }
+                                              }),
                                           CustomImageView(
                                             imagePath: IconConstant.arrowRight,
                                           ),

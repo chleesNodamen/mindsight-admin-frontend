@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_controller.dart';
 
 class ChallengeEditController extends GetxController {
   RxBool isLoading = true.obs;
@@ -19,5 +20,8 @@ class ChallengeEditController extends GetxController {
 
   void goToChallenge() {
     Get.toNamed(AppRoutes.contentChallengeManage);
+    if (Get.isRegistered<ChallengeManageController>()) {
+      Get.find<ChallengeManageController>().fetchData();
+    }
   }
 }

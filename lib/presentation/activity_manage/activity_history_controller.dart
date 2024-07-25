@@ -117,32 +117,32 @@ class ActivityHistoryController extends GetxController {
   }
 
   void onMemberTap() {
+    if (Get.isRegistered<MemberDetailsController>()) {
+      Get.delete<MemberDetailsController>();
+    }
     Get.toNamed(AppRoutes.memberDetails, arguments: {
       RouteArguments.id: memberId,
     });
-    if (Get.isRegistered<MemberDetailsController>()) {
-      Get.find<MemberDetailsController>().loadData();
-    }
     menuController.changeActiveItemTo(memberManagePageDisplayName);
     menuController.changeActiveSubItem(memberDetailsPageDisplayName);
   }
 
   void onPracticeTap() {
+    if (Get.isRegistered<PracticeDetailsController>()) {
+      Get.delete<PracticeDetailsController>();
+    }
     Get.toNamed(AppRoutes.practiceDetails,
         arguments: {RouteArguments.id: activityDetailsModel.sessionId});
-    if (Get.isRegistered<PracticeDetailsController>()) {
-      Get.find<PracticeDetailsController>().loadData();
-    }
     menuController.changeActiveItemTo(contentManagePageDisplayName);
     menuController.changeActiveSubItem(contentPracticePlanDisplayName);
   }
 
   void onChallengeTap() {
+    if (Get.isRegistered<ChallengeDetailsController>()) {
+      Get.delete<ChallengeDetailsController>();
+    }
     Get.toNamed(AppRoutes.challengeDetails,
         arguments: {RouteArguments.id: activityDetailsModel.sessionId});
-    if (Get.isRegistered<ChallengeDetailsController>()) {
-      Get.find<ChallengeDetailsController>().loadData();
-    }
     menuController.changeActiveItemTo(contentManagePageDisplayName);
     menuController.changeActiveSubItem(contentChallengeDisplayName);
   }

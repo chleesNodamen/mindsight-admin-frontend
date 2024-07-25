@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
 
 class MemberDetailsView extends GetWidget<MemberDetailsController> {
   const MemberDetailsView({super.key});
@@ -47,7 +48,14 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                                             decorationColor: appTheme.skyBlue,
                                           ),
                                         ),
-                                        onTap: () => Get.back(),
+                                        onTap: () {
+                                          Get.toNamed(AppRoutes.memberManage);
+                                          if (Get.isRegistered<
+                                              MemberManageController>()) {
+                                            Get.find<MemberManageController>()
+                                                .loadData();
+                                          }
+                                        },
                                       ),
                                       CustomImageView(
                                         imagePath: IconConstant.arrowRight,
@@ -201,11 +209,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(
-                      (controller.membersDataModel.lastName == null ||
-                              controller.membersDataModel.lastName == "")
-                          ? "-"
-                          : controller.membersDataModel.lastName!,
+                  Text(controller.lastName.value,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),

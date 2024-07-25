@@ -1,4 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_controller.dart';
 
 class ContentEditView extends GetWidget<ContentEditController> {
@@ -48,8 +51,16 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                               decorationColor: appTheme.skyBlue,
                                             ),
                                           ),
-                                          onTap: () => Get.toNamed(
-                                              AppRoutes.contentManage)),
+                                          onTap: () {
+                                            Get.toNamed(
+                                                AppRoutes.contentManage);
+                                            if (Get.isRegistered<
+                                                ContentManageController>()) {
+                                              Get.find<
+                                                      ContentManageController>()
+                                                  .loadData();
+                                            }
+                                          }),
                                       CustomImageView(
                                         imagePath: IconConstant.arrowRight,
                                       ),
@@ -65,12 +76,19 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                               decorationColor: appTheme.skyBlue,
                                             ),
                                           ),
-                                          onTap: () => Get.toNamed(
-                                                  AppRoutes.contentDetails,
-                                                  arguments: {
-                                                    RouteArguments.id:
-                                                        controller.id
-                                                  })),
+                                          onTap: () {
+                                            if (Get.isRegistered<
+                                                ContentDetailsController>()) {
+                                              Get.delete<
+                                                  ContentDetailsController>();
+                                            }
+                                            Get.toNamed(
+                                                AppRoutes.contentDetails,
+                                                arguments: {
+                                                  RouteArguments.id:
+                                                      controller.id
+                                                });
+                                          }),
                                       CustomImageView(
                                         imagePath: IconConstant.arrowRight,
                                       ),

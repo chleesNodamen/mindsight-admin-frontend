@@ -5,6 +5,7 @@ import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart
 import 'package:mindsight_admin_page/data/content_status/content_status_model.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_repository.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_req_put.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
 
 class ContentManageController extends GetxController {
   RxMap<String, bool> selectedIds = <String, bool>{}.obs;
@@ -200,6 +201,9 @@ class ContentManageController extends GetxController {
   }
 
   void goToDetails(int index) {
+    if (Get.isRegistered<ContentDetailsController>()) {
+      Get.delete<ContentDetailsController>();
+    }
     Get.toNamed(AppRoutes.contentDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(contentListModel.id![index])
     });

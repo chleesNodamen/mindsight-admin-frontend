@@ -34,7 +34,6 @@ class ContentEditController extends GetxController {
   final TextEditingController introController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController videoController = TextEditingController();
-  late VideoPlayerController videoPlayerController;
   late final focusNode = FocusNode();
 
   RxString selectedCategory = "".obs;
@@ -211,47 +210,33 @@ class ContentEditController extends GetxController {
   }
 
   Future<void> onSave() async {
-    try {
-      if (ccFile != null) {
-        ccUrl = await UploadRepository().uploadFile(ccFile!, "upload");
-      }
-      if (thumbnailFile != null) {
-        thumbnailUrl =
-            await UploadRepository().uploadFile(thumbnailFile!, "upload");
-      }
-      // videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
-      //   videoController.text,
-      // ));
-      // await videoPlayerController.initialize();
+    if (ccFile != null) {
+      ccUrl = await UploadRepository().uploadFile(ccFile!, "upload");
+    }
+    if (thumbnailFile != null) {
+      thumbnailUrl =
+          await UploadRepository().uploadFile(thumbnailFile!, "upload");
+    }
+    contentEditModel = await ContentEditRepository().put(
+      id,
+      ContentEditReqPut(
+        category: selectedCategory.value,
+        type: selectedType.value,
+        master: selectedMaster.value,
+        tags: tags,
+        intro: introController.text,
+        thumbnail: thumbnailUrl ?? thumbnailName.value,
+        video: videoController.text,
+        cc: ccUrl ?? ccName.value,
+        name: titleController.text,
+      ).toJson(),
+    );
 
-      // int duration = videoPlayerController.value.duration.inMinutes;
-      contentEditModel = await ContentEditRepository().put(
-        id,
-        ContentEditReqPut(
-          category: selectedCategory.value,
-          type: selectedType.value,
-          master: selectedMaster.value,
-          tags: tags,
-          intro: introController.text,
-          thumbnail: thumbnailUrl ?? thumbnailName.value,
-          video: videoController.text,
-          cc: ccUrl ?? ccName.value,
-          name: titleController.text,
-        ).toJson(),
-      );
-
-      if (contentEditModel.isSuccess) {
-        Get.toNamed(AppRoutes.contentDetails,
-            arguments: {RouteArguments.id: id});
-        if (Get.isRegistered<ContentDetailsController>()) {
-          Get.find<ContentDetailsController>().loadData();
-        }
+    if (contentEditModel.isSuccess) {
+      if (Get.isRegistered<ContentDetailsController>()) {
+        Get.delete<ContentDetailsController>();
       }
-    } catch (error) {
-      Logger.log('Error occurred: $error');
-      Get.snackbar('Error', 'Failed to save content: $error');
-    } finally {
-      videoPlayerController.dispose();
+      Get.toNamed(AppRoutes.contentDetails, arguments: {RouteArguments.id: id});
     }
   }
 

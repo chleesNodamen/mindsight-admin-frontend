@@ -3,6 +3,8 @@ import 'package:mindsight_admin_page/data/content_details/content_details_model.
 import 'package:mindsight_admin_page/data/content_details/content_details_repository.dart';
 import 'dart:html' as html;
 
+import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_controller.dart';
+
 class ContentDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
   RxBool isLoading = true.obs;
@@ -39,6 +41,9 @@ class ContentDetailsController extends GetxController {
   }
 
   void goToEdit() {
+    if (Get.isRegistered<ContentEditController>()) {
+      Get.delete<ContentEditController>();
+    }
     Get.toNamed(AppRoutes.contentEdit, arguments: {
       RouteArguments.id: contentDetailsModel.id,
     });

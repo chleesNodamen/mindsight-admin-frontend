@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
 
 class ChallengeManageController extends GetxController {
   static ChallengeManageController get to =>
@@ -106,6 +107,9 @@ class ChallengeManageController extends GetxController {
   }
 
   void goToEdit() {
+    if (Get.isRegistered<ChallengeDetailsController>()) {
+      Get.delete<ChallengeDetailsController>();
+    }
     Get.toNamed(AppRoutes.challengeDetails);
   }
 }

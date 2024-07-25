@@ -1,12 +1,14 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_model.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_repository.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_edit_controller.dart';
 
 class MemberDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
   String dash = "-";
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+  RxString lastName = "".obs;
 
   late MembersDataModel membersDataModel;
 
@@ -19,33 +21,19 @@ class MemberDetailsController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
-    if (AppConstant.chleesTest) {
-      membersDataModel = await MembersDataRepository().get(id);
-    } else {
-      membersDataModel = MembersDataModel().copyWith(
-        id: "",
-        affiliation: "Nodamen",
-        department: "Product Biz Dept.",
-        position: "Team leader",
-        firstName: "Aiden",
-        lastName: "Kim",
-        gender: "Male",
-        yearOfBirth: 1992,
-        createdAt: DateTime.now(),
-        lastLogin: DateTime.now(),
-        username: "dbwjspdla",
-        email: "akdlsemtkdlxm@nodamen.com",
-        mindfulStreak: 16,
-        mindfulDays: 421,
-        sessionsCompleted: 34,
-        minutesMeditated: 421,
-      );
-    }
+    membersDataModel = await MembersDataRepository().get(id);
+    lastName.value =
+        (membersDataModel.lastName == null || membersDataModel.lastName == "")
+            ? "-"
+            : membersDataModel.lastName!;
     isLoading.value = false;
     isInited.value = true;
   }
 
   void onMemberEdit() {
+    if (Get.isRegistered<MemberEditController>()) {
+      Get.delete<MemberEditController>();
+    }
     Get.toNamed(AppRoutes.memberEdit, arguments: {RouteArguments.id: id});
   }
 }
