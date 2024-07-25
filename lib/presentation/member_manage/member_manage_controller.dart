@@ -27,18 +27,7 @@ class MemberManageController extends GetxController {
   late MembersStatusModel membersStatusModel;
   late AffiliationModel affiliationModel;
 
-  RxList<bool> selectedMembers = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ].obs;
+  RxList<bool> selectedMembers = List.generate(20, (_) => false).obs;
   RxList<bool>? memberState;
 
   @override
@@ -137,6 +126,7 @@ class MemberManageController extends GetxController {
   }
 
   Future<void> loadNewPage(int pageNum) async {
+    selectedMembers = List.generate(20, (_) => false).obs;
     if (AppConstant.chleesTest) {
       isLoading.value = true;
       List<String> affiliation = [
@@ -208,18 +198,7 @@ class MemberManageController extends GetxController {
         .put(MembersStatusReqPut(ids: ids, status: true).toJson());
     if (membersStatusModel.isSuccess) {
       isLoading.value = true;
-      selectedMembers = [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-      ].obs;
+      selectedMembers = List.generate(20, (_) => false).obs;
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,
         disabled: false,

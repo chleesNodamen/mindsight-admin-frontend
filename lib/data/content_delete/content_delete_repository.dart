@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/content_delete/content_delete_model.da
 class ContentDeleteRepository extends BaseRepository {
   Future<ContentDeleteModel> delete(String? id) async {
     // req
-    String endpoint = "content/$id";
+    String endpoint = "contents/$id";
     Response response = await httpClient.delete(endpoint);
 
     // result

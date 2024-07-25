@@ -142,9 +142,10 @@ class ContentManageView extends GetWidget<ContentManageController> {
                     List.generate(controller.contentListModel.length, (index) {
                   String id = controller.contentListModel.id![index];
                   return DataRow(
-                      selected: controller.selectedIds[id] ?? false,
+                      selected: controller.selectedContent[index],
                       onSelectChanged: (bool? value) {
-                        controller.updateSelected(id, value ?? false);
+                        controller.selectedContent[index] =
+                            !controller.selectedContent[index];
                       },
                       cells: [
                         DataCell(Padding(
@@ -199,9 +200,8 @@ class ContentManageView extends GetWidget<ContentManageController> {
                             padding: const EdgeInsets.only(
                                 left: 6, right: 0, top: 0, bottom: 0),
                             child: DropdownButton<String>(
-                              value: controller.contentState![index]
-                                  ? '활성'
-                                  : '비활성',
+                              value:
+                                  controller.contentState![index] ? '정상' : '안함',
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
                               borderRadius: BorderRadius.circular(12),
@@ -215,14 +215,14 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                 }
                               },
                               items: <String>[
-                                '활성',
-                                '비활성'
+                                '정상',
+                                '안함'
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(
                                     value,
-                                    style: value == "활성"
+                                    style: value == "정상"
                                         ? CustomTextStyles.labelLargeGreen
                                         : CustomTextStyles.labelLargeRed,
                                   ),
@@ -253,7 +253,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       margin: const EdgeInsets.only(right: 16),
                       width: 107,
                       height: 44,
-                      onPressed: () {},
+                      onPressed: controller.onStatusChangeForAll,
                     ),
                     CustomElevatedButton(
                       text: '삭제',
@@ -264,7 +264,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                           CustomButtonStyles.fillRedTransparent.copyWith(),
                       width: 76,
                       height: 44,
-                      onPressed: () {},
+                      onPressed: controller.onDeleteButton,
                     ),
                   ],
                 ),
