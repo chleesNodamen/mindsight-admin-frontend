@@ -7,7 +7,7 @@ class PracticesModel extends BaseModel {
   List<int>? participated;
   List<String>? ratio;
   List<int>? liked;
-  List<int>? total;
+  int? total;
 
   PracticesModel({
     this.id,
@@ -26,7 +26,7 @@ class PracticesModel extends BaseModel {
     List<int>? participated,
     List<String>? ratio,
     List<int>? liked,
-    List<int>? total,
+    int? total,
   }) =>
       PracticesModel(
           id: id ?? this.id,
@@ -38,28 +38,25 @@ class PracticesModel extends BaseModel {
           total: total ?? this.total);
 
   factory PracticesModel.fromJson(Map<String, dynamic> json) => PracticesModel(
-        id: json["id"] == null
-            ? []
-            : List<String>.from(json["id"]!.map((x) => x)),
-        level: json["level"] == null
-            ? []
-            : List<int>.from(json["level"]!.map((x) => x)),
-        finished: json["finished"] == null
-            ? []
-            : List<int>.from(json["finished"]!.map((x) => x)),
-        participated: json["participated"] == null
-            ? []
-            : List<int>.from(json["participated"]!.map((x) => x)),
-        ratio: json["ratio"] == null
-            ? []
-            : List<String>.from(json["ratio"]!.map((x) => x)),
-        liked: json["liked"] == null
-            ? []
-            : List<int>.from(json["liked"].map((x) => x)),
-        total: json["total"] == null
-            ? []
-            : List<int>.from(json["total"].map((x) => x)),
-      );
+      id: json["id"] == null
+          ? []
+          : List<String>.from(json["id"]!.map((x) => x)),
+      level: json["level"] == null
+          ? []
+          : List<int>.from(json["level"]!.map((x) => x)),
+      finished: json["finished"] == null
+          ? []
+          : List<int>.from(json["finished"]!.map((x) => x)),
+      participated: json["participated"] == null
+          ? []
+          : List<int>.from(json["participated"]!.map((x) => x)),
+      ratio: json["ratio"] == null
+          ? []
+          : List<String>.from(json["ratio"]!.map((x) => x)),
+      liked: json["liked"] == null
+          ? []
+          : List<int>.from(json["liked"].map((x) => x)),
+      total: json["total"]);
 
   Map<String, dynamic> toJson() => {
         "id": id == null ? [] : List<dynamic>.from(id!.map((x) => x)),
@@ -71,6 +68,6 @@ class PracticesModel extends BaseModel {
             : List<dynamic>.from(participated!.map((x) => x)),
         "ratio": ratio == null ? [] : List<dynamic>.from(ratio!.map((x) => x)),
         "liked": liked == null ? [] : List<dynamic>.from(liked!.map((x) => x)),
-        "total": total == null ? [] : List<dynamic>.from(total!.map((x) => x)),
+        "total": total
       };
 }

@@ -57,6 +57,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
       searchShow: true,
       viewCount: false,
       searchText: "챌린지 제목, 콘텐츠 제목 검색",
+      onSearch: controller.onSearch,
     );
   }
 
@@ -87,22 +88,6 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
-                  // DataColumn(
-                  //   label: Checkbox(
-                  //       activeColor: appTheme.skyBlue,
-                  //       checkColor: Colors.white,
-                  //       fillColor: MaterialStateProperty.resolveWith(
-                  //         (states) {
-                  //           if (!states
-                  //               .contains(MaterialState.selected)) {
-                  //             return Colors.transparent;
-                  //           }
-                  //           return null;
-                  //         },
-                  //       ),
-                  //       value: false,
-                  //       onChanged: (bool? value) {}),
-                  // ),
                   DataColumn(
                       label:
                           Text('목적', style: CustomTextStyles.labelLargeGray)),
@@ -122,98 +107,112 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                       label:
                           Text('상태', style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows: controller.data.map((item) {
+                rows: List.generate(controller.challengesModel.length, (index) {
+                  String id = controller.challengesModel.id![index];
                   return DataRow(
-                      selected: controller.selected.value,
+                      selected: controller.selectedIds[id] ?? false,
                       onSelectChanged: (bool? value) {
-                        controller.updateValue();
+                        controller.updateSelected(id, value ?? false);
                       },
                       cells: [
-                        // DataCell(
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(right: 8.0),
-                        //     child: Checkbox(
-                        //       value: controller.selected.value,
-                        //       onChanged: (bool? value) {
-                        //         controller.updateValue();
-                        //       },
-                        //     ),
-                        //   ),
-                        // ), // Checkbox cell
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['type'],
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: GestureDetector(
-                            onTap: controller.goToEdit,
-                            child: Text(item['title'],
+                        DataCell(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: Text(controller.challengesModel.goal![index],
+                                style: CustomTextStyles.bodyLargeBlack),
+                          ),
+                        ),
+                        DataCell(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: GestureDetector(
+                              onTap: controller.goToEdit,
+                              child: Text(
+                                controller.challengesModel.name![index],
                                 style:
                                     CustomTextStyles.bodyMediumBlack.copyWith(
                                   decoration: TextDecoration.underline,
                                   fontWeight: FontWeight.w500,
-                                )),
-                          ),
-                        )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['views'],
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['likes'],
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(item['preview'],
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
+                                ),
+                              ),
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value: item['status'],
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadius.circular(12),
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  item['status'] = newValue;
-                                  controller.updateDTText(newValue);
-                                }
-                              },
-                              items: <String>[
-                                '정상',
-                                '안함'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: value == "정상"
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
+                        ),
+                        DataCell(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: Text(
+                                controller.challengesModel.participants![index]
+                                    .toString(),
+                                style: CustomTextStyles.bodyLargeBlack),
+                          ),
+                        ),
+                        DataCell(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: Text(
+                                controller.challengesModel.finished![index]
+                                    .toString(),
+                                style: CustomTextStyles.bodyLargeBlack),
+                          ),
+                        ),
+                        DataCell(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: Text(
+                                controller.challengesModel.liked![index]
+                                    .toString(),
+                                style: CustomTextStyles.bodyLargeBlack),
+                          ),
+                        ),
+                        DataCell(
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: appTheme.white,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                width: 1,
+                                color: appTheme.grayScale2,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 6, right: 0, top: 0, bottom: 0),
+                              child: DropdownButton<String>(
+                                value: controller.challengesState![index]
+                                    ? '정상'
+                                    : "안함",
+                                underline: Container(),
+                                padding: const EdgeInsets.only(left: 6),
+                                borderRadius: BorderRadius.circular(12),
+                                elevation: 16,
+                                style:
+                                    const TextStyle(color: Colors.deepPurple),
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    controller.challengesState![index] =
+                                        !controller.challengesState![index];
+                                    controller.onStatusChange(index);
+                                  }
+                                },
+                                items: <String>['정상', '안함']
+                                    .map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: value == "정상"
+                                            ? CustomTextStyles.labelLargeGreen
+                                            : CustomTextStyles.labelLargeRed,
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
                             ),
                           ),
-                        )),
+                        ),
                       ]);
                 }).toList(),
               ),
@@ -252,7 +251,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                   ],
                 ),
                 Pages(
-                    pages: 100,
+                    pages: (controller.challengesModel.total! / 20).ceil(),
                     activePage: controller.activePage.value,
                     onTap: (int pageNum) {
                       controller.loadNewPage(pageNum);

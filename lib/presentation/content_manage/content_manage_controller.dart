@@ -88,6 +88,7 @@ class ContentManageController extends GetxController {
   }
 
   RxInt activePage = 1.obs;
+
   Future<void> loadNewPage(int pageNum) async {
     selectedContent = List.generate(20, (_) => false).obs;
     List<String> chosenTypes = bodyValues.every((a) => a == true) &&

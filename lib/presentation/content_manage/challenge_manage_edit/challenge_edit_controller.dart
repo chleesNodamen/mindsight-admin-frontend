@@ -21,7 +21,7 @@ class ChallengeEditController extends GetxController {
   void goToChallenge() {
     Get.toNamed(AppRoutes.contentChallengeManage);
     if (Get.isRegistered<ChallengeManageController>()) {
-      Get.find<ChallengeManageController>().fetchData();
+      Get.find<ChallengeManageController>().loadData();
     }
   }
 }

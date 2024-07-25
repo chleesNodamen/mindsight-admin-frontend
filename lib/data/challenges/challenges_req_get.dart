@@ -38,10 +38,10 @@ class ChallengesReqGet {
         sortBy: json["sortBy"],
         goal: json["goal"] == null
             ? []
-            : List<String>.from(json["ids"]!.map((x) => x)),
+            : List<String>.from(json["goal"]!.map((x) => x)),
         duration: json["duration"] == null
             ? []
-            : List<int>.from(json["ids"]!.map((x) => x)),
+            : List<int>.from(json["duration"]!.map((x) => x)),
         status: json["status"],
         search: json["search"],
       );

@@ -70,54 +70,58 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           Text("사용자 데이터", style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 24),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("2,418", style: CustomTextStyles.headlineLargeBlack),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("누적 참여 회원 수", style: CustomTextStyles.labelLargeGray)
-                ],
-              ),
-              Column(
-                children: [
-                  Text("594", style: CustomTextStyles.headlineLargeBlack),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("참여 회원 수", style: CustomTextStyles.labelLargeGray)
-                ],
-              ),
-              Column(
-                children: [
-                  Text("1,824", style: CustomTextStyles.headlineLargeBlack),
+                  Text(controller.practiceDetailsModel.finished.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
                   Text("완료 회원 수", style: CustomTextStyles.labelLargeGray)
                 ],
               ),
+              const SizedBox(width: 70),
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("821", style: CustomTextStyles.headlineLargeBlack),
+                  Text(controller.practiceDetailsModel.participated.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text("참여 회원 수", style: CustomTextStyles.labelLargeGray)
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(controller.practiceDetailsModel.ratio!,
+                      style: CustomTextStyles.headlineLargeBlack),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text("완료율", style: CustomTextStyles.labelLargeGray)
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(controller.practiceDetailsModel.liked.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
                   Text("좋아요 수", style: CustomTextStyles.labelLargeGray)
                 ],
               ),
-              Column(
-                children: [
-                  Text("4.25", style: CustomTextStyles.headlineLargeBlack),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("별점", style: CustomTextStyles.labelLargeGray)
-                ],
-              ),
-              const SizedBox(width: 32),
             ],
           )
         ],
@@ -152,8 +156,8 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           const SizedBox(
             height: 16,
           ),
-          // Text(controller.activityDetailsModel.level ?? "",
-          //     style: CustomTextStyles.labelLargeBlack),
+          Text("${controller.practiceDetailsModel.level.toString()}회차",
+              style: CustomTextStyles.bodyMediumBlack),
           const SizedBox(
             height: 24,
           ),
@@ -171,11 +175,11 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Body', style: CustomTextStyles.labelLargeSkyBlue),
+                  Text('Body', style: CustomTextStyles.bodyMediumSkyBlue),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text('Breath', style: CustomTextStyles.labelLargeSkyBlue),
+                  Text('Breath', style: CustomTextStyles.bodyMediumSkyBlue),
                 ],
               ),
               const SizedBox(
@@ -184,13 +188,13 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(controller.activityDetailsModel.body ?? "",
-                  //     style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.practiceDetailsModel.body!,
+                      style: CustomTextStyles.bodyMediumBlack),
                   const SizedBox(
                     height: 16,
                   ),
-                  // Text(controller.activityDetailsModel.breath ?? "",
-                  //     style: CustomTextStyles.labelLargeBlack),
+                  Text(controller.practiceDetailsModel.breath!,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               )
             ],

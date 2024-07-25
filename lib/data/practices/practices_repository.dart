@@ -6,7 +6,7 @@ class PracticesRepository extends BaseRepository {
   Future<PracticesModel> get(Map<String, dynamic>? query) async {
     Logger.log(query.toString());
     // req
-    String endpoint = "contentes/practices?";
+    String endpoint = "contents/practices?";
     endpoint += addGetParam(query);
     Response response = await httpClient.get(endpoint);
 

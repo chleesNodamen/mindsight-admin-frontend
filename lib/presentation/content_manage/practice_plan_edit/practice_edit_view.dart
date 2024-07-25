@@ -66,7 +66,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         ])),
         const SizedBox(height: 8),
         GestureDetector(
-          onTap: () => showCustomDialog(),
+          onTap: () => showCustomDialog(true),
           child: Container(
             width: 353,
             decoration: BoxDecoration(
@@ -77,7 +77,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Body 세션 등록', style: CustomTextStyles.bodyMediumGray),
+                Text(controller.practiceDetailsModel.body!,
+                    style: CustomTextStyles.bodyMediumBlack),
                 CustomImageView(
                   imagePath: IconConstant.search,
                 )
@@ -87,7 +88,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         ),
         const SizedBox(height: 8),
         GestureDetector(
-          onTap: () => showCustomDialog(),
+          onTap: () => showCustomDialog(false),
           child: Container(
             width: 353,
             decoration: BoxDecoration(
@@ -98,7 +99,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Breath 세션 등록', style: CustomTextStyles.bodyMediumGray),
+                Text(controller.practiceDetailsModel.breath!,
+                    style: CustomTextStyles.bodyMediumBlack),
                 CustomImageView(
                   imagePath: IconConstant.search,
                 )
@@ -137,7 +139,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
     );
   }
 
-  void showCustomDialog() {
+// 1 body 0 breath
+  void showCustomDialog(bool contentType) {
+    controller.resetData();
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
@@ -172,9 +176,10 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
               Row(
                 children: [
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 45,
                       child: TextFormField(
+                        controller: controller.textController,
                         decoration: InputDecoration(
                           fillColor: appTheme.white,
                           filled: true,
@@ -263,7 +268,11 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        controller.fetchData();
+                        contentType == true
+                            ? controller
+                                .fetchBodyData(controller.textController.text)
+                            : controller.fetchBreathData(
+                                controller.textController.text);
                       },
                       child: Text(
                         "검색",
@@ -274,7 +283,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                 ],
               ),
               Obx(() {
-                if (controller.data.isEmpty) {
+                if (controller.fetchedData.value == false) {
                   return Center(
                     child: Text('', style: CustomTextStyles.bodyMediumGray),
                   );
@@ -319,8 +328,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                       style: CustomTextStyles.labelLargeGray),
                                 ),
                               ],
-                              rows: controller.data.map(
-                                (item) {
+                              rows: List.generate(
+                                controller.contentListModel.length,
+                                (index) {
                                   return DataRow(
                                     cells: [
                                       DataCell(
@@ -342,7 +352,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 24.0),
-                                          child: Text(item['type'],
+                                          child: Text(
+                                              controller.contentListModel
+                                                  .type![index],
                                               style: CustomTextStyles
                                                   .bodyLargeBlack),
                                         ),
@@ -351,7 +363,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 24.0),
-                                          child: Text(item['title'],
+                                          child: Text(
+                                              controller.contentListModel
+                                                  .name![index],
                                               style: CustomTextStyles
                                                   .bodyLargeBlack),
                                         ),
@@ -360,7 +374,11 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 24.0),
-                                          child: Text(item['status'],
+                                          child: Text(
+                                              controller.contentListModel
+                                                      .status![index]
+                                                  ? "정상"
+                                                  : "안함",
                                               style: CustomTextStyles
                                                   .bodyLargeBlack),
                                         ),
@@ -387,7 +405,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                 onPressed: () {},
                               ),
                               Pages(
-                                pages: 100,
+                                pages: (controller.contentListModel.total! / 5)
+                                    .ceil(),
                                 activePage: controller.activePage.value,
                                 onTap: (int pageNum) {
                                   controller.loadNewPage(pageNum);
@@ -426,7 +445,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
               border: Border.all(color: appTheme.grayScale3),
               color: appTheme.grayScale2),
           padding: const EdgeInsets.all(16),
-          child: Text('101회차', style: CustomTextStyles.bodyMediumGray),
+          child: Text('${controller.practiceDetailsModel.level.toString()}회차',
+              style: CustomTextStyles.bodyMediumGray),
         ),
       ],
     );
@@ -450,7 +470,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           imagePath: IconConstant.arrowRight,
         ),
         GestureDetector(
-          onTap: () => Get.back(),
+          onTap: controller.goToDetails,
           child: Text("Practice plan 상세",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,

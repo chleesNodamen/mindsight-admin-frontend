@@ -87,10 +87,13 @@ class BaseRepository {
 
     query?.forEach((key, value) {
       if (value is List) {
+        if (value.isEmpty) {
+          return;
+        }
         for (int i = 0; i < value.length; i++) {
           add += "$key=${value[i]}&";
         }
-      } else if (value == null) {
+      } else if (value == null || value == "null" || value == "[]") {
         return;
       } else {
         add += "$key=$value&";

@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/practice_details/practice_details_mode
 class PracticeDetailsRepository extends BaseRepository {
   Future<PracticeDetailsModel> get(String? id) async {
     // req
-    String endpoint = "practice/$id";
+    String endpoint = "contents/practices/$id";
     Response response = await httpClient.get(endpoint);
 
     // result

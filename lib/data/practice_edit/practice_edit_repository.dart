@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/practice_edit/practice_edit_model.dart
 class PracticeEditRepository extends BaseRepository {
   Future<PracticeEditModel> put(String? id, Map<String, dynamic> body) async {
     // req
-    String endpoint = "practice/$id";
+    String endpoint = "contents/practices/$id";
     Response response = await httpClient.put(endpoint, body);
 
     // result

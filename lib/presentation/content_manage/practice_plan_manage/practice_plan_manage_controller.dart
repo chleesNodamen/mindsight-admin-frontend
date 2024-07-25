@@ -1,8 +1,14 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/practices/practices_model.dart';
+import 'package:mindsight_admin_page/data/practices/practices_repository.dart';
+import 'package:mindsight_admin_page/data/practices/practices_req_get.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
 
 class PracticePlanManageController extends GetxController {
-  static PracticePlanManageController get to =>
-      Get.find<PracticePlanManageController>();
+  late PracticesModel practicesModel;
+  RxBool isInited = false.obs;
+  RxBool searchOn = false.obs;
+  RxString searchValue = "".obs;
 
 //REGISTER BUTTON
   void onRegisterTap() {
@@ -16,13 +22,22 @@ class PracticePlanManageController extends GetxController {
   }
 
   //DATA TABLE
-  RxString dataTableButtonText = '정상'.obs;
-  void updateDTText(String newText) {
-    dataTableButtonText.value = newText;
-  }
+  // RxString dataTableButtonText = '정상'.obs;
+  // void updateDTText(String newText) {
+  //   dataTableButtonText.value = newText;
+  // }
 
   RxInt activePage = 1.obs;
-  void loadNewPage(int pageNum) {
+  Future<void> loadNewPage(int pageNum) async {
+    if (AppConstant.chleesTest) {
+      isLoading.value = true;
+      practicesModel = await PracticesRepository().get(PracticesReqGet(
+        page: pageNum,
+        search: searchOn.value == true ? searchValue.value : null,
+        sortBy: selectedOrder.value,
+      ).toJson());
+    }
+    isLoading.value = false;
     activePage.value = pageNum;
   }
 
@@ -30,9 +45,9 @@ class PracticePlanManageController extends GetxController {
   var isLoading = true.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    fetchData();
+    loadData();
   }
 
   RxBool selected = false.obs;
@@ -40,42 +55,36 @@ class PracticePlanManageController extends GetxController {
     selected.value = !selected.value;
   }
 
-  void fetchData() async {
-    try {
-      isLoading(true);
-      // Simulate API call
-      await Future.delayed(Duration(seconds: 1));
-      var fetchedData = [
-        {
-          "level": "1회차",
-          "completed": "3,456",
-          "participated": "9,999",
-          "ratio": "99,9%",
-          "likes": "9,999",
-        },
-        {
-          "level": "1회차",
-          "completed": "3,456",
-          "participated": "9,999",
-          "ratio": "99,9%",
-          "likes": "9,999",
-        },
-        {
-          "level": "1회차",
-          "completed": "3,456",
-          "participated": "9,999",
-          "ratio": "99,9%",
-          "likes": "9,999",
-        },
-        // Add more items as needed
-      ];
-      data.assignAll(fetchedData);
-    } finally {
-      isLoading(false);
+  Future<void> loadData() async {
+    isLoading.value = true;
+    isInited.value = false;
+    if (AppConstant.chleesTest) {
+      practicesModel = await PracticesRepository().get(PracticesReqGet(
+        page: 1,
+      ).toJson());
     }
+    if (!practicesModel.isSuccess) {
+      practicesModel = PracticesModel().copyWith(
+        id: List.generate(10, (_) => ""),
+        level: List.generate(10, (_) => 111),
+        ratio: List.generate(10, (_) => "88%"),
+        participated: List.generate(10, (_) => 111),
+        finished: List.generate(10, (_) => 111),
+        liked: List.generate(10, (_) => 111),
+        total: 10,
+      );
+      practicesModel.length = practicesModel.id!.length;
+    }
+    isLoading.value = false;
+    isInited.value = true;
   }
 
-  void goToDetails() {
-    Get.toNamed(AppRoutes.practiceDetails);
+  void goToDetails(int index) {
+    if (Get.isRegistered<PracticeDetailsController>()) {
+      Get.delete<PracticeDetailsController>();
+    }
+    Get.toNamed(AppRoutes.practiceDetails, arguments: {
+      RouteArguments.id: Uri.encodeComponent(practicesModel.id![index])
+    });
   }
 }

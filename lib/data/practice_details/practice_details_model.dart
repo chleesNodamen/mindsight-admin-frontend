@@ -2,7 +2,7 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 
 class PracticeDetailsModel extends BaseModel {
   String? id;
-  String? level;
+  int? level;
   String? body;
   String? breath;
   int? finished;
@@ -22,7 +22,7 @@ class PracticeDetailsModel extends BaseModel {
 
   PracticeDetailsModel copyWith(
           {String? id,
-          String? level,
+          int? level,
           String? body,
           String? breath,
           int? finished,

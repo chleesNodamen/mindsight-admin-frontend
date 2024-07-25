@@ -9,38 +9,43 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
     return Obx(
       () => Scaffold(
         extendBodyBehindAppBar: true,
-        body: ResponsiveWidget(
-          largeScreen: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SideMenu(),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Container(
-                    margin: const EdgeInsets.all(48.0),
-                    child: ListView(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            buildTopBar(),
-                            const SizedBox(height: 32),
-                            buildBlueButton(),
-                            const SizedBox(height: 32),
-                            dropdownButton(),
-                            const SizedBox(height: 16),
-                            buildDataContainer()
-                          ],
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SideMenu(),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Container(
+                            margin: const EdgeInsets.all(48.0),
+                            child: ListView(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    buildTopBar(),
+                                    const SizedBox(height: 32),
+                                    buildBlueButton(),
+                                    const SizedBox(height: 32),
+                                    dropdownButton(),
+                                    const SizedBox(height: 16),
+                                    buildDataContainer()
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-            ],
-          ),
+                )
+              : const SizedBox.shrink(),
         ),
       ),
     );
@@ -127,27 +132,10 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
               child: DataTable(
                 columnSpacing: 0,
                 checkboxHorizontalMargin: 0,
-                // dataRowMinHeight: ,
                 dataRowMaxHeight: 80,
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
-                  // DataColumn(
-                  //   label: Checkbox(
-                  //       activeColor: appTheme.skyBlue,
-                  //       checkColor: Colors.white,
-                  //       fillColor: MaterialStateProperty.resolveWith(
-                  //         (states) {
-                  //           if (!states
-                  //               .contains(MaterialState.selected)) {
-                  //             return Colors.transparent;
-                  //           }
-                  //           return null;
-                  //         },
-                  //       ),
-                  //       value: false,
-                  //       onChanged: (bool? value) {}),
-                  // ),
                   DataColumn(
                       label: Padding(
                     padding: const EdgeInsets.only(left: 64.0),
@@ -166,37 +154,30 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
                       label: Text('좋아요 수',
                           style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows: controller.data.map((item) {
+                rows: List.generate(controller.practicesModel.length, (index) {
                   return DataRow(cells: [
-                    // DataCell(
-                    //   Padding(
-                    //     padding: const EdgeInsets.only(right: 8.0),
-                    //     child: Checkbox(
-                    //       value: controller.selected.value,
-                    //       onChanged: (bool? value) {
-                    //         controller.updateValue();
-                    //       },
-                    //     ),
-                    //   ),
-                    // ), // Checkbox cell
                     DataCell(GestureDetector(
-                      onTap: controller.goToDetails,
+                      onTap: () => controller.goToDetails(index),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 64.0),
                         child: Text(
-                          item['level'],
+                          "${controller.practicesModel.level![index]}회차",
                           style: CustomTextStyles.bodyLargeBlack
                               .copyWith(decoration: TextDecoration.underline),
                         ),
                       ),
                     )),
-                    DataCell(Text(item['completed'],
+                    DataCell(Text(
+                        controller.practicesModel.finished![index].toString(),
                         style: CustomTextStyles.bodyLargeBlack)),
-                    DataCell(Text(item['participated'],
+                    DataCell(Text(
+                        controller.practicesModel.participated![index]
+                            .toString(),
                         style: CustomTextStyles.bodyLargeBlack)),
-                    DataCell(Text(item['ratio'],
+                    DataCell(Text(controller.practicesModel.ratio![index],
                         style: CustomTextStyles.bodyLargeGreen)),
-                    DataCell(Text(item['likes'],
+                    DataCell(Text(
+                        controller.practicesModel.liked![index].toString(),
                         style: CustomTextStyles.bodyLargeBlack)),
                   ]);
                 }).toList(),
@@ -206,7 +187,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
               height: 32,
             ),
             Pages(
-                pages: 100,
+                pages: (controller.practicesModel.total! / 20).ceil(),
                 activePage: controller.activePage.value,
                 onTap: (int pageNum) {
                   controller.loadNewPage(pageNum);

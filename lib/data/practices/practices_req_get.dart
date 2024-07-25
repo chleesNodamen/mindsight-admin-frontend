@@ -11,7 +11,6 @@ class PracticesReqGet {
 
   PracticesReqGet copyWith({
     int? page,
-    List<String>? affiliation,
     String? sortBy,
     String? search,
   }) =>

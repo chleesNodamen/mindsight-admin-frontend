@@ -6,7 +6,7 @@ class ChallengesRepository extends BaseRepository {
   Future<ChallengesModel> get(Map<String, dynamic>? query) async {
     Logger.log(query.toString());
     // req
-    String endpoint = "contentes/challenges?";
+    String endpoint = "contents/challenges?";
     endpoint += addGetParam(query);
     Response response = await httpClient.get(endpoint);
 
