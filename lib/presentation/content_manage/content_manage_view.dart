@@ -68,11 +68,11 @@ class ContentManageView extends GetWidget<ContentManageController> {
   TobBarSearch buildTopBar() {
     return TobBarSearch(
       name: "콘텐츠 목록",
-      searchShow: true,
+      searchShow: false,
       viewCount: true,
-      searchText: "제목, 마스터 이름, 태그 검색",
+      // searchText: "제목, 마스터 이름, 태그 검색",
       viewNumber: controller.contentListModel.total,
-      onSearch: controller.onSearch,
+      // onSearch: controller.onSearch,
     );
   }
 
@@ -255,17 +255,17 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       height: 44,
                       onPressed: controller.onStatusChangeForAll,
                     ),
-                    CustomElevatedButton(
-                      text: '삭제',
-                      buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                      buttonStyle:
-                          CustomButtonStyles.fillRedTransparent.copyWith(),
-                      width: 76,
-                      height: 44,
-                      onPressed: controller.onDeleteButton,
-                    ),
+                    // CustomElevatedButton(
+                    //   text: '삭제',
+                    //   buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
+                    //     fontWeight: FontWeight.w700,
+                    //   ),
+                    //   buttonStyle:
+                    //       CustomButtonStyles.fillRedTransparent.copyWith(),
+                    //   width: 76,
+                    //   height: 44,
+                    //   onPressed: controller.onDeleteButton,
+                    // ),
                   ],
                 ),
                 Pages(
