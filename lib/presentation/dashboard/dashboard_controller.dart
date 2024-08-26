@@ -8,9 +8,7 @@ import 'package:mindsight_admin_page/data/dashboard_practice/dashboard_practice_
 import 'package:mindsight_admin_page/data/dashboard_registered/dashboard_registered_model.dart';
 import 'package:mindsight_admin_page/data/dashboard_registered/dashboard_registered_repository.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_manage/practice_plan_manage_controller.dart';
 
 class DashboardController extends GetxController {
   late DashboardChallengeModel challengeModel;

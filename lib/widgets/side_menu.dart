@@ -1,14 +1,10 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/theme/custom_button_style.dart';
-import 'package:mindsight_admin_page/theme/custom_text_style.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: Container(

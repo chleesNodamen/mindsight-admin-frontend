@@ -140,7 +140,6 @@ class ContentManageView extends GetWidget<ContentManageController> {
                 ],
                 rows:
                     List.generate(controller.contentListModel.length, (index) {
-                  String id = controller.contentListModel.id![index];
                   return DataRow(
                       selected: controller.selectedContent[index],
                       onSelectChanged: (bool? value) {

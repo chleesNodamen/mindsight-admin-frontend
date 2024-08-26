@@ -1,10 +1,9 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'package:mindsight_admin_page/data/content_master/master_model.dart';
 import 'package:mindsight_admin_page/data/content_master/master_repository.dart';
 import 'package:mindsight_admin_page/data/upload/upload_request.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
-import 'package:video_player/video_player.dart';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_model.dart';

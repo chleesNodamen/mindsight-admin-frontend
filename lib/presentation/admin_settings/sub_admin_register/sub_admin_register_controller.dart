@@ -40,7 +40,6 @@ class SubAdminRegisterController extends GetxController {
 
   late AdminRegisterModel adminRegisterModel;
 
-  final CorrectWordChecker _wordChecker = CorrectWordChecker('');
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   List<Rx<PasswordValidEnum>> isPasswordValid = [

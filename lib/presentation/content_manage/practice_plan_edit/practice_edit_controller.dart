@@ -7,7 +7,6 @@ import 'package:mindsight_admin_page/data/practice_details/practice_details_repo
 import 'package:mindsight_admin_page/data/practice_edit/practice_edit_model.dart';
 import 'package:mindsight_admin_page/data/practice_edit/practice_edit_repository.dart';
 import 'package:mindsight_admin_page/data/practice_edit/practice_edit_req_put.dart';
-import 'package:mindsight_admin_page/data/practices/practices_model.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
 
 class PracticeEditController extends GetxController {

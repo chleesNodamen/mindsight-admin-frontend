@@ -51,7 +51,6 @@ class AdminSettingsController extends GetxController {
   final TextEditingController oldPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
 
-  final CorrectWordChecker _wordChecker = CorrectWordChecker('');
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   RxBool isShowPasswordOne = true.obs;

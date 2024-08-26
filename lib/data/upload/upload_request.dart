@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'dart:typed_data';
 import 'package:mindsight_admin_page/data/base_repository.dart';
@@ -24,6 +23,7 @@ class UploadRepository extends BaseRepository {
     if (response.isOk) {
       return response.body['url'];
     } else {
+      // ignore: unused_local_variable
       MembersEditModel model =
           fetchJsonData<MembersEditModel>(response, MembersEditModel.fromJson);
       return "";

@@ -80,14 +80,14 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             onChange: (value) {
               // controller.checkPasswordValid(value, false);
             },
-            validator: (value) {
-              // if (value == null ||
-              //     !controller.checkPasswordValid(value, true) ||
-              //     !controller.authPasswordResetModel.isSuccess) {
-              //   return "Code is invalid or has expired".tr;
-              // }
-              // return null;
-            },
+            // validator: (value) {
+            //   // if (value == null ||
+            //   //     !controller.checkPasswordValid(value, true) ||
+            //   //     !controller.authPasswordResetModel.isSuccess) {
+            //   //   return "Code is invalid or has expired".tr;
+            //   // }
+            //   // return null;
+            // },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
             // focusedBorderDecoration:
@@ -148,14 +148,14 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 onChange: (value) {
                   // controller.checkPasswordValid(value, false);
                 },
-                validator: (value) {
-                  // if (value == null ||
-                  //     !controller.checkPasswordValid(value, true) ||
-                  //     !controller.authPasswordResetModel.isSuccess) {
-                  //   return "Code is invalid or has expired".tr;
-                  // }
-                  // return null;
-                },
+                // validator: (value) {
+                //   // if (value == null ||
+                //   //     !controller.checkPasswordValid(value, true) ||
+                //   //     !controller.authPasswordResetModel.isSuccess) {
+                //   //   return "Code is invalid or has expired".tr;
+                //   // }
+                //   // return null;
+                // },
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
                 // focusedBorderDecoration:
@@ -184,14 +184,14 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 onChange: (value) {
                   // controller.checkPasswordValid(value, false);
                 },
-                validator: (value) {
-                  // if (value == null ||
-                  //     !controller.checkPasswordValid(value, true) ||
-                  //     !controller.authPasswordResetModel.isSuccess) {
-                  //   return "Code is invalid or has expired".tr;
-                  // }
-                  // return null;
-                },
+                // validator: (value) {
+                //   // if (value == null ||
+                //   //     !controller.checkPasswordValid(value, true) ||
+                //   //     !controller.authPasswordResetModel.isSuccess) {
+                //   //   return "Code is invalid or has expired".tr;
+                //   // }
+                //   // return null;
+                // },
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
                 // focusedBorderDecoration:
@@ -280,14 +280,14 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 onChange: (value) {
                   // controller.checkPasswordValid(value, false);
                 },
-                validator: (value) {
-                  // if (value == null ||
-                  //     !controller.checkPasswordValid(value, true) ||
-                  //     !controller.authPasswordResetModel.isSuccess) {
-                  //   return "Code is invalid or has expired".tr;
-                  // }
-                  // return null;
-                },
+                // validator: (value) {
+                //   // if (value == null ||
+                //   //     !controller.checkPasswordValid(value, true) ||
+                //   //     !controller.authPasswordResetModel.isSuccess) {
+                //   //   return "Code is invalid or has expired".tr;
+                //   // }
+                //   // return null;
+                // },
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
                 // focusedBorderDecoration:
@@ -323,14 +323,14 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 onChange: (value) {
                   // controller.checkPasswordValid(value, false);
                 },
-                validator: (value) {
-                  // if (value == null ||
-                  //     !controller.checkPasswordValid(value, true) ||
-                  //     !controller.authPasswordResetModel.isSuccess) {
-                  //   return "Code is invalid or has expired".tr;
-                  // }
-                  // return null;
-                },
+                // validator: (value) {
+                //   // if (value == null ||
+                //   //     !controller.checkPasswordValid(value, true) ||
+                //   //     !controller.authPasswordResetModel.isSuccess) {
+                //   //   return "Code is invalid or has expired".tr;
+                //   // }
+                //   // return null;
+                // },
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
                 // focusedBorderDecoration:
