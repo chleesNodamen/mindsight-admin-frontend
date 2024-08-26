@@ -16,7 +16,7 @@ class ChallengeDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await loadData();
   }
 
   Future<void> loadData() async {
@@ -27,14 +27,10 @@ class ChallengeDetailsController extends GetxController {
     }
     if (challengeDetailsModel.isSuccess) {
       thumbnailLink.value = challengeDetailsModel.thumbnail ?? "";
-      print(challengeDetailsModel.days);
-      // print("initialized");
     }
     isLoading.value = false;
     isInited.value = true;
   }
-
-  var numbers = List.generate(30, (index) => index + 1).obs;
 
   void goToEdit() {
     if (Get.isRegistered<ChallengeEditController>()) {

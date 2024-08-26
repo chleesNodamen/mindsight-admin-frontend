@@ -84,29 +84,32 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
 
   List<Widget> _buildNumberWidgets() {
     List<Widget> widgets = [];
-    for (int i = 0; i < controller.numbers.length; i++) {
+    for (int i = 0; i < controller.challengeDetailsModel.days!.length; i++) {
       if (i > 0 && i % 14 == 0) {
-        widgets.add(SizedBox(width: double.infinity)); // Line break
+        widgets.add(const SizedBox(
+          width: double.infinity,
+        ));
       }
+
+      int day = controller.challengeDetailsModel.days![i].day!;
+
       widgets.add(
-        InkWell(
-          onTap: () {
-            controller.setActiveNumber(controller.numbers[i]);
-          },
+        GestureDetector(
+          onTap: () => controller.updateSelectedDay(day),
           child: Container(
             width: 33,
             height: 30,
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
             decoration: BoxDecoration(
-              color: controller.activeNumber.value == controller.numbers[i]
+              color: controller.selectedDay.value == day
                   ? appTheme.skyBlue
                   : appTheme.primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             alignment: Alignment.center,
             child: Text(
-              controller.numbers[i].toString(),
-              style: controller.activeNumber.value == controller.numbers[i]
+              day.toString(),
+              style: controller.selectedDay.value == day
                   ? CustomTextStyles.labelMediumWhite
                   : CustomTextStyles.labelMediumBlack,
             ),
@@ -133,42 +136,26 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: TextEditingController(
+                    text: controller.selectedDayDetails.name),
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
                 onChange: (value) {
                   // controller.checkPasswordValid(value, false);
                 },
-                validator: (value) {
-                  // if (value == null ||
-                  //     !controller.checkPasswordValid(value, true) ||
-                  //     !controller.authPasswordResetModel.isSuccess) {
-                  //   return "Code is invalid or has expired".tr;
-                  // }
-                  // return null;
-                },
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
         const SizedBox(width: 24),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "콘텐츠 등록 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
+          children: List.generate(
+              controller.selectedDayDetails.contents!.length, (index) {
+            return Container(
               width: 353,
+              margin: const EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: appTheme.grayScale3),
@@ -177,54 +164,22 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Sunrise 10-Minute Morning Yoga A',
-                      style: CustomTextStyles.bodyMediumGray),
+                  SizedBox(
+                    width: 280,
+                    child: Text(
+                      controller.selectedDayDetails.contents![index],
+                      style: CustomTextStyles.bodyMediumGray,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                   CustomImageView(
                     imagePath: IconConstant.search,
                   )
                 ],
               ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.grayScale2),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Sunrise 10-Minute Morning Yoga B',
-                      style: CustomTextStyles.bodyMediumGray),
-                  CustomImageView(
-                    imagePath: IconConstant.search,
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.grayScale2),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Sunrise 10-Minute Morning Yoga C',
-                      style: CustomTextStyles.bodyMediumGray),
-                  CustomImageView(
-                    imagePath: IconConstant.search,
-                  )
-                ],
-              ),
-            ),
-          ],
-        )
+            );
+          }),
+        ),
       ],
     );
   }
@@ -255,10 +210,19 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('https://nodamen.akamaized.net/Mi...',
-                      style: CustomTextStyles.bodyMediumBlack),
+                  SizedBox(
+                    width: 280,
+                    child: Text(
+                      controller.challengeDetailsModel.thumbnail!,
+                      style: CustomTextStyles.bodyMediumBlack,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                   CustomImageView(
                     imagePath: IconConstant.upload,
+                    onTap: () {
+                      controller.pickFile("thumbnail");
+                    },
                   )
                 ],
               ),
@@ -275,7 +239,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                   buttonStyle: CustomButtonStyles.fillPrimary,
                   width: 90,
                   height: 44,
-                  // onPressed: controller.saveChanges,
+                  onPressed: controller.saveChanges,
                 ),
                 CustomElevatedButton(
                   text: '취소',
@@ -308,26 +272,11 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            // controller: controller.passwordController,
+            controller: controller.introController,
             maxLines: 5,
             width: 730,
-            hintText: "Input text",
-            hintStyle: CustomTextStyles.bodyMediumGray,
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
-            validator: (value) {
-              // if (value == null ||
-              //     !controller.checkPasswordValid(value, true) ||
-              //     !controller.authPasswordResetModel.isSuccess) {
-              //   return "Code is invalid or has expired".tr;
-              // }
-              // return null;
-            },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
             filled: true),
       ],
     );
@@ -358,7 +307,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
               ),
               child: DropdownButton<String>(
                 isExpanded: true,
-                // value: controller.selectedOrder.value,
+                value: controller.selectedGoal.value,
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
@@ -367,12 +316,16 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
-                    // controller.updateSelectedOrder(newValue);
-                    // controller.updateStyle();
+                    controller.selectedGoal.value = newValue;
                   }
                 },
-                items: <String>['Select Option', '운영', '제품 관리', '개발']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: <String>[
+                  'Improve health',
+                  'Relaxing Stretching',
+                  'Wellness at work',
+                  'Regulate emotions',
+                  'Fall a sleep easily'
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
@@ -406,7 +359,9 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('30일', style: CustomTextStyles.bodyMediumGray),
+                  Text(
+                      '${controller.challengeDetailsModel.duration!.toString()}일',
+                      style: CustomTextStyles.bodyMediumGray),
                   CustomImageView(
                     imagePath: IconConstant.more,
                   )
@@ -437,36 +392,14 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
             ),
             const SizedBox(height: 8),
             CustomTextFormField(
-                // controller: controller.passwordController,
+                controller: controller.nameController,
                 width: 353,
-                hintText: "30-Day Challenge to Strengthen Your",
-                hintStyle: CustomTextStyles.bodyMediumGray,
                 onChange: (value) {
                   // controller.checkPasswordValid(value, false);
                 },
-                validator: (value) {
-                  // if (value == null ||
-                  //     !controller.checkPasswordValid(value, true) ||
-                  //     !controller.authPasswordResetModel.isSuccess) {
-                  //   return "Code is invalid or has expired".tr;
-                  // }
-                  // return null;
-                },
-                contentPadding:
-                    const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
+                contentPadding: const EdgeInsets.only(
+                    left: 16, top: 17, bottom: 17, right: 5),
                 filled: true),
-            // Container(
-            //   width: 353,
-            //   decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(12),
-            //       border: Border.all(color: appTheme.grayScale3),
-            //       color: appTheme.grayScale2),
-            //   padding: const EdgeInsets.all(16),
-            //   child: Text('30-Day Challenge to Strengthen Your',
-            //       style: CustomTextStyles.bodyMediumGray),
-            // ),
           ],
         ),
       ],

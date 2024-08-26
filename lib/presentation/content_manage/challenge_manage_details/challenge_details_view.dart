@@ -283,6 +283,9 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
   List<Widget> _buildNumberWidgets() {
     List<Widget> widgets = [];
     for (int i = 0; i < controller.challengeDetailsModel.days!.length; i++) {
+      if (i > 0 && i % 14 == 0) {
+        widgets.add(SizedBox(width: double.infinity)); // Line break
+      }
       int day = controller.challengeDetailsModel.days![i].day!;
 
       widgets.add(
