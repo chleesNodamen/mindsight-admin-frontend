@@ -34,11 +34,11 @@ class ContentManageController extends GetxController {
     "Advance body",
   ].obs;
   RxList<String> breathingLabels = [
-    "Relax breathing",
-    "Focus breathing",
-    "Energy breathing",
+    // "Relax breathing",
+    // "Focus breathing",
+    // "Energy breathing",
     "Nature breathing",
-    "Guided breathing"
+    "Guided meditation"
   ].obs;
   List<String> otherLabels = [
     "Mindful Art",
@@ -48,25 +48,45 @@ class ContentManageController extends GetxController {
   ];
 
   RxList<bool> bodyValues = List<bool>.filled(3, true).obs;
-  RxList<bool> breathingValues = List<bool>.filled(5, true).obs;
+  RxList<bool> breathingValues = List<bool>.filled(2, true).obs;
   RxList<bool> otherValues = List<bool>.filled(4, true).obs;
   RxList<bool> serviceValues = List<bool>.filled(2, true).obs;
 
-  void toggleBodyCheckbox(int index, bool value) {
+  Future<void> toggleBodyCheckbox(int index, bool value) async {
     bodyValues[index] = value;
+    isLoading.value = true;
+    if (await loadNewData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
   }
 
-  void toggleBreathingCheckbox(int index, bool value) {
+  Future<void> toggleBreathingCheckbox(int index, bool value) async {
     breathingValues[index] = value;
+    isLoading.value = true;
+    if (await loadNewData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
   }
 
-  void toggleOtherCheckbox(int index, bool value) {
+  Future<void> toggleOtherCheckbox(int index, bool value) async {
     otherValues[index] = value;
+    isLoading.value = true;
+    if (await loadNewData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
   }
 
-  void toggleServiceValues(int index, bool value) {
+  Future<void> toggleServiceValues(int index, bool value) async {
     //정상, 서비스 안함
     serviceValues[index] = value;
+    isLoading.value = true;
+    if (await loadNewData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
   }
 
   @override
@@ -77,8 +97,56 @@ class ContentManageController extends GetxController {
 
   //DROPDOWN BUTTON
   RxString selectedOrder = '등록순'.obs;
-  void updateSelectedOrder(String newOrder) {
+  Future<void> updateSelectedOrder(String newOrder) async {
     selectedOrder.value = newOrder;
+    isLoading.value = true;
+    if (await loadNewData()) {
+      activePage.value = 1;
+      isLoading.value = false;
+    }
+  }
+
+  Future<bool> loadNewData() async {
+    searchOn.value = false;
+    searchValue.value = "";
+    selectedContent = List.generate(20, (_) => false).obs;
+    if (bodyValues.every((element) => element == false) &&
+            breathingValues.every((element) => element == false) &&
+            otherValues.every((element) => element == false) ||
+        serviceValues.every((element) => element == false)) {
+      contentListModel = ContentListModel().copyWith(
+        id: null,
+        type: null,
+        name: null,
+        seen: null,
+        liked: null,
+        status: null,
+        total: 0,
+      );
+      return true;
+    }
+    List<String> chosenTypes = bodyValues.every((a) => a == true) &&
+            breathingValues.every((a) => a == true) &&
+            otherValues.every((a) => a == true)
+        ? []
+        : [
+            for (int i = 0; i < bodyLabels.length; i++)
+              if (bodyValues[i]) bodyLabels[i],
+            for (int i = 0; i < otherLabels.length; i++)
+              if (otherValues[i]) otherLabels[i],
+            for (int i = 0; i < breathingLabels.length; i++)
+              if (breathingValues[i]) breathingLabels[i],
+          ];
+    contentListModel = await ContentListRepository().get(ContentListReqGet(
+      type: chosenTypes,
+      page: 1,
+      status: serviceValues.contains(false) ? serviceValues[0] : null,
+      sortBy: selectedOrder.value,
+      pageSize: 20,
+    ).toJson());
+    contentState =
+        (contentListModel.status!.map((status) => status).toList()).obs;
+    return contentListModel.isSuccess;
   }
 
   //DATA TABLE
@@ -110,6 +178,8 @@ class ContentManageController extends GetxController {
         page: pageNum,
         search: searchOn.value == true ? searchValue.value : null,
         status: serviceValues.contains(false) ? serviceValues[0] : null,
+        sortBy: selectedOrder.value,
+        pageSize: 20,
       ).toJson());
       contentState =
           (contentListModel.status!.map((status) => status).toList()).obs;
@@ -123,17 +193,18 @@ class ContentManageController extends GetxController {
     selectedContent[index] = !selectedContent[index];
   }
 
-  void loadData() async {
+  Future<void> loadData() async {
     searchOn.value = false;
     searchValue.value = "";
     bodyValues = List<bool>.filled(3, true).obs;
-    breathingValues = List<bool>.filled(5, true).obs;
+    breathingValues = List<bool>.filled(2, true).obs;
     otherValues = List<bool>.filled(4, true).obs;
     serviceValues = List<bool>.filled(2, true).obs;
     selectedContent = List.generate(20, (_) => false).obs;
     if (AppConstant.chleesTest) {
       contentListModel = await ContentListRepository().get(ContentListReqGet(
         page: 1,
+        sortBy: selectedOrder.value,
         pageSize: 20,
       ).toJson());
     } else {
@@ -194,7 +265,32 @@ class ContentManageController extends GetxController {
   Future<void> onSearch(String? search) async {
     searchOn.value = true;
     searchValue.value = search!;
-    loadNewPage(activePage.value);
+    isLoading.value = true;
+    selectedContent = List.generate(20, (_) => false).obs;
+    List<String> chosenTypes = bodyValues.every((a) => a == true) &&
+            breathingValues.every((a) => a == true) &&
+            otherValues.every((a) => a == true)
+        ? []
+        : [
+            for (int i = 0; i < bodyLabels.length; i++)
+              if (bodyValues[i]) bodyLabels[i],
+            for (int i = 0; i < otherLabels.length; i++)
+              if (otherValues[i]) otherLabels[i],
+            for (int i = 0; i < breathingLabels.length; i++)
+              if (breathingValues[i]) breathingLabels[i],
+          ];
+    contentListModel = await ContentListRepository().get(ContentListReqGet(
+      type: chosenTypes,
+      page: 1,
+      status: serviceValues.contains(false) ? serviceValues[0] : null,
+      sortBy: selectedOrder.value,
+      search: search,
+      pageSize: 20,
+    ).toJson());
+    contentState =
+        (contentListModel.status!.map((status) => status).toList()).obs;
+    isLoading.value = false;
+    activePage.value = 1;
   }
 
   Future<void> onDeleteButton() async {
