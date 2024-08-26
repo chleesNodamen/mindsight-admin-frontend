@@ -163,10 +163,12 @@ class ChallengeManageController extends GetxController {
     isLoading.value = false;
   }
 
-  void goToEdit() {
+  void goToEdit(int index) {
     if (Get.isRegistered<ChallengeDetailsController>()) {
       Get.delete<ChallengeDetailsController>();
     }
-    Get.toNamed(AppRoutes.challengeDetails);
+    Get.toNamed(AppRoutes.challengeDetails, arguments: {
+      RouteArguments.id: Uri.encodeComponent(challengesModel.id![index])
+    });
   }
 }

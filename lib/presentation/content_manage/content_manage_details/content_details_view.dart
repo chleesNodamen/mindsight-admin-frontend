@@ -1,7 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ContentDetailsView extends GetWidget<ContentDetailsController> {
   const ContentDetailsView({super.key});

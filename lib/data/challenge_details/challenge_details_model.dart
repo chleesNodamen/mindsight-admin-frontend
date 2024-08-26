@@ -64,7 +64,8 @@ class ChallengeDetailsModel extends BaseModel {
         intro: json["intro"],
         days: json["days"] == null
             ? []
-            : List<ChallengeDayDetailDto>.from(json["days"].map((x) => x)),
+            : List<ChallengeDayDetailDto>.from(
+                json["days"]!.map((x) => ChallengeDayDetailDto.fromJson(x))),
         thumbnail: json["thumbnail"],
         participants: json["participants"],
         challengers: json["challengers"],

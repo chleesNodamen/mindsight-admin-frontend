@@ -67,7 +67,9 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
             children: [
               Column(
                 children: [
-                  Text("2,418", style: CustomTextStyles.headlineLargeBlack),
+                  Text(
+                      controller.challengeDetailsModel.participants!.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
@@ -76,7 +78,8 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               ),
               Column(
                 children: [
-                  Text("594", style: CustomTextStyles.headlineLargeBlack),
+                  Text(controller.challengeDetailsModel.challengers!.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
@@ -85,25 +88,27 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               ),
               Column(
                 children: [
-                  Text("1,824", style: CustomTextStyles.headlineLargeBlack),
+                  Text(controller.challengeDetailsModel.completed!.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
                   Text("완료 회원 수", style: CustomTextStyles.labelLargeGray)
                 ],
               ),
+              // Column(
+              //   children: [
+              //     Text("821", style: CustomTextStyles.headlineLargeBlack),
+              //     const SizedBox(
+              //       height: 16,
+              //     ),
+              //     Text("좋아요 수", style: CustomTextStyles.labelLargeGray)
+              //   ],
+              // ),
               Column(
                 children: [
-                  Text("821", style: CustomTextStyles.headlineLargeBlack),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("좋아요 수", style: CustomTextStyles.labelLargeGray)
-                ],
-              ),
-              Column(
-                children: [
-                  Text("4.25", style: CustomTextStyles.headlineLargeBlack),
+                  Text(controller.challengeDetailsModel.rating!.toString(),
+                      style: CustomTextStyles.headlineLargeBlack),
                   const SizedBox(
                     height: 16,
                   ),
@@ -155,7 +160,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                   style: CustomTextStyles.labelMediumGray
                       .copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 16),
-              Text("30-Day Challenge to Strengthen Your Legs",
+              Text(controller.challengeDetailsModel.name!,
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
@@ -176,7 +181,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 children: [
                   Text('목적', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("Improve health",
+                  Text(controller.challengeDetailsModel.goal!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -187,7 +192,9 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 children: [
                   Text('기간', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("30일", style: CustomTextStyles.bodyMediumBlack),
+                  Text(
+                      "${controller.challengeDetailsModel.duration!.toString()}일",
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               )
             ],
@@ -205,8 +212,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
             children: [
               Text('소개', style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
-              Text(
-                  "This is a 30-Day challenge to Strengthen your legs.Strengthen your legs will increase muscle mass throughout the body, which helps boost metabolism such as breathing and blood circulation.",
+              Text(controller.challengeDetailsModel.intro!,
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
@@ -231,65 +237,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
           const SizedBox(height: 24),
           Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
           const SizedBox(height: 24),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('제목',
-                  style: CustomTextStyles.labelMediumGray
-                      .copyWith(fontWeight: FontWeight.w500)),
-              const SizedBox(height: 16),
-              Text("Warming Up",
-                  style: CustomTextStyles.bodyMediumBlack
-                      .copyWith(fontWeight: FontWeight.w500)),
-            ],
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('콘텐츠',
-                  style: CustomTextStyles.labelMediumGray
-                      .copyWith(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Text('1', style: CustomTextStyles.bodyMediumSkyBlue),
-                  const SizedBox(width: 16),
-                  Text(
-                    "Sunrise 10-Minute Morning Yoga A",
-                    style: CustomTextStyles.bodyMediumBlack
-                        .copyWith(fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text('2', style: CustomTextStyles.bodyMediumSkyBlue),
-                  const SizedBox(width: 16),
-                  Text(
-                    "Sunrise 10-Minute Morning Yoga B",
-                    style: CustomTextStyles.bodyMediumBlack
-                        .copyWith(fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text('3', style: CustomTextStyles.bodyMediumSkyBlue),
-                  const SizedBox(width: 16),
-                  Text(
-                    "Sunrise 10-Minute Morning Yoga C",
-                    style: CustomTextStyles.bodyMediumBlack
-                        .copyWith(fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          _buildDayContent(),
           const SizedBox(
             height: 24,
           ),
@@ -305,12 +253,22 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Text("이미지 보기",
+                  InkWell(
+                    child: Text(
+                      "이미지 보기",
                       style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                           decoration: TextDecoration.underline,
-                          decorationColor: appTheme.skyBlue)),
+                          decorationColor: appTheme.skyBlue),
+                    ),
+                    onTap: () => launchUrl(
+                        Uri.parse(controller.challengeDetailsModel.thumbnail!)),
+                  ),
                   const SizedBox(width: 4),
                   CustomImageView(
+                    onTap: () => SwitchNativeWeb.downloadFile(
+                        url: controller.thumbnailLink.value,
+                        fileName: "download.jpg",
+                        dataType: "data:image/jpg"),
                     imagePath: IconConstant.download,
                   )
                 ],
@@ -324,32 +282,82 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
 
   List<Widget> _buildNumberWidgets() {
     List<Widget> widgets = [];
-    for (int i = 0; i < controller.numbers.length; i++) {
-      if (i > 0 && i % 14 == 0) {
-        widgets.add(SizedBox(width: double.infinity)); // Line break
-      }
+    for (int i = 0; i < controller.challengeDetailsModel.days!.length; i++) {
+      int day = controller.challengeDetailsModel.days![i].day!;
+
       widgets.add(
-        Container(
-          width: 33,
-          height: 30,
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-          decoration: BoxDecoration(
-            color: controller.numbers[i] == 1
-                ? appTheme.skyBlue
-                : appTheme.primary.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            controller.numbers[i].toString(),
-            style: controller.numbers[i] == 1
-                ? CustomTextStyles.labelMediumWhite
-                : CustomTextStyles.labelMediumBlack,
+        GestureDetector(
+          onTap: () => controller.updateSelectedDay(day),
+          child: Container(
+            width: 33,
+            height: 30,
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+            decoration: BoxDecoration(
+              color: controller.selectedDay.value == day
+                  ? appTheme.skyBlue
+                  : appTheme.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              day.toString(),
+              style: controller.selectedDay.value == day
+                  ? CustomTextStyles.labelMediumWhite
+                  : CustomTextStyles.labelMediumBlack,
+            ),
           ),
         ),
       );
     }
     return widgets;
+  }
+
+  Widget _buildDayContent() {
+    int selectedIndex = controller.selectedDay.value - 1;
+
+    // Safely get the selected day details using indexing
+    if (selectedIndex < 0 ||
+        selectedIndex >= controller.challengeDetailsModel.days!.length) {
+      return const SizedBox();
+    }
+
+    var selectedDayDetails =
+        controller.challengeDetailsModel.days![selectedIndex];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('제목',
+            style: CustomTextStyles.labelMediumGray
+                .copyWith(fontWeight: FontWeight.w600)),
+        const SizedBox(height: 16),
+        Text(selectedDayDetails.name ?? '',
+            style: CustomTextStyles.bodyMediumBlack),
+        const SizedBox(height: 24),
+        Text('콘텐츠', style: CustomTextStyles.labelMediumGray),
+        const SizedBox(height: 16),
+        Column(
+          children: selectedDayDetails.contents?.map((content) {
+                int index = selectedDayDetails.contents!.indexOf(content) + 1;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Text('$index', style: CustomTextStyles.bodyMediumSkyBlue),
+                      const SizedBox(width: 16),
+                      Text(
+                        content,
+                        style: CustomTextStyles.bodyMediumBlack
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList() ??
+              [],
+        ),
+      ],
+    );
   }
 
   Row buildSubHeader() {

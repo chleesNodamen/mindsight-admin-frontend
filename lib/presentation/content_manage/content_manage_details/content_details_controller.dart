@@ -1,6 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_model.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_repository.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_edit/content_edit_controller.dart';

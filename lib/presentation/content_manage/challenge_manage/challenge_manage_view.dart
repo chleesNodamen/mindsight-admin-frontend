@@ -126,7 +126,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 24.0),
                             child: GestureDetector(
-                              onTap: controller.goToEdit,
+                              onTap: () => controller.goToEdit(index),
                               child: Text(
                                 controller.challengesModel.name![index],
                                 style:
