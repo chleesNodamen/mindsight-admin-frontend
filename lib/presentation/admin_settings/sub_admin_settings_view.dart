@@ -21,7 +21,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 16),
                           child: Container(
-                            margin: const EdgeInsets.all(48.0),
+                            margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                             child: ListView(
                               children: [
                                 Column(
@@ -55,7 +55,8 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
       text: "신규 등록",
       height: 44,
       width: 107,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
   }
 
@@ -178,9 +179,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
               children: [
                 CustomElevatedButton(
                   text: '삭제',
-                  buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                  buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                   buttonStyle: CustomButtonStyles.fillRedTransparent.copyWith(),
                   width: 76,
                   height: 44,

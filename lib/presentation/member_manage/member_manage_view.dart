@@ -22,7 +22,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                         child: ListView(
                           children: [
                             Container(
-                              margin: const EdgeInsets.all(48.0),
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -37,9 +37,9 @@ class MemberManageView extends GetWidget<MemberManageController> {
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
-                                  _buildFirstContainer(),
+                                  _buildSelect(),
                                   const SizedBox(height: 16),
-                                  _pageView(),
+                                  _buildPage(),
                                 ],
                               ),
                             ),
@@ -55,7 +55,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
     );
   }
 
-  Widget _buildFirstContainer() {
+  Widget _buildSelect() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -93,7 +93,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
     );
   }
 
-  SingleChildScrollView _pageView() {
+  SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -121,8 +121,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                   //       checkColor: Colors.white,
                   //       fillColor: MaterialStateProperty.resolveWith(
                   //         (states) {
-                  //           if (!states
-                  //               .contains(MaterialState.selected)) {
+                  //           if (!states.contains(MaterialState.selected)) {
                   //             return Colors.transparent;
                   //           }
                   //           return null;
@@ -210,7 +209,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                         DataCell(DecoratedBox(
                           decoration: BoxDecoration(
                             color: appTheme.white,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadiusStyle.roundedBorder8,
                             border: Border.all(
                               width: 1,
                               color: appTheme.grayScale2,
@@ -224,7 +223,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                                   controller.memberState![index] ? '활성' : '비활성',
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadiusStyle.roundedBorder12,
                               elevation: 16,
                               style: const TextStyle(color: Colors.deepPurple),
                               onChanged: (String? newValue) {
@@ -264,9 +263,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                 children: [
                   CustomElevatedButton(
                     text: '비활성',
-                    buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     buttonStyle: CustomButtonStyles.fillRedTransparent,
                     // margin: const EdgeInsets.symmetric(
                     //     vertical: 11, horizontal: 24),

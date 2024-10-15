@@ -21,7 +21,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 16),
                           child: Container(
-                            margin: const EdgeInsets.all(48.0),
+                            margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                             child: ListView(
                               children: [
                                 Column(
@@ -56,7 +56,8 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
       text: "신규 등록",
       height: 44,
       width: 107,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
       onPressed: controller.onRegisterTap,
     );
   }
@@ -78,7 +79,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
           color: appTheme.grayScale2,
         ),
         color: appTheme.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadiusStyle.roundedBorder8,
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 6, right: 0, top: 0, bottom: 0),
@@ -86,7 +87,7 @@ class PracticePlanManageView extends GetWidget<PracticePlanManageController> {
           value: controller.selectedOrder.value,
           underline: Container(),
           padding: const EdgeInsets.only(left: 6),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadiusStyle.roundedBorder12,
           // icon: const Icon(Icons.),
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),

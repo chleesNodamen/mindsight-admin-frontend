@@ -19,7 +19,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.all(48.0),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -132,7 +132,8 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
   Container buildFirstContainer() {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: appTheme.white),
+          borderRadius: BorderRadiusStyle.roundedBorder12,
+          color: appTheme.white),
       padding: const EdgeInsets.all(32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

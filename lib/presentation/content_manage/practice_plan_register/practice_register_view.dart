@@ -19,7 +19,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.all(48.0),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +70,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
           child: Container(
             width: 353,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 border: Border.all(color: appTheme.grayScale3),
                 color: appTheme.white),
             padding: const EdgeInsets.all(16),
@@ -92,7 +92,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
           child: Container(
             width: 353,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 border: Border.all(color: appTheme.grayScale3),
                 color: appTheme.white),
             padding: const EdgeInsets.all(16),
@@ -114,9 +114,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
           children: [
             CustomElevatedButton(
               text: '저장',
-              buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,
@@ -126,9 +124,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
             ),
             CustomElevatedButton(
               text: '취소',
-              buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
               buttonStyle: CustomButtonStyles.fillRedTransparent,
               margin: const EdgeInsets.only(left: 16),
               width: 90,
@@ -147,11 +143,11 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadiusStyle.roundedBorder12,
         ),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
             color: appTheme.background,
           ),
           width: 784,
@@ -295,7 +291,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                     const SizedBox(height: 35),
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
                         color: appTheme.white,
                       ),
                       padding: const EdgeInsets.all(32.0),
@@ -399,9 +395,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                               CustomElevatedButton(
                                   text: '상태 변경',
                                   buttonTextStyle:
-                                      CustomTextStyles.bodyMediumWhite.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                      CustomTextStyles.bodyMediumWhiteBold,
                                   buttonStyle: CustomButtonStyles.fillPrimary,
                                   margin: const EdgeInsets.only(right: 16),
                                   width: 107,
@@ -451,7 +445,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
         Container(
           width: 353,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadiusStyle.roundedBorder12,
               border: Border.all(color: appTheme.grayScale3),
               color: appTheme.grayScale2),
           padding: const EdgeInsets.all(16),

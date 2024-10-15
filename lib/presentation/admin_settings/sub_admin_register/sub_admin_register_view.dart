@@ -19,7 +19,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.all(48.0),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -99,9 +99,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
           children: [
             CustomElevatedButton(
               text: '저장',
-              buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,
@@ -109,9 +107,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             ),
             CustomElevatedButton(
               text: '취소',
-              buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
               buttonStyle: CustomButtonStyles.fillRedTransparent,
               margin: const EdgeInsets.only(left: 16),
               width: 90,
@@ -227,7 +223,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                   color: appTheme.grayScale3,
                 ),
                 color: appTheme.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
               child: DropdownButton<String>(
                 isExpanded: true,
@@ -235,7 +231,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 // icon: const Icon(Icons.),
                 elevation: 16,
                 onChanged: (String? newValue) {

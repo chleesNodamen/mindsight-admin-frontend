@@ -20,7 +20,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.all(48.0),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -180,7 +180,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
           const SizedBox(height: 24),
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 color: appTheme.background),
             padding: const EdgeInsets.all(16),
             child: Row(

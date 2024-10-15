@@ -23,7 +23,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                         child: ListView(
                           children: [
                             Container(
-                              margin: const EdgeInsets.all(48.0),
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -87,7 +87,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
   Widget _buildFirstContainer() {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: appTheme.white),
+          borderRadius: BorderRadiusStyle.roundedBorder12,
+          color: appTheme.white),
       padding: const EdgeInsets.all(32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,7 +323,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
           ),
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 color: appTheme.background),
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -357,7 +358,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
   Widget _buildSecondContainer() {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(32),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

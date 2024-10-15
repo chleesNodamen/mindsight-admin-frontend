@@ -11,7 +11,8 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
         body: Center(
           child: Container(
             decoration: BoxDecoration(
-                color: appTheme.white, borderRadius: BorderRadius.circular(32)),
+                color: appTheme.white,
+                borderRadius: BorderRadiusStyle.roundedBorder32),
             constraints: const BoxConstraints(maxWidth: 420),
             padding: const EdgeInsets.all(24),
             child: Column(
@@ -48,42 +49,42 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     // hintText: "abc@domain.com",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,
@@ -120,42 +121,42 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                     labelStyle: CustomTextStyles.bodyMediumGray,
                     // hintText: "123",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 1,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.grayScale3,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       borderSide: BorderSide(
                         color: appTheme.red,
                         width: 2,

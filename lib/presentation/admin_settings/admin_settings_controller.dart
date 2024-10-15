@@ -5,6 +5,8 @@ import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_repository.d
 import 'package:mindsight_admin_page/data/admin_password/admin_password_model.dart';
 import 'package:mindsight_admin_page/data/admin_password/admin_password_repository.dart';
 import 'package:mindsight_admin_page/data/admin_password/admin_password_req_put.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 
 enum PasswordValidEnum { waiting, valid, invalid }
 
@@ -24,6 +26,11 @@ class AdminSettingsController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
     if (AppConstant.chleesTest) {
       adminMyDataModel = await AdminMydataRepository().get();
     } else {

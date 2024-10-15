@@ -14,7 +14,6 @@ import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_regis
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_settings_binding.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/authentication/auth_binding.dart';
-import 'package:mindsight_admin_page/presentation/authentication/auth_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_binding.dart';
@@ -52,6 +51,11 @@ import 'package:mindsight_admin_page/presentation/member_manage/member_edit_view
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_controller.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_view.dart';
 
 class AppRoutes {
   static const String rootRoute = "/";
@@ -76,6 +80,8 @@ class AppRoutes {
   static const String challengeDetails = "/challenge_details";
   static const String challengeEdit = "/challenge_edit";
   static const String activityManage = "/activity_manage";
+  static const String settlementManage = "/settlement_manage";
+  static const String revenueShareManage = "/revenue_share_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
   static const String subAdminSettings = '/sub_admin_settings';
@@ -219,6 +225,16 @@ class AppRoutes {
       page: () => const SubAdminDetailsView(),
       bindings: [SubAdminDetailsBinding()],
     ),
+    GetPage(
+      name: settlementManage,
+      page: () => const SettlementManageView(),
+      bindings: [SettlementManageBinding()],
+    ),
+    GetPage(
+      name: revenueShareManage,
+      page: () => const RevenueShareManageView(),
+      bindings: [RevenueShareManageBinding()],
+    ),
   ];
 }
 
@@ -235,8 +251,8 @@ const dashboardPageRoute = "/dashboard";
 const dashboardPageDisplayName = "대시보드";
 
 const memberManagePageRoute = "/member_manage";
-const memberManagePageSubMenuDisplayName = "회원 목록";
 const memberManagePageDisplayName = "회원 관리";
+const memberManagePageSubMenuDisplayName = "회원 목록";
 
 const memberDetailsPageRoute = "/member_details";
 const memberDetailsPageDisplayName = "회원 상세";
@@ -258,6 +274,13 @@ const activityManagePageRoute = "/activity_manage";
 
 const activityHistoryPageDisplayName = "활동 기록 상세";
 const activityHistoryPageRoute = "/activity_history";
+
+const settlementManagePageRoute = "/settlement_manage";
+const settlementManagePageDisplayName = "매출 및 정산";
+const settlementManagePageSubMenuDisplayName = "스트리밍 정산";
+
+const revenueShareManagePageRoute = "/revenue_share_manage";
+const revenueShareManagePageDisplayName = "CP 수익율";
 
 const adminSettingsPageDisplayName = "관리자 설정";
 const myAccountManageDisplayName = "내 계정 관리";
@@ -288,10 +311,18 @@ List<MenuItem> sideMenuItemRoutes = [
       Get.find<ActivityManageController>().loadData();
     }
   }),
+
+  MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage, () {
+    if (Get.isRegistered<SettlementManageController>()) {
+      Get.find<SettlementManageController>().loadData();
+    }
+  }),
+
   MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings, () {
     if (Get.isRegistered<AdminSettingsController>()) {
       Get.find<AdminSettingsController>().loadData();
     }
   }),
+
   // MenuItem(authenticationPageDisplayName, authenticationPageRoute),
 ];

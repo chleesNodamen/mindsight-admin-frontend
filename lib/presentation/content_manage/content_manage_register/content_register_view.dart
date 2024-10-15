@@ -19,7 +19,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   child: ListView(
                     children: [
                       Container(
-                        margin: const EdgeInsets.all(48.0),
+                        margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                         child: Form(
                           key: formKey,
                           child: Column(
@@ -74,11 +74,8 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                                 children: [
                                   CustomElevatedButton(
                                     text: '저장',
-                                    buttonTextStyle: CustomTextStyles
-                                        .bodyMediumWhite
-                                        .copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                                    buttonTextStyle:
+                                        CustomTextStyles.bodyMediumWhiteBold,
                                     buttonStyle: CustomButtonStyles.fillPrimary,
                                     width: 90,
                                     height: 44,
@@ -92,9 +89,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                                   CustomElevatedButton(
                                     text: '취소',
                                     buttonTextStyle:
-                                        CustomTextStyles.bodyMediumRed.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                                        CustomTextStyles.bodyMediumRedBold,
                                     buttonStyle:
                                         CustomButtonStyles.fillRedTransparent,
                                     margin: const EdgeInsets.only(left: 16),
@@ -132,7 +127,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               color: appTheme.grayScale3,
             ),
             color: appTheme.white,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<String>(
             hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
@@ -143,7 +138,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
             // icon: const Icon(Icons.),
             elevation: 16,
             onChanged: (String? newValue) {
@@ -227,7 +222,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 color: controller.enableCategoryError.value
                     ? appTheme.alertNegative.withOpacity(0.1)
                     : appTheme.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
               child: DropdownButton<String>(
                 hint: Text('Select Option',
@@ -239,7 +234,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
@@ -295,7 +290,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 color: controller.enableTypeError.value
                     ? appTheme.alertNegative.withOpacity(0.1)
                     : appTheme.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
               child: DropdownButton<String>(
                   enableFeedback: controller.categorySelected.value,
@@ -308,7 +303,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   underline: Container(),
                   padding: const EdgeInsets.only(
                       left: 16, right: 16, top: 2, bottom: 2),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadiusStyle.roundedBorder12,
                   // icon: const Icon(Icons.),
                   elevation: 16,
                   onChanged: (String? newValue) {
@@ -539,7 +534,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 Container(
                   width: 353,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       border: Border.all(
                           color: controller.enableThumbnailError.value
                               ? appTheme.alertNegative
@@ -595,7 +590,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 Container(
                   width: 353,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       border: Border.all(color: appTheme.grayScale3),
                       color: appTheme.white),
                   padding: const EdgeInsets.all(16),

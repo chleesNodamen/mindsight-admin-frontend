@@ -1,7 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({Key? key}) : super(key: key);
+  const SideMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,14 +9,13 @@ class SideMenu extends StatelessWidget {
       padding: const EdgeInsets.all(32.0),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadiusStyle.roundedBorder16,
           color: appTheme.skyBlue,
         ),
         width: 297,
-        height: 912,
+        // height: 912,
         child: ListView(
           children: [
-            // if (ResponsiveWidget.isSmallScreen(context))
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -72,13 +71,12 @@ class SideMenu extends StatelessWidget {
                       }))
                   .toList(),
             ),
-            const SizedBox(height: 105),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Container(
                   padding: const EdgeInsets.all(24.0),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       color: appTheme.white),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -91,7 +89,7 @@ class SideMenu extends StatelessWidget {
                             imagePath: IconConstant.powerOn,
                           ),
                           Text(
-                            '로그인 정보',
+                            "로그인 정보",
                             style: CustomTextStyles.titleSmallBlack,
                           ),
                         ],

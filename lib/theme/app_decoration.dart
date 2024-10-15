@@ -1,7 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
 
 class AppDecoration {
-    /*
+  /*
       fill
   */
   static BoxDecoration get fillPrimary => BoxDecoration(
@@ -48,6 +48,7 @@ class AppDecoration {
           color: appTheme.grayScale2,
           width: 1,
         ),
+        borderRadius: BorderRadiusStyle.roundedBorder12,
       );
 
   /*

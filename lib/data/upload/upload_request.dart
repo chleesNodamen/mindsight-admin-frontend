@@ -13,6 +13,7 @@ class UploadRepository extends BaseRepository {
 
     Uint8List fileBytes = reader.result as Uint8List;
     final formData = FormData({
+      'folder': 'body',
       'file': MultipartFile(fileBytes,
           filename: file.name, contentType: 'application/octet-stream')
     });

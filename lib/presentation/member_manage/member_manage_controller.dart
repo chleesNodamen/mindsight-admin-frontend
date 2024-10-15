@@ -1,6 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/members/members_model.dart';
 import 'package:mindsight_admin_page/data/members/members_repository.dart';
 import 'package:mindsight_admin_page/data/members/members_req_get.dart';
@@ -42,6 +44,13 @@ class MemberManageController extends GetxController {
     searchOn = false.obs;
     searchValue = "".obs;
     activePage = 1.obs;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
+
     if (AppConstant.chleesTest) {
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,

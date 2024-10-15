@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_model.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_repository.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_model.dart';
@@ -201,6 +203,12 @@ class ContentManageController extends GetxController {
     otherValues = List<bool>.filled(4, true).obs;
     serviceValues = List<bool>.filled(2, true).obs;
     selectedContent = List.generate(20, (_) => false).obs;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
     if (AppConstant.chleesTest) {
       contentListModel = await ContentListRepository().get(ContentListReqGet(
         page: 1,

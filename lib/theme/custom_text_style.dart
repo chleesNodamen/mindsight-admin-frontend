@@ -27,6 +27,11 @@ class CustomTextStyles {
   static get bodyMediumWhite => theme.textTheme.bodyMedium?.copyWith(
         color: appTheme.white,
       );
+  static get bodyMediumWhiteBold => theme.textTheme.bodyMedium?.copyWith(
+        color: appTheme.white,
+        fontWeight: FontWeight.w700,
+      );
+
   static get bodySmallWhite => theme.textTheme.bodySmall?.copyWith(
         color: appTheme.white,
       );
@@ -103,6 +108,10 @@ class CustomTextStyles {
   static get bodyMediumSkyBlue => theme.textTheme.bodyMedium?.copyWith(
         color: appTheme.skyBlue,
       );
+
+  static get bodyMediumSkyBlueBold => theme.textTheme.bodyMedium
+      ?.copyWith(color: appTheme.skyBlue, fontWeight: FontWeight.w700);
+
   static get bodySmallSkyBlue => theme.textTheme.bodySmall?.copyWith(
         color: appTheme.skyBlue,
       );
@@ -217,6 +226,11 @@ class CustomTextStyles {
   static get bodyMediumRed => theme.textTheme.bodyMedium?.copyWith(
         color: appTheme.red,
       );
+  static get bodyMediumRedBold => theme.textTheme.bodyMedium?.copyWith(
+        color: appTheme.red,
+        fontWeight: FontWeight.w700,
+      );
+
   static get bodySmallRed => theme.textTheme.bodySmall?.copyWith(
         color: appTheme.red,
       );

@@ -9,6 +9,8 @@ import 'package:mindsight_admin_page/data/activity_details/activity_details_req_
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_model.dart';
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_repository.dart';
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_req_put.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
@@ -44,6 +46,12 @@ class ActivityHistoryController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
     activityDetailsModel = await ActivityDetailsRepository()
         .get(id, ActivityDetailsReqGet(type: type).toJson());
 

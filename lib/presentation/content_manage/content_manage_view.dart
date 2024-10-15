@@ -21,7 +21,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 16),
                           child: Container(
-                            margin: const EdgeInsets.all(48.0),
+                            margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                             child: ListView(
                               children: [
                                 Column(
@@ -61,7 +61,8 @@ class ContentManageView extends GetWidget<ContentManageController> {
       text: "신규 등록",
       height: 44,
       width: 107,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
   }
 
@@ -189,7 +190,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         DataCell(DecoratedBox(
                           decoration: BoxDecoration(
                             color: appTheme.white,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadiusStyle.roundedBorder8,
                             border: Border.all(
                               width: 1,
                               color: appTheme.grayScale2,
@@ -203,7 +204,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                   controller.contentState![index] ? '정상' : '안함',
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadiusStyle.roundedBorder12,
                               elevation: 16,
                               style: const TextStyle(color: Colors.deepPurple),
                               onChanged: (String? newValue) {
@@ -244,10 +245,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   children: [
                     CustomElevatedButton(
                       text: '상태 변경',
-                      buttonTextStyle:
-                          CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
+                      buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                       buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                       margin: const EdgeInsets.only(right: 16),
                       width: 107,
@@ -256,8 +254,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                     ),
                     // CustomElevatedButton(
                     //   text: '삭제',
-                    //   buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                    //     fontWeight: FontWeight.w700,
+                    // buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     //   ),
                     //   buttonStyle:
                     //       CustomButtonStyles.fillRedTransparent.copyWith(),
@@ -408,7 +405,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
           color: appTheme.grayScale2,
         ),
         color: appTheme.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadiusStyle.roundedBorder8,
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 6, right: 0, top: 0, bottom: 0),
@@ -416,7 +413,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
           value: controller.selectedOrder.value,
           underline: Container(),
           padding: const EdgeInsets.only(left: 6),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadiusStyle.roundedBorder12,
           // icon: const Icon(Icons.),
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),

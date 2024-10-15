@@ -19,7 +19,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.all(48.0),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                           child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
               color: controller.selectedDay.value == day
                   ? appTheme.skyBlue
                   : appTheme.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadiusStyle.roundedBorder6,
             ),
             alignment: Alignment.center,
             child: Text(
@@ -157,7 +157,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
               width: 353,
               margin: const EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadiusStyle.roundedBorder12,
                   border: Border.all(color: appTheme.grayScale3),
                   color: appTheme.grayScale2),
               padding: const EdgeInsets.all(16),
@@ -203,7 +203,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
             Container(
               width: 353,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadiusStyle.roundedBorder12,
                   border: Border.all(color: appTheme.grayScale3),
                   color: appTheme.white),
               padding: const EdgeInsets.all(16),
@@ -233,9 +233,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
               children: [
                 CustomElevatedButton(
                   text: '저장',
-                  buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                  buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                   buttonStyle: CustomButtonStyles.fillPrimary,
                   width: 90,
                   height: 44,
@@ -243,9 +241,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                 ),
                 CustomElevatedButton(
                   text: '취소',
-                  buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                  buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                   buttonStyle: CustomButtonStyles.fillRedTransparent,
                   margin: const EdgeInsets.only(left: 16),
                   width: 90,
@@ -303,7 +299,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                   color: appTheme.grayScale3,
                 ),
                 color: appTheme.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
               child: DropdownButton<String>(
                 isExpanded: true,
@@ -311,7 +307,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 // icon: const Icon(Icons.),
                 elevation: 16,
                 onChanged: (String? newValue) {
@@ -352,7 +348,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
             Container(
               width: 353,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadiusStyle.roundedBorder12,
                   border: Border.all(color: appTheme.grayScale3),
                   color: appTheme.grayScale2),
               padding: const EdgeInsets.all(16),

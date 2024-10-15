@@ -22,7 +22,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                         child: ListView(
                           children: [
                             Container(
-                              margin: const EdgeInsets.all(48.0),
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -164,7 +164,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
           const SizedBox(height: 24),
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 color: appTheme.background),
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -315,9 +315,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
             const SizedBox(height: 24),
             CustomElevatedButton(
               text: '저장',
-              buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,

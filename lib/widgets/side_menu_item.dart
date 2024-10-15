@@ -10,6 +10,7 @@ class SideMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
                 onTap: onTap,
@@ -56,43 +57,46 @@ class SideMenuItem extends StatelessWidget {
                 )),
             menuController.isActive(itemName) &&
                     menuController.hasSubMenu(itemName)
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: menuController.subMenuItems[itemName]!
-                        .map((item) => Column(
-                              children: [
-                                InkWell(
-                                  child: Container(
-                                      color:
-                                          menuController.isHovering(item.name)
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 45),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: menuController.subMenuItems[itemName]!
+                            .map((item) => Column(
+                                  children: [
+                                    InkWell(
+                                      child: Container(
+                                          color: menuController
+                                                  .isHovering(item.name)
                                               ? appTheme.white.withOpacity(0.4)
                                               : Colors.transparent,
-                                      child: Text(item.name,
-                                          style: menuController
-                                                  .isActiveSubItem(item.name)
-                                              ? CustomTextStyles.bodyMediumWhite
-                                                  .copyWith(
-                                                  fontWeight: FontWeight.w700,
-                                                )
-                                              : CustomTextStyles.bodyMediumWhite
-                                                  .copyWith(
-                                                  color: Colors.white
-                                                      .withOpacity(0.75),
-                                                ))),
-                                  onTap: () {
-                                    Get.toNamed(item.route);
-                                    item.inited();
-                                    menuController
-                                        .changeActiveSubItem(item.name);
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 16,
-                                )
-                              ],
-                            ))
-                        .toList())
+                                          child: Text(item.name,
+                                              style: menuController
+                                                      .isActiveSubItem(
+                                                          item.name)
+                                                  ? CustomTextStyles
+                                                      .bodyMediumWhiteBold
+                                                  : CustomTextStyles
+                                                      .bodyMediumWhite
+                                                      .copyWith(
+                                                      color: Colors.white
+                                                          .withOpacity(0.75),
+                                                    ))),
+                                      onTap: () {
+                                        Get.toNamed(item.route);
+                                        item.inited();
+                                        menuController
+                                            .changeActiveSubItem(item.name);
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    )
+                                  ],
+                                ))
+                            .toList()),
+                  )
                 : const SizedBox.shrink()
           ],
         ));

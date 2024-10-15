@@ -23,7 +23,7 @@ class InactiveMemberManageView
                         child: ListView(
                           children: [
                             Container(
-                              margin: const EdgeInsets.all(48.0),
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -182,7 +182,7 @@ class InactiveMemberManageView
                         DataCell(DecoratedBox(
                           decoration: BoxDecoration(
                             color: appTheme.white,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadiusStyle.roundedBorder8,
                             border: Border.all(
                               width: 1,
                               color: appTheme.grayScale2,
@@ -196,7 +196,7 @@ class InactiveMemberManageView
                                   controller.memberState![index] ? '활성' : '비활성',
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadiusStyle.roundedBorder12,
                               elevation: 16,
                               style: const TextStyle(color: Colors.deepPurple),
                               onChanged: (String? newValue) {
@@ -238,10 +238,7 @@ class InactiveMemberManageView
                     children: [
                       CustomElevatedButton(
                         text: '활성',
-                        buttonTextStyle:
-                            CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
+                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                         // margin: const EdgeInsets.symmetric(
                         //     vertical: 11, horizontal: 24),
@@ -251,10 +248,7 @@ class InactiveMemberManageView
                       ),
                       // CustomElevatedButton(
                       //   text: '비활성',
-                      //   buttonTextStyle:
-                      //       CustomTextStyles.bodyMediumRed.copyWith(
-                      //     fontWeight: FontWeight.w700,
-                      //   ),
+                      // buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                       //   buttonStyle: CustomButtonStyles.fillRedTransparent,
                       //   margin: const EdgeInsets.symmetric(horizontal: 16),
                       //   width: 90,

@@ -24,7 +24,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                           child: ListView(
                             children: [
                               Container(
-                                margin: const EdgeInsets.all(48.0),
+                                margin:
+                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -86,7 +87,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
   Widget _buildFirstContainer() {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: appTheme.white),
+          borderRadius: BorderRadiusStyle.roundedBorder12,
+          color: appTheme.white),
       padding: const EdgeInsets.all(32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +167,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
   Widget _buildPracticeContainer() {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(32),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +245,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
   Widget _buildChallengeContainer() {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(32),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,7 +338,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
   Widget _buildThirdContainer() {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: appTheme.white),
+          borderRadius: BorderRadiusStyle.roundedBorder12,
+          color: appTheme.white),
       padding: const EdgeInsets.all(32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -405,7 +410,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           ),
           Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadiusStyle.roundedBorder12,
                   color: appTheme.background),
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -516,7 +521,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                     ),
                     Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadiusStyle.roundedBorder12,
                             color: appTheme.background),
                         padding: const EdgeInsets.all(16),
                         child: Row(
@@ -554,7 +559,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
         radius: 12,
         content: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadiusStyle.roundedBorder12,
               color: appTheme.background),
           width: 794,
           padding: const EdgeInsets.only(left: 32, right: 32),
@@ -593,9 +598,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 children: [
                   CustomElevatedButton(
                     text: '저장',
-                    buttonTextStyle: CustomTextStyles.bodyMediumWhite.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                     buttonStyle: CustomButtonStyles.fillPrimary,
                     width: 90,
                     height: 44,
@@ -603,9 +606,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   ),
                   CustomElevatedButton(
                     text: '취소',
-                    buttonTextStyle: CustomTextStyles.bodyMediumRed.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     buttonStyle: CustomButtonStyles.fillRedTransparent,
                     margin: const EdgeInsets.only(left: 16),
                     width: 90,
@@ -628,7 +629,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
         child: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
                 color: appTheme.background),
             width: 762,
             padding: const EdgeInsets.only(left: 32, right: 32),
@@ -709,7 +710,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
                       color: appTheme.white),
                   width: 698,
                   padding: const EdgeInsets.all(24),

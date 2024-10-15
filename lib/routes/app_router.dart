@@ -7,6 +7,7 @@ import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart'
 import 'package:mindsight_admin_page/presentation/member_manage/member_details_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_view.dart';
 import 'package:mindsight_admin_page/routes/app_routes.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -29,6 +30,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(const ActivityHistoryView());
     case adminSettingsPageRoute:
       return _getPageRoute(const AdminSettingsView());
+    case settlementManagePageRoute:
+      return _getPageRoute(const SettlementManageView());
+    case revenueShareManagePageRoute:
+      return _getPageRoute(const SettlementManageView());
+
     default:
       return _getPageRoute(const DashboardView());
   }

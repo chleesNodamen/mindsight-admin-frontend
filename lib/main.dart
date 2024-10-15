@@ -1,12 +1,12 @@
 import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
 import 'app_export.dart';
-import 'package:mindsight_admin_page/controllers/menu_controller.dart'
-    as menu_controller;
 
 void main() {
+  /*
   Get.put(menu_controller.MenuController());
   Get.put(NavigationController());
   // Get.lazyPut(() => ContentManageController());
+  */
   runApp(const MyApp());
 }
 

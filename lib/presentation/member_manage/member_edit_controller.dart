@@ -1,6 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_model.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_repository.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
@@ -44,6 +46,13 @@ class MemberEditController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
+
     membersDataModel = await MembersDataRepository().get(id);
     if (membersDataModel.affiliation == null) {
       affiliation = "".obs;

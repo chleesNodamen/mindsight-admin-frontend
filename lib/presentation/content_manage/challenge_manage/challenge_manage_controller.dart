@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_model.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_repository.dart';
@@ -79,6 +81,12 @@ class ChallengeManageController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
     if (AppConstant.chleesTest) {
       challengesModel = await ChallengesRepository().get(
         ChallengesReqGet(

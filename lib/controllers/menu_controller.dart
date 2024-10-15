@@ -1,6 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_controller.dart';
 
 class SubMenuItem {
   final String name;
@@ -33,7 +34,7 @@ class MenuController extends GetxController {
     contentManagePageDisplayName: [
       SubMenuItem(contentManageContentDisplayName, AppRoutes.contentManage, () {
         if (Get.isRegistered<MemberManageController>()) {
-          Get.find<MemberManageController>().loadData(); //TODO
+          Get.find<MemberManageController>().loadData();
         }
       }),
       SubMenuItem(
@@ -59,6 +60,21 @@ class MenuController extends GetxController {
       SubMenuItem(subAdminSettingsDisplayName, AppRoutes.subAdminSettings, () {
         if (Get.isRegistered<InactiveMemberManageController>()) {
           Get.find<InactiveMemberManageController>().loadData();
+        }
+      }),
+    ],
+    settlementManagePageDisplayName: [
+      SubMenuItem(
+          settlementManagePageSubMenuDisplayName, AppRoutes.settlementManage,
+          () {
+        if (Get.isRegistered<SettlementManageController>()) {
+          Get.find<SettlementManageController>().loadData();
+        }
+      }),
+      SubMenuItem(
+          revenueShareManagePageDisplayName, AppRoutes.revenueShareManage, () {
+        if (Get.isRegistered<SettlementManageController>()) {
+          Get.find<SettlementManageController>().loadData();
         }
       }),
     ],
@@ -126,6 +142,10 @@ class MenuController extends GetxController {
         return CustomImageView(
             imagePath:
                 '${IconConstant.settings.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+      case settlementManagePageDisplayName:
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.aabbcc.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       // case authenticationPageDisplayName:
       //   return _customIcon(Icons.exit_to_app, itemName);
       default:

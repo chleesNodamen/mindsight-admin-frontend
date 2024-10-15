@@ -2,6 +2,8 @@
 import 'dart:html';
 import 'package:file_picker/file_picker.dart';
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_day_detail.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_model.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_repository.dart';
@@ -39,6 +41,13 @@ class ChallengeEditController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
+
     if (AppConstant.chleesTest) {
       challengeDetailsModel = await ChallengeDetailsRepository().get(id);
     }

@@ -24,7 +24,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                           child: ListView(
                             children: [
                               Container(
-                                margin: const EdgeInsets.all(48.0),
+                                margin:
+                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -42,8 +43,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                       height: 44,
                                       width: 107,
                                       decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                          borderRadius: BorderRadiusStyle
+                                              .roundedBorder12),
                                     ),
                                     const SizedBox(height: 32),
                                     buildFirstContainer(),

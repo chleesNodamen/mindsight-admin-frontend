@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/practices/practices_model.dart';
 import 'package:mindsight_admin_page/data/practices/practices_repository.dart';
 import 'package:mindsight_admin_page/data/practices/practices_req_get.dart';
@@ -58,6 +60,13 @@ class PracticePlanManageController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
+
     if (AppConstant.chleesTest) {
       practicesModel = await PracticesRepository().get(PracticesReqGet(
         page: 1,

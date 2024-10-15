@@ -50,7 +50,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                       color: appTheme.primary,
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadiusStyle.roundedBorder32,
                       border: Border.all(color: appTheme.grayScale1, width: 2)),
                 ),
               )
@@ -74,10 +74,11 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           Container(
             decoration: BoxDecoration(
                 color: appTheme.primary.withOpacity(.5),
-                borderRadius: BorderRadius.circular(30)),
+                borderRadius: BorderRadiusStyle.roundedBorder32),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
+                  color: Colors.white,
+                  borderRadius: BorderRadiusStyle.roundedBorder32),
               padding: const EdgeInsets.all(2),
               margin: const EdgeInsets.all(2),
               child: CircleAvatar(

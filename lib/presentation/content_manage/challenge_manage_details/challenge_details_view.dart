@@ -20,7 +20,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.all(48.0),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                           child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,7 +299,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               color: controller.selectedDay.value == day
                   ? appTheme.skyBlue
                   : appTheme.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadiusStyle.roundedBorder6,
             ),
             alignment: Alignment.center,
             child: Text(

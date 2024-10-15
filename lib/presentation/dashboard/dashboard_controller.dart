@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_model.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_repository.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_req_get.dart';
@@ -26,6 +28,13 @@ class DashboardController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
+
     challengeModel = await DashboardChallengeRepository()
         .get(DashboardChallengeReqGet(page: 1).toJson());
     practiceModel = await DashboardPracticeRepository()

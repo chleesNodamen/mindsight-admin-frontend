@@ -95,7 +95,8 @@ class DashboardView extends GetWidget<DashboardController> {
   Widget _buildFirstContainer() {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(24),
         child: Stack(
           children: [
@@ -121,7 +122,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadiusStyle.roundedBorder8,
                       color: appTheme.alertNegative.withOpacity(0.1)),
                   child: Text('-6.5%', style: CustomTextStyles.labelLargeRed),
                 ),
@@ -158,7 +159,8 @@ class DashboardView extends GetWidget<DashboardController> {
   Widget _buildSecondContainer() {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(24),
         child: Stack(
           children: [
@@ -183,7 +185,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadiusStyle.roundedBorder8,
                       color: appTheme.alertPositive.withOpacity(0.1)),
                   child:
                       Text('+35.4%', style: CustomTextStyles.labelLargeGreen),
@@ -221,7 +223,8 @@ class DashboardView extends GetWidget<DashboardController> {
   Widget _buildThirdContainer() {
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(24),
         child: Stack(
           children: [
@@ -246,7 +249,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadiusStyle.roundedBorder8,
                       color: appTheme.alertPositive.withOpacity(0.1)),
                   child:
                       Text('+37.0%', style: CustomTextStyles.labelLargeGreen),
@@ -285,7 +288,8 @@ class DashboardView extends GetWidget<DashboardController> {
     return Container(
         height: 397,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -412,7 +416,8 @@ class DashboardView extends GetWidget<DashboardController> {
     return Container(
         height: 397,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -522,7 +527,8 @@ class DashboardView extends GetWidget<DashboardController> {
         width: 1016,
         height: 350,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: appTheme.white),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            color: appTheme.white),
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -679,9 +685,7 @@ class DashboardView extends GetWidget<DashboardController> {
             imagePath: controller.challengeModel.image![index],
             height: 56,
             width: 56,
-            radius: BorderRadius.circular(
-              8,
-            ),
+            radius: BorderRadiusStyle.roundedBorder8,
             // margin: EdgeInsets.only(
             //   top: 2,
             // ),
@@ -722,7 +726,7 @@ class DashboardView extends GetWidget<DashboardController> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 6),
+                      padding: const EdgeInsets.only(left: 6),
                       child: Text(
                         '${controller.challengeModel.daysTotal![index]} days',
                         // "${model.daysTotal![index]} days",

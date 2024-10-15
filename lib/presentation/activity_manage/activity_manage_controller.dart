@@ -4,6 +4,8 @@ import 'package:mindsight_admin_page/data/activity/activity_repository.dart';
 import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
+import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
@@ -65,6 +67,12 @@ class ActivityManageController extends GetxController {
     feedbackValues = List<bool>.filled(2, true).obs;
     searchValue = "".obs;
     activePage = 1.obs;
+
+    if (AppConstant.chleesTest) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.chleesTestEmail,
+          password: AppConstant.chleesTestPassword));
+    }
     if (AppConstant.chleesTest) {
       activityModel = await ActivityRepository().get(ActivityReqGet(
         page: 1,

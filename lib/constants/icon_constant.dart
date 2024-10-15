@@ -1,6 +1,8 @@
 class IconConstant {
   static String iconPath = 'assets/icons';
 
+  static String aabbcc = '$iconPath/icon_dashboard.svg';
+
   static String arrowRight = '$iconPath/icon_arrow_right.svg';
   static String newTab = '$iconPath/icon_newtab.svg';
   static String powerOn = '$iconPath/icon_power_on.svg';

@@ -62,11 +62,10 @@ class BaseRepository {
     Logger.log(httpClient.forTest2);
 
     // 임시 테스트
-    /*
+
     if (!response.isOk) {
       _showExceptionDialog(response.statusCode, response.body.toString());
     }
-    */
   }
 
   String _getErrorCode(Response response) {

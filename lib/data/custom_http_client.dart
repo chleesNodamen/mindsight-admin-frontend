@@ -3,9 +3,7 @@ import 'package:mindsight_admin_page/constants/app_constant.dart';
 import 'package:mindsight_admin_page/utils/logger.dart';
 
 class CustomHttpClient extends GetConnect {
-  final String _baseUrl = AppConstant.isProdServer
-      ? "https://wmdev.patron.digital/api/v1/admin/"
-      : "https://mindsight.im/api/v1/admin/";
+  final String _baseUrl = AppConstant.apiServer;
 
   static CustomHttpClient get to => Get.find<CustomHttpClient>();
   String forTest0 = "";
