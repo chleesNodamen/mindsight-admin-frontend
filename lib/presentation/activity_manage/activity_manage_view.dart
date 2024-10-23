@@ -19,42 +19,38 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                       const SideMenu(),
                       Expanded(
                         // flex: 5,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    TobBarSearch(
-                                      name: "활동 기록 관리",
-                                      searchShow: true,
-                                      viewCount: false,
-                                      searchText: "회원, 기록 내용 검색",
-                                      onSearch: controller.onSearch,
-                                    ),
-                                    const SizedBox(height: 32),
-                                    CustomElevatedButton(
-                                      text: "신규 등록",
-                                      height: 44,
-                                      width: 107,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadiusStyle
-                                              .roundedBorder12),
-                                    ),
-                                    const SizedBox(height: 32),
-                                    buildFirstContainer(),
-                                    const SizedBox(height: 32),
-                                    _pageView(),
-                                  ],
-                                ),
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TobBarSearch(
+                                    name: "활동 기록 관리",
+                                    searchShow: true,
+                                    viewCount: false,
+                                    searchText: "회원, 기록 내용 검색",
+                                    onSearch: controller.onSearch,
+                                  ),
+                                  const SizedBox(height: 32),
+                                  CustomElevatedButton(
+                                    text: "신규 등록",
+                                    height: 44,
+                                    width: 107,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadiusStyle.roundedBorder12),
+                                  ),
+                                  const SizedBox(height: 32),
+                                  buildFirstContainer(),
+                                  const SizedBox(height: 32),
+                                  _pageView(),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -272,7 +268,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                     )),
                     DataCell(Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: GestureDetector(
+                      child: InkWell(
                         onTap: () {
                           controller.onMemberTap(index);
                         },
@@ -283,7 +279,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                     )),
                     DataCell(Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: GestureDetector(
+                      child: InkWell(
                         onTap: () {
                           controller.onSessionTap(index);
                         },
@@ -295,7 +291,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                     )),
                     DataCell(Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: GestureDetector(
+                      child: InkWell(
                         onTap: () {
                           controller.onHistoryTap(index);
                         },

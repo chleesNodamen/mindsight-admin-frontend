@@ -23,7 +23,7 @@ class MasterProfitRateListReqGet {
       );
 
   Map<String, dynamic> toJson() => {
-        "page": page.toString(),
+        "page": page,
         "search": search,
       };
 }

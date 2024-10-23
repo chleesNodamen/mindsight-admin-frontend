@@ -2,9 +2,18 @@ import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_model.dart';
+import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_repository.dart';
+import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_req_get.dart';
 import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_model.dart';
 import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_repository.dart';
 import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_req_get.dart';
+import 'package:mindsight_admin_page/data/purchase_list/purchase_list_model.dart';
+import 'package:mindsight_admin_page/data/purchase_list/purchase_list_repository.dart';
+import 'package:mindsight_admin_page/data/purchase_list/purchase_list_req_get.dart';
+import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_model.dart';
+import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_repository.dart';
+import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_req_get.dart';
 
 enum Type { all, notIssued, notSettled }
 
@@ -24,28 +33,38 @@ class SettlementManageController extends GetxController {
   RxBool isInited = false.obs;
 
   late MasterSettlementListModel masterSettlementListModel;
+  late PurchaseListModel purchaseListModel;
+  late SettlementSummaryModel settlementSummaryModel;
+  late Rx<MasterContentSettlementListModel> masterContentSettlementListModel =
+      MasterContentSettlementListModel().obs;
 
   Rx<Type> type = Type.all.obs;
   RxInt activePage = 1.obs;
-  Rx<MonthType> selectedMonth = MonthType.thisMonth.obs;
+  RxInt activePageMasterContentSettlementList = 1.obs;
+  Rx<MonthType> selectedMonthType = MonthType.thisMonth.obs;
   RxString dateRange = ''.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
-  RxString displayedMonth = ''.obs;
+  RxInt selectedMonth = 1.obs;
 
   @override
   Future<void> onInit() async {
-    loadData();
-    changeMonth(MonthType.thisMonth);
+    if (AppConstant.test) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
+    }
+
+    await changeMonth(MonthType.thisMonth);
     super.onInit();
   }
 
-  void changeMonth(MonthType month, {int? year, int? monthNumber}) {
-    selectedMonth.value = month;
+  Future<void> changeMonth(MonthType monthType,
+      {int? year, int? monthNumber}) async {
+    selectedMonthType.value = monthType;
     DateTime now = DateTime.now();
     DateTime firstDay;
     DateTime lastDay;
 
-    if (month == MonthType.lastMonth) {
+    if (monthType == MonthType.lastMonth) {
       // Handle January to December transition
       if (now.month == 1) {
         firstDay = DateTime(now.year - 1, 12, 1);
@@ -53,22 +72,25 @@ class SettlementManageController extends GetxController {
         firstDay = DateTime(now.year, now.month - 1, 1);
       }
       lastDay = DateTime(firstDay.year, firstDay.month + 1, 0);
-      displayedMonth.value = DateFormat('yyyy-MM').format(firstDay);
-    } else if (month == MonthType.thisMonth) {
+      // displayedMonth.value = DateFormat('MM').format(firstDay);
+      selectedMonth.value = int.parse(DateFormat('MM').format(firstDay));
+    } else if (monthType == MonthType.thisMonth) {
       firstDay = DateTime(now.year, now.month, 1);
       lastDay = DateTime(now.year, now.month + 1, 0);
-      displayedMonth.value = DateFormat('yyyy-MM').format(firstDay);
+      // displayedMonth.value = DateFormat('MM').format(firstDay);
+      selectedMonth.value = now.month;
     } else {
       // selectedMonth case
       if (year == null || monthNumber == null) {
         // year 또는 monthNumber가 null일 경우 기본값 설정 또는 에러 처리
         firstDay = DateTime(now.year, now.month, 1);
         lastDay = DateTime(now.year, now.month + 1, 0);
+        selectedMonth.value = now.month;
       } else {
         firstDay = DateTime(year, monthNumber, 1);
         lastDay = DateTime(year, monthNumber + 1, 0);
         selectedDate.value = DateTime(year, monthNumber, 1);
-        displayedMonth.value = DateFormat('yyyy-MM').format(firstDay);
+        selectedMonth.value = monthNumber;
       }
     }
 
@@ -76,45 +98,37 @@ class SettlementManageController extends GetxController {
         DateFormat('yyyy-MM-dd 00:00:00').format(firstDay);
     String formattedLastDay = DateFormat('yyyy-MM-dd 23:59:59').format(lastDay);
     dateRange.value = '$formattedFirstDay ~ $formattedLastDay';
+
+    loadData();
   }
 
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
-    activePage = 1.obs;
+    activePage.value = 1;
 
-    if (AppConstant.chleesTest) {
-      await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
-    }
+    settlementSummaryModel =
+        await SettlementSummaryRepository().get(SettlementSummaryReqGet(
+      month: selectedMonth.value,
+      search: '',
+    ));
 
     masterSettlementListModel =
         await MasterSettlementListRepository().get(MasterSettlementListReqGet(
       page: 1,
+      month: selectedMonth.value,
       search: '',
-    ).toJson());
+    ));
 
     isLoading.value = false;
     isInited.value = true;
   }
-
-  Future<bool> loadNewData() async {
-    return false;
-  }
-
-  Future<void> loadNewPage(int pageNum) async {}
 
   Future<void> changeType(Type? newType) async {
     if (newType == null) {
       return;
     }
     isLoading.value = true;
-
-    // activityModel = await ActivityRepository().get(ActivityReqGet(
-    //   page: 1,
-    //   type: newType.name,
-    // ).toJson());
 
     type.value = newType;
 
@@ -123,4 +137,48 @@ class SettlementManageController extends GetxController {
   }
 
   Future<void> onSearch(String? search) async {}
+
+  Future<void> reqPurchaseList() async {
+    isLoading.value = true;
+
+    purchaseListModel = await PurchaseListRepository().get(PurchaseListReqGet(
+      page: 1,
+      month: selectedMonth.value,
+      search: '',
+    ));
+
+    isLoading.value = false;
+  }
+
+  Future<void> reqMasterContentSettlementList(int index, int page) async {
+    isLoading.value = true;
+
+    activePageMasterContentSettlementList.value = page;
+
+    masterContentSettlementListModel.value =
+        await MasterContentSettlementListRepository()
+            .get(MasterContentSettlementListReqGet(
+      masterId: masterSettlementListModel.id![index],
+      page: page,
+      month: selectedMonth.value,
+    ));
+
+    isLoading.value = false;
+  }
+
+  String getViewRate(int playCount, int totalPlayCount) {
+    if (totalPlayCount == 0) {
+      return "0";
+    }
+    return ((playCount / totalPlayCount) * 100).toStringAsFixed(1);
+  }
+
+  String getSettlementAmount(
+      int playCount, int totalPlayCount, double profitRate, double finalSales) {
+    if (totalPlayCount == 0) {
+      return "0";
+    }
+
+    return "${(finalSales * (((playCount / totalPlayCount) * 100) / 100) * (profitRate / 100))}";
+  }
 }

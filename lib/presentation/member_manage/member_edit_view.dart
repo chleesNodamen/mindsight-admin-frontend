@@ -55,7 +55,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                                 ),
                                               ),
                                               onTap: () {
-                                                Get.toNamed(
+                                                Get.offAllNamed(
                                                     AppRoutes.memberManage);
                                                 if (Get.isRegistered<
                                                     MemberManageController>()) {

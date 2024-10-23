@@ -19,60 +19,56 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                     children: [
                       const SideMenu(),
                       Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    TobBarSearch(
-                                      name: "활동 기록 상세",
-                                      searchShow: false,
-                                      viewCount: false,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Row(
-                                      children: [
-                                        GestureDetector(
-                                          child: Text(
-                                            "활동 기록 관리",
-                                            style: CustomTextStyles
-                                                .bodyMediumSkyBlue
-                                                .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              decorationColor: appTheme.skyBlue,
-                                            ),
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TobBarSearch(
+                                    name: "활동 기록 상세",
+                                    searchShow: false,
+                                    viewCount: false,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        child: Text(
+                                          "활동 기록 관리",
+                                          style: CustomTextStyles
+                                              .bodyMediumSkyBlue
+                                              .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor: appTheme.skyBlue,
                                           ),
-                                          onTap: () => Get.back(),
                                         ),
-                                        CustomImageView(
-                                          imagePath: IconConstant.arrowRight,
-                                        ),
-                                        Text('활동 기록 상세',
-                                            style: CustomTextStyles
-                                                .bodyMediumGray),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 32),
-                                    _buildFirstContainer(),
-                                    const SizedBox(height: 16),
-                                    controller.type == "practice"
-                                        ? _buildPracticeContainer()
-                                        : _buildChallengeContainer(),
-                                    const SizedBox(height: 16),
-                                    _buildThirdContainer(),
-                                  ],
-                                ),
+                                        onTap: () => Get.back(),
+                                      ),
+                                      CustomImageView(
+                                        imagePath: IconConstant.arrowRight,
+                                      ),
+                                      Text('활동 기록 상세',
+                                          style:
+                                              CustomTextStyles.bodyMediumGray),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 32),
+                                  _buildFirstContainer(),
+                                  const SizedBox(height: 16),
+                                  controller.type == "practice"
+                                      ? _buildPracticeContainer()
+                                      : _buildChallengeContainer(),
+                                  const SizedBox(height: 16),
+                                  _buildThirdContainer(),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -98,7 +94,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('회원 정보', style: CustomTextStyles.labelLargeBlack),
-              GestureDetector(
+              InkWell(
                   onTap: controller.onMemberTap,
                   child: Text(
                     '상세',
@@ -178,7 +174,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('세션 정보', style: CustomTextStyles.labelLargeBlack),
-                  GestureDetector(
+                  InkWell(
                     onTap: controller.onPracticeTap,
                     child: Text(
                       '상세',
@@ -215,11 +211,13 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Body', style: CustomTextStyles.labelLargeSkyBlue),
+                      Text(Category.body.toDisplayName(),
+                          style: CustomTextStyles.labelLargeSkyBlue),
                       const SizedBox(
                         height: 16,
                       ),
-                      Text('Breath', style: CustomTextStyles.labelLargeSkyBlue),
+                      Text(Category.breath.toDisplayName(),
+                          style: CustomTextStyles.labelLargeSkyBlue),
                     ],
                   ),
                   const SizedBox(
@@ -256,7 +254,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('세션 정보', style: CustomTextStyles.labelLargeBlack),
-                  GestureDetector(
+                  InkWell(
                     onTap: controller.onChallengeTap,
                     child: Text(
                       '상세',
@@ -459,7 +457,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           const SizedBox(
             height: 16,
           ),
-          GestureDetector(
+          InkWell(
             child: Text(
               controller.chatBot! ? '있음' : '없음',
               style: controller.chatBot!
@@ -488,7 +486,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               Text('전문가 피드백', style: CustomTextStyles.labelLargeGray),
               controller.feedback.value
                   ? const SizedBox.shrink()
-                  : GestureDetector(
+                  : InkWell(
                       child: Text(
                         '작성',
                         style: CustomTextStyles.labelLargeSkyBlue.copyWith(

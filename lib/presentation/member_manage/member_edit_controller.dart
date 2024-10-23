@@ -47,10 +47,9 @@ class MemberEditController extends GetxController {
     isLoading.value = true;
     isInited.value = false;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
     membersDataModel = await MembersDataRepository().get(id);
@@ -97,19 +96,18 @@ class MemberEditController extends GetxController {
   }
 
   Future<void> saveChanges() async {
-    if (AppConstant.chleesTest) {
-      membersEditModel = await MembersEditRepository().put(
-          id,
-          MembersEditReqPut(
-            affiliation: affiliation.value,
-            department: departmentController.text,
-            position: positionController.text,
-            firstName: firstNameController.text,
-            lastName: lastNameController.text,
-            gender: gender.value,
-            yearOfBirth: int.parse(yearController.text),
-          ).toJson());
-    }
+    membersEditModel = await MembersEditRepository().put(
+        id,
+        MembersEditReqPut(
+          affiliation: affiliation.value,
+          department: departmentController.text,
+          position: positionController.text,
+          firstName: firstNameController.text,
+          lastName: lastNameController.text,
+          gender: gender.value,
+          yearOfBirth: int.parse(yearController.text),
+        ));
+
     memberDetailsController.loadData();
   }
 }

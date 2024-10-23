@@ -9,8 +9,6 @@ import 'package:mindsight_admin_page/data/dashboard_practice/dashboard_practice_
 import 'package:mindsight_admin_page/data/dashboard_practice/dashboard_practice_req_get.dart';
 import 'package:mindsight_admin_page/data/dashboard_registered/dashboard_registered_model.dart';
 import 'package:mindsight_admin_page/data/dashboard_registered/dashboard_registered_repository.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
 
 class DashboardController extends GetxController {
   late DashboardChallengeModel challengeModel;
@@ -27,52 +25,45 @@ class DashboardController extends GetxController {
 
   Future<void> loadData() async {
     isLoading.value = true;
-    isInited.value = false;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
     challengeModel = await DashboardChallengeRepository()
-        .get(DashboardChallengeReqGet(page: 1).toJson());
+        .get(DashboardChallengeReqGet(page: 1));
     practiceModel = await DashboardPracticeRepository()
-        .get(DashboardPracticeReqGet(page: 1).toJson());
+        .get(DashboardPracticeReqGet(page: 1));
     registeredModel = await DashboardRegisteredRepository().get();
-    isLoading.value = false;
+
     isInited.value = true;
+    isLoading.value = false;
   }
 
   void onPracticeTap(int index) {
-    if (Get.isRegistered<PracticeDetailsController>()) {
-      Get.delete<PracticeDetailsController>();
-    }
-    Get.toNamed(AppRoutes.practiceDetails,
+    Get.offAllNamed(AppRoutes.practiceDetails,
         arguments: {RouteArguments.id: practiceModel.id![index]});
-    menuController.changeActiveItemTo(contentManagePageDisplayName);
-    menuController.changeActiveSubItem(contentPracticePlanDisplayName);
+    SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
+    SideMenuController.to.changeActiveSubItem(contentPracticeDisplayName);
   }
 
   void onPracticeMore() {
-    Get.toNamed(AppRoutes.contentPracticePlanManage);
-    menuController.changeActiveItemTo(contentManagePageDisplayName);
-    menuController.changeActiveSubItem(contentPracticePlanDisplayName);
+    Get.offAllNamed(AppRoutes.contentPracticeManage);
+    SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
+    SideMenuController.to.changeActiveSubItem(contentPracticeDisplayName);
   }
 
   void onChallengeMore() {
-    Get.toNamed(AppRoutes.contentChallengeManage);
-    menuController.changeActiveItemTo(contentManagePageDisplayName);
-    menuController.changeActiveSubItem(contentChallengeDisplayName);
+    Get.offAllNamed(AppRoutes.contentChallengeManage);
+    SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
+    SideMenuController.to.changeActiveSubItem(contentChallengeDisplayName);
   }
 
   void onChallengeTap(int index) {
-    if (Get.isRegistered<ChallengeDetailsController>()) {
-      Get.delete<ChallengeDetailsController>();
-    }
-    Get.toNamed(AppRoutes.challengeDetails,
+    Get.offAllNamed(AppRoutes.challengeDetails,
         arguments: {RouteArguments.id: challengeModel.id![index]});
-    menuController.changeActiveItemTo(contentManagePageDisplayName);
-    menuController.changeActiveSubItem(contentChallengeDisplayName);
+    SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
+    SideMenuController.to.changeActiveSubItem(contentChallengeDisplayName);
   }
 }

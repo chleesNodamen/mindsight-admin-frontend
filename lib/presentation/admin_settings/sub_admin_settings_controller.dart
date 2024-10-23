@@ -18,39 +18,11 @@ class SubAdminSettingsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    if (AppConstant.chleesTest) {
-      adminListModel = await AdminListRepository().get(AdminListReqGet(
-        page: 1,
-      ).toJson());
-    } else {
-      adminListModel = AdminListModel().copyWith(email: [
-        "ms_content@nodamen.com",
-        "ms_meditation@nodamen.com",
-        "ms_product@nodamen.com",
-        "ms_development@nodamen.com"
-      ], department: [
-        "Mindsight Content Dept.",
-        "Mindsight Meditation Dept.",
-        "Mindsight Product Dept.",
-        "Mindsight Development Dept."
-      ], role: [
-        "마스터 (변경불가)",
-        "운영",
-        "제품 관리",
-        "개발"
-      ], manager: [
-        "이진아",
-        "이장희",
-        "김조왕",
-        "최레오"
-      ], id: [
-        "content",
-        "meditation",
-        "product",
-        "development"
-      ]);
-      adminListModel.length = adminListModel.email!.length;
-    }
+
+    adminListModel = await AdminListRepository().get(AdminListReqGet(
+      page: 1,
+    ));
+
     isLoading.value = false;
     isInited.value = true;
   }
@@ -77,18 +49,18 @@ class SubAdminSettingsController extends GetxController {
 
     if (idsToDelete.isEmpty) return;
     adminDeleteModel = await AdminDeleteRepository()
-        .delete(AdminDeleteReqDelete(ids: idsToDelete).toJson());
+        .delete(AdminDeleteReqDelete(ids: idsToDelete));
     selectedIds.clear();
-    Get.toNamed(AppRoutes.subAdminSettings);
+    Get.offAllNamed(AppRoutes.subAdminSettings);
     // Reload data if needed after deletion
   }
 
   void onRegisterTap() {
-    Get.toNamed(AppRoutes.subAdminRegister);
+    Get.offAllNamed(AppRoutes.subAdminRegister);
   }
 
   void goToEdit(int index) {
-    Get.toNamed(AppRoutes.subAdminDetails, arguments: {
+    Get.offAllNamed(AppRoutes.subAdminDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(adminListModel.id![index])
     });
   }

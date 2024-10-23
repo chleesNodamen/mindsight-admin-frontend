@@ -182,7 +182,7 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                   height: 16,
                 ),
                 Text(
-                  "로그인에 문제가 있다면\nleochoi@nodame.com으로 문의하세요.",
+                  "로그인에 문제가 있다면\nmindsight@nodame.com으로 문의 해 주십시오.",
                   style: CustomTextStyles.labelLargeGray,
                   textAlign: TextAlign.center,
                 ),

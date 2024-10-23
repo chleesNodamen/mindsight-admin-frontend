@@ -1,12 +1,14 @@
-import 'package:mindsight_admin_page/app_export.dart';
+import 'package:http/http.dart';
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_model.dart';
+import 'package:mindsight_admin_page/data/activity_expert/activity_expert_req_put.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
 
 class ActivityExpertRepository extends BaseRepository {
-  Future<ActivityExpertModel> put(String id, Map<String, dynamic> body) async {
+  Future<ActivityExpertModel> put(String id, ActivityExpertReqPut dto) async {
     // req
     String endpoint = "activity/expert/$id";
-    Response response = await httpClient.put(endpoint, body);
+    Response response =
+        await httpClient.putRequest(endpoint, body: dto.toJson());
 
     // result
     ActivityExpertModel model = fetchJsonData<ActivityExpertModel>(

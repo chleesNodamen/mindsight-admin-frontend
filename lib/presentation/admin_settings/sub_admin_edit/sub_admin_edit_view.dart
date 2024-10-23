@@ -324,7 +324,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
   Row buildSubHeader() {
     return Row(
       children: [
-        GestureDetector(
+        InkWell(
           onTap: () => Get.back(),
           child: Text("서브 관리자 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(

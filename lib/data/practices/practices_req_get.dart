@@ -31,5 +31,5 @@ class PracticesReqGet {
         "page": page,
         "sortBy": sortBy,
         "search": search,
-      }.map((key, value) => MapEntry(key, value.toString()));
+      };
 }

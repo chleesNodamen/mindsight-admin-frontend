@@ -19,28 +19,25 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Container(
-                            margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                            child: ListView(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    buildTopBar(),
-                                    const SizedBox(height: 32),
-                                    buildBlueButton(),
-                                    const SizedBox(height: 32),
-                                    buildFirstContainer(),
-                                    const SizedBox(height: 16),
-                                    dropdownButton(),
-                                    const SizedBox(height: 16),
-                                    buildSecondContainer()
-                                  ],
-                                ),
-                              ],
-                            ),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                          child: ListView(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  buildTopBar(),
+                                  const SizedBox(height: 32),
+                                  buildBlueButton(),
+                                  const SizedBox(height: 32),
+                                  buildFirstContainer(),
+                                  const SizedBox(height: 16),
+                                  dropdownButton(),
+                                  const SizedBox(height: 16),
+                                  buildSecondContainer()
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -56,7 +53,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
   CustomElevatedButton buildBlueButton() {
     return CustomElevatedButton(
       onPressed: () {
-        Get.toNamed(AppRoutes.contentRegister);
+        Get.offAllNamed(AppRoutes.contentRegister);
       },
       text: "신규 등록",
       height: 44,
@@ -72,7 +69,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
       searchShow: false,
       viewCount: true,
       // searchText: "제목, 마스터 이름, 태그 검색",
-      viewNumber: controller.contentListModel.total,
+      viewNumber: controller.contentListModel.value.total,
       // onSearch: controller.onSearch,
     );
   }
@@ -139,8 +136,8 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       label:
                           Text('상태', style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows:
-                    List.generate(controller.contentListModel.length, (index) {
+                rows: List.generate(controller.contentListModel.value.length,
+                    (index) {
                   return DataRow(
                       selected: controller.selectedContent[index],
                       onSelectChanged: (bool? value) {
@@ -150,17 +147,18 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       cells: [
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(controller.contentListModel.type![index],
+                          child: Text(
+                              controller.contentListModel.value.type![index],
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(
-                          GestureDetector(
+                          InkWell(
                             onTap: () => controller.goToDetails(index),
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 24.0),
                               child: Text(
-                                controller.contentListModel.name![index],
+                                controller.contentListModel.value.name![index],
                                 style: CustomTextStyles.bodyLargeBlack.copyWith(
                                   decoration: TextDecoration.underline,
                                 ),
@@ -171,14 +169,14 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller.contentListModel.seen![index]
+                              controller.contentListModel.value.seen![index]
                                   .toString(),
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller.contentListModel.liked![index]
+                              controller.contentListModel.value.liked![index]
                                   .toString(),
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
@@ -265,7 +263,8 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   ],
                 ),
                 Pages(
-                    pages: (controller.contentListModel.total! / 20).ceil(),
+                    pages:
+                        (controller.contentListModel.value.total! / 20).ceil(),
                     activePage: controller.activePage.value,
                     onTap: (int pageNum) {
                       controller.loadNewPage(pageNum);
@@ -355,7 +354,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: GestureDetector(
+                  child: InkWell(
                     child: Text(
                       controller.showMore.value ? "간략히 보기" : "전체 보기",
                       style: CustomTextStyles.bodySmallSkyBlue.copyWith(

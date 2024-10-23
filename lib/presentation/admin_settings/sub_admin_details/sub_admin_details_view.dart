@@ -62,7 +62,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
               Text("관리자 기본 정보",
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              GestureDetector(
+              InkWell(
                 onTap: controller.goToEdit,
                 child: Text("수정",
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
@@ -218,7 +218,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
   Row buildSubHeader() {
     return Row(
       children: [
-        GestureDetector(
+        InkWell(
           onTap: () => Get.back(),
           child: Text("관리자 등록",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(

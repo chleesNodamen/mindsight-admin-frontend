@@ -1,12 +1,12 @@
-import 'package:mindsight_admin_page/app_export.dart';
+import 'package:http/http.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
 import 'package:mindsight_admin_page/data/challenges_delete/challenges_delete_model.dart';
 
 class ChallengesDeleteRepository extends BaseRepository {
-  Future<ChallengesDeleteModel> delete(Map<String, dynamic> body) async {
+  Future<ChallengesDeleteModel> delete() async {
     // req
     String endpoint = "contents/challenges";
-    Response response = await httpClient.delete(endpoint);
+    Response response = await httpClient.deleteRequest(endpoint);
 
     // result
     ChallengesDeleteModel model = fetchJsonData<ChallengesDeleteModel>(

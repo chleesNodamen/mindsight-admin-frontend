@@ -49,7 +49,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                                           ),
                                         ),
                                         onTap: () {
-                                          Get.toNamed(AppRoutes.memberManage);
+                                          Get.offAllNamed(
+                                              AppRoutes.memberManage);
                                           if (Get.isRegistered<
                                               MemberManageController>()) {
                                             Get.find<MemberManageController>()
@@ -98,7 +99,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('회원 정보', style: CustomTextStyles.labelLargeBlack),
-              GestureDetector(
+              InkWell(
                   onTap: controller.onMemberEdit,
                   child: Text(
                     '사전 정보 수정',

@@ -5,8 +5,8 @@ class MasterProfitRateListModel extends BaseModel {
   List<String>? name;
   List<String>? email;
   List<String>? intro;
-  List<int>? currentProfitRate;
-  List<int>? previousProfitRate;
+  List<double>? currentProfitRate;
+  List<double>? previousProfitRate;
   int? total;
 
   MasterProfitRateListModel({
@@ -24,8 +24,8 @@ class MasterProfitRateListModel extends BaseModel {
     List<String>? name,
     List<String>? email,
     List<String>? intro,
-    List<int>? currentProfitRate,
-    List<int>? previousProfitRate,
+    List<double>? currentProfitRate,
+    List<double>? previousProfitRate,
     int? total,
   }) =>
       MasterProfitRateListModel(
@@ -54,10 +54,10 @@ class MasterProfitRateListModel extends BaseModel {
             : List<String>.from(json["intro"]!.map((x) => x ?? "-")),
         currentProfitRate: json["currentProfitRate"] == null
             ? []
-            : List<int>.from(json["currentProfitRate"]!.map((x) => x)),
+            : List<double>.from(json["currentProfitRate"]!.map((x) => x)),
         previousProfitRate: json["previousProfitRate"] == null
             ? []
-            : List<int>.from(json["previousProfitRate"]!.map((x) => x)),
+            : List<double>.from(json["previousProfitRate"]!.map((x) => x)),
         total: json["total"],
       );
 

@@ -1,7 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_model.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_repository.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_req_get.dart';
@@ -82,21 +82,20 @@ class ChallengeManageController extends GetxController {
     isLoading.value = true;
     isInited.value = false;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
-    if (AppConstant.chleesTest) {
-      challengesModel = await ChallengesRepository().get(
-        ChallengesReqGet(
-          page: 1,
-          // sortBy: selectedOrder.value,
-        ).toJson(),
-      );
-      challengesState =
-          (challengesModel.status!.map((status) => !status).toList()).obs;
-    }
+
+    challengesModel = await ChallengesRepository().get(
+      ChallengesReqGet(
+        page: 1,
+        // sortBy: selectedOrder.value,
+      ),
+    );
+    challengesState =
+        (challengesModel.status!.map((status) => !status).toList()).obs;
+
     if (!challengesModel.isSuccess) {
       challengesModel = ChallengesModel().copyWith(
         id: List.generate(10, (_) => ""),
@@ -119,9 +118,8 @@ class ChallengeManageController extends GetxController {
   Future<void> onStatusChange(int index) async {
     challengesStatusModel = await ChallengesStatusRepository().put(
         ChallengesStatusReqPut(
-                challengesId: [challengesModel.id![index]],
-                status: !challengesState![index])
-            .toJson());
+            challengesId: [challengesModel.id![index]],
+            status: !challengesState![index]));
     // if (membersStatusModel.isSuccess) {
     //   isLoading.value = true;
     //   selectedMembers = [
@@ -149,24 +147,24 @@ class ChallengeManageController extends GetxController {
   Future<void> onSearch(String? search) async {
     searchOn.value = true;
     searchValue.value = search!;
-    if (AppConstant.chleesTest) {
-      isLoading.value = true;
-      // List<String> affiliation = [
-      //   for (int i = 0; i < membershipLabels.length; i++)
-      //     if (membershipValues[i]) membershipLabels[i]
-      // ];
-      // if (membershipValues.every((element) => element == true)) {
-      //   affiliation = [];
-      // } //TODO remove later
-      // membersModel = await MembersRepository().get(MembersReqGet(
-      //   page: 1,
-      //   affiliation: affiliation,
-      //   search: search,
-      //   disabled: false,
-      // ).toJson());
-      // memberState =
-      //     (membersModel.status!.map((status) => !status).toList()).obs;
-    }
+
+    isLoading.value = true;
+    // List<String> affiliation = [
+    //   for (int i = 0; i < membershipLabels.length; i++)
+    //     if (membershipValues[i]) membershipLabels[i]
+    // ];
+    // if (membershipValues.every((element) => element == true)) {
+    //   affiliation = [];
+    // } //TODO remove later
+    // membersModel = await MembersRepository().get(MembersReqGet(
+    //   page: 1,
+    //   affiliation: affiliation,
+    //   search: search,
+    //   disabled: false,
+    // ).toJson());
+    // memberState =
+    //     (membersModel.status!.map((status) => !status).toList()).obs;
+
     activePage.value = 1;
     isLoading.value = false;
   }
@@ -175,7 +173,7 @@ class ChallengeManageController extends GetxController {
     if (Get.isRegistered<ChallengeDetailsController>()) {
       Get.delete<ChallengeDetailsController>();
     }
-    Get.toNamed(AppRoutes.challengeDetails, arguments: {
+    Get.offAllNamed(AppRoutes.challengeDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(challengesModel.id![index])
     });
   }

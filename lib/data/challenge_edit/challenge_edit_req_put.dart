@@ -1,10 +1,10 @@
-import 'package:mindsight_admin_page/data/challenge_details/challenge_day_detail.dart';
+import 'package:mindsight_admin_page/data/challenge_details/challenge_detail_days.dart';
 
 class ChallengeEditReqPut {
   String? name;
   String? goal;
   String? intro;
-  List<ChallengeDayDetailDto>? days;
+  List<ChallengeDetailDays>? days;
   String? thumbnail;
 
   ChallengeEditReqPut({
@@ -19,7 +19,7 @@ class ChallengeEditReqPut {
     String? name,
     String? goal,
     String? intro,
-    List<ChallengeDayDetailDto>? days,
+    List<ChallengeDetailDays>? days,
     String? thumbnail,
   }) =>
       ChallengeEditReqPut(
@@ -37,8 +37,8 @@ class ChallengeEditReqPut {
         intro: json["intro"],
         days: json["days"] == null
             ? []
-            : List<ChallengeDayDetailDto>.from(
-                json["days"].map((x) => ChallengeDayDetailDto.fromJson(x))),
+            : List<ChallengeDetailDays>.from(
+                json["days"].map((x) => ChallengeDetailDays.fromJson(x))),
         thumbnail: json["thumbnail"],
       );
 
@@ -46,7 +46,7 @@ class ChallengeEditReqPut {
         "name": name,
         "goal": goal,
         "intro": intro,
-        "days": days == null ? [] : List<dynamic>.from(days!.map((x) => x)),
+        "days": days ?? [],
         "thumbnail": thumbnail,
       };
 }

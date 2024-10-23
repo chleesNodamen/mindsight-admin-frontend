@@ -20,6 +20,6 @@ class AdminDeleteReqDelete {
       );
 
   Map<String, dynamic> toJson() => {
-        "ids": ids == null ? [] : List<dynamic>.from(ids!.map((x) => x)),
+        "ids": ids ?? [],
       };
 }

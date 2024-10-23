@@ -2,11 +2,6 @@ import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
 import 'app_export.dart';
 
 void main() {
-  /*
-  Get.put(menu_controller.MenuController());
-  Get.put(NavigationController());
-  // Get.lazyPut(() => ContentManageController());
-  */
   runApp(const MyApp());
 }
 
@@ -21,8 +16,9 @@ class MyApp extends StatelessWidget {
         unknownRoute: GetPage(
             name: '/not-found',
             page: () => const PageNotFound(),
-            transition: Transition.fadeIn),
+            transition: Transition.noTransition),
         getPages: AppRoutes.pages,
+        defaultTransition: Transition.noTransition,
         debugShowCheckedModeBanner: false,
         title: 'Dashboard',
         theme: theme,

@@ -1,9 +1,15 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/master_profit_rate_change/master_profit_rate_change_model.dart';
+import 'package:mindsight_admin_page/data/master_profit_rate_change/master_profit_rate_change_repository.dart';
+import 'package:mindsight_admin_page/data/master_profit_rate_change/master_profit_rate_change_req_patch.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_list/master_profit_rate_list_model.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_list/master_profit_rate_list_repository.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_list/master_profit_rate_list_req_get.dart';
+import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_model.dart';
+import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_repository.dart';
+import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_req_get.dart';
 
 enum Type { all, notIssued, notSettled }
 
@@ -14,11 +20,15 @@ class RevenueShareManageController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  late MasterProfitRateListModel masterProfitRateListModel;
+  Rx<MasterProfitRateListModel> masterProfitRateListModel =
+      MasterProfitRateListModel().obs;
+  // late SettlementSummaryModel settlementSummaryModel;
 
   RxInt activePage = 1.obs;
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
+
+  TextEditingController profitChangeController = TextEditingController();
 
   @override
   Future<void> onInit() async {
@@ -33,23 +43,22 @@ class RevenueShareManageController extends GetxController {
     searchValue = "".obs;
     activePage = 1.obs;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    if (AppConstant.chleesTest) {
-      await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
-    }
+    // settlementSummaryModel =
+    //     await SettlementSummaryRepository().get(SettlementSummaryReqGet(
+    //   month: 10,
+    //   search: '',
+    // ).toJson());
 
-    masterProfitRateListModel =
+    masterProfitRateListModel.value =
         await MasterProfitRateListRepository().get(MasterProfitRateListReqGet(
       page: 1,
       search: '',
-    ).toJson());
+    ));
 
     isLoading.value = false;
     isInited.value = true;
@@ -57,5 +66,29 @@ class RevenueShareManageController extends GetxController {
 
   Future<void> onSearch(String? search) async {}
 
-  onChangeProfitRate() {}
+  onProfitChange(int index) async {
+    if (profitChangeController.text.isEmpty ||
+        !profitChangeController.text.isNum) {
+      return;
+    }
+
+    isLoading.value = true;
+
+    MasterProfitRateChangeModel model = await MasterProfitRateChangeRepository()
+        .put(MasterProfitRateChangeReqPatch(
+      masterId: masterProfitRateListModel.value.id![index],
+      rate: double.parse(profitChangeController.text),
+    ));
+
+    if (model.isSuccess) {
+      masterProfitRateListModel.value.currentProfitRate![index] =
+          model.currentProfitRate!;
+      masterProfitRateListModel.value.previousProfitRate![index] =
+          model.previousProfitRate!;
+    }
+
+    isLoading.value = false;
+
+    Get.back();
+  }
 }

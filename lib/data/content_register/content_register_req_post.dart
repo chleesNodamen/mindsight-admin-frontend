@@ -63,7 +63,7 @@ class ContentRegisterReqPost {
         "category": category,
         "type": type,
         "master": master,
-        "tags": tags == null ? [] : List<dynamic>.from(tags!.map((x) => x)),
+        "tags": tags ?? [],
         "intro": intro,
         "thumbnail": thumbnail,
         "video": video,

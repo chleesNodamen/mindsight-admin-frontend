@@ -25,9 +25,7 @@ class ContentStatusReqPut {
       );
 
   Map<String, dynamic> toJson() => {
-        "contentIds": contentIds == null
-            ? []
-            : List<dynamic>.from(contentIds!.map((x) => x)),
+        "contentIds": contentIds ?? [],
         "status": status,
       };
 }

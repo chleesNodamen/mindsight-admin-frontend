@@ -10,7 +10,7 @@ class PrefUtils {
       _sharedPreferences = value;
       Logger.log('PrefUtils: SharedPreference Initialized');
 
-      if (AppConstant.clearPref) {
+      if (AppConstant.testClearPref) {
         clearPreferencesData();
       }
     });

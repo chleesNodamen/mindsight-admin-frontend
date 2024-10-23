@@ -47,43 +47,19 @@ class InactiveMemberManageController extends GetxController {
     searchValue = "".obs;
     activePage = 1.obs;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    if (AppConstant.chleesTest) {
-      membersModel = await MembersRepository().get(MembersReqGet(
-        page: 1,
-        disabled: true,
-      ).toJson());
-      affiliationModel = await AffiliationRepository().get();
-      membershipLabels = affiliationModel.affiliation!;
-      membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
-    } else {
-      membersModel = MembersModel().copyWith(
-        id: [
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-        ],
-        affiliation: List.generate(10, (_) => 'Nodamen'),
-        email: List.generate(10, (_) => 'akdlsemtkdlxm@nodamen.com'),
-        username: List.generate(10, (_) => 'dbwjspdla'),
-        createdAt: List.generate(10, (_) => DateTime.now()),
-        status: List.generate(10, (_) => false),
-        total: 10,
-      );
-      membersModel.length = membersModel.id!.length;
-    }
+    membersModel = await MembersRepository().get(MembersReqGet(
+      page: 1,
+      disabled: true,
+    ));
+    affiliationModel = await AffiliationRepository().get();
+    membershipLabels = affiliationModel.affiliation!;
+    membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
+
     memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     isLoading.value = false;
     isInited.value = true;
@@ -94,17 +70,17 @@ class InactiveMemberManageController extends GetxController {
     searchValue.value = "";
     isLoading.value = true;
     membershipValues[index] = value;
-    if (AppConstant.chleesTest) {
-      List<String> affiliation = [
-        for (int i = 0; i < membershipLabels.length; i++)
-          if (membershipValues[i]) membershipLabels[i]
-      ];
-      membersModel = await MembersRepository().get(MembersReqGet(
-        page: 1,
-        affiliation: affiliation,
-        disabled: true,
-      ).toJson());
-    }
+
+    List<String> affiliation = [
+      for (int i = 0; i < membershipLabels.length; i++)
+        if (membershipValues[i]) membershipLabels[i]
+    ];
+    membersModel = await MembersRepository().get(MembersReqGet(
+      page: 1,
+      affiliation: affiliation,
+      disabled: true,
+    ));
+
     memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     activePage.value = 1;
     isLoading.value = false;
@@ -114,21 +90,21 @@ class InactiveMemberManageController extends GetxController {
     searchOn.value = true;
     searchValue.value = search!;
     isLoading.value = true;
-    if (AppConstant.chleesTest) {
-      List<String> affiliation = [
-        for (int i = 0; i < membershipLabels.length; i++)
-          if (membershipValues[i]) membershipLabels[i]
-      ];
-      if (membershipValues.every((element) => element == true)) {
-        affiliation = [];
-      } //TODO remove later
-      membersModel = await MembersRepository().get(MembersReqGet(
-        page: 1,
-        affiliation: affiliation,
-        search: search,
-        disabled: true,
-      ).toJson());
+
+    List<String> affiliation = [
+      for (int i = 0; i < membershipLabels.length; i++)
+        if (membershipValues[i]) membershipLabels[i]
+    ];
+    if (membershipValues.every((element) => element == true)) {
+      affiliation = [];
     }
+    membersModel = await MembersRepository().get(MembersReqGet(
+      page: 1,
+      affiliation: affiliation,
+      search: search,
+      disabled: true,
+    ));
+
     memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     activePage.value = 1;
     isLoading.value = false;
@@ -142,16 +118,15 @@ class InactiveMemberManageController extends GetxController {
     ];
     if (membershipValues.every((element) => element == true)) {
       affiliation = [];
-    } //TODO remove later
-    if (AppConstant.chleesTest) {
-      isLoading.value = true;
-      membersModel = await MembersRepository().get(MembersReqGet(
-              page: pageNum,
-              disabled: true,
-              search: searchOn.value == true ? searchValue.value : null,
-              affiliation: affiliation)
-          .toJson());
     }
+
+    isLoading.value = true;
+    membersModel = await MembersRepository().get(MembersReqGet(
+        page: pageNum,
+        disabled: true,
+        search: searchOn.value == true ? searchValue.value : null,
+        affiliation: affiliation));
+
     memberState = (membersModel.status!.map((status) => !status).toList()).obs;
     activePage.value = pageNum;
     isLoading.value = false;
@@ -161,7 +136,8 @@ class InactiveMemberManageController extends GetxController {
     if (Get.isRegistered<MemberDetailsController>()) {
       Get.delete<MemberDetailsController>();
     }
-    Get.toNamed(AppRoutes.memberDetails, arguments: {RouteArguments.id: id});
+    Get.offAllNamed(AppRoutes.memberDetails,
+        arguments: {RouteArguments.id: id});
   }
 
   void updateValue(int index) {
@@ -172,8 +148,7 @@ class InactiveMemberManageController extends GetxController {
     isLoading.value = true;
     membersStatusModel = await MembersStatusRepository().put(
         MembersStatusReqPut(
-                ids: [membersModel.id![index]], status: !memberState![index])
-            .toJson());
+            ids: [membersModel.id![index]], status: !memberState![index]));
     isLoading.value = false;
   }
 
@@ -183,14 +158,14 @@ class InactiveMemberManageController extends GetxController {
         if (selectedMembers[i]) membersModel.id![i]
     ];
     membersStatusModel = await MembersStatusRepository()
-        .put(MembersStatusReqPut(ids: ids, status: false).toJson());
+        .put(MembersStatusReqPut(ids: ids, status: false));
     if (membersStatusModel.isSuccess) {
       isLoading.value = true;
       selectedMembers = List.generate(20, (_) => false).obs;
       membersModel = await MembersRepository().get(MembersReqGet(
         page: 1,
         disabled: true,
-      ).toJson());
+      ));
       memberState =
           (membersModel.status!.map((status) => !status).toList()).obs;
       isLoading.value = false;

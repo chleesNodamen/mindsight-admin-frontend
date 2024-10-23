@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'custom_text.dart';
 
 AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
     AppBar(

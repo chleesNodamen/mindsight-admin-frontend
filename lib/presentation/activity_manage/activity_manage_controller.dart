@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/widgets/side_menu/side_menu_controller.dart';
 import 'package:mindsight_admin_page/data/activity/activity_model.dart';
 import 'package:mindsight_admin_page/data/activity/activity_repository.dart';
 import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
@@ -7,8 +8,8 @@ import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dar
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage_details/challenge_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_plan_details/practice_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/practice_details/practice_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
 enum Type { practice, challenge }
@@ -68,32 +69,19 @@ class ActivityManageController extends GetxController {
     searchValue = "".obs;
     activePage = 1.obs;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
-    if (AppConstant.chleesTest) {
-      activityModel = await ActivityRepository().get(ActivityReqGet(
-        page: 1,
-        type: "practice",
-      ).toJson());
-      affiliationModel = await AffiliationRepository().get();
-      membershipLabels = affiliationModel.affiliation!;
-      membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
-    } else {
-      activityModel = ActivityModel().copyWith(
-        type: List.generate(10, (_) => 'Practice plan'),
-        memberId: List.generate(10, (_) => ''),
-        email: List.generate(10, (_) => 'aiden@nodamen.com'),
-        sessionId: List.generate(10, (_) => '3회차'),
-        sessionName: List.generate(10, (_) => '3회차'),
-        recordId: List.generate(10, (_) => 'Practice plan'),
-        record: List.generate(10, (_) => 'Easy to follow some of them, 4'),
-        feedback: List.generate(10, (_) => false),
-        total: 10,
-      );
-    }
+
+    activityModel = await ActivityRepository().get(ActivityReqGet(
+      page: 1,
+      type: "practice",
+    ));
+    affiliationModel = await AffiliationRepository().get();
+    membershipLabels = affiliationModel.affiliation!;
+    membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
+
     activityModel.length = activityModel.recordId!.length;
     isLoading.value = false;
     isInited.value = true;
@@ -157,7 +145,7 @@ class ActivityManageController extends GetxController {
       affiliation: chosenAffiliation,
       chatbot: chatbotValues.contains(false) ? chatbotValues[0] : null,
       feedback: feedbackValues.contains(false) ? feedbackValues[1] : null,
-    ).toJson());
+    ));
     return activityModel.isSuccess;
   }
 
@@ -175,7 +163,7 @@ class ActivityManageController extends GetxController {
       search: searchOn.value ? searchValue.value : null,
       affiliation: chosenAffiliation,
       type: type.value.name,
-    ).toJson());
+    ));
     activePage.value = pageNum;
     isLoading.value = false;
   }
@@ -184,7 +172,7 @@ class ActivityManageController extends GetxController {
     if (Get.isRegistered<ActivityHistoryController>()) {
       Get.delete<ActivityHistoryController>();
     }
-    Get.toNamed(AppRoutes.activityHistory, arguments: {
+    Get.offAllNamed(AppRoutes.activityHistory, arguments: {
       RouteArguments.id: activityModel.recordId![index],
       RouteArguments.type: activityModel.type![index],
       RouteArguments.memberId: activityModel.memberId![index]
@@ -195,10 +183,10 @@ class ActivityManageController extends GetxController {
     if (Get.isRegistered<MemberDetailsController>()) {
       Get.delete<MemberDetailsController>();
     }
-    Get.toNamed(AppRoutes.memberDetails,
+    Get.offAllNamed(AppRoutes.memberDetails,
         arguments: {RouteArguments.id: activityModel.memberId![index]});
-    menuController.changeActiveItemTo(memberManagePageDisplayName);
-    menuController.changeActiveSubItem(memberDetailsPageDisplayName);
+    SideMenuController.to.changeActiveItemTo(memberManagePageDisplayName);
+    SideMenuController.to.changeActiveSubItem(memberDetailsPageDisplayName);
   }
 
   void onSessionTap(int index) {
@@ -206,18 +194,18 @@ class ActivityManageController extends GetxController {
       if (Get.isRegistered<PracticeDetailsController>()) {
         Get.delete<PracticeDetailsController>();
       }
-      Get.toNamed(AppRoutes.practiceDetails,
+      Get.offAllNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
-      menuController.changeActiveItemTo(contentManagePageDisplayName);
-      menuController.changeActiveSubItem(contentPracticePlanDisplayName);
+      SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
+      SideMenuController.to.changeActiveSubItem(contentPracticeDisplayName);
     } else {
       if (Get.isRegistered<ChallengeDetailsController>()) {
         Get.delete<ChallengeDetailsController>();
       }
-      Get.toNamed(AppRoutes.challengeDetails,
+      Get.offAllNamed(AppRoutes.challengeDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
-      menuController.changeActiveItemTo(contentManagePageDisplayName);
-      menuController.changeActiveSubItem(contentChallengeDisplayName);
+      SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
+      SideMenuController.to.changeActiveSubItem(contentChallengeDisplayName);
     }
   }
 
@@ -231,7 +219,7 @@ class ActivityManageController extends GetxController {
     activityModel = await ActivityRepository().get(ActivityReqGet(
       page: 1,
       type: newType.name,
-    ).toJson());
+    ));
     type.value = newType;
     membershipValues.value =
         List.generate(membershipValues.length, (_) => true);
@@ -251,13 +239,12 @@ class ActivityManageController extends GetxController {
     ];
     //TODO remove later
     activityModel = await ActivityRepository().get(ActivityReqGet(
-            page: 1,
-            type: type.value.name,
-            affiliation: chosenAffiliation,
-            chatbot: chatbotValues.contains(false) ? chatbotValues[0] : null,
-            feedback: feedbackValues.contains(false) ? feedbackValues[1] : null,
-            search: search)
-        .toJson());
+        page: 1,
+        type: type.value.name,
+        affiliation: chosenAffiliation,
+        chatbot: chatbotValues.contains(false) ? chatbotValues[0] : null,
+        feedback: feedbackValues.contains(false) ? feedbackValues[1] : null,
+        search: search));
     isLoading.value = false;
     activePage.value = 1;
   }

@@ -1,15 +1,14 @@
-import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/activity/activity_model.dart';
+import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
+import 'package:http/http.dart';
 
 class ActivityRepository extends BaseRepository {
-  Future<ActivityModel> get(Map<String, dynamic>? query) async {
-    Logger.log(query.toString());
-
+  Future<ActivityModel> get(ActivityReqGet dto) async {
     // req
-    String endpoint = "activity?";
-    endpoint += addGetParam(query);
-    Response response = await httpClient.get(endpoint);
+    String endpoint = "activity";
+    Response response =
+        await httpClient.getRequest(endpoint, query: dto.toJson());
 
     // result
     ActivityModel model =

@@ -1,14 +1,14 @@
-import 'package:mindsight_admin_page/app_export.dart';
+import 'package:http/http.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_model.dart';
+import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart';
 
 class ContentListRepository extends BaseRepository {
-  Future<ContentListModel> get(Map<String, dynamic>? query) async {
-    Logger.log(query.toString());
+  Future<ContentListModel> get(ContentListReqGet dto) async {
     // req
-    String endpoint = "contents?";
-    endpoint += addGetParam(query);
-    Response response = await httpClient.get(endpoint);
+    String endpoint = "contents";
+    Response response =
+        await httpClient.getRequest(endpoint, query: dto.toJson());
 
     // result
     ContentListModel model =

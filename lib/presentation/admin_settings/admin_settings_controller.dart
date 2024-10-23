@@ -26,24 +26,13 @@ class AdminSettingsController extends GetxController {
   Future<void> loadData() async {
     isLoading.value = true;
     isInited.value = false;
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
-    if (AppConstant.chleesTest) {
-      adminMyDataModel = await AdminMydataRepository().get();
-    } else {
-      adminMyDataModel = AdminMyDataModel().copyWith(
-        id: "ms_content@nodamen.com",
-        department: "Mindsight Content Dept.",
-        role: "마스터 (변경불가)",
-        manager: "이진아",
-        phone: "01012345678",
-        adminEmail: "jalee@nodamen.com",
-        lastActivity: DateTime.parse("2024-06-01T12:02:21"),
-      );
-    }
+
+    adminMyDataModel = await AdminMydataRepository().get();
+
     isLoading.value = false;
     isInited.value = true;
   }
@@ -118,9 +107,8 @@ class AdminSettingsController extends GetxController {
 
     adminPasswordModel = await AdminPasswordRepository().put(
         AdminPasswordReqPut(
-                previousPassword: oldPasswordController.text,
-                newPassword: newPasswordController.text)
-            .toJson());
+            previousPassword: oldPasswordController.text,
+            newPassword: newPasswordController.text));
 
     isLoading.value = false;
 

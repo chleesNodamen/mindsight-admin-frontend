@@ -27,9 +27,9 @@ class SubAdminEditController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    if (AppConstant.chleesTest) {
-      adminDetailsModel = await AdminDetailsRepository().get(id);
-    }
+
+    adminDetailsModel = await AdminDetailsRepository().get(id);
+
     departmentController.text = adminDetailsModel.department!;
     managerController.text = adminDetailsModel.manager!;
     phoneController.text = adminDetailsModel.phone!;
@@ -49,10 +49,10 @@ class SubAdminEditController extends GetxController {
           manager: managerController.text,
           phone: phoneController.text,
           adminEmail: adminEmailController.text,
-        ).toJson());
+        ));
 
     if (adminEditModel.isSuccess) {
-      Get.toNamed(AppRoutes.subAdminSettings);
+      Get.offAllNamed(AppRoutes.subAdminSettings);
     }
   }
 }

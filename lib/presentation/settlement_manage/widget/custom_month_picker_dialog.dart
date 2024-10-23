@@ -92,8 +92,8 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
                 margin: const EdgeInsets.only(left: 10, bottom: 15),
                 width: 94,
                 height: 44,
-                onPressed: () {
-                  SettlementManageController.to.changeMonth(
+                onPressed: () async {
+                  await SettlementManageController.to.changeMonth(
                     MonthType.selectedMonth,
                     year: selectedYear,
                     monthNumber: selectedMonth,

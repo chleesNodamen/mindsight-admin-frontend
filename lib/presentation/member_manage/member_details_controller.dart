@@ -24,10 +24,9 @@ class MemberDetailsController extends GetxController {
     isLoading.value = true;
     isInited.value = false;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
     membersDataModel = await MembersDataRepository().get(id);
@@ -43,6 +42,6 @@ class MemberDetailsController extends GetxController {
     if (Get.isRegistered<MemberEditController>()) {
       Get.delete<MemberEditController>();
     }
-    Get.toNamed(AppRoutes.memberEdit, arguments: {RouteArguments.id: id});
+    Get.offAllNamed(AppRoutes.memberEdit, arguments: {RouteArguments.id: id});
   }
 }

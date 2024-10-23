@@ -18,32 +18,27 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     children: [
                       const SideMenu(),
                       Expanded(
-                        // flex: 5,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    TobBarSearch(
-                                      name: "수익쉐어",
-                                      searchShow: true,
-                                      viewCount: false,
-                                      searchText: "마스터ID, 마스터명, 작품명 검색",
-                                      onSearch: controller.onSearch,
-                                    ),
-                                    const SizedBox(height: 32),
-                                    _buildPage(),
-                                  ],
-                                ),
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TobBarSearch(
+                                    name: "수익쉐어",
+                                    searchShow: true,
+                                    viewCount: false,
+                                    searchText: "마스터ID, 마스터명, 작품명 검색",
+                                    onSearch: controller.onSearch,
+                                  ),
+                                  const SizedBox(height: 32),
+                                  _buildPage(),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -55,7 +50,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
     );
   }
 
-  SingleChildScrollView _buildPage() {
+  Widget _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -92,14 +87,14 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                       label: Text("마스터 ID",
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
+                      label: Text("이전 수익률",
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
                       label: Text(
                     "현 수익률",
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
-                  DataColumn(
-                      label: Text("이전 수익률",
-                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text("월시청 비율",
                           style: CustomTextStyles.labelLargeGray)),
@@ -107,8 +102,8 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                       label: Text("마스터별 상세",
                           style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows: List.generate(controller.masterProfitRateListModel.length,
-                    (index) {
+                rows: List.generate(
+                    controller.masterProfitRateListModel.value.length, (index) {
                   return DataRow(
                       selected: false,
                       onSelectChanged: (bool? value) {},
@@ -120,8 +115,8 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: InkWell(
                             child: Text(
-                                controller
-                                    .masterProfitRateListModel.name![index],
+                                controller.masterProfitRateListModel.value
+                                    .name![index],
                                 style: CustomTextStyles.bodyLargeBlack.copyWith(
                                     decoration: TextDecoration.underline)),
                             onTap: () {},
@@ -130,26 +125,26 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller
-                                  .masterProfitRateListModel.email![index],
+                              controller.masterProfitRateListModel.value
+                                  .email![index],
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              "${controller.masterProfitRateListModel.currentProfitRate![index]}%",
+                              "${controller.masterProfitRateListModel.value.previousProfitRate![index]}%",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              "${controller.masterProfitRateListModel.previousProfitRate![index]}%",
+                              "${controller.masterProfitRateListModel.value.currentProfitRate![index]}%",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text("5%",
-                              style: CustomTextStyles.bodyLargeBlack),
+                          child:
+                              Text("-", style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 0.0),
@@ -174,7 +169,8 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                                 buttonStyle: CustomButtonStyles.fillPrimary,
                                 width: 60,
                                 height: 30,
-                                onPressed: () => _buildProfitRateChangeModal(),
+                                onPressed: () =>
+                                    _buildProfitRateChangeModal(index),
                               ),
                             ],
                           ),
@@ -206,12 +202,13 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                       buttonStyle: CustomButtonStyles.fillPrimary,
                       width: 107,
                       height: 44,
-                      // onPressed: controller.onStatusChangeForAll,
                     ),
                   ),
                   Pages(
-                      pages: (controller.masterProfitRateListModel.total! / 20)
-                          .ceil(),
+                      pages:
+                          (controller.masterProfitRateListModel.value.total! /
+                                  20)
+                              .ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
                         // controller.loadNewPage(pageNum);
@@ -225,7 +222,9 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
     );
   }
 
-  Future<dynamic> _buildProfitRateChangeModal() {
+  Future<dynamic> _buildProfitRateChangeModal(int index) {
+    controller.profitChangeController.clear();
+
     return Get.defaultDialog(
         title: '',
         titlePadding: EdgeInsets.zero,
@@ -235,11 +234,9 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
           decoration: BoxDecoration(
               borderRadius: BorderRadiusStyle.roundedBorder12,
               color: appTheme.background),
-          width: 632,
-          padding: const EdgeInsets.only(left: 32, right: 32),
+          // width: 632,
+          padding: const EdgeInsets.only(left: 32, right: 32, bottom: 15),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -249,7 +246,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "홍길동 (seobo@gmail.com)님의",
+                        "${controller.masterProfitRateListModel.value.name![index]} (${controller.masterProfitRateListModel.value.email![index]})님의",
                         style: CustomTextStyles.headlineLargeBlack.copyWith(
                           decoration: TextDecoration.underline,
                           // decorationColor: appTheme.skyBlue
@@ -264,6 +261,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                   CustomImageView(
                     imagePath: IconConstant.close,
                     onTap: () => Get.back(),
+                    margin: const EdgeInsets.only(left: 20),
                   ),
                 ],
               ),
@@ -288,7 +286,8 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                           CustomTextFormField(
                             enabled: false,
                             width: 100,
-                            hintText: "20",
+                            hintText:
+                                "${controller.masterProfitRateListModel.value.currentProfitRate![index]}",
                             contentPadding: const EdgeInsets.all(16),
                             hintStyle: CustomTextStyles.titleLargeGray,
                           ),
@@ -297,7 +296,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                           ),
                           Text(
                             "%",
-                            style: CustomTextStyles.bodyLargeGray,
+                            style: CustomTextStyles.titleLargeGray,
                           )
                         ],
                       ),
@@ -324,18 +323,20 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                       Row(
                         children: [
                           CustomTextFormField(
-                            // enabled: false,
                             width: 100,
-                            // hintText: "20",
                             contentPadding: const EdgeInsets.all(16),
                             textStyle: CustomTextStyles.titleLargeSkyBlue,
+                            textInputType: TextInputType.number,
+                            controller: controller.profitChangeController,
+                            onSubmitted: (value) =>
+                                controller.onProfitChange(index),
                           ),
                           const SizedBox(
                             width: 10,
                           ),
                           Text(
                             "%",
-                            style: CustomTextStyles.bodyLargeBlack,
+                            style: CustomTextStyles.titleLargeBlack,
                           )
                         ],
                       ),
@@ -355,7 +356,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     buttonStyle: CustomButtonStyles.fillPrimary,
                     width: 120,
                     height: 44,
-                    onPressed: () => controller.onChangeProfitRate(),
+                    onPressed: () => controller.onProfitChange(index),
                   ),
                 ],
               )

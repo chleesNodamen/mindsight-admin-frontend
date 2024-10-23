@@ -19,26 +19,23 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                       const SideMenu(),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Container(
-                            margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                            child: ListView(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    buildTopBar(),
-                                    const SizedBox(height: 32),
-                                    buildFirstContainer(),
-                                    const SizedBox(height: 16),
-                                    dropdownButton(),
-                                    const SizedBox(height: 16),
-                                    buildSecondContainer()
-                                  ],
-                                ),
-                              ],
-                            ),
+                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                          child: ListView(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  buildTopBar(),
+                                  const SizedBox(height: 32),
+                                  buildFirstContainer(),
+                                  const SizedBox(height: 16),
+                                  dropdownButton(),
+                                  const SizedBox(height: 16),
+                                  buildSecondContainer()
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -125,7 +122,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                         DataCell(
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 24.0),
-                            child: GestureDetector(
+                            child: InkWell(
                               onTap: () => controller.goToEdit(index),
                               child: Text(
                                 controller.challengesModel.name![index],

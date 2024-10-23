@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/data/base_model.dart';
-import 'package:mindsight_admin_page/data/challenge_details/challenge_day_detail.dart';
+import 'package:mindsight_admin_page/data/challenge_details/challenge_detail_days.dart';
 
 class ChallengeDetailsModel extends BaseModel {
   String? id;
@@ -7,7 +7,7 @@ class ChallengeDetailsModel extends BaseModel {
   String? goal;
   int? duration;
   String? intro;
-  List<ChallengeDayDetailDto>? days;
+  List<ChallengeDetailDays>? days;
   String? thumbnail;
   int? participants;
   int? challengers;
@@ -34,7 +34,7 @@ class ChallengeDetailsModel extends BaseModel {
     String? goal,
     int? duration,
     String? intro,
-    List<ChallengeDayDetailDto>? days,
+    List<ChallengeDetailDays>? days,
     String? thumbnail,
     int? participants,
     int? challengers,
@@ -64,8 +64,8 @@ class ChallengeDetailsModel extends BaseModel {
         intro: json["intro"],
         days: json["days"] == null
             ? []
-            : List<ChallengeDayDetailDto>.from(
-                json["days"]!.map((x) => ChallengeDayDetailDto.fromJson(x))),
+            : List<ChallengeDetailDays>.from(
+                json["days"]!.map((x) => ChallengeDetailDays.fromJson(x))),
         thumbnail: json["thumbnail"],
         participants: json["participants"],
         challengers: json["challengers"],

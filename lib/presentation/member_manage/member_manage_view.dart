@@ -257,29 +257,27 @@ class MemberManageView extends GetWidget<MemberManageController> {
             const SizedBox(
               height: 32,
             ),
-            Obx(
-              () => Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  CustomElevatedButton(
-                    text: '비활성',
-                    buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                    buttonStyle: CustomButtonStyles.fillRedTransparent,
-                    // margin: const EdgeInsets.symmetric(
-                    //     vertical: 11, horizontal: 24),
-                    width: 90,
-                    height: 44,
-                    onPressed: controller.onButtonPressed,
-                  ),
-                  Pages(
-                      pages: (controller.membersModel.total! / 20).ceil(),
-                      activePage: controller.activePage.value,
-                      onTap: (int pageNum) {
-                        controller.loadNewPage(pageNum);
-                      }),
-                ],
-              ),
-            )
+            Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                CustomElevatedButton(
+                  text: '비활성',
+                  buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+                  buttonStyle: CustomButtonStyles.fillRedTransparent,
+                  // margin: const EdgeInsets.symmetric(
+                  //     vertical: 11, horizontal: 24),
+                  width: 90,
+                  height: 44,
+                  onPressed: controller.onButtonPressed,
+                ),
+                Pages(
+                    pages: (controller.membersModel.total! / 20).ceil(),
+                    activePage: controller.activePage.value,
+                    onTap: (int pageNum) {
+                      controller.loadNewPage(pageNum);
+                    }),
+              ],
+            ),
           ],
         ),
       ),

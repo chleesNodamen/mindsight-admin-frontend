@@ -9,7 +9,7 @@ import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart
 import 'package:mindsight_admin_page/data/content_status/content_status_model.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_repository.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_req_put.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/content_manage_details/content_details_controller.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/content_details/content_details_controller.dart';
 
 class ContentManageController extends GetxController {
   RxMap<String, bool> selectedIds = <String, bool>{}.obs;
@@ -25,7 +25,7 @@ class ContentManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  late ContentListModel contentListModel;
+  Rx<ContentListModel> contentListModel = ContentListModel().obs;
   late ContentStatusModel contentStatusModel;
   late ContentDeleteModel contentDeleteModel;
   RxList<bool>? contentState;
@@ -116,7 +116,7 @@ class ContentManageController extends GetxController {
             breathingValues.every((element) => element == false) &&
             otherValues.every((element) => element == false) ||
         serviceValues.every((element) => element == false)) {
-      contentListModel = ContentListModel().copyWith(
+      contentListModel.value = ContentListModel().copyWith(
         id: null,
         type: null,
         name: null,
@@ -139,16 +139,17 @@ class ContentManageController extends GetxController {
             for (int i = 0; i < breathingLabels.length; i++)
               if (breathingValues[i]) breathingLabels[i],
           ];
-    contentListModel = await ContentListRepository().get(ContentListReqGet(
+    contentListModel.value =
+        await ContentListRepository().get(ContentListReqGet(
       type: chosenTypes,
       page: 1,
       status: serviceValues.contains(false) ? serviceValues[0] : null,
       sortBy: selectedOrder.value,
       pageSize: 20,
-    ).toJson());
+    ));
     contentState =
-        (contentListModel.status!.map((status) => status).toList()).obs;
-    return contentListModel.isSuccess;
+        (contentListModel.value.status!.map((status) => status).toList()).obs;
+    return contentListModel.value.isSuccess;
   }
 
   //DATA TABLE
@@ -173,19 +174,20 @@ class ContentManageController extends GetxController {
             for (int i = 0; i < breathingLabels.length; i++)
               if (breathingValues[i]) breathingLabels[i],
           ];
-    if (AppConstant.chleesTest) {
-      isLoading.value = true;
-      contentListModel = await ContentListRepository().get(ContentListReqGet(
-        type: chosenTypes,
-        page: pageNum,
-        search: searchOn.value == true ? searchValue.value : null,
-        status: serviceValues.contains(false) ? serviceValues[0] : null,
-        sortBy: selectedOrder.value,
-        pageSize: 20,
-      ).toJson());
-      contentState =
-          (contentListModel.status!.map((status) => status).toList()).obs;
-    }
+
+    isLoading.value = true;
+    contentListModel.value =
+        await ContentListRepository().get(ContentListReqGet(
+      type: chosenTypes,
+      page: pageNum,
+      search: searchOn.value == true ? searchValue.value : null,
+      status: serviceValues.contains(false) ? serviceValues[0] : null,
+      sortBy: selectedOrder.value,
+      pageSize: 20,
+    ));
+    contentState =
+        (contentListModel.value.status!.map((status) => status).toList()).obs;
+
     isLoading.value = false;
     activePage.value = pageNum;
     isLoading.value = false;
@@ -196,6 +198,8 @@ class ContentManageController extends GetxController {
   }
 
   Future<void> loadData() async {
+    isLoading.value = true;
+
     searchOn.value = false;
     searchValue.value = "";
     bodyValues = List<bool>.filled(3, true).obs;
@@ -204,47 +208,35 @@ class ContentManageController extends GetxController {
     serviceValues = List<bool>.filled(2, true).obs;
     selectedContent = List.generate(20, (_) => false).obs;
 
-    if (AppConstant.chleesTest) {
+    if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
-          email: AppConstant.chleesTestEmail,
-          password: AppConstant.chleesTestPassword));
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
-    if (AppConstant.chleesTest) {
-      contentListModel = await ContentListRepository().get(ContentListReqGet(
-        page: 1,
-        sortBy: selectedOrder.value,
-        pageSize: 20,
-      ).toJson());
-    } else {
-      contentListModel = ContentListModel().copyWith(
-        id: List.generate(10, (_) => ""),
-        type: List.generate(10, (_) => 'Nodamen'),
-        name: List.generate(10, (_) => 'akdlsemtkdlxm@nodamen.com'),
-        seen: List.generate(10, (_) => 111),
-        liked: List.generate(10, (_) => 111),
-        status: List.generate(10, (_) => true),
-        total: 10,
-      );
-      contentListModel.length = contentListModel.id!.length;
-    }
-    print("Content list initialized");
-    contentState = contentListModel.status!.obs;
-    isLoading.value = false;
+
+    contentListModel.value =
+        await ContentListRepository().get(ContentListReqGet(
+      page: 1,
+      sortBy: selectedOrder.value,
+      pageSize: 20,
+    ));
+
+    contentState = contentListModel.value.status!.obs;
+
     isInited.value = true;
+    isLoading.value = false;
   }
 
   Future<void> onStatusChange(int index) async {
     contentStatusModel = await ContentStatusRepository().put(
         ContentStatusReqPut(
-                contentIds: [contentListModel.id![index]],
-                status: contentState![index])
-            .toJson());
+            contentIds: [contentListModel.value.id![index]],
+            status: contentState![index]));
   }
 
   Future<void> onStatusChangeForAll() async {
     List<String> contentIds = [
       for (int i = 0; i < selectedContent.length; i++)
-        if (selectedContent[i]) contentListModel.id![i],
+        if (selectedContent[i]) contentListModel.value.id![i],
     ];
     List<bool> contentStatus = [
       for (int i = 0; i < selectedContent.length; i++)
@@ -258,10 +250,10 @@ class ContentManageController extends GetxController {
       for (int i = 0; i < contentIds.length; i++)
         if (!contentStatus[i]) contentIds[i],
     ];
-    contentStatusModel = await ContentStatusRepository().put(
-        ContentStatusReqPut(contentIds: positiveIds, status: false).toJson());
-    contentStatusModel = await ContentStatusRepository().put(
-        ContentStatusReqPut(contentIds: negativeIds, status: true).toJson());
+    contentStatusModel = await ContentStatusRepository()
+        .put(ContentStatusReqPut(contentIds: positiveIds, status: false));
+    contentStatusModel = await ContentStatusRepository()
+        .put(ContentStatusReqPut(contentIds: negativeIds, status: true));
     if (contentStatusModel.isSuccess) {
       selectedContent = List.generate(20, (_) => false).obs;
       loadNewPage(1);
@@ -287,16 +279,17 @@ class ContentManageController extends GetxController {
             for (int i = 0; i < breathingLabels.length; i++)
               if (breathingValues[i]) breathingLabels[i],
           ];
-    contentListModel = await ContentListRepository().get(ContentListReqGet(
+    contentListModel.value =
+        await ContentListRepository().get(ContentListReqGet(
       type: chosenTypes,
       page: 1,
       status: serviceValues.contains(false) ? serviceValues[0] : null,
       sortBy: selectedOrder.value,
       search: search,
       pageSize: 20,
-    ).toJson());
+    ));
     contentState =
-        (contentListModel.status!.map((status) => status).toList()).obs;
+        (contentListModel.value.status!.map((status) => status).toList()).obs;
     isLoading.value = false;
     activePage.value = 1;
   }
@@ -304,7 +297,7 @@ class ContentManageController extends GetxController {
   Future<void> onDeleteButton() async {
     List<String> contentIds = [
       for (int i = 0; i < selectedContent.length; i++)
-        if (selectedContent[i]) contentListModel.id![i],
+        if (selectedContent[i]) contentListModel.value.id![i],
     ];
     for (int i = 0; i < contentIds.length; i++) {
       contentDeleteModel =
@@ -322,8 +315,8 @@ class ContentManageController extends GetxController {
     if (Get.isRegistered<ContentDetailsController>()) {
       Get.delete<ContentDetailsController>();
     }
-    Get.toNamed(AppRoutes.contentDetails, arguments: {
-      RouteArguments.id: Uri.encodeComponent(contentListModel.id![index])
+    Get.offAllNamed(AppRoutes.contentDetails, arguments: {
+      RouteArguments.id: Uri.encodeComponent(contentListModel.value.id![index])
     });
   }
 }

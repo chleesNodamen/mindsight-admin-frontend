@@ -99,10 +99,10 @@ class SubAdminRegisterController extends GetxController {
       manager: managerController.text,
       phone: phoneController.text,
       adminEmail: adminEmailController.text,
-    ).toJson());
+    ));
 
     if (adminRegisterModel.isSuccess) {
-      Get.toNamed(AppRoutes.subAdminSettings);
+      Get.offAllNamed(AppRoutes.subAdminSettings);
     }
   }
 }

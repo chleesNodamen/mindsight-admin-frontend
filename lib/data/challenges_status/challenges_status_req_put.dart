@@ -25,9 +25,7 @@ class ChallengesStatusReqPut {
       );
 
   Map<String, dynamic> toJson() => {
-        "challengesId": challengesId == null
-            ? []
-            : List<dynamic>.from(challengesId!.map((x) => x)),
+        "challengesId": challengesId ?? [],
         "status": status,
       };
 }

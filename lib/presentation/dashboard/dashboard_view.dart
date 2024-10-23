@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_controller.dart';
 import 'package:intl/intl.dart';
+
+class MembersData {
+  MembersData(this.registrationState, this.number, this.color);
+  final String registrationState;
+  final double number;
+  final Color color;
+}
 
 class DashboardView extends GetWidget<DashboardController> {
   const DashboardView({super.key});
@@ -20,67 +26,74 @@ class DashboardView extends GetWidget<DashboardController> {
                     children: [
                       const SideMenu(),
                       Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                            left: 32,
-                            right: 48,
-                          ),
-                          child: ListView(
-                            children: [
-                              const SizedBox(
-                                height: 80,
-                              ),
-                              Text('대시보드',
-                                  style: CustomTextStyles.headlineLargeBlack),
-                              const SizedBox(
-                                height: 32,
-                              ),
-                              Row(
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                      flex: 1, child: _buildFirstContainer()),
+                                  Text("대시보드",
+                                      style:
+                                          CustomTextStyles.headlineLargeBlack),
                                   const SizedBox(
-                                    width: 16,
+                                    height: 32,
                                   ),
-                                  Expanded(
-                                      flex: 1, child: _buildSecondContainer()),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 1,
+                                          child:
+                                              _buildYesterdayLoggedInMembersNumber()),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                          flex: 1,
+                                          child: _buildLast7DaysEventNumber()),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                          flex: 1,
+                                          child:
+                                              _buildLast7DaysReturningMembersNumber()),
+                                    ],
+                                  ),
                                   const SizedBox(
-                                    width: 16,
+                                    height: 16,
                                   ),
-                                  Expanded(
-                                      flex: 1, child: _buildThirdContainer()),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 1, child: _buildMembersGraph()),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                          flex: 2,
+                                          child:
+                                              _buildPracticePlanCompletionRate()),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 1,
+                                          child: _buildPopularChallenge()),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 80,
+                                  ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      flex: 1, child: _buildMembersGraph()),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Expanded(
-                                      flex: 2,
-                                      child: _buildPracticePlanContainer()),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: _buildChallengeContainer()),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 80,
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -92,7 +105,7 @@ class DashboardView extends GetWidget<DashboardController> {
     );
   }
 
-  Widget _buildFirstContainer() {
+  Widget _buildYesterdayLoggedInMembersNumber() {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -134,7 +147,7 @@ class DashboardView extends GetWidget<DashboardController> {
             Positioned(
               bottom: 0,
               right: 0,
-              child: GestureDetector(
+              child: InkWell(
                   child: Row(
                 children: [
                   Text(
@@ -156,7 +169,7 @@ class DashboardView extends GetWidget<DashboardController> {
         ));
   }
 
-  Widget _buildSecondContainer() {
+  Widget _buildLast7DaysEventNumber() {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -183,7 +196,8 @@ class DashboardView extends GetWidget<DashboardController> {
                   height: 8,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadiusStyle.roundedBorder8,
                       color: appTheme.alertPositive.withOpacity(0.1)),
@@ -198,7 +212,7 @@ class DashboardView extends GetWidget<DashboardController> {
             Positioned(
               bottom: 0,
               right: 0,
-              child: GestureDetector(
+              child: InkWell(
                   child: Row(
                 children: [
                   Text(
@@ -220,7 +234,7 @@ class DashboardView extends GetWidget<DashboardController> {
         ));
   }
 
-  Widget _buildThirdContainer() {
+  Widget _buildLast7DaysReturningMembersNumber() {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -247,7 +261,8 @@ class DashboardView extends GetWidget<DashboardController> {
                   height: 8,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadiusStyle.roundedBorder8,
                       color: appTheme.alertPositive.withOpacity(0.1)),
@@ -262,7 +277,7 @@ class DashboardView extends GetWidget<DashboardController> {
             Positioned(
               bottom: 0,
               right: 0,
-              child: GestureDetector(
+              child: InkWell(
                   child: Row(
                 children: [
                   Text(
@@ -317,7 +332,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   height: 8,
                   decoration: ShapeDecoration(
                     color: appTheme.background,
-                    shape: OvalBorder(),
+                    shape: const OvalBorder(),
                   ),
                 ),
                 const SizedBox(
@@ -336,7 +351,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   height: 8,
                   decoration: ShapeDecoration(
                     color: appTheme.skyBlue,
-                    shape: OvalBorder(),
+                    shape: const OvalBorder(),
                   ),
                 ),
                 const SizedBox(
@@ -355,7 +370,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   height: 8,
                   decoration: ShapeDecoration(
                     color: appTheme.alertNegative,
-                    shape: OvalBorder(),
+                    shape: const OvalBorder(),
                   ),
                 ),
                 const SizedBox(
@@ -369,12 +384,12 @@ class DashboardView extends GetWidget<DashboardController> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 180,
                     height: 180,
                     child: SfCircularChart(series: <CircularSeries>[
                       DoughnutSeries<MembersData, String>(
-                        dataSource: getChartData(),
+                        dataSource: _getChartData(),
                         xValueMapper: (MembersData data, _) =>
                             data.registrationState,
                         yValueMapper: (MembersData data, _) => data.number,
@@ -396,7 +411,7 @@ class DashboardView extends GetWidget<DashboardController> {
         ));
   }
 
-  List<MembersData> getChartData() {
+  List<MembersData> _getChartData() {
     final List<MembersData> chartData = [
       MembersData(
           'not registered',
@@ -412,7 +427,7 @@ class DashboardView extends GetWidget<DashboardController> {
     return chartData;
   }
 
-  Widget _buildPracticePlanContainer() {
+  Widget _buildPracticePlanCompletionRate() {
     return Container(
         height: 397,
         decoration: BoxDecoration(
@@ -430,7 +445,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   'Practice plan 완료율',
                   style: CustomTextStyles.labelLargeGray,
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: controller.onPracticeMore,
                   child: Text(
                     '모두보기',
@@ -486,7 +501,7 @@ class DashboardView extends GetWidget<DashboardController> {
                     DataCell(Text('${index + 1}',
                         style: CustomTextStyles.labelLargeSkyBlue)),
                     DataCell(
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           controller.onPracticeTap(index);
                         },
@@ -522,7 +537,7 @@ class DashboardView extends GetWidget<DashboardController> {
         ));
   }
 
-  Widget _buildChallengeContainer() {
+  Widget _buildPopularChallenge() {
     return Container(
         width: 1016,
         height: 350,
@@ -541,7 +556,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   '인기 Challenge',
                   style: CustomTextStyles.labelLargeGray,
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: controller.onChallengeMore,
                   child: Text(
                     '모두보기',
@@ -556,7 +571,7 @@ class DashboardView extends GetWidget<DashboardController> {
               height: 8,
             ),
             Text(
-                '집계기간  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 1)))}',
+                '집계기간  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1)))}',
                 style: CustomTextStyles.labelMediumGray),
             const SizedBox(
               height: 24,
@@ -764,11 +779,4 @@ class DashboardView extends GetWidget<DashboardController> {
       ),
     );
   }
-}
-
-class MembersData {
-  MembersData(this.registrationState, this.number, this.color);
-  final String registrationState;
-  final double number;
-  final Color color;
 }

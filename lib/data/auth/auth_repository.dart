@@ -1,13 +1,16 @@
-import 'package:mindsight_admin_page/app_export.dart';
+import 'package:http/http.dart';
 import 'package:mindsight_admin_page/data/auth/auth_model.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
+import 'package:mindsight_admin_page/utils/logger.dart';
+import 'package:mindsight_admin_page/utils/pref_utils.dart';
 
 class AuthRepository extends BaseRepository {
   Future<AuthModel> post(AuthReqPost dto) async {
     // req
     String endpoint = "admin/signin";
-    Response response = await httpClient.post(endpoint, dto.toJson());
+    Response response =
+        await httpClient.postRequest(endpoint, body: dto.toJson());
 
     // result
     AuthModel model = fetchJsonData<AuthModel>(response, AuthModel.fromJson);
