@@ -1,6 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_controller.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
 
 class MemberEditView extends GetWidget<MemberEditController> {
   const MemberEditView({super.key});
@@ -41,7 +40,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                       const SizedBox(height: 16),
                                       Row(
                                         children: [
-                                          GestureDetector(
+                                          InkWell(
                                               child: Text(
                                                 "회원 목록",
                                                 style: CustomTextStyles
@@ -57,17 +56,11 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                               onTap: () {
                                                 Get.offAllNamed(
                                                     AppRoutes.memberManage);
-                                                if (Get.isRegistered<
-                                                    MemberManageController>()) {
-                                                  Get.find<
-                                                          MemberManageController>()
-                                                      .loadData();
-                                                }
                                               }),
                                           CustomImageView(
                                             imagePath: IconConstant.arrowRight,
                                           ),
-                                          GestureDetector(
+                                          InkWell(
                                             child: Text(
                                               "회원 상세",
                                               style: CustomTextStyles
@@ -80,7 +73,8 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                                     appTheme.skyBlue,
                                               ),
                                             ),
-                                            onTap: () => Get.back(),
+                                            onTap: () =>
+                                                controller.goMemberDatailPage(),
                                           ),
                                           CustomImageView(
                                             imagePath: IconConstant.arrowRight,
@@ -91,15 +85,15 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                         ],
                                       ),
                                       const SizedBox(height: 24),
-                                      _companySelect(),
+                                      _buildCompany(),
                                       const SizedBox(height: 24),
-                                      buildFirstRow(),
+                                      _buildPart(),
                                       const SizedBox(height: 24),
-                                      buildSecondRow(),
+                                      _buildName(),
                                       const SizedBox(height: 24),
-                                      buildThirdRow(),
+                                      _buildGender(),
                                       const SizedBox(height: 24),
-                                      buildLastRow(),
+                                      _buildEmail(),
                                       const SizedBox(height: 32),
                                       Row(
                                         mainAxisAlignment:
@@ -116,8 +110,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                             onPressed: () {
                                               if (formKey.currentState!
                                                   .validate()) {
-                                                controller.saveChanges();
-                                                Get.back();
+                                                controller.onSaveChanges();
                                               }
                                             },
                                           ),
@@ -131,7 +124,8 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                                 const EdgeInsets.only(left: 16),
                                             width: 90,
                                             height: 44,
-                                            onPressed: () => Get.back(),
+                                            onPressed: () =>
+                                                controller.goMemberDatailPage(),
                                           ),
                                         ],
                                       )
@@ -152,7 +146,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
     );
   }
 
-  Widget _companySelect() {
+  Widget _buildCompany() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -203,7 +197,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
     );
   }
 
-  Row buildThirdRow() {
+  Row _buildGender() {
     return Row(
       children: [
         Column(
@@ -283,7 +277,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
     );
   }
 
-  Row buildFirstRow() {
+  Row _buildPart() {
     return Row(
       children: [
         Column(
@@ -335,7 +329,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
     );
   }
 
-  Row buildSecondRow() {
+  Row _buildName() {
     return Row(
       children: [
         Column(
@@ -383,7 +377,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
     );
   }
 
-  Widget buildLastRow() {
+  Widget _buildEmail() {
     return Row(
       children: [
         Column(

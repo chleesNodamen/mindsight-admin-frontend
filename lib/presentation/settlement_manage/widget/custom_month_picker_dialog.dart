@@ -76,20 +76,10 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomElevatedButton(
-                text: "취소",
-                buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                margin: const EdgeInsets.only(bottom: 15),
-                width: 94,
-                height: 44,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-            CustomElevatedButton(
                 text: "확인",
                 buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                 buttonStyle: CustomButtonStyles.fillPrimary,
-                margin: const EdgeInsets.only(left: 10, bottom: 15),
+                margin: const EdgeInsets.only(bottom: 15),
                 width: 94,
                 height: 44,
                 onPressed: () async {
@@ -98,6 +88,16 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
                     year: selectedYear,
                     monthNumber: selectedMonth,
                   );
+                  Navigator.of(context).pop();
+                }),
+            CustomElevatedButton(
+                text: "취소",
+                buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                margin: const EdgeInsets.only(left: 10, bottom: 15),
+                width: 94,
+                height: 44,
+                onPressed: () {
                   Navigator.of(context).pop();
                 }),
           ],

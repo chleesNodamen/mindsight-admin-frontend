@@ -6,30 +6,58 @@ import 'base_model.dart';
 class BaseRepository {
   final CustomHttpClient httpClient = Get.find<CustomHttpClient>();
 
+  Map<String, dynamic> isValidJson(String str) {
+    try {
+      return jsonDecode(str);
+    } catch (e) {
+      return {};
+    }
+  }
+
+  List<dynamic> isValidListJson(String str) {
+    try {
+      return jsonDecode(str);
+    } catch (e) {
+      return [];
+    }
+  }
+
   T fetchJsonData<T extends BaseModel>(
       http.Response response, T Function(Map<String, dynamic>) fromJson) {
     T model;
 
-    try {
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        Map<String, dynamic> body = jsonDecode(response.body);
-        model = fromJson(body);
-      } else {
-        model = fromJson({});
-      }
-
-      model.handleStatus(
-          isOk: response.statusCode >= 200 && response.statusCode < 300,
-          errorCode: _getErrorCode(response),
-          data: response.body);
-    } catch (e) {
-      Logger.log("------------------ Repository Exception ${toString()}");
-
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      Map<String, dynamic> body = isValidJson(response.body);
+      model = fromJson(body);
+    } else {
       model = fromJson({});
-      model.handleStatus(
-          isOk: response.statusCode >= 200 && response.statusCode < 300,
-          data: response.body);
     }
+
+    model.handleStatus(
+        isOk: response.statusCode >= 200 && response.statusCode < 300,
+        errorCode: _handleErrorCode(response),
+        data: response.body);
+
+    // try {
+    //   if (response.statusCode >= 200 && response.statusCode < 300) {
+    //     Map<String, dynamic> body = isValidJson(response.body);
+    //     model = fromJson(body);
+    //   } else {
+    //     model = fromJson({});
+    //   }
+
+    //   model.handleStatus(
+    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
+    //       errorCode: _handleErrorCode(response),
+    //       data: response.body);
+    // } catch (e) {
+    //   Logger.error("Repository Exception(fetchJsonData) ${toString()}");
+
+    //   model = fromJson({});
+    //   model.handleStatus(
+    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
+    //       data: response.body);
+    // }
 
     _handleLog(response);
     return model;
@@ -39,26 +67,37 @@ class BaseRepository {
       http.Response response, T Function(List<dynamic>) fromJson) {
     T model;
 
-    try {
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        List<dynamic> list = jsonDecode(response.body);
-        model = fromJson(list);
-      } else {
-        model = fromJson([]);
-      }
-
-      model.handleStatus(
-          isOk: response.statusCode >= 200 && response.statusCode < 300,
-          errorCode: _getErrorCode(response),
-          data: response.body);
-    } catch (e) {
-      Logger.log("------------------ Repository Exception ${toString()}");
-
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      List<dynamic> list = isValidListJson(response.body);
+      model = fromJson(list);
+    } else {
       model = fromJson([]);
-      model.handleStatus(
-          isOk: response.statusCode >= 200 && response.statusCode < 300,
-          data: response.body);
     }
+    model.handleStatus(
+        isOk: response.statusCode >= 200 && response.statusCode < 300,
+        errorCode: _handleErrorCode(response),
+        data: response.body);
+
+    // try {
+    //   if (response.statusCode >= 200 && response.statusCode < 300) {
+    //     List<dynamic> list = isValidListJson(response.body);
+    //     model = fromJson(list);
+    //   } else {
+    //     model = fromJson([]);
+    //   }
+
+    //   model.handleStatus(
+    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
+    //       errorCode: _handleErrorCode(response),
+    //       data: response.body);
+    // } catch (e) {
+    //   Logger.error("Repository Exception(fetchListJsonData) ${toString()}");
+
+    //   model = fromJson([]);
+    //   model.handleStatus(
+    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
+    //       data: response.body);
+    // }
 
     _handleLog(response);
     return model;
@@ -67,20 +106,20 @@ class BaseRepository {
   void _handleLog(http.Response response) {
     httpClient.forTest2 = "Api response body: ${response.body}";
 
-    if (AppConstant.showHttpLog) {
-      Logger.log(httpClient.forTest2);
-    }
+    // if (AppConstant.showHttpLog) {
+    //   Logger.log(httpClient.forTest2);
+    // }
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       _showExceptionDialog(response.statusCode, response.body);
     }
   }
 
-  String _getErrorCode(http.Response response) {
+  String _handleErrorCode(http.Response response) {
     String errorCode = "";
 
     try {
-      Map<String, dynamic> body = jsonDecode(response.body);
+      Map<String, dynamic> body = isValidJson(response.body);
       if (body["message"] is Map) {
         var message = body["message"];
         errorCode = message["errorCode"] ?? "";

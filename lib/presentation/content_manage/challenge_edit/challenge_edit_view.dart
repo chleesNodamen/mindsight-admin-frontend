@@ -94,7 +94,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
       int day = controller.challengeDetailsModel.days![i].day!;
 
       widgets.add(
-        GestureDetector(
+        InkWell(
           onTap: () => controller.updateSelectedDay(day),
           child: Container(
             width: 33,

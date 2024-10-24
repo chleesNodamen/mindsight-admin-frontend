@@ -37,7 +37,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
-                                  _buildSelect(),
+                                  _buildCheckBox(),
                                   const SizedBox(height: 16),
                                   _buildPage(),
                                 ],
@@ -55,7 +55,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
     );
   }
 
-  Widget _buildSelect() {
+  Widget _buildCheckBox() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -82,7 +82,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                     isChecked: controller.membershipValues[index],
                     label: controller.membershipLabels[index],
                     onChanged: (value) =>
-                        controller.toggleMembership(index, value),
+                        controller.onCheckMembership(index, value),
                   );
                 }),
               ),

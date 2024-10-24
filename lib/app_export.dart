@@ -38,3 +38,4 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:mindsight_admin_page/constants/category.dart';
 export 'package:mindsight_admin_page/widgets/side_menu/side_menu_controller.dart';
 export 'package:mindsight_admin_page/helpers/switch_native_web/switch_native_web.dart';
+export 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';

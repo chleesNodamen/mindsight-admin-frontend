@@ -20,10 +20,10 @@ class AdminSettingsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
     if (AppConstant.test) {

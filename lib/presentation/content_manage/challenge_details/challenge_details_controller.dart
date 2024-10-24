@@ -18,10 +18,10 @@ class ChallengeDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    await loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
     if (AppConstant.test) {
@@ -39,9 +39,6 @@ class ChallengeDetailsController extends GetxController {
   }
 
   void goToEdit() {
-    if (Get.isRegistered<ChallengeEditController>()) {
-      Get.delete<ChallengeEditController>();
-    }
     Get.offAllNamed(AppRoutes.challengeEdit, arguments: {
       RouteArguments.id: id,
     });

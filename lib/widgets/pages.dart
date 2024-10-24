@@ -18,7 +18,7 @@ class Pages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      GestureDetector(
+      InkWell(
           child: CustomImageView(
             imagePath: IconConstant.firstPage,
             width: 24,
@@ -34,7 +34,7 @@ class Pages extends StatelessWidget {
       const SizedBox(
         width: 8,
       ),
-      GestureDetector(
+      InkWell(
           child: CustomImageView(
             imagePath: IconConstant.previousPage,
             width: 24,
@@ -170,7 +170,7 @@ class Pages extends StatelessWidget {
                       ),
               ],
             ),
-      GestureDetector(
+      InkWell(
           child: CustomImageView(
             imagePath: IconConstant.nextPage,
             width: 24,
@@ -186,7 +186,7 @@ class Pages extends StatelessWidget {
       const SizedBox(
         width: 8,
       ),
-      GestureDetector(
+      InkWell(
           child: CustomImageView(
             imagePath: IconConstant.lastPage,
             width: 24,

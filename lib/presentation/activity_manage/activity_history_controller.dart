@@ -1,9 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/widgets/side_menu/side_menu_controller.dart';
 import 'package:mindsight_admin_page/data/activity_chat.dart/activity_chat_model.dart';
 import 'package:mindsight_admin_page/data/activity_chat.dart/activity_chat_repository.dart';
-import 'package:mindsight_admin_page/data/activity_chat.dart/chat_log.dart';
 import 'package:mindsight_admin_page/data/activity_details/activity_details_model.dart';
 import 'package:mindsight_admin_page/data/activity_details/activity_details_repository.dart';
 import 'package:mindsight_admin_page/data/activity_details/activity_details_req_get.dart';
@@ -12,9 +10,6 @@ import 'package:mindsight_admin_page/data/activity_expert/activity_expert_reposi
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_req_put.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_details/practice_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
 class ActivityHistoryController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -40,11 +35,11 @@ class ActivityHistoryController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    loadData();
+    initData();
     super.onInit();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
 
@@ -105,9 +100,6 @@ class ActivityHistoryController extends GetxController {
   }
 
   void onMemberTap() {
-    if (Get.isRegistered<MemberDetailsController>()) {
-      Get.delete<MemberDetailsController>();
-    }
     Get.offAllNamed(AppRoutes.memberDetails, arguments: {
       RouteArguments.id: memberId,
     });
@@ -116,9 +108,6 @@ class ActivityHistoryController extends GetxController {
   }
 
   void onPracticeTap() {
-    if (Get.isRegistered<PracticeDetailsController>()) {
-      Get.delete<PracticeDetailsController>();
-    }
     Get.offAllNamed(AppRoutes.practiceDetails,
         arguments: {RouteArguments.id: activityDetailsModel.sessionId});
     SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
@@ -126,9 +115,6 @@ class ActivityHistoryController extends GetxController {
   }
 
   void onChallengeTap() {
-    if (Get.isRegistered<ChallengeDetailsController>()) {
-      Get.delete<ChallengeDetailsController>();
-    }
     Get.offAllNamed(AppRoutes.challengeDetails,
         arguments: {RouteArguments.id: activityDetailsModel.sessionId});
     SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);

@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/widgets/side_menu/side_menu_controller.dart';
 import 'package:mindsight_admin_page/data/activity/activity_model.dart';
 import 'package:mindsight_admin_page/data/activity/activity_repository.dart';
 import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
@@ -7,10 +6,6 @@ import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_details/practice_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
 
 enum Type { practice, challenge }
 
@@ -56,11 +51,11 @@ class ActivityManageController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    loadData();
+    await initData();
     super.onInit();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
     searchOn = false.obs;
@@ -169,9 +164,6 @@ class ActivityManageController extends GetxController {
   }
 
   void onHistoryTap(int index) {
-    if (Get.isRegistered<ActivityHistoryController>()) {
-      Get.delete<ActivityHistoryController>();
-    }
     Get.offAllNamed(AppRoutes.activityHistory, arguments: {
       RouteArguments.id: activityModel.recordId![index],
       RouteArguments.type: activityModel.type![index],
@@ -180,9 +172,6 @@ class ActivityManageController extends GetxController {
   }
 
   void onMemberTap(int index) {
-    if (Get.isRegistered<MemberDetailsController>()) {
-      Get.delete<MemberDetailsController>();
-    }
     Get.offAllNamed(AppRoutes.memberDetails,
         arguments: {RouteArguments.id: activityModel.memberId![index]});
     SideMenuController.to.changeActiveItemTo(memberManagePageDisplayName);
@@ -191,17 +180,11 @@ class ActivityManageController extends GetxController {
 
   void onSessionTap(int index) {
     if (type.value == Type.practice) {
-      if (Get.isRegistered<PracticeDetailsController>()) {
-        Get.delete<PracticeDetailsController>();
-      }
       Get.offAllNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
       SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
       SideMenuController.to.changeActiveSubItem(contentPracticeDisplayName);
     } else {
-      if (Get.isRegistered<ChallengeDetailsController>()) {
-        Get.delete<ChallengeDetailsController>();
-      }
       Get.offAllNamed(AppRoutes.challengeDetails,
           arguments: {RouteArguments.id: activityModel.sessionId![index]});
       SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);

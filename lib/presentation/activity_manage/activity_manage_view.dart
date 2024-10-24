@@ -115,8 +115,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                           SizedBox(
                             width: 170,
                             child: ListTile(
-                                contentPadding:
-                                    EdgeInsets.only(left: 0.0, right: 0.0),
+                                contentPadding: const EdgeInsets.only(
+                                    left: 0.0, right: 0.0),
                                 title: Row(
                                   children: <Widget>[
                                     Radio<Type>(

@@ -246,9 +246,6 @@ class ContentEditController extends GetxController {
     );
 
     if (contentEditModel.isSuccess) {
-      if (Get.isRegistered<ContentDetailsController>()) {
-        Get.delete<ContentDetailsController>();
-      }
       Get.offAllNamed(AppRoutes.contentDetails,
           arguments: {RouteArguments.id: id});
     }

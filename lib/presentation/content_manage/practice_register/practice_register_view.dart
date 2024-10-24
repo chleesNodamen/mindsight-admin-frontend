@@ -65,7 +65,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
           TextSpan(text: "*", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
-        GestureDetector(
+        InkWell(
           onTap: () => showCustomDialog(true),
           child: Container(
             width: 353,
@@ -87,7 +87,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
           ),
         ),
         const SizedBox(height: 8),
-        GestureDetector(
+        InkWell(
           onTap: () => showCustomDialog(false),
           child: Container(
             width: 353,

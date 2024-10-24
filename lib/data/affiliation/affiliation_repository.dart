@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/base_repository.dart';
 class AffiliationRepository extends BaseRepository {
   Future<AffiliationModel> get() async {
     // req
-    String endpoint = "contents/affiliation";
+    String endpoint = "members/affiliation";
     Response response = await httpClient.getRequest(endpoint);
 
     // result

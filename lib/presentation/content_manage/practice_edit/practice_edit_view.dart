@@ -65,7 +65,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           TextSpan(text: "*", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
-        GestureDetector(
+        InkWell(
           onTap: () => showCustomDialog(true),
           child: Container(
             width: 353,
@@ -87,7 +87,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           ),
         ),
         const SizedBox(height: 8),
-        GestureDetector(
+        InkWell(
           onTap: () => showCustomDialog(false),
           child: Container(
             width: 353,

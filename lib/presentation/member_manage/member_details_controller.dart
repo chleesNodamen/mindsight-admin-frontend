@@ -3,11 +3,10 @@ import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_model.dart';
 import 'package:mindsight_admin_page/data/members_data/members_data_repository.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_edit_controller.dart';
 
 class MemberDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
-  String dash = "-";
+  final String dash = "-";
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   RxString lastName = "".obs;
@@ -16,13 +15,12 @@ class MemberDetailsController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    loadData();
     super.onInit();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
-    isInited.value = false;
 
     if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
@@ -30,18 +28,20 @@ class MemberDetailsController extends GetxController {
     }
 
     membersDataModel = await MembersDataRepository().get(id);
-    lastName.value =
-        (membersDataModel.lastName == null || membersDataModel.lastName == "")
-            ? "-"
-            : membersDataModel.lastName!;
+    lastName.value = membersDataModel.lastName ?? dash;
     isLoading.value = false;
     isInited.value = true;
   }
 
   void onMemberEdit() {
-    if (Get.isRegistered<MemberEditController>()) {
-      Get.delete<MemberEditController>();
-    }
     Get.offAllNamed(AppRoutes.memberEdit, arguments: {RouteArguments.id: id});
+  }
+
+  void onMemberList() {
+    if (SideMenuController.to.isActiveSubItem("회원 목록")) {
+      Get.offAllNamed(AppRoutes.memberManage);
+    } else {
+      Get.offAllNamed(AppRoutes.inactiveMemberManage);
+    }
   }
 }

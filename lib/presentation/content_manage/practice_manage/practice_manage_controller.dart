@@ -48,7 +48,7 @@ class PracticeManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
   RxBool selected = false.obs;
@@ -56,7 +56,7 @@ class PracticeManageController extends GetxController {
     selected.value = !selected.value;
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
 
@@ -86,9 +86,6 @@ class PracticeManageController extends GetxController {
   }
 
   void goToDetails(int index) {
-    if (Get.isRegistered<PracticeDetailsController>()) {
-      Get.delete<PracticeDetailsController>();
-    }
     Get.offAllNamed(AppRoutes.practiceDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(practicesModel.id![index])
     });

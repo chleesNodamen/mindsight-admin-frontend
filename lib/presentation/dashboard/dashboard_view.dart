@@ -684,7 +684,7 @@ class DashboardView extends GetWidget<DashboardController> {
   }
 
   Widget _challengeItemBuilder(int index) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         controller.onChallengeTap(index);
       },

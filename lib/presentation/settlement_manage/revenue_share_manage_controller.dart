@@ -32,11 +32,11 @@ class RevenueShareManageController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    loadData();
     super.onInit();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
     searchOn = false.obs;

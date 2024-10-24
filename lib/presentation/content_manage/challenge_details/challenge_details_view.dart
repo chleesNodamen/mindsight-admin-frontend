@@ -283,12 +283,12 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
     List<Widget> widgets = [];
     for (int i = 0; i < controller.challengeDetailsModel.days!.length; i++) {
       if (i > 0 && i % 14 == 0) {
-        widgets.add(SizedBox(width: double.infinity)); // Line break
+        widgets.add(const SizedBox(width: double.infinity)); // Line break
       }
       int day = controller.challengeDetailsModel.days![i].day!;
 
       widgets.add(
-        GestureDetector(
+        InkWell(
           onTap: () => controller.updateSelectedDay(day),
           child: Container(
             width: 33,

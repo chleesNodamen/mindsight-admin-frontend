@@ -35,10 +35,10 @@ class ChallengeEditController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    await loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
 
@@ -69,9 +69,6 @@ class ChallengeEditController extends GetxController {
 
   void goToChallenge() {
     Get.offAllNamed(AppRoutes.contentChallengeManage);
-    if (Get.isRegistered<ChallengeManageController>()) {
-      Get.find<ChallengeManageController>().loadData();
-    }
   }
 
   Future<void> saveChanges() async {
@@ -88,9 +85,6 @@ class ChallengeEditController extends GetxController {
           thumbnail: thumbnailUrl ?? challengeDetailsModel.thumbnail,
         ));
     if (challengeEditModel.isSuccess) {
-      if (Get.isRegistered<ChallengeDetailsController>()) {
-        Get.delete<ChallengeDetailsController>();
-      }
       Get.offAllNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: id});
     }

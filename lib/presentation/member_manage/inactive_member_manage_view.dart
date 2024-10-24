@@ -38,9 +38,9 @@ class InactiveMemberManageView
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
-                                  _buildFirstContainer(),
+                                  _buildCheckBox(),
                                   const SizedBox(height: 16),
-                                  _pageView(),
+                                  _pagePage(),
                                 ],
                               ),
                             ),
@@ -56,7 +56,7 @@ class InactiveMemberManageView
     );
   }
 
-  Widget _buildFirstContainer() {
+  Widget _buildCheckBox() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -83,7 +83,7 @@ class InactiveMemberManageView
                     isChecked: controller.membershipValues[index],
                     label: controller.membershipLabels[index],
                     onChanged: (value) =>
-                        controller.toggleMembership(index, value),
+                        controller.onCheckMembership(index, value),
                   );
                 }),
               ),
@@ -94,7 +94,7 @@ class InactiveMemberManageView
     );
   }
 
-  SingleChildScrollView _pageView() {
+  SingleChildScrollView _pagePage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(

@@ -8,7 +8,7 @@ import 'package:mindsight_admin_page/data/members_data/members_data_repository.d
 import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_repository.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_req_put.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
+import 'package:mindsight_admin_page/function/show_simple_message.dart';
 
 class MemberEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -16,11 +16,10 @@ class MemberEditController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   List<String> membershipLabels = [
-    "affiliation",
     "Nodamen",
     "UNHCR",
     "UN Women",
-  ]; //TODO
+  ];
   RxString affiliation = "".obs;
   RxString gender = "".obs;
 
@@ -34,18 +33,14 @@ class MemberEditController extends GetxController {
   late MembersEditModel membersEditModel;
   late AffiliationModel affiliationModel;
 
-  MemberDetailsController memberDetailsController =
-      Get.find<MemberDetailsController>();
-
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
-    isInited.value = false;
 
     if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
@@ -53,49 +48,23 @@ class MemberEditController extends GetxController {
     }
 
     membersDataModel = await MembersDataRepository().get(id);
-    if (membersDataModel.affiliation == null) {
-      affiliation = "".obs;
-    } else {
-      affiliation = membersDataModel.affiliation!.obs;
-    }
-    if (membersDataModel.gender == null) {
-      gender = "".obs;
-    } else {
-      gender = membersDataModel.gender!.obs;
-    }
-    if (membersDataModel.firstName == null) {
-      firstNameController.text = "";
-    } else {
-      firstNameController.text = membersDataModel.firstName!;
-    }
-    if (membersDataModel.lastName == null) {
-      lastNameController.text = "";
-    } else {
-      lastNameController.text = membersDataModel.lastName!;
-    }
-    if (membersDataModel.department == null) {
-      departmentController.text = "";
-    } else {
-      departmentController.text = membersDataModel.department!;
-    }
-    if (membersDataModel.position == null) {
-      positionController.text = "";
-    } else {
-      positionController.text = membersDataModel.position!;
-    }
-    if (membersDataModel.yearOfBirth == null) {
-      yearController.text = "";
-    } else {
-      yearController.text = membersDataModel.yearOfBirth!.toString();
-    }
+    affiliation.value = membersDataModel.affiliation ?? "";
+    gender.value = membersDataModel.gender ?? "";
+    firstNameController.text = membersDataModel.firstName ?? "";
+    lastNameController.text = membersDataModel.lastName ?? "";
+    departmentController.text = membersDataModel.department ?? "";
+    positionController.text = membersDataModel.position ?? "";
+    yearController.text = membersDataModel.yearOfBirth?.toString() ?? "";
+
     affiliationModel = await AffiliationRepository().get();
     membershipLabels = affiliationModel.affiliation!;
 
-    isLoading.value = false;
     isInited.value = true;
+    isLoading.value = false;
   }
 
-  Future<void> saveChanges() async {
+  Future<void> onSaveChanges() async {
+    isLoading.value = true;
     membersEditModel = await MembersEditRepository().put(
         id,
         MembersEditReqPut(
@@ -108,6 +77,17 @@ class MemberEditController extends GetxController {
           yearOfBirth: int.parse(yearController.text),
         ));
 
-    memberDetailsController.loadData();
+    if (membersEditModel.isSuccess) {
+      showSimpleMessage(Get.context!, "저장 되었습니다");
+    } else {
+      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
+    }
+
+    isLoading.value = false;
+  }
+
+  void goMemberDatailPage() {
+    Get.offAllNamed(AppRoutes.memberDetails,
+        arguments: {RouteArguments.id: id});
   }
 }

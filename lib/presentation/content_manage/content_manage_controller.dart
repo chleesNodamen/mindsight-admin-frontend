@@ -94,7 +94,7 @@ class ContentManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
   //DROPDOWN BUTTON
@@ -197,7 +197,7 @@ class ContentManageController extends GetxController {
     selectedContent[index] = !selectedContent[index];
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
 
     searchOn.value = false;
@@ -312,9 +312,6 @@ class ContentManageController extends GetxController {
   }
 
   void goToDetails(int index) {
-    if (Get.isRegistered<ContentDetailsController>()) {
-      Get.delete<ContentDetailsController>();
-    }
     Get.offAllNamed(AppRoutes.contentDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(contentListModel.value.id![index])
     });

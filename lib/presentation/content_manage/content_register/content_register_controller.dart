@@ -177,9 +177,6 @@ class ContentRegisterController extends GetxController {
 
     if (contentRegisterModel.isSuccess) {
       Get.offAllNamed(AppRoutes.contentManage);
-      if (Get.isRegistered<ContentManageController>()) {
-        Get.find<ContentManageController>().loadData();
-      }
     }
 
     isLoading.value = false;

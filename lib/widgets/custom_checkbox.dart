@@ -18,7 +18,7 @@ class CustomCheckboxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: _handleTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),

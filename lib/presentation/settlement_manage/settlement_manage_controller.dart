@@ -99,10 +99,10 @@ class SettlementManageController extends GetxController {
     String formattedLastDay = DateFormat('yyyy-MM-dd 23:59:59').format(lastDay);
     dateRange.value = '$formattedFirstDay ~ $formattedLastDay';
 
-    loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
     activePage.value = 1;

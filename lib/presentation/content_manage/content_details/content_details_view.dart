@@ -328,9 +328,6 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
         InkWell(
           onTap: () {
             Get.offAllNamed(AppRoutes.contentManage);
-            if (Get.isRegistered<ContentManageController>()) {
-              Get.find<ContentManageController>().loadData();
-            }
           },
           child: Text("콘텐츠 목록",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(

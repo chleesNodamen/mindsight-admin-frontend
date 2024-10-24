@@ -1,7 +1,5 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
 
 class MemberDetailsView extends GetWidget<MemberDetailsController> {
   const MemberDetailsView({super.key});
@@ -36,7 +34,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                                   const SizedBox(height: 16),
                                   Row(
                                     children: [
-                                      GestureDetector(
+                                      InkWell(
                                         child: Text(
                                           "회원 목록",
                                           style: CustomTextStyles
@@ -49,13 +47,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                                           ),
                                         ),
                                         onTap: () {
-                                          Get.offAllNamed(
-                                              AppRoutes.memberManage);
-                                          if (Get.isRegistered<
-                                              MemberManageController>()) {
-                                            Get.find<MemberManageController>()
-                                                .loadData();
-                                          }
+                                          controller.onMemberList();
                                         },
                                       ),
                                       CustomImageView(
@@ -67,9 +59,9 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                                     ],
                                   ),
                                   const SizedBox(height: 32),
-                                  _buildFirstContainer(),
+                                  _buildMemberInfo(),
                                   const SizedBox(height: 16),
-                                  _buildSecondContainer()
+                                  _buildActivityInfo()
                                 ],
                               ),
                             ),
@@ -85,7 +77,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
     );
   }
 
-  Widget _buildFirstContainer() {
+  Widget _buildMemberInfo() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -127,7 +119,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   Text(
                       (controller.membersDataModel.affiliation == null ||
                               controller.membersDataModel.affiliation == "")
-                          ? "-"
+                          ? controller.dash
                           : controller.membersDataModel.affiliation!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
@@ -146,7 +138,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   Text(
                       (controller.membersDataModel.department == null ||
                               controller.membersDataModel.department == "")
-                          ? "-"
+                          ? controller.dash
                           : controller.membersDataModel.department!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
@@ -165,7 +157,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   Text(
                       (controller.membersDataModel.position == null ||
                               controller.membersDataModel.position == "")
-                          ? "-"
+                          ? controller.dash
                           : controller.membersDataModel.position!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
@@ -195,7 +187,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   Text(
                       (controller.membersDataModel.firstName == null ||
                               controller.membersDataModel.firstName == "")
-                          ? "-"
+                          ? controller.dash
                           : controller.membersDataModel.firstName!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
@@ -229,7 +221,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   Text(
                       (controller.membersDataModel.gender == null ||
                               controller.membersDataModel.gender == "")
-                          ? "-"
+                          ? controller.dash
                           : controller.membersDataModel.gender!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
@@ -274,7 +266,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   Text(
                       (controller.membersDataModel.email == null ||
                               controller.membersDataModel.email == "")
-                          ? "-"
+                          ? controller.dash
                           : controller.membersDataModel.email!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
@@ -293,7 +285,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                   Text(
                       (controller.membersDataModel.username == null ||
                               controller.membersDataModel.username == "")
-                          ? "-"
+                          ? controller.dash
                           : controller.membersDataModel.username!,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
@@ -313,7 +305,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                       controller.membersDataModel.createdAt != null
                           ? DateFormat('yyyy-MM-dd')
                               .format(controller.membersDataModel.createdAt!)
-                          : "-",
+                          : controller.dash,
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               ),
@@ -346,7 +338,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     controller.membersDataModel.lastLogin != null
                         ? DateFormat('yyyy-MM-dd-HH:mm:ss')
                             .format(controller.membersDataModel.lastLogin!)
-                        : "-",
+                        : controller.dash,
                     style: CustomTextStyles.labelLargeGray),
               ],
             ),
@@ -356,7 +348,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
     );
   }
 
-  Widget _buildSecondContainer() {
+  Widget _buildActivityInfo() {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -380,7 +372,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     children: [
                       Text(
                           controller.membersDataModel.sessionsCompleted == null
-                              ? "-"
+                              ? controller.dash
                               : controller.membersDataModel.sessionsCompleted
                                   .toString(),
                           style: CustomTextStyles.headlineLargeBlack),
@@ -399,7 +391,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     children: [
                       Text(
                           controller.membersDataModel.minutesMeditated == null
-                              ? "-"
+                              ? controller.dash
                               : controller.membersDataModel.minutesMeditated
                                   .toString(),
                           style: CustomTextStyles.headlineLargeBlack),
@@ -418,7 +410,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     children: [
                       Text(
                           controller.membersDataModel.mindfulStreak == null
-                              ? "-"
+                              ? controller.dash
                               : controller.membersDataModel.mindfulStreak
                                   .toString(),
                           style: CustomTextStyles.headlineLargeBlack),
@@ -437,7 +429,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     children: [
                       Text(
                           controller.membersDataModel.mindfulDays == null
-                              ? "-"
+                              ? controller.dash
                               : controller.membersDataModel.mindfulDays
                                   .toString(),
                           style: CustomTextStyles.headlineLargeBlack),

@@ -13,11 +13,10 @@ class BaseModel {
     _errorCode = errorCode ?? "";
     this.data = data;
 
-    if (AppConstant.showHttpLog) {
-      Logger.log('Api response isOk: $_isOk');
-      Logger.log('Api response errorCode: $_errorCode');
-      // Logger.log('Api response bodyString: $_body');
-    }
+    // if (AppConstant.showHttpLog) {
+    //   Logger.log('Api response isOk: $_isOk');
+    //   Logger.log('Api response errorCode: $_errorCode');
+    // }
   }
 
   bool get isEmpty {

@@ -36,10 +36,10 @@ class PracticeEditController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
 
@@ -166,9 +166,6 @@ class PracticeEditController extends GetxController {
     practiceEditModel = await PracticeEditRepository().put(id,
         PracticeEditReqPut(bodyId: selectedBodyId, breathId: selectedBreathId));
     if (practiceEditModel.isSuccess) {
-      if (Get.isRegistered<PracticeDetailsController>()) {
-        Get.delete<PracticeDetailsController>();
-      }
       Get.offAllNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: id});
     }

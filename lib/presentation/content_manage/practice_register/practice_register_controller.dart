@@ -34,7 +34,7 @@ class PracticeRegisterController extends GetxController {
     // loadData();
   }
 
-  // Future<void> loadData() async {
+  // Future<void>initData() async {
   //   isLoading.value = true;
   //   isInited.value = false;
   //   isLoading.value = false;
@@ -144,9 +144,6 @@ class PracticeRegisterController extends GetxController {
         PracticesDataReqPost(
             bodyId: selectedBodyId, breathId: selectedBreathId));
     if (practicesDataModel.isSuccess) {
-      if (Get.isRegistered<PracticeManageController>()) {
-        Get.delete<PracticeManageController>();
-      }
       Get.offAllNamed(AppRoutes.contentPracticeManage);
     }
   }

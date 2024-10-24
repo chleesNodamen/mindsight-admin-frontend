@@ -35,7 +35,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                   const SizedBox(height: 16),
                                   Row(
                                     children: [
-                                      GestureDetector(
+                                      InkWell(
                                         child: Text(
                                           "활동 기록 관리",
                                           style: CustomTextStyles

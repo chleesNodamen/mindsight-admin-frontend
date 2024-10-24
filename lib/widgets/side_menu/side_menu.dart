@@ -52,36 +52,12 @@ const authenticationPageDisplayName = "Log out";
 const authenticationPageRoute = "/auth";
 
 List<MenuItem> sideMenuItemRoutes = [
-  MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().loadData();
-    // }
-  }),
-  MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {
-    // if (Get.isRegistered<MemberManageController>()) {
-    //   Get.find<MemberManageController>().loadData();
-    // }
-  }),
-  MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {
-    // if (Get.isRegistered<ContentManageController>()) {
-    //   Get.find<ContentManageController>().loadData();
-    // }
-  }),
-  MenuItem(activityManagePageDisplayName, AppRoutes.activityManage, () {
-    // if (Get.isRegistered<ActivityManageController>()) {
-    //   Get.find<ActivityManageController>().loadData();
-    // }
-  }),
-  MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage, () {
-    // if (Get.isRegistered<SettlementManageController>()) {
-    //   Get.find<SettlementManageController>().loadData();
-    // }
-  }),
-  MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings, () {
-    // if (Get.isRegistered<AdminSettingsController>()) {
-    //   Get.find<AdminSettingsController>().loadData();
-    // }
-  }),
+  MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
+  MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {}),
+  MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {}),
+  MenuItem(activityManagePageDisplayName, AppRoutes.activityManage, () {}),
+  MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage, () {}),
+  MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings, () {}),
 ];
 
 class SideMenu extends StatelessWidget {

@@ -1,7 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_controller.dart';
-import 'package:mindsight_admin_page/presentation/member_manage/member_manage_controller.dart';
-import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_controller.dart';
 
 class SubMenuItem {
   final String name;
@@ -16,86 +13,37 @@ class SideMenuController extends GetxController {
   static SideMenuController get to => Get.find<SideMenuController>();
 
   var activeItem = dashboardPageDisplayName.obs;
-  Rx<String>? activeSubItem;
+  var hoverItem = "".obs;
+  RxString activeSubItem = "".obs;
   Map<String, List<SubMenuItem>> subMenuItems = {
     memberManagePageDisplayName: [
-      SubMenuItem(memberManagePageSubMenuDisplayName, AppRoutes.memberManage,
-          () {
-        if (Get.isRegistered<MemberManageController>()) {
-          Get.find<MemberManageController>().loadData();
-        }
-      }),
       SubMenuItem(
-          inactiveMemberManagePageDisplayName, AppRoutes.inactiveMemberManage,
-          () {
-        if (Get.isRegistered<InactiveMemberManageController>()) {
-          Get.find<InactiveMemberManageController>().loadData();
-        }
-      }),
+          memberManagePageSubMenuDisplayName, AppRoutes.memberManage, () {}),
+      SubMenuItem(inactiveMemberManagePageDisplayName,
+          AppRoutes.inactiveMemberManage, () {}),
     ],
     contentManagePageDisplayName: [
-      SubMenuItem(contentManageContentDisplayName, AppRoutes.contentManage, () {
-        if (Get.isRegistered<MemberManageController>()) {
-          Get.find<MemberManageController>().loadData();
-        }
-      }),
-      SubMenuItem(contentPracticeDisplayName, AppRoutes.contentPracticeManage,
-          () {
-        if (Get.isRegistered<InactiveMemberManageController>()) {
-          Get.find<InactiveMemberManageController>().loadData();
-        }
-      }),
-      SubMenuItem(contentChallengeDisplayName, AppRoutes.contentChallengeManage,
-          () {
-        if (Get.isRegistered<InactiveMemberManageController>()) {
-          Get.find<InactiveMemberManageController>().loadData();
-        }
-      }),
+      SubMenuItem(
+          contentManageContentDisplayName, AppRoutes.contentManage, () {}),
+      SubMenuItem(
+          contentPracticeDisplayName, AppRoutes.contentPracticeManage, () {}),
+      SubMenuItem(
+          contentChallengeDisplayName, AppRoutes.contentChallengeManage, () {}),
     ],
     adminSettingsPageDisplayName: [
-      SubMenuItem(myAccountManageDisplayName, AppRoutes.adminSettings, () {
-        if (Get.isRegistered<MemberManageController>()) {
-          Get.find<MemberManageController>().loadData();
-        }
-      }),
-      SubMenuItem(subAdminSettingsDisplayName, AppRoutes.subAdminSettings, () {
-        if (Get.isRegistered<InactiveMemberManageController>()) {
-          Get.find<InactiveMemberManageController>().loadData();
-        }
-      }),
+      SubMenuItem(myAccountManageDisplayName, AppRoutes.adminSettings, () {}),
+      SubMenuItem(
+          subAdminSettingsDisplayName, AppRoutes.subAdminSettings, () {}),
     ],
     settlementManagePageDisplayName: [
-      SubMenuItem(
-          settlementManagePageSubMenuDisplayName, AppRoutes.settlementManage,
-          () {
-        if (Get.isRegistered<SettlementManageController>()) {
-          Get.find<SettlementManageController>().loadData();
-        }
-      }),
-      SubMenuItem(
-          revenueShareManagePageDisplayName, AppRoutes.revenueShareManage, () {
-        if (Get.isRegistered<SettlementManageController>()) {
-          Get.find<SettlementManageController>().loadData();
-        }
-      }),
+      SubMenuItem(settlementManagePageSubMenuDisplayName,
+          AppRoutes.settlementManage, () {}),
+      SubMenuItem(revenueShareManagePageDisplayName,
+          AppRoutes.revenueShareManage, () {}),
     ],
   };
 
-  var hoverItem = "".obs;
-
   changeActiveItemTo(String itemName) {
-    // switch (itemName) {
-    //   case contentManagePageDisplayName:
-    //     Get.lazyPut(() => ContentManageController());
-    //   case activityManagePageDisplayName:
-    //     Get.lazyPut(() => ActivityManageController());
-    //   case memberManagePageDisplayName:
-    //     Get.lazyPut(() => MemberManageController());
-    //   case memberDetailsPageDisplayName:
-    //     Get.lazyPut(() => MemberDetailsController());
-    //   case memberEditPageDisplayName:
-    //     Get.lazyPut(() => MemberEditController());
-    // }
     activeItem.value = itemName;
   }
 
@@ -104,7 +52,7 @@ class SideMenuController extends GetxController {
   }
 
   changeActiveSubItem(String itemName) {
-    activeSubItem = itemName.obs;
+    activeSubItem.value = itemName;
   }
 
   onHover(String itemName) {
@@ -119,7 +67,7 @@ class SideMenuController extends GetxController {
 
   isActive(String itemName) => activeItem.value == itemName;
 
-  isActiveSubItem(String itemName) => activeSubItem!.value == itemName;
+  isActiveSubItem(String itemName) => activeSubItem.value == itemName;
 
   Widget returnIconFor(String itemName, bool full) {
     switch (itemName) {

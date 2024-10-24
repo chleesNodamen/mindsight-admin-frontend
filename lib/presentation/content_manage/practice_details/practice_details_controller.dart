@@ -14,10 +14,10 @@ class PracticeDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
 
@@ -33,9 +33,6 @@ class PracticeDetailsController extends GetxController {
   }
 
   void onPracticeTap() {
-    if (Get.isRegistered<PracticeEditController>()) {
-      Get.delete<PracticeEditController>();
-    }
     Get.offAllNamed(AppRoutes.practiceEdit, arguments: {RouteArguments.id: id});
   }
 

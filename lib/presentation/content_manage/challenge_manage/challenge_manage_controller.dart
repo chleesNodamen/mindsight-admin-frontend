@@ -70,7 +70,7 @@ class ChallengeManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
   RxBool selected = false.obs;
@@ -78,7 +78,7 @@ class ChallengeManageController extends GetxController {
     selected.value = !selected.value;
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
 
@@ -170,9 +170,6 @@ class ChallengeManageController extends GetxController {
   }
 
   void goToEdit(int index) {
-    if (Get.isRegistered<ChallengeDetailsController>()) {
-      Get.delete<ChallengeDetailsController>();
-    }
     Get.offAllNamed(AppRoutes.challengeDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(challengesModel.id![index])
     });

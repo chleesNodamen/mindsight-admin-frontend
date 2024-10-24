@@ -20,10 +20,10 @@ class ContentDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loadData();
+    await initData();
   }
 
-  Future<void> loadData() async {
+  Future<void> initData() async {
     isLoading.value = true;
     isInited.value = false;
 
@@ -44,9 +44,6 @@ class ContentDetailsController extends GetxController {
   }
 
   void goToEdit() {
-    if (Get.isRegistered<ContentEditController>()) {
-      Get.delete<ContentEditController>();
-    }
     Get.offAllNamed(AppRoutes.contentEdit, arguments: {
       RouteArguments.id: contentDetailsModel.id,
     });

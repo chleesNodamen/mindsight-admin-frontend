@@ -38,7 +38,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                   const SizedBox(height: 16),
                                   Row(
                                     children: [
-                                      GestureDetector(
+                                      InkWell(
                                           child: Text(
                                             "콘텐츠 목록",
                                             style: CustomTextStyles
@@ -53,17 +53,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                           onTap: () {
                                             Get.offAllNamed(
                                                 AppRoutes.contentManage);
-                                            if (Get.isRegistered<
-                                                ContentManageController>()) {
-                                              Get.find<
-                                                      ContentManageController>()
-                                                  .loadData();
-                                            }
                                           }),
                                       CustomImageView(
                                         imagePath: IconConstant.arrowRight,
                                       ),
-                                      GestureDetector(
+                                      InkWell(
                                           child: Text(
                                             "콘텐츠 상세",
                                             style: CustomTextStyles
@@ -76,11 +70,6 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                             ),
                                           ),
                                           onTap: () {
-                                            if (Get.isRegistered<
-                                                ContentDetailsController>()) {
-                                              Get.delete<
-                                                  ContentDetailsController>();
-                                            }
                                             Get.offAllNamed(
                                                 AppRoutes.contentDetails,
                                                 arguments: {

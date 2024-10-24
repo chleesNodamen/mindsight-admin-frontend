@@ -62,7 +62,7 @@ class CustomHttpClient {
     final uri = Uri.parse(
         '$baseUrl$endpoint${queryString.isNotEmpty ? '?$queryString' : ''}');
     if (AppConstant.showHttpLog) {
-      Logger.log('Api GET 요청: $uri');
+      Logger.info('Api GET 요청: $uri');
     }
 
     forTest0 = "get: $uri";
@@ -73,7 +73,7 @@ class CustomHttpClient {
       final response =
           await client.get(uri, headers: {..._headers, ...?headers});
       if (AppConstant.showHttpLog) {
-        Logger.log('GET 응답: ${response.statusCode} ${response.body}');
+        Logger.log('Api GET 응답: ${response.statusCode} ${response.body}');
       }
       return response;
     } catch (e) {
@@ -91,7 +91,7 @@ class CustomHttpClient {
     final uri = Uri.parse('$baseUrl$endpoint').replace(
         queryParameters: query?.map((k, v) => MapEntry(k, v.toString())));
     if (AppConstant.showHttpLog) {
-      Logger.log('Api POST 요청: $uri');
+      Logger.info('Api POST 요청: $uri');
       Logger.log('Api POST 바디: ${jsonEncode(body)}');
     }
 
@@ -103,7 +103,7 @@ class CustomHttpClient {
       final response = await client.post(uri,
           headers: {..._headers, ...?headers}, body: jsonEncode(body));
       if (AppConstant.showHttpLog) {
-        Logger.log('POST 응답: ${response.statusCode} ${response.body}');
+        Logger.log('Api POST 응답: ${response.statusCode} ${response.body}');
       }
       return response;
     } catch (e) {
@@ -121,7 +121,7 @@ class CustomHttpClient {
     final uri = Uri.parse('$baseUrl$endpoint').replace(
         queryParameters: query?.map((k, v) => MapEntry(k, v.toString())));
     if (AppConstant.showHttpLog) {
-      Logger.log('Api PUT 요청: $uri');
+      Logger.info('Api PUT 요청: $uri');
       Logger.log('Api PUT 바디: ${jsonEncode(body)}');
     }
 
@@ -133,7 +133,7 @@ class CustomHttpClient {
       final response = await client.put(uri,
           headers: {..._headers, ...?headers}, body: jsonEncode(body));
       if (AppConstant.showHttpLog) {
-        Logger.log('PUT 응답: ${response.statusCode} ${response.body}');
+        Logger.log('Api PUT 응답: ${response.statusCode} ${response.body}');
       }
       return response;
     } catch (e) {
@@ -151,7 +151,7 @@ class CustomHttpClient {
     final uri = Uri.parse('$baseUrl$endpoint').replace(
         queryParameters: query?.map((k, v) => MapEntry(k, v.toString())));
     if (AppConstant.showHttpLog) {
-      Logger.log('Api PATCH 요청: $uri');
+      Logger.info('Api PATCH 요청: $uri');
       Logger.log('Api PATCH 바디: ${jsonEncode(body)}');
     }
 
@@ -166,7 +166,7 @@ class CustomHttpClient {
       final streamedResponse = await client.send(request);
       final response = await http.Response.fromStream(streamedResponse);
       if (AppConstant.showHttpLog) {
-        Logger.log('PATCH 응답: ${response.statusCode} ${response.body}');
+        Logger.log('Api PATCH 응답: ${response.statusCode} ${response.body}');
       }
       return response;
     } catch (e) {
@@ -183,7 +183,7 @@ class CustomHttpClient {
     final uri = Uri.parse('$baseUrl$endpoint').replace(
         queryParameters: query?.map((k, v) => MapEntry(k, v.toString())));
     if (AppConstant.showHttpLog) {
-      Logger.log('Api DELETE 요청: $uri');
+      Logger.info('Api DELETE 요청: $uri');
     }
 
     forTest0 = "delete: $uri";
@@ -194,7 +194,7 @@ class CustomHttpClient {
       final response =
           await client.delete(uri, headers: {..._headers, ...?headers});
       if (AppConstant.showHttpLog) {
-        Logger.log('DELETE 응답: ${response.statusCode} ${response.body}');
+        Logger.log('Api DELETE 응답: ${response.statusCode} ${response.body}');
       }
       return response;
     } catch (e) {
