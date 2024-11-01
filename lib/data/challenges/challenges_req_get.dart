@@ -2,7 +2,7 @@ class ChallengesReqGet {
   int? page;
   String? sortBy;
   List<String>? goal;
-  List<int>? duration;
+  List<int>? days;
   bool? status;
   String? search;
 
@@ -10,7 +10,7 @@ class ChallengesReqGet {
     this.page,
     this.sortBy,
     this.goal,
-    this.duration,
+    this.days,
     this.status,
     this.search,
   });
@@ -19,7 +19,7 @@ class ChallengesReqGet {
         "page": page,
         "sortBy": sortBy,
         "goal": goal ?? [],
-        "duration": duration ?? [],
+        "days": days ?? [],
         "search": search,
         "status": status,
       };

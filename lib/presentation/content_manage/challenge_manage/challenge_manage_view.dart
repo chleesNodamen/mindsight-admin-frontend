@@ -26,13 +26,13 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  buildTopBar(),
+                                  _buildTitle(),
                                   const SizedBox(height: 32),
-                                  buildFirstContainer(),
+                                  _buildSelect(),
                                   const SizedBox(height: 16),
-                                  dropdownButton(),
+                                  _buildSortDropdown(),
                                   const SizedBox(height: 16),
-                                  buildSecondContainer()
+                                  _buildPage()
                                 ],
                               ),
                             ],
@@ -48,7 +48,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "Challenge 관리",
       searchShow: true,
@@ -58,7 +58,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
     );
   }
 
-  SingleChildScrollView buildSecondContainer() {
+  SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -176,7 +176,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                               padding: const EdgeInsets.only(
                                   left: 6, right: 0, top: 0, bottom: 0),
                               child: DropdownButton<String>(
-                                value: controller.challengesState![index]
+                                value: controller.challengesModel.status![index]
                                     ? '정상'
                                     : "안함",
                                 underline: Container(),
@@ -187,8 +187,6 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                                     const TextStyle(color: Colors.deepPurple),
                                 onChanged: (String? newValue) {
                                   if (newValue != null) {
-                                    controller.challengesState![index] =
-                                        !controller.challengesState![index];
                                     controller.onStatusChange(index);
                                   }
                                 },
@@ -229,7 +227,9 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                       margin: const EdgeInsets.only(right: 16),
                       width: 107,
                       height: 44,
-                      onPressed: () {},
+                      onPressed: () {
+                        showSimpleMessage(Get.context!, "서비스 준비 중 입니다");
+                      },
                     ),
                     CustomElevatedButton(
                       text: '삭제',
@@ -238,7 +238,9 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                           CustomButtonStyles.fillRedTransparent.copyWith(),
                       width: 76,
                       height: 44,
-                      onPressed: () {},
+                      onPressed: () {
+                        showSimpleMessage(Get.context!, "서비스 준비 중 입니다");
+                      },
                     ),
                   ],
                 ),
@@ -256,7 +258,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
     );
   }
 
-  Container buildFirstContainer() {
+  Container _buildSelect() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -279,12 +281,12 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
             width: double.infinity,
             child: Wrap(
               runSpacing: 18,
-              children:
-                  List.generate(controller.checkboxValues.length, (index) {
+              children: List.generate(controller.goalValues.length, (index) {
                 return CustomCheckboxWidget(
-                  isChecked: controller.checkboxValues[index],
-                  label: controller.checkboxLabels[index],
-                  onChanged: (value) => controller.toggleCheckbox(index, value),
+                  isChecked: controller.goalValues[index],
+                  label: controller.goalLabels[index],
+                  onChanged: (value) =>
+                      controller.toggleGoalCheckbox(index, value),
                 );
               }),
             ),
@@ -309,7 +311,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                         isChecked: controller.periodValues[index],
                         label: controller.periodLabels[index],
                         onChanged: (value) =>
-                            controller.toggleCheckbox(index, value),
+                            controller.togglePeriodCheckbox(index, value),
                       );
                     }),
                   ),
@@ -327,15 +329,15 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                   Row(
                     children: [
                       CustomCheckboxWidget(
-                        isChecked: controller.isChecked.value,
+                        isChecked: controller.statusValues[0],
                         label: '정상',
-                        onChanged: (value) => controller.toggleSecondCheckbox(
+                        onChanged: (value) => controller.toggleStatusCheckbox(
                             0, value), // Adjust as needed
                       ),
                       CustomCheckboxWidget(
-                        isChecked: controller.isChecked.value,
+                        isChecked: controller.statusValues[1],
                         label: '서비스 안함',
-                        onChanged: (value) => controller.toggleSecondCheckbox(
+                        onChanged: (value) => controller.toggleStatusCheckbox(
                             1, value), // Adjust as needed
                       ),
                     ],
@@ -349,7 +351,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
     );
   }
 
-  DecoratedBox dropdownButton() {
+  DecoratedBox _buildSortDropdown() {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(

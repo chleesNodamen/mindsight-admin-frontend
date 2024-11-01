@@ -24,9 +24,9 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              buildTopBar(),
+                              _buildTitle(),
                               const SizedBox(height: 32),
-                              buildSubHeader(),
+                              _buildSubMenu(),
                               const SizedBox(height: 32),
                               buildContainers()
                             ],
@@ -207,7 +207,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
@@ -229,7 +229,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "Practice plan 상세",
       searchShow: false,

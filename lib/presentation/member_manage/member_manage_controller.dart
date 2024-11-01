@@ -51,7 +51,6 @@ class MemberManageController extends GetxController {
 
     affiliationModel = await AffiliationRepository().get();
     membershipLabels = affiliationModel.affiliation!;
-    membershipValues = List<bool>.filled(affiliationModel.length, false).obs;
 
     await loadNewPage(1);
 
@@ -65,12 +64,15 @@ class MemberManageController extends GetxController {
         if (membershipValues[i]) membershipLabels[i]
     ];
 
-    // 모두 체크 되었을 떄..조건 안줄려면 주석 풀 것
-    /*
+    // 모두 체크 되었을 떄..조건 주지 않음
     if (membershipValues.every((element) => element == true)) {
       affiliation = [];
     }
-    */
+
+    // 아무것도 체크 안되었을때는..검색이 안되어야 된다..
+    if (membershipValues.every((element) => element == false)) {
+      affiliation = ['known'];
+    }
 
     return affiliation;
   }

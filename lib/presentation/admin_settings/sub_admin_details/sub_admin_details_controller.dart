@@ -12,15 +12,21 @@ class SubAdminDetailsController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    adminDetailsModel = await AdminDetailsRepository().get(id);
-
-    isLoading.value = false;
-    isInited.value = true;
+    await initData();
   }
 
-  void goToEdit() {
+  Future<void> initData() async {
+    isLoading.value = true;
+
+    adminDetailsModel = await AdminDetailsRepository().get(id);
+
+    isInited.value = true;
+    isLoading.value = false;
+  }
+
+  void onEdit() {
     Get.offAllNamed(AppRoutes.subAdminEdit, arguments: {
-      RouteArguments.id: adminDetailsModel.id,
+      RouteArguments.id: id,
     });
   }
 }

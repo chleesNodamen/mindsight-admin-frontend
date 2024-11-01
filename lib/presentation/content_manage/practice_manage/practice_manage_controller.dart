@@ -4,34 +4,50 @@ import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/practices/practices_model.dart';
 import 'package:mindsight_admin_page/data/practices/practices_repository.dart';
 import 'package:mindsight_admin_page/data/practices/practices_req_get.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_details/practice_details_controller.dart';
 
 class PracticeManageController extends GetxController {
-  late PracticesModel practicesModel;
   RxBool isInited = false.obs;
+  RxBool isLoading = true.obs;
+
+  late PracticesModel practicesModel;
+
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-//REGISTER BUTTON
+  RxString selectedOrder = '회차순'.obs;
+  RxInt activePage = 1.obs;
+
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    await initData();
+  }
+
+  Future<void> initData() async {
+    isLoading.value = true;
+
+    if (AppConstant.test) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
+    }
+
+    await loadNewPage(1);
+
+    isLoading.value = false;
+    isInited.value = true;
+  }
+
   void onRegisterTap() {
     Get.offAllNamed(AppRoutes.practiceRegister);
   }
 
-  //DROPDOWN BUTTON
-  RxString selectedOrder = '회차순'.obs;
   void updateSelectedOrder(String newOrder) {
     selectedOrder.value = newOrder;
   }
 
-  //DATA TABLE
-  // RxString dataTableButtonText = '정상'.obs;
-  // void updateDTText(String newText) {
-  //   dataTableButtonText.value = newText;
-  // }
-
-  RxInt activePage = 1.obs;
   Future<void> loadNewPage(int pageNum) async {
     isLoading.value = true;
+
     practicesModel = await PracticesRepository().get(PracticesReqGet(
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,
@@ -42,50 +58,7 @@ class PracticeManageController extends GetxController {
     activePage.value = pageNum;
   }
 
-  var data = [].obs;
-  var isLoading = true.obs;
-
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    await initData();
-  }
-
-  RxBool selected = false.obs;
-  void updateValue() {
-    selected.value = !selected.value;
-  }
-
-  Future<void> initData() async {
-    isLoading.value = true;
-    isInited.value = false;
-
-    if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
-
-    practicesModel = await PracticesRepository().get(PracticesReqGet(
-      page: 1,
-    ));
-
-    if (!practicesModel.isSuccess) {
-      practicesModel = PracticesModel().copyWith(
-        id: List.generate(10, (_) => ""),
-        level: List.generate(10, (_) => 111),
-        ratio: List.generate(10, (_) => "88%"),
-        participated: List.generate(10, (_) => 111),
-        finished: List.generate(10, (_) => 111),
-        liked: List.generate(10, (_) => 111),
-        total: 10,
-      );
-      practicesModel.length = practicesModel.id!.length;
-    }
-    isLoading.value = false;
-    isInited.value = true;
-  }
-
-  void goToDetails(int index) {
+  void onDetails(int index) {
     Get.offAllNamed(AppRoutes.practiceDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(practicesModel.id![index])
     });

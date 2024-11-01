@@ -1,31 +1,31 @@
 class ChallengesStatusReqPut {
-  List<String>? challengesId;
+  List<String>? challengeIds;
   bool? status;
 
   ChallengesStatusReqPut({
-    this.challengesId,
+    this.challengeIds,
     this.status,
   });
 
   ChallengesStatusReqPut copyWith({
-    List<String>? challengesId,
+    List<String>? challengeIds,
     bool? status,
   }) =>
       ChallengesStatusReqPut(
-        challengesId: challengesId ?? this.challengesId,
+        challengeIds: challengeIds ?? this.challengeIds,
         status: status ?? this.status,
       );
 
   factory ChallengesStatusReqPut.fromJson(Map<String, dynamic> json) =>
       ChallengesStatusReqPut(
-        challengesId: json["challengesId"] == null
+        challengeIds: json["challengeIds"] == null
             ? []
             : List<String>.from(json["ids"]!.map((x) => x)),
         status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
-        "challengesId": challengesId ?? [],
+        "challengeIds": challengeIds ?? [],
         "status": status,
       };
 }

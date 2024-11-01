@@ -3,7 +3,6 @@ import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_model.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_repository.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_edit/challenge_edit_controller.dart';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
@@ -11,8 +10,10 @@ class ChallengeDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
-  RxString thumbnailLink = "".obs;
+
   late ChallengeDetailsModel challengeDetailsModel;
+
+  // RxString thumbnailLink = "".obs;
   RxInt selectedDay = 1.obs;
 
   @override
@@ -23,7 +24,7 @@ class ChallengeDetailsController extends GetxController {
 
   Future<void> initData() async {
     isLoading.value = true;
-    isInited.value = false;
+
     if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
@@ -31,14 +32,11 @@ class ChallengeDetailsController extends GetxController {
 
     challengeDetailsModel = await ChallengeDetailsRepository().get(id);
 
-    if (challengeDetailsModel.isSuccess) {
-      thumbnailLink.value = challengeDetailsModel.thumbnail ?? "";
-    }
     isLoading.value = false;
     isInited.value = true;
   }
 
-  void goToEdit() {
+  void onEdit() {
     Get.offAllNamed(AppRoutes.challengeEdit, arguments: {
       RouteArguments.id: id,
     });

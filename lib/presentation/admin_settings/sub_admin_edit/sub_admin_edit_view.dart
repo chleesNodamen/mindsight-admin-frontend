@@ -24,11 +24,11 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              buildTopBar(),
+                              _buildTitle(),
                               const SizedBox(height: 32),
-                              buildSubHeader(),
+                              _buildSubMenu(),
                               const SizedBox(height: 32),
-                              buildTextFields()
+                              _buildInfo()
                             ],
                           ),
                         ),
@@ -42,23 +42,23 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
     );
   }
 
-  Column buildTextFields() {
+  Column _buildInfo() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildFirstRow(),
+        _buildInfo0(),
         const SizedBox(height: 24),
-        buildSecondRow(),
+        _buildInfo1(),
         const SizedBox(height: 24),
-        buildThirdRow(),
+        _buildInfo2(),
         const SizedBox(height: 24),
-        buildLastRow(),
+        _buildInfo3(),
       ],
     );
   }
 
-  Column buildLastRow() {
+  Column _buildInfo3() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,21 +77,9 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             width: 353,
             hintText: "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
-            // validator: (value) {
-            //   // if (value == null ||
-            //   //     !controller.checkPasswordValid(value, true) ||
-            //   //     !controller.authPasswordResetModel.isSuccess) {
-            //   //   return "Code is invalid or has expired".tr;
-            //   // }
-            //   // return null;
-            // },
+            onChange: (value) {},
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
             filled: true),
         const SizedBox(height: 44),
         Row(
@@ -103,7 +91,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,
-              onPressed: controller.saveChanges,
+              onPressed: controller.onSave,
             ),
             CustomElevatedButton(
               text: '취소',
@@ -112,7 +100,8 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
               margin: const EdgeInsets.only(left: 16),
               width: 90,
               height: 44,
-              onPressed: () => Get.back(),
+              onPressed: () => Get.offAllNamed(AppRoutes.subAdminDetails,
+                  arguments: {RouteArguments.id: controller.id}),
             ),
           ],
         )
@@ -120,7 +109,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
     );
   }
 
-  Row buildThirdRow() {
+  Row _buildInfo2() {
     return Row(
       children: [
         Column(
@@ -141,21 +130,9 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                // validator: (value) {
-                //   // if (value == null ||
-                //   //     !controller.checkPasswordValid(value, true) ||
-                //   //     !controller.authPasswordResetModel.isSuccess) {
-                //   //   return "Code is invalid or has expired".tr;
-                //   // }
-                //   // return null;
-                // },
+                onChange: (value) {},
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
@@ -177,21 +154,9 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                // validator: (value) {
-                //   // if (value == null ||
-                //   //     !controller.checkPasswordValid(value, true) ||
-                //   //     !controller.authPasswordResetModel.isSuccess) {
-                //   //   return "Code is invalid or has expired".tr;
-                //   // }
-                //   // return null;
-                // },
+                onChange: (value) {},
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
@@ -199,7 +164,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
     );
   }
 
-  Row buildSecondRow() {
+  Row _buildInfo1() {
     return Row(
       children: [
         Column(
@@ -232,7 +197,6 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
                 borderRadius: BorderRadiusStyle.roundedBorder12,
-                // icon: const Icon(Icons.),
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
@@ -286,7 +250,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
     );
   }
 
-  Row buildFirstRow() {
+  Row _buildInfo0() {
     return Row(
       children: [
         Column(
@@ -321,11 +285,11 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.offAllNamed(AppRoutes.subAdminSettings),
           child: Text("서브 관리자 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
@@ -338,12 +302,26 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
+        InkWell(
+            onTap: () => Get.offAllNamed(AppRoutes.subAdminDetails,
+                arguments: {RouteArguments.id: controller.id}),
+            child: Text("관리자 상세",
+                style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                  decoration: TextDecoration.underline,
+                  decorationColor: appTheme.skyBlue,
+                ))),
+        CustomImageView(
+          width: 20,
+          height: 20,
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          imagePath: IconConstant.arrowRight,
+        ),
         Text("관리자 계정 수정", style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "관리자 계정 수정",
       searchShow: false,

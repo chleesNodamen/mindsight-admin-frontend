@@ -36,6 +36,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                   ),
                                   const SizedBox(height: 32),
                                   CustomElevatedButton(
+                                    onPressed: () => showSimpleMessage(
+                                        Get.context!, "서비스 준비 중 입니다"),
                                     text: "신규 등록",
                                     height: 44,
                                     width: 107,
@@ -44,9 +46,9 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                             BorderRadiusStyle.roundedBorder12),
                                   ),
                                   const SizedBox(height: 32),
-                                  buildFirstContainer(),
+                                  _buildSelect(),
                                   const SizedBox(height: 32),
-                                  _pageView(),
+                                  _buildPage(),
                                 ],
                               ),
                             ),
@@ -62,7 +64,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
     );
   }
 
-  Container buildFirstContainer() {
+  Container _buildSelect() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -92,15 +94,15 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: ListTile(
-                                  contentPadding:
-                                      EdgeInsets.only(left: 0.0, right: 0.0),
+                                  contentPadding: const EdgeInsets.only(
+                                      left: 0.0, right: 0.0),
                                   title: Row(
                                     children: <Widget>[
-                                      Radio<Type>(
-                                        value: Type.practice,
+                                      Radio<ActivityType>(
+                                        value: ActivityType.practice,
                                         groupValue: controller.type.value,
-                                        onChanged: (Type? value) {
-                                          controller.changeType(value);
+                                        onChanged: (ActivityType? value) {
+                                          controller.onChangeType(value);
                                         },
                                       ),
                                       Text(controller.typeLabels[0],
@@ -119,11 +121,11 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                     left: 0.0, right: 0.0),
                                 title: Row(
                                   children: <Widget>[
-                                    Radio<Type>(
-                                      value: Type.challenge,
+                                    Radio<ActivityType>(
+                                      value: ActivityType.challenge,
                                       groupValue: controller.type.value,
-                                      onChanged: (Type? value) {
-                                        controller.changeType(value);
+                                      onChanged: (ActivityType? value) {
+                                        controller.onChangeType(value);
                                       },
                                     ),
                                     Text(controller.typeLabels[1],
@@ -217,7 +219,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
     );
   }
 
-  SingleChildScrollView _pageView() {
+  SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -261,7 +263,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: Text(
                           controller.activityModel.type![index] ==
-                                  Type.practice.name
+                                  ActivityType.practice.name
                               ? controller.typeLabels[0]
                               : controller.typeLabels[1],
                           style: CustomTextStyles.bodyLargeBlack),
@@ -285,6 +287,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                         },
                         child: Text(
                             controller.activityModel.sessionName![index],
+                            overflow: TextOverflow.ellipsis,
                             style: CustomTextStyles.bodyLargeBlack.copyWith(
                                 decoration: TextDecoration.underline)),
                       ),
@@ -296,7 +299,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                           controller.onHistoryTap(index);
                         },
                         child: SizedBox(
-                          width: 280,
+                          width: 100,
                           child: Text(controller.activityModel.record![index],
                               overflow: TextOverflow.ellipsis,
                               style: CustomTextStyles.bodyLargeBlack.copyWith(

@@ -26,13 +26,13 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  buildTopBar(),
+                                  _buildTitle(),
                                   const SizedBox(height: 32),
-                                  buildBlueButton(),
+                                  _buildRegisterButton(),
                                   const SizedBox(height: 32),
-                                  dropdownButton(),
+                                  _buildSortDropdown(),
                                   const SizedBox(height: 16),
-                                  buildDataContainer()
+                                  _buildPage()
                                 ],
                               ),
                             ],
@@ -48,7 +48,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
     );
   }
 
-  CustomElevatedButton buildBlueButton() {
+  CustomElevatedButton _buildRegisterButton() {
     return CustomElevatedButton(
       text: "신규 등록",
       height: 44,
@@ -59,7 +59,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "Practice plan 관리",
       searchShow: true,
@@ -68,7 +68,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
     );
   }
 
-  DecoratedBox dropdownButton() {
+  DecoratedBox _buildSortDropdown() {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(
@@ -108,7 +108,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
     );
   }
 
-  SingleChildScrollView buildDataContainer() {
+  SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -155,7 +155,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                 rows: List.generate(controller.practicesModel.length, (index) {
                   return DataRow(cells: [
                     DataCell(InkWell(
-                      onTap: () => controller.goToDetails(index),
+                      onTap: () => controller.onDetails(index),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 64.0),
                         child: Text(

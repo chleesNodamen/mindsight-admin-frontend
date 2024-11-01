@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_controller.dart';
 
@@ -47,7 +47,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                             decorationColor: appTheme.skyBlue,
                                           ),
                                         ),
-                                        onTap: () => Get.back(),
+                                        onTap: () => Get.offAllNamed(
+                                            AppRoutes.activityManage),
                                       ),
                                       CustomImageView(
                                         imagePath: IconConstant.arrowRight,
@@ -58,13 +59,13 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                     ],
                                   ),
                                   const SizedBox(height: 32),
-                                  _buildFirstContainer(),
+                                  _buildMemberInfo(),
                                   const SizedBox(height: 16),
                                   controller.type == "practice"
-                                      ? _buildPracticeContainer()
-                                      : _buildChallengeContainer(),
+                                      ? _buildPracticeInfo()
+                                      : _buildChallengeInfo(),
                                   const SizedBox(height: 16),
-                                  _buildThirdContainer(),
+                                  _buildRecordInfo(),
                                 ],
                               ),
                             ),
@@ -80,7 +81,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
     );
   }
 
-  Widget _buildFirstContainer() {
+  Widget _buildMemberInfo() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -149,7 +150,9 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.registrationDate,
+                  Text(
+                      DateFormat('yyyy-MM-dd').format(
+                          controller.activityDetailsModel.registrationDate!),
                       style: CustomTextStyles.labelLargeBlack),
                 ],
               )
@@ -160,7 +163,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
     );
   }
 
-  Widget _buildPracticeContainer() {
+  Widget _buildPracticeInfo() {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -240,7 +243,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             ]));
   }
 
-  Widget _buildChallengeContainer() {
+  Widget _buildChallengeInfo() {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -333,7 +336,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             ]));
   }
 
-  Widget _buildThirdContainer() {
+  Widget _buildRecordInfo() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -426,7 +429,9 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(controller.sessionStartDate,
+                  Text(
+                      DateFormat('yyyy-MM-dd').format(
+                          controller.activityDetailsModel.sessionStartDate!),
                       style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     width: 32,
@@ -442,7 +447,9 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(controller.sessionEndDate,
+                  Text(
+                      DateFormat('yyyy-MM-dd').format(
+                          controller.activityDetailsModel.sessionEndDate!),
                       style: CustomTextStyles.labelLargeGray),
                 ],
               )),
@@ -459,15 +466,15 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           ),
           InkWell(
             child: Text(
-              controller.chatBot! ? '있음' : '없음',
-              style: controller.chatBot!
+              controller.activityDetailsModel.chatbot != null ? '있음' : '없음',
+              style: controller.activityDetailsModel.chatbot != null
                   ? CustomTextStyles.labelLargeSkyBlue.copyWith(
                       decoration: TextDecoration.underline,
                       decorationColor: appTheme.skyBlue)
                   : CustomTextStyles.labelLargeBlack,
             ),
             onTap: () async {
-              if (controller.chatBot!) {
+              if (controller.activityDetailsModel.chatbot != null) {
                 await controller.onChat();
                 _buildChatModal();
               }
@@ -484,7 +491,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('전문가 피드백', style: CustomTextStyles.labelLargeGray),
-              controller.feedback.value
+              controller.activityDetailsModel.expertMessage != null
                   ? const SizedBox.shrink()
                   : InkWell(
                       child: Text(
@@ -502,7 +509,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           const SizedBox(
             height: 16,
           ),
-          controller.feedback.value
+          controller.activityDetailsModel.expertMessage != null
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -538,7 +545,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                             const SizedBox(
                               width: 8,
                             ),
-                            Text(controller.expertMessageDate,
+                            Text(
+                                DateFormat('yyyy-MM-dd-HH:mm:ss').format(
+                                    controller.activityDetailsModel
+                                        .expertMessageDate!),
                                 style: CustomTextStyles.labelLargeGray),
                           ],
                         )),

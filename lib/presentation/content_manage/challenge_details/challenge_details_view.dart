@@ -1,5 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
+import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
 class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
   const ChallengeDetailsView({super.key});
@@ -25,13 +26,13 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                buildTopBar(),
+                                _buildTitle(),
                                 const SizedBox(height: 32),
-                                buildSubHeader(),
+                                _buildSubMenu(),
                                 const SizedBox(height: 32),
-                                buildFirstContainer(),
+                                _buildInfo(),
                                 const SizedBox(height: 16),
-                                buildSecondContainer(),
+                                _buildUserData(),
                               ],
                             ),
                           ),
@@ -46,7 +47,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
     );
   }
 
-  Container buildSecondContainer() {
+  Container _buildUserData() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -122,7 +123,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
     );
   }
 
-  Widget buildFirstContainer() {
+  Widget _buildInfo() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -142,7 +143,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               InkWell(
-                onTap: controller.goToEdit,
+                onTap: controller.onEdit,
                 child: Text("수정",
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
@@ -250,28 +251,30 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               const SizedBox(height: 24),
               Text('썸네일 파일', style: CustomTextStyles.labelLargeGray),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  InkWell(
-                    child: Text(
-                      "이미지 보기",
-                      style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: appTheme.skyBlue),
-                    ),
-                    onTap: () => launchUrl(
-                        Uri.parse(controller.challengeDetailsModel.thumbnail!)),
-                  ),
-                  const SizedBox(width: 4),
-                  CustomImageView(
-                    onTap: () => SwitchNativeWeb.downloadFile(
-                        url: controller.thumbnailLink.value,
-                        fileName: "download.jpg",
-                        dataType: "data:image/jpg"),
-                    imagePath: IconConstant.download,
-                  )
-                ],
-              ),
+              ImageActionsWidget(
+                  imageUrl: controller.challengeDetailsModel.thumbnail!)
+              // Row(
+              //   children: [
+              //     InkWell(
+              //       child: Text(
+              //         "이미지 보기",
+              //         style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+              //             decoration: TextDecoration.underline,
+              //             decorationColor: appTheme.skyBlue),
+              //       ),
+              //       onTap: () => launchUrl(
+              //           Uri.parse(controller.challengeDetailsModel.thumbnail!)),
+              //     ),
+              //     const SizedBox(width: 4),
+              //     CustomImageView(
+              //       onTap: () => SwitchNativeWeb.downloadFile(
+              //           url: controller.challengeDetailsModel.thumbnail ?? "",
+              //           fileName: "download.jpg",
+              //           dataType: "data:image/jpg"),
+              //       imagePath: IconConstant.download,
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ],
@@ -362,11 +365,11 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.offAllNamed(AppRoutes.contentChallengeManage),
           child: Text("Challenge 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
@@ -384,7 +387,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "Challenge 상세",
       searchShow: false,

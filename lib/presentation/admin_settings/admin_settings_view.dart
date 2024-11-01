@@ -27,11 +27,11 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  buildTopBar(),
+                                  _buildTitle(),
                                   const SizedBox(height: 32),
-                                  _buildFirstContainer(),
+                                  _buildInfo(),
                                   const SizedBox(height: 16),
-                                  _buildSecondContainer(),
+                                  _buildChangePassword(),
                                 ],
                               ),
                             ),
@@ -47,7 +47,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "내 계정 관리",
       searchShow: false,
@@ -59,7 +59,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
     );
   }
 
-  Widget _buildFirstContainer() {
+  Widget _buildInfo() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -196,7 +196,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
     );
   }
 
-  Container _buildSecondContainer() {
+  Container _buildChangePassword() {
     return Container(
         decoration: BoxDecoration(
           color: appTheme.white,
@@ -243,22 +243,10 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                                     height: 24.adaptSize,
                                     width: 24.adaptSize))),
                         suffixConstraints: const BoxConstraints(maxHeight: 56),
-                        onChange: (value) {
-                          // controller.checkPasswordValid(value, false);
-                        },
-                        // validator: (value) {
-                        //   if (value == null ||
-                        //       !controller.checkPasswordValid(value, true) ||
-                        //       !controller.adminPasswordModel.isSuccess) {
-                        //     return "Code is invalid or has expired".tr;
-                        //   }
-                        //   return null;
-                        // },
+                        onChange: (value) {},
                         obscureText: controller.isShowPasswordOne.value,
                         contentPadding: const EdgeInsets.only(
                             left: 16, top: 17, bottom: 17),
-                        // focusedBorderDecoration:
-                        //     TextFormFieldStyleHelper.outlineSkyBlue,
                         filled: true),
                   ],
                 ),
@@ -291,22 +279,10 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                                     height: 24.adaptSize,
                                     width: 24.adaptSize))),
                         suffixConstraints: const BoxConstraints(maxHeight: 56),
-                        onChange: (value) {
-                          // controller.checkPasswordValid(value, false);
-                        },
-                        // validator: (value) {
-                        //   if (value == null ||
-                        //       !controller.checkPasswordValid(value, true) ||
-                        //       !controller.adminPasswordModel.isSuccess) {
-                        //     return "Code is invalid or has expired".tr;
-                        //   }
-                        //   return null;
-                        // },
+                        onChange: (value) {},
                         obscureText: controller.isShowPasswordTwo.value,
                         contentPadding: const EdgeInsets.only(
                             left: 16, top: 17, bottom: 17),
-                        // focusedBorderDecoration:
-                        //     TextFormFieldStyleHelper.outlineSkyBlue,
                         filled: true),
                   ],
                 ),

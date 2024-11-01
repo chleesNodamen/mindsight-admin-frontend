@@ -611,41 +611,41 @@ class ContentEditView extends GetWidget<ContentEditController> {
             const SizedBox(
               width: 24,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("자막 파일 ", style: CustomTextStyles.labelLargeBlack),
-                const SizedBox(height: 8),
-                Container(
-                  width: 353,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      border: Border.all(color: appTheme.grayScale3),
-                      color: appTheme.white),
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 280,
-                        child: Text(
-                          controller.ccName.value,
-                          style: CustomTextStyles.bodyMediumBlack,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      CustomImageView(
-                        imagePath: IconConstant.upload,
-                        onTap: () {
-                          controller.pickFile("cc");
-                        },
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text("자막 파일 ", style: CustomTextStyles.labelLargeBlack),
+            //     const SizedBox(height: 8),
+            //     Container(
+            //       width: 353,
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadiusStyle.roundedBorder12,
+            //           border: Border.all(color: appTheme.grayScale3),
+            //           color: appTheme.white),
+            //       padding: const EdgeInsets.all(16),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           SizedBox(
+            //             width: 280,
+            //             child: Text(
+            //               controller.ccName.value,
+            //               style: CustomTextStyles.bodyMediumBlack,
+            //               overflow: TextOverflow.ellipsis,
+            //             ),
+            //           ),
+            //           CustomImageView(
+            //             imagePath: IconConstant.upload,
+            //             onTap: () {
+            //               controller.pickFile("cc");
+            //             },
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ],

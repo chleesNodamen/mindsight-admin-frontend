@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/route_arguments.dart';
 import 'package:mindsight_admin_page/data/admin_details/admin_details_model.dart';
 import 'package:mindsight_admin_page/data/admin_details/admin_details_repository.dart';
 import 'package:mindsight_admin_page/data/admin_edit/admin_edit_model.dart';
@@ -28,6 +27,12 @@ class SubAdminEditController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
+    await initData();
+  }
+
+  Future<void> initData() async {
+    isLoading.value = true;
+
     adminDetailsModel = await AdminDetailsRepository().get(id);
 
     departmentController.text = adminDetailsModel.department!;
@@ -36,11 +41,13 @@ class SubAdminEditController extends GetxController {
     adminEmailController.text = adminDetailsModel.adminEmail!;
     selectedOrder.value = adminDetailsModel.role!;
 
-    isLoading.value = false;
     isInited.value = true;
+    isLoading.value = false;
   }
 
-  Future<void> saveChanges() async {
+  Future<void> onSave() async {
+    isLoading.value = true;
+
     adminEditModel = await AdminEditRepository().put(
         id,
         AdminEditReqPut(
@@ -51,8 +58,12 @@ class SubAdminEditController extends GetxController {
           adminEmail: adminEmailController.text,
         ));
 
+    isLoading.value = false;
+
     if (adminEditModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.subAdminSettings);
+      showSimpleMessage(Get.context!, "저장 되었습니다");
+    } else {
+      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
     }
   }
 }

@@ -5,10 +5,8 @@ import 'package:mindsight_admin_page/data/challenges/challenges_req_get.dart';
 
 class ChallengesRepository extends BaseRepository {
   Future<ChallengesModel> get(ChallengesReqGet dto) async {
-    // Logger.log(query.toString());
     // req
     String endpoint = "contents/challenges";
-    // endpoint += addGetParam(query);
     Response response =
         await httpClient.getRequest(endpoint, query: dto.toJson());
 

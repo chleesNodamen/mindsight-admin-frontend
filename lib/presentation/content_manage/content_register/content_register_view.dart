@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/category.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_register/content_register_controller.dart';
 
 class ContentRegisterView extends GetWidget<ContentRegisterController> {
@@ -8,109 +7,126 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    return Scaffold(
+    return Obx(() => Scaffold(
         extendBodyBehindAppBar: true,
-        body: ResponsiveWidget(
-          largeScreen: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SideMenu(),
-              Obx(
-                () => Expanded(
-                  child: ListView(
+        body: PageLoadingIndicator(
+          isLoading: controller.isLoading.value,
+          child: controller.isInited.value
+              ? ResponsiveWidget(
+                  largeScreen: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                        child: Form(
-                          key: formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                      const SideMenu(),
+                      Obx(
+                        () => Expanded(
+                          child: ListView(
                             children: [
-                              TobBarSearch(
-                                name: "콘텐츠 신규 등록",
-                                searchShow: false,
-                                viewCount: false,
-                              ),
-                              const SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  InkWell(
-                                      child: Text(
-                                        "콘텐츠 목록",
-                                        style: CustomTextStyles
-                                            .bodyMediumSkyBlue
-                                            .copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          decoration: TextDecoration.underline,
-                                          decorationColor: appTheme.skyBlue,
-                                        ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                                child: Form(
+                                  key: formKey,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TobBarSearch(
+                                        name: "콘텐츠 신규 등록",
+                                        searchShow: false,
+                                        viewCount: false,
                                       ),
-                                      onTap: () => Get.back()),
-                                  CustomImageView(
-                                    imagePath: IconConstant.arrowRight,
+                                      const SizedBox(height: 16),
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                              child: Text(
+                                                "콘텐츠 목록",
+                                                style: CustomTextStyles
+                                                    .bodyMediumSkyBlue
+                                                    .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor:
+                                                      appTheme.skyBlue,
+                                                ),
+                                              ),
+                                              onTap: () => Get.offAllNamed(
+                                                  AppRoutes.contentManage)),
+                                          CustomImageView(
+                                            imagePath: IconConstant.arrowRight,
+                                          ),
+                                          Text('콘텐츠 신규 등록',
+                                              style: CustomTextStyles
+                                                  .bodyMediumGray),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 32),
+                                      Text('기본 정보',
+                                          style:
+                                              CustomTextStyles.bodyMediumBlack),
+                                      const SizedBox(height: 24),
+                                      _enterTitle(),
+                                      const SizedBox(height: 24),
+                                      buildThirdRow(),
+                                      const SizedBox(height: 24),
+                                      _enterMaster(),
+                                      const SizedBox(height: 24),
+                                      _enterTags(),
+                                      const SizedBox(height: 24),
+                                      _enterIntro(),
+                                      const SizedBox(height: 32),
+                                      buildLastRow(),
+                                      const SizedBox(height: 32),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          CustomElevatedButton(
+                                            text: '저장',
+                                            buttonTextStyle: CustomTextStyles
+                                                .bodyMediumWhiteBold,
+                                            buttonStyle:
+                                                CustomButtonStyles.fillPrimary,
+                                            width: 90,
+                                            height: 44,
+                                            onPressed: () {
+                                              if (formKey.currentState!
+                                                      .validate() &&
+                                                  controller.isSaveValidate()) {
+                                                controller.onSave();
+                                              }
+                                            },
+                                          ),
+                                          CustomElevatedButton(
+                                            text: '취소',
+                                            buttonTextStyle: CustomTextStyles
+                                                .bodyMediumRedBold,
+                                            buttonStyle: CustomButtonStyles
+                                                .fillRedTransparent,
+                                            margin:
+                                                const EdgeInsets.only(left: 16),
+                                            width: 90,
+                                            height: 44,
+                                            onPressed: () => Get.offAllNamed(
+                                                AppRoutes.contentManage),
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                  Text('콘텐츠 신규 등록',
-                                      style: CustomTextStyles.bodyMediumGray),
-                                ],
+                                ),
                               ),
-                              const SizedBox(height: 32),
-                              Text('기본 정보',
-                                  style: CustomTextStyles.bodyMediumBlack),
-                              const SizedBox(height: 24),
-                              _enterTitle(),
-                              const SizedBox(height: 24),
-                              buildThirdRow(),
-                              const SizedBox(height: 24),
-                              _enterMaster(),
-                              const SizedBox(height: 24),
-                              _enterTags(),
-                              const SizedBox(height: 24),
-                              _enterIntro(),
-                              const SizedBox(height: 32),
-                              buildLastRow(),
-                              const SizedBox(height: 32),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  CustomElevatedButton(
-                                    text: '저장',
-                                    buttonTextStyle:
-                                        CustomTextStyles.bodyMediumWhiteBold,
-                                    buttonStyle: CustomButtonStyles.fillPrimary,
-                                    width: 90,
-                                    height: 44,
-                                    onPressed: () {
-                                      if (formKey.currentState!.validate() &&
-                                          controller.isSaveOk()) {
-                                        controller.onSave();
-                                      }
-                                    },
-                                  ),
-                                  CustomElevatedButton(
-                                    text: '취소',
-                                    buttonTextStyle:
-                                        CustomTextStyles.bodyMediumRedBold,
-                                    buttonStyle:
-                                        CustomButtonStyles.fillRedTransparent,
-                                    margin: const EdgeInsets.only(left: 16),
-                                    width: 90,
-                                    height: 44,
-                                    onPressed: () => Get.back(),
-                                  ),
-                                ],
-                              )
                             ],
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ));
+                )
+              : const SizedBox.shrink(),
+        )));
   }
 
   Widget _enterMaster() {
@@ -147,7 +163,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 controller.selectedMaster.value = newValue;
               }
             },
-            items: controller.masters
+            items: controller.masterModel.name!
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -251,7 +267,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   return DropdownMenuItem<Category>(
                     value: value,
                     child: Text(
-                      value.toString(),
+                      value.toDisplayName(),
                       style: CustomTextStyles.bodyMediumBlack,
                     ),
                   );
@@ -586,45 +602,45 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             const SizedBox(
               width: 24,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("자막 파일 ", style: CustomTextStyles.labelLargeBlack),
-                const SizedBox(height: 8),
-                Container(
-                  width: 353,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      border: Border.all(color: appTheme.grayScale3),
-                      color: appTheme.white),
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 280,
-                        child: Text(
-                          controller.ccName == "".obs
-                              ? '파일 추가 혹은 여기로 드래그 (.srt)'
-                              : controller.ccName.value,
-                          style: controller.ccName == "".obs
-                              ? CustomTextStyles.bodyMediumGray
-                              : CustomTextStyles.bodyMediumBlack,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      CustomImageView(
-                        imagePath: IconConstant.upload,
-                        onTap: () {
-                          controller.pickFile("cc");
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text("자막 파일 ", style: CustomTextStyles.labelLargeBlack),
+            //     const SizedBox(height: 8),
+            //     Container(
+            //       width: 353,
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadiusStyle.roundedBorder12,
+            //           border: Border.all(color: appTheme.grayScale3),
+            //           color: appTheme.white),
+            //       padding: const EdgeInsets.all(16),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           SizedBox(
+            //             width: 280,
+            //             child: Text(
+            //               controller.ccName == "".obs
+            //                   ? '파일 추가 혹은 여기로 드래그 (.srt)'
+            //                   : controller.ccName.value,
+            //               style: controller.ccName == "".obs
+            //                   ? CustomTextStyles.bodyMediumGray
+            //                   : CustomTextStyles.bodyMediumBlack,
+            //               overflow: TextOverflow.ellipsis,
+            //             ),
+            //           ),
+            //           CustomImageView(
+            //             imagePath: IconConstant.upload,
+            //             onTap: () {
+            //               controller.pickFile("cc");
+            //             },
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ],

@@ -9,7 +9,6 @@ import 'package:mindsight_admin_page/data/practice_details/practice_details_repo
 import 'package:mindsight_admin_page/data/practice_edit/practice_edit_model.dart';
 import 'package:mindsight_admin_page/data/practice_edit/practice_edit_repository.dart';
 import 'package:mindsight_admin_page/data/practice_edit/practice_edit_req_put.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_details/practice_details_controller.dart';
 
 class PracticeEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -24,14 +23,16 @@ class PracticeEditController extends GetxController {
 
   var selectedIndex = (-1).obs; // Initialize with -1 indicating no selection
   RxString selectedBodyName = "".obs;
-  String selectedBodyId = "";
+  String? selectedBodyId;
   RxString selectedBreathName = "".obs;
-  String selectedBreathId = "";
+  String? selectedBreathId;
 
   List<String> contentType = [];
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+
+  RxInt activePage = 1.obs;
 
   @override
   Future<void> onInit() async {
@@ -63,20 +64,10 @@ class PracticeEditController extends GetxController {
     Get.offAllNamed(AppRoutes.challengeEdit);
   }
 
-  var data = [].obs;
-  var selected = false.obs;
-  var activePage = 1.obs;
-
-  // Method to update the value
-  // void updateBodyValue(int index) {
-  //   selectedContent[index] = !selectedContent[index];
-  // }
-
   void updateSelectedIndex(int index) {
     selectedIndex.value = index;
   }
 
-  // Method to load new data for the page
   Future<void> loadNewPage(int pageNum) async {
     selectedIndex.value = (-1);
 
@@ -93,14 +84,18 @@ class PracticeEditController extends GetxController {
     isLoading.value = false;
   }
 
-  // Method to simulate data fetch
   Future<void> fetchBodyData(String? search) async {
+    Logger.info("바디");
+
     selectedIndex.value = (-1);
     contentType = [
       "Basic body",
       "Intermediate body",
       "Advance body",
     ];
+
+    isLoading.value = true;
+    fetchedData.value = false;
 
     contentListModel = await ContentListRepository().get(ContentListReqGet(
       page: 1,
@@ -110,10 +105,13 @@ class PracticeEditController extends GetxController {
       status: true,
     ));
 
+    isLoading.value = false;
     fetchedData.value = true;
   }
 
   Future<void> fetchBreathData(String? search) async {
+    Logger.info("fetchBreathData");
+
     selectedIndex.value = (-1);
     contentType = [
       "Relax breathing",
@@ -123,6 +121,9 @@ class PracticeEditController extends GetxController {
       "Guided breathing"
     ];
 
+    isLoading.value = true;
+    fetchedData.value = false;
+
     contentListModel = await ContentListRepository().get(ContentListReqGet(
       page: 1,
       type: contentType,
@@ -131,25 +132,27 @@ class PracticeEditController extends GetxController {
       status: true,
     ));
 
+    isLoading.value = false;
     fetchedData.value = true;
   }
 
-  void goToPractice() {
-    Get.offAllNamed(AppRoutes.contentPracticeManage);
-  }
-
-  void goToDetails() {
+  void onDetails() {
     Get.offAllNamed(AppRoutes.practiceDetails,
         arguments: {RouteArguments.id: id});
   }
 
-  void resetData() {
+  Future<void> initSearchDialogData(bool isBody) async {
     contentListModel = ContentListModel();
     contentType = [];
     fetchedData.value = false;
-    selected.value = false;
     activePage.value = 1;
     textController.clear();
+
+    if (isBody) {
+      await fetchBodyData(textController.text);
+    } else {
+      await fetchBreathData(textController.text);
+    }
   }
 
   void onBodyButtonPressed() {
@@ -162,12 +165,14 @@ class PracticeEditController extends GetxController {
     selectedBreathId = contentListModel.id![selectedIndex.value];
   }
 
-  Future<void> saveChanges() async {
+  Future<void> onSave() async {
     practiceEditModel = await PracticeEditRepository().put(id,
         PracticeEditReqPut(bodyId: selectedBodyId, breathId: selectedBreathId));
     if (practiceEditModel.isSuccess) {
       Get.offAllNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: id});
+    } else {
+      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
     }
   }
 }

@@ -25,11 +25,11 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              buildTopBar(),
+                              _buildTitle(),
                               const SizedBox(height: 32),
-                              buildSubHeader(),
+                              _buildSubMenu(),
                               const SizedBox(height: 32),
-                              buildFirstContainer()
+                              _buildInfo()
                             ],
                           ),
                         ),
@@ -43,7 +43,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
     );
   }
 
-  Widget buildFirstContainer() {
+  Widget _buildInfo() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -63,7 +63,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               InkWell(
-                onTap: controller.goToEdit,
+                onTap: controller.onEdit,
                 child: Text("수정",
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
@@ -215,12 +215,14 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
-          onTap: () => Get.back(),
-          child: Text("관리자 등록",
+          onTap: () {
+            Get.offAllNamed(AppRoutes.subAdminSettings);
+          },
+          child: Text("서브 관리자 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -237,7 +239,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "관리자 상세",
       searchShow: false,

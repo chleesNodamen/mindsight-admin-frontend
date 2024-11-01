@@ -26,15 +26,15 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  buildTopBar(),
+                                  _buildTitle(),
                                   const SizedBox(height: 32),
-                                  buildBlueButton(),
+                                  _buildRegisterButton(),
                                   const SizedBox(height: 32),
-                                  buildFirstContainer(),
+                                  _buildSelect(),
                                   const SizedBox(height: 16),
-                                  dropdownButton(),
+                                  _buildSortDropdown(),
                                   const SizedBox(height: 16),
-                                  buildSecondContainer()
+                                  _buildPage()
                                 ],
                               ),
                             ],
@@ -50,7 +50,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
     );
   }
 
-  CustomElevatedButton buildBlueButton() {
+  CustomElevatedButton _buildRegisterButton() {
     return CustomElevatedButton(
       onPressed: () {
         Get.offAllNamed(AppRoutes.contentRegister);
@@ -63,7 +63,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "콘텐츠 목록",
       searchShow: false,
@@ -74,7 +74,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
     );
   }
 
-  SingleChildScrollView buildSecondContainer() {
+  SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -101,22 +101,6 @@ class ContentManageView extends GetWidget<ContentManageController> {
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
-                  // DataColumn(
-                  //   label: Checkbox(
-                  //       activeColor: appTheme.skyBlue,
-                  //       checkColor: Colors.white,
-                  //       fillColor: MaterialStateProperty.resolveWith(
-                  //         (states) {
-                  //           if (!states
-                  //               .contains(MaterialState.selected)) {
-                  //             return Colors.transparent;
-                  //           }
-                  //           return null;
-                  //         },
-                  //       ),
-                  //       value: false,
-                  //       onChanged: (bool? value) {}),
-                  // ),
                   DataColumn(
                       label:
                           Text('타입', style: CustomTextStyles.labelLargeGray)),
@@ -153,7 +137,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         )),
                         DataCell(
                           InkWell(
-                            onTap: () => controller.goToDetails(index),
+                            onTap: () => controller.onDetails(index),
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 24.0),
@@ -198,8 +182,10 @@ class ContentManageView extends GetWidget<ContentManageController> {
                             padding: const EdgeInsets.only(
                                 left: 6, right: 0, top: 0, bottom: 0),
                             child: DropdownButton<String>(
-                              value:
-                                  controller.contentState![index] ? '정상' : '안함',
+                              value: controller
+                                      .contentListModel.value.status![index]
+                                  ? '정상'
+                                  : '안함',
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
                               borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -207,8 +193,6 @@ class ContentManageView extends GetWidget<ContentManageController> {
                               style: const TextStyle(color: Colors.deepPurple),
                               onChanged: (String? newValue) {
                                 if (newValue != null) {
-                                  controller.contentState![index] =
-                                      !controller.contentState![index];
                                   controller.onStatusChange(index);
                                 }
                               },
@@ -250,16 +234,6 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       height: 44,
                       onPressed: controller.onStatusChangeForAll,
                     ),
-                    // CustomElevatedButton(
-                    //   text: '삭제',
-                    // buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                    //   ),
-                    //   buttonStyle:
-                    //       CustomButtonStyles.fillRedTransparent.copyWith(),
-                    //   width: 76,
-                    //   height: 44,
-                    //   onPressed: controller.onDeleteButton,
-                    // ),
                   ],
                 ),
                 Pages(
@@ -277,7 +251,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
     );
   }
 
-  Container buildFirstContainer() {
+  Container _buildSelect() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -396,7 +370,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
     );
   }
 
-  DecoratedBox dropdownButton() {
+  DecoratedBox _buildSortDropdown() {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(

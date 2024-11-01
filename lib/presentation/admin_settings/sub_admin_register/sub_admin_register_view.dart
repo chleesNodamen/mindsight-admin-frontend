@@ -24,11 +24,11 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              buildTopBar(),
+                              _buildTitle(),
                               const SizedBox(height: 32),
-                              buildSubHeader(),
+                              _buildSubMenu(),
                               const SizedBox(height: 32),
-                              buildTextFields()
+                              _buildInfo()
                             ],
                           ),
                         ),
@@ -42,23 +42,23 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
     );
   }
 
-  Column buildTextFields() {
+  Column _buildInfo() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildFirstRow(),
+        _buildInfo0(),
         const SizedBox(height: 24),
-        buildSecondRow(),
+        _buildInfo1(),
         const SizedBox(height: 24),
-        buildThirdRow(),
+        _buildInfo2(),
         const SizedBox(height: 24),
-        buildLastRow(),
+        _buildInfo3(),
       ],
     );
   }
 
-  Column buildLastRow() {
+  Column _buildInfo3() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,21 +77,9 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             width: 353,
             hintText: "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,
-            onChange: (value) {
-              // controller.checkPasswordValid(value, false);
-            },
-            // validator: (value) {
-            //   // if (value == null ||
-            //   //     !controller.checkPasswordValid(value, true) ||
-            //   //     !controller.authPasswordResetModel.isSuccess) {
-            //   //   return "Code is invalid or has expired".tr;
-            //   // }
-            //   // return null;
-            // },
+            onChange: (value) {},
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
             filled: true),
         const SizedBox(height: 44),
         Row(
@@ -103,7 +91,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
               height: 44,
-              onPressed: controller.saveChanges,
+              onPressed: controller.onSave,
             ),
             CustomElevatedButton(
               text: '취소',
@@ -112,7 +100,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
               margin: const EdgeInsets.only(left: 16),
               width: 90,
               height: 44,
-              onPressed: () => Get.back(),
+              onPressed: () => Get.offAllNamed(AppRoutes.subAdminSettings),
             ),
           ],
         )
@@ -120,7 +108,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
     );
   }
 
-  Row buildThirdRow() {
+  Row _buildInfo2() {
     return Row(
       children: [
         Column(
@@ -141,21 +129,9 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                // validator: (value) {
-                //   // if (value == null ||
-                //   //     !controller.checkPasswordValid(value, true) ||
-                //   //     !controller.authPasswordResetModel.isSuccess) {
-                //   //   return "Code is invalid or has expired".tr;
-                //   // }
-                //   // return null;
-                // },
+                onChange: (value) {},
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
@@ -177,21 +153,9 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                // validator: (value) {
-                //   // if (value == null ||
-                //   //     !controller.checkPasswordValid(value, true) ||
-                //   //     !controller.authPasswordResetModel.isSuccess) {
-                //   //   return "Code is invalid or has expired".tr;
-                //   // }
-                //   // return null;
-                // },
+                onChange: (value) {},
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
@@ -199,7 +163,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
     );
   }
 
-  Row buildSecondRow() {
+  Row _buildInfo1() {
     return Row(
       children: [
         Column(
@@ -232,12 +196,10 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
                 borderRadius: BorderRadiusStyle.roundedBorder12,
-                // icon: const Icon(Icons.),
                 elevation: 16,
                 onChanged: (String? newValue) {
                   if (newValue != null) {
                     controller.updateSelectedOrder(newValue);
-                    // controller.updateStyle();
                   }
                 },
                 items: <String>['Select Option', '운영', '제품 관리', '개발']
@@ -273,21 +235,9 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                // validator: (value) {
-                //   // if (value == null ||
-                //   //     !controller.checkPasswordValid(value, true) ||
-                //   //     !controller.authPasswordResetModel.isSuccess) {
-                //   //   return "Code is invalid or has expired".tr;
-                //   // }
-                //   // return null;
-                // },
+                onChange: (value) {},
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
@@ -295,7 +245,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
     );
   }
 
-  Row buildFirstRow() {
+  Row _buildInfo0() {
     return Row(
       children: [
         Column(
@@ -316,21 +266,9 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                 width: 353,
                 hintText: "Input text",
                 hintStyle: CustomTextStyles.bodyMediumGray,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                // validator: (value) {
-                //   // if (value == null ||
-                //   //     !controller.checkPasswordValid(value, true) ||
-                //   //     !controller.authPasswordResetModel.isSuccess) {
-                //   //   return "Code is invalid or has expired".tr;
-                //   // }
-                //   // return null;
-                // },
+                onChange: (value) {},
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
@@ -370,22 +308,10 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                             height: 24.adaptSize,
                             width: 24.adaptSize))),
                 suffixConstraints: const BoxConstraints(maxHeight: 56),
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false); //TODO
-                },
-                // validator: (value) { //TODO
-                //   if (value == null ||
-                //       !controller.checkPasswordValid(value, true)
-                //       ) {
-                //     return "Code is invalid or has expired".tr;
-                //   }
-                //   return null;
-                // },
+                onChange: (value) {},
                 obscureText: controller.isShowPasswordOne.value,
                 contentPadding:
                     const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                // focusedBorderDecoration:
-                //     TextFormFieldStyleHelper.outlineSkyBlue,
                 filled: true),
           ],
         ),
@@ -393,11 +319,11 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.offAllNamed(AppRoutes.subAdminSettings),
           child: Text("서브 관리자 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
@@ -415,7 +341,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "관리자 신규 등록",
       searchShow: false,

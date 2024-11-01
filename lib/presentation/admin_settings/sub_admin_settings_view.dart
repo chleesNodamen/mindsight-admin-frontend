@@ -26,11 +26,11 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  buildTopBar(),
+                                  _buildTitle(),
                                   const SizedBox(height: 32),
-                                  buildBlueButton(),
+                                  _buildRegisterButton(),
                                   const SizedBox(height: 32),
-                                  buildSecondContainer()
+                                  _buildPage()
                                 ],
                               ),
                             ],
@@ -46,9 +46,9 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
     );
   }
 
-  CustomElevatedButton buildBlueButton() {
+  CustomElevatedButton _buildRegisterButton() {
     return CustomElevatedButton(
-      onPressed: controller.onRegisterTap,
+      onPressed: controller.onRegister,
       text: "신규 등록",
       height: 44,
       width: 107,
@@ -57,7 +57,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "서브 관리자 관리",
       searchShow: false,
@@ -66,7 +66,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
     );
   }
 
-  SingleChildScrollView buildSecondContainer() {
+  SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -91,22 +91,6 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
-                  // DataColumn(
-                  //   label: Checkbox(
-                  //       activeColor: appTheme.skyBlue,
-                  //       checkColor: Colors.white,
-                  //       fillColor: MaterialStateProperty.resolveWith(
-                  //         (states) {
-                  //           if (!states
-                  //               .contains(MaterialState.selected)) {
-                  //             return Colors.transparent;
-                  //           }
-                  //           return null;
-                  //         },
-                  //       ),
-                  //       value: false,
-                  //       onChanged: (bool? value) {}),
-                  // ),
                   DataColumn(
                       label:
                           Text('아이디', style: CustomTextStyles.labelLargeGray)),
@@ -132,7 +116,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: InkWell(
                             onTap: () {
-                              controller.goToEdit(index);
+                              controller.onEdit(index);
                             },
                             child: Text(controller.adminListModel.email![index],
                                 style:
@@ -181,7 +165,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                   width: 76,
                   height: 44,
                   onPressed: () async {
-                    await controller.deleteSelected();
+                    await controller.onDeleteSelected();
                   },
                 ),
                 Pages(

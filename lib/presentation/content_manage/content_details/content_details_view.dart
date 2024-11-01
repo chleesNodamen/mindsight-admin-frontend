@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_details/content_details_controller.dart';
+import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
 class ContentDetailsView extends GetWidget<ContentDetailsController> {
   const ContentDetailsView({super.key});
@@ -26,13 +26,13 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                buildTopBar(),
+                                _buildTitle(),
                                 const SizedBox(height: 32),
-                                buildSubHeader(),
+                                _buildSubMenu(),
                                 const SizedBox(height: 32),
-                                buildFirstContainer(),
+                                _buildInfo(),
                                 const SizedBox(height: 16),
-                                buildSecondContainer(),
+                                _buildUserData(),
                               ],
                             ),
                           ),
@@ -47,7 +47,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
     );
   }
 
-  Container buildSecondContainer() {
+  Container _buildUserData() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -96,7 +96,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
     );
   }
 
-  Widget buildFirstContainer() {
+  Widget _buildInfo() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -116,7 +116,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               InkWell(
-                onTap: controller.goToEdit,
+                onTap: controller.onEdit,
                 child: Text("수정",
                     style: CustomTextStyles.labelLargeSkyBlue
                         .copyWith(decoration: TextDecoration.underline)),
@@ -241,7 +241,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                                       decorationColor: appTheme.skyBlue),
                             ),
                             onTap: () => SwitchNativeWeb.downloadFile(
-                                url: controller.videoLink.value,
+                                url: controller.contentDetailsModel.video ?? "",
                                 fileName: "download.mp4",
                                 dataType: "data:video/MPEG-4"),
                           ),
@@ -256,63 +256,52 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                     children: [
                       Text('썸네일 파일', style: CustomTextStyles.labelLargeGray),
                       const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          InkWell(
-                            child: Text(
-                              "이미지 보기",
-                              style: CustomTextStyles.bodyMediumSkyBlue
-                                  .copyWith(
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: appTheme.skyBlue),
-                            ),
-                            onTap: () => launchUrl(Uri.parse(
-                                controller.contentDetailsModel.thumbnail!)),
-                          ),
-                          const SizedBox(width: 4),
-                          CustomImageView(
-                            onTap: () => SwitchNativeWeb.downloadFile(
-                                url: controller.thumbnailLink.value,
-                                fileName: "download.jpg",
-                                dataType: "data:image/jpeg"),
-                            imagePath: IconConstant.download,
-                          )
-                        ],
+                      ImageActionsWidget(
+                        imageUrl: controller.contentDetailsModel.thumbnail!,
                       ),
                     ],
                   ),
                   const SizedBox(width: 60),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('자막 파일', style: CustomTextStyles.labelLargeGray),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          InkWell(
-                            child: Text(
-                              "파일 보기",
-                              style: CustomTextStyles.bodyMediumSkyBlue
-                                  .copyWith(
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: appTheme.skyBlue),
-                            ),
-                            onTap: () => launchUrl(
-                                Uri.parse(controller.contentDetailsModel.cc!)),
-                          ),
-                          const SizedBox(width: 4),
-                          CustomImageView(
-                            onTap: () => SwitchNativeWeb.downloadFile(
-                                url: controller.ccLink.value,
-                                fileName: "download.txt",
-                                dataType: "data:text/txt"),
-                            imagePath: IconConstant.download,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text('자막 파일', style: CustomTextStyles.labelLargeGray),
+                  //     const SizedBox(height: 16),
+                  //     (controller.contentDetailsModel.cc == null ||
+                  //             controller.contentDetailsModel.cc!.isEmpty)
+                  //         ? const SizedBox(
+                  //             height: 25,
+                  //           )
+                  //         : Row(
+                  //             children: [
+                  //               InkWell(
+                  //                 child: Text(
+                  //                   "파일 보기",
+                  //                   style: CustomTextStyles.bodyMediumSkyBlue
+                  //                       .copyWith(
+                  //                           decoration:
+                  //                               TextDecoration.underline,
+                  //                           decorationColor: appTheme.skyBlue),
+                  //                 ),
+                  //                 onTap: () {
+                  //                   launchUrl(Uri.parse(
+                  //                       controller.contentDetailsModel.cc!));
+                  //                 },
+                  //               ),
+                  //               const SizedBox(width: 4),
+                  //               CustomImageView(
+                  //                 onTap: () => SwitchNativeWeb.downloadFile(
+                  //                     url: controller.contentDetailsModel.cc ??
+                  //                         "",
+                  //                     fileName: "download.txt",
+                  //                     dataType: "data:text/txt"),
+                  //                 imagePath: IconConstant.download,
+                  //               )
+                  //             ],
+                  //           ),
+                  //   ],
+                  // ),
                 ],
               ),
             ],
@@ -322,7 +311,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
@@ -346,7 +335,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "콘텐츠 상세",
       searchShow: false,

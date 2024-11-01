@@ -11,21 +11,17 @@ import 'package:mindsight_admin_page/data/challenge_edit/challenge_edit_model.da
 import 'package:mindsight_admin_page/data/challenge_edit/challenge_edit_repository.dart';
 import 'package:mindsight_admin_page/data/challenge_edit/challenge_edit_req_put.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
 
 class ChallengeEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
-  RxInt selectedDay = 1.obs;
-
-  File? thumbnailFile;
-  String? thumbnailUrl;
-  RxString thumbnailName = "".obs;
 
   late ChallengeEditModel challengeEditModel;
   late ChallengeDetailsModel challengeDetailsModel;
+
+  RxInt selectedDay = 1.obs;
+  File? thumbnailFile;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController introController = TextEditingController();
@@ -40,7 +36,6 @@ class ChallengeEditController extends GetxController {
 
   Future<void> initData() async {
     isLoading.value = true;
-    isInited.value = false;
 
     if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
@@ -54,6 +49,7 @@ class ChallengeEditController extends GetxController {
       introController.text = challengeDetailsModel.intro ?? "";
       selectedGoal.value = challengeDetailsModel.goal ?? "";
     }
+
     isLoading.value = false;
     isInited.value = true;
   }
@@ -67,21 +63,20 @@ class ChallengeEditController extends GetxController {
     selectedDay.value = day;
   }
 
-  void goToChallenge() {
-    Get.offAllNamed(AppRoutes.contentChallengeManage);
-  }
+  Future<void> onSave() async {
+    String? thumbnailUrl;
 
-  Future<void> saveChanges() async {
     if (thumbnailFile != null) {
       thumbnailUrl = await UploadRepository().uploadFile(thumbnailFile!);
     }
+
     challengeEditModel = await ChallengeEditRepository().put(
         id,
         ChallengeEditReqPut(
           name: nameController.text,
           goal: selectedGoal.value,
           intro: introController.text,
-          // days: challengeDetailsModel.days, //TODO update names for daysr
+          // days: challengeDetailsModel.days,
           thumbnail: thumbnailUrl ?? challengeDetailsModel.thumbnail,
         ));
     if (challengeEditModel.isSuccess) {
@@ -100,8 +95,6 @@ class ChallengeEditController extends GetxController {
 
     if (result != null) {
       PlatformFile file = result.files.first;
-
-      thumbnailName.value = file.name;
       thumbnailFile = File([file.bytes!], file.name);
     } else {
       return;

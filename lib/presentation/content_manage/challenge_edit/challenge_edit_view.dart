@@ -25,9 +25,9 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                buildTopBar(),
+                                _buildTitle(),
                                 const SizedBox(height: 32),
-                                buildSubHeader(),
+                                _buildSubMenu(),
                                 const SizedBox(height: 32),
                                 buildTextFields()
                               ],
@@ -237,7 +237,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                   buttonStyle: CustomButtonStyles.fillPrimary,
                   width: 90,
                   height: 44,
-                  onPressed: controller.saveChanges,
+                  onPressed: controller.onSave,
                 ),
                 CustomElevatedButton(
                   text: '취소',
@@ -246,7 +246,8 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                   margin: const EdgeInsets.only(left: 16),
                   width: 90,
                   height: 44,
-                  onPressed: () => Get.back(),
+                  onPressed: () => Get.offAllNamed(AppRoutes.challengeDetails,
+                      arguments: {RouteArguments.id: controller.id}),
                 ),
               ],
             )
@@ -402,11 +403,11 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
-          onTap: controller.goToChallenge,
+          onTap: () => Get.offAllNamed(AppRoutes.contentChallengeManage),
           child: Text("Challenge 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
@@ -420,7 +421,8 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
           imagePath: IconConstant.arrowRight,
         ),
         InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.offAllNamed(AppRoutes.challengeDetails,
+              arguments: {RouteArguments.id: controller.id}),
           child: Text("Challenge 상세",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
@@ -438,7 +440,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "Challenge 수정",
       searchShow: false,

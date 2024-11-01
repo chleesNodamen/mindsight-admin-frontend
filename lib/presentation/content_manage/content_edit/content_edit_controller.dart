@@ -246,8 +246,11 @@ class ContentEditController extends GetxController {
     );
 
     if (contentEditModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.contentDetails,
-          arguments: {RouteArguments.id: id});
+      // Get.offAllNamed(AppRoutes.contentDetails,
+      //     arguments: {RouteArguments.id: id});
+      showSimpleMessage(Get.context!, "수정 되었습니다");
+    } else {
+      showSimpleMessage(Get.context!, "수정에 실패 하였습니다");
     }
 
     isLoading.value = false;

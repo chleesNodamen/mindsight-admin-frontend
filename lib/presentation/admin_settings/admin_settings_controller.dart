@@ -1,4 +1,3 @@
-// import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_model.dart';
 import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_repository.dart';
@@ -17,33 +16,6 @@ class AdminSettingsController extends GetxController {
   late AdminMyDataModel adminMyDataModel;
   late AdminPasswordModel adminPasswordModel;
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    await initData();
-  }
-
-  Future<void> initData() async {
-    isLoading.value = true;
-    isInited.value = false;
-    if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
-
-    adminMyDataModel = await AdminMydataRepository().get();
-
-    isLoading.value = false;
-    isInited.value = true;
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    oldPasswordController.dispose();
-    newPasswordController.dispose();
-  }
-
   final TextEditingController oldPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
 
@@ -58,51 +30,34 @@ class AdminSettingsController extends GetxController {
     PasswordValidEnum.waiting.obs
   ];
 
-  // bool checkPasswordValid(String value, bool showInvalidRedColor) {
-  //   _wordChecker.check(value);
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    await initData();
+  }
 
-  //   Logger.log("$value ${_wordChecker.is8Characters}");
+  Future<void> initData() async {
+    isLoading.value = true;
 
-  //   if (_wordChecker.is8Characters) {
-  //     isPasswordValid[0].value = PasswordValidEnum.valid;
-  //   } else {
-  //     if (showInvalidRedColor) {
-  //       isPasswordValid[0].value = PasswordValidEnum.invalid;
-  //     } else {
-  //       isPasswordValid[0].value = PasswordValidEnum.waiting;
-  //     }
-  //   }
+    if (AppConstant.test) {
+      await AuthRepository().post(AuthReqPost(
+          email: AppConstant.testEmail, password: AppConstant.testPassword));
+    }
 
-  //   if (_wordChecker.isUpperLowerLetter) {
-  //     isPasswordValid[1].value = PasswordValidEnum.valid;
-  //   } else {
-  //     if (showInvalidRedColor) {
-  //       isPasswordValid[1].value = PasswordValidEnum.invalid;
-  //     } else {
-  //       isPasswordValid[1].value = PasswordValidEnum.waiting;
-  //     }
-  //   }
+    adminMyDataModel = await AdminMydataRepository().get();
 
-  //   if (_wordChecker.is1Symbol) {
-  //     isPasswordValid[2].value = PasswordValidEnum.valid;
-  //   } else {
-  //     if (showInvalidRedColor) {
-  //       isPasswordValid[2].value = PasswordValidEnum.invalid;
-  //     } else {
-  //       isPasswordValid[2].value = PasswordValidEnum.waiting;
-  //     }
-  //   }
+    isInited.value = true;
+    isLoading.value = false;
+  }
 
-  //   return _wordChecker.is8Characters &&
-  //       _wordChecker.isUpperLowerLetter &&
-  //       _wordChecker.is1Symbol;
-  // }
+  @override
+  void onClose() {
+    super.onClose();
+    oldPasswordController.dispose();
+    newPasswordController.dispose();
+  }
 
   Future<void> onContinue() async {
-    // if (!checkPasswordValid(oldPasswordController.text, false)) {
-    //   return;
-    // }
-
     isLoading.value = true;
 
     adminPasswordModel = await AdminPasswordRepository().put(
@@ -112,12 +67,10 @@ class AdminSettingsController extends GetxController {
 
     isLoading.value = false;
 
-    // if (!formKey.currentState!.validate()) {
-    //   return;
-    // }
-
     if (adminPasswordModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.adminSettings);
+      showSimpleMessage(Get.context!, "성공적으로 저장 되었습니다");
+    } else {
+      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
     }
   }
 }

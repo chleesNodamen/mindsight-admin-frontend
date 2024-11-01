@@ -24,9 +24,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              buildTopBar(),
+                              _buildTitle(),
                               const SizedBox(height: 32),
-                              buildSubHeader(),
+                              _buildSubMenu(),
                               const SizedBox(height: 32),
                               buildTextFields()
                             ],
@@ -66,7 +66,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         ])),
         const SizedBox(height: 8),
         InkWell(
-          onTap: () => showCustomDialog(true),
+          onTap: () => showSearchDialog(true),
           child: Container(
             width: 353,
             decoration: BoxDecoration(
@@ -88,7 +88,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         ),
         const SizedBox(height: 8),
         InkWell(
-          onTap: () => showCustomDialog(false),
+          onTap: () => showSearchDialog(false),
           child: Container(
             width: 353,
             decoration: BoxDecoration(
@@ -119,7 +119,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
               width: 90,
               height: 44,
               onPressed: () async => {
-                await controller.saveChanges(),
+                await controller.onSave(),
               },
             ),
             CustomElevatedButton(
@@ -129,7 +129,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
               margin: const EdgeInsets.only(left: 16),
               width: 90,
               height: 44,
-              onPressed: () => Get.back(),
+              onPressed: () => Get.offAllNamed(AppRoutes.practiceDetails,
+                  arguments: {RouteArguments.id: controller.id}),
             ),
           ],
         )
@@ -137,9 +138,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
     );
   }
 
-// 1 body 0 breath
-  void showCustomDialog(bool contentType) {
-    controller.resetData();
+  // 1 body 0 breath
+  Future<void> showSearchDialog(bool isBody) async {
+    await controller.initSearchDialogData(isBody);
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
@@ -266,7 +267,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        contentType == true
+                        isBody == true
                             ? controller
                                 .fetchBodyData(controller.textController.text)
                             : controller.fetchBreathData(
@@ -390,10 +391,12 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                             ),
                           ),
                           const SizedBox(height: 32),
-                          Row(
+                          Stack(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            alignment: Alignment.centerLeft,
                             children: [
                               CustomElevatedButton(
-                                  text: '상태 변경',
+                                  text: '선택 완료',
                                   buttonTextStyle:
                                       CustomTextStyles.bodyMediumWhiteBold,
                                   buttonStyle: CustomButtonStyles.fillPrimary,
@@ -401,20 +404,23 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                   width: 107,
                                   height: 44,
                                   onPressed: () async {
-                                    if (contentType) {
+                                    if (isBody) {
                                       controller.onBodyButtonPressed();
                                     } else {
                                       controller.onBreathButtonPressed();
                                     }
                                     Get.back();
                                   }),
-                              Pages(
-                                pages: (controller.contentListModel.total! / 5)
-                                    .ceil(),
-                                activePage: controller.activePage.value,
-                                onTap: (int pageNum) {
-                                  controller.loadNewPage(pageNum);
-                                },
+                              Center(
+                                child: Pages(
+                                  pages:
+                                      (controller.contentListModel.total! / 5)
+                                          .ceil(),
+                                  activePage: controller.activePage.value,
+                                  onTap: (int pageNum) {
+                                    controller.loadNewPage(pageNum);
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -456,11 +462,11 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
     );
   }
 
-  Row buildSubHeader() {
+  Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
-          onTap: controller.goToPractice,
+          onTap: () => Get.offAllNamed(AppRoutes.contentPracticeManage),
           child: Text("Practice plan 관리",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
@@ -474,7 +480,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           imagePath: IconConstant.arrowRight,
         ),
         InkWell(
-          onTap: controller.goToDetails,
+          onTap: controller.onDetails,
           child: Text("Practice plan 상세",
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
@@ -492,7 +498,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
     );
   }
 
-  TobBarSearch buildTopBar() {
+  TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "Practice plan 수정",
       searchShow: false,

@@ -19,7 +19,7 @@ class ContentListReqGet {
         "page": page,
         "sortBy": sortBy,
         "type": type ?? [],
-        "status": status ?? true,
+        "status": status,
         "search": search,
         "pageSize": pageSize,
       };

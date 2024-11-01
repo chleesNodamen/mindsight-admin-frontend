@@ -1,7 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_model.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_repository.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_req_get.dart';
@@ -10,62 +9,35 @@ import 'package:mindsight_admin_page/data/challenges_status/challenges_status_re
 import 'package:mindsight_admin_page/data/challenges_status/challenges_status_req_put.dart';
 
 class ChallengeManageController extends GetxController {
-  RxMap<String, bool> selectedIds = <String, bool>{}.obs;
+  RxBool isInited = false.obs;
+  RxBool isLoading = true.obs;
 
   late ChallengesModel challengesModel;
   late ChallengesStatusModel challengesStatusModel;
 
-  RxBool isInited = false.obs;
+  RxMap<String, bool> selectedIds = <String, bool>{}.obs;
+
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
-  var data = [].obs;
-  RxList<bool>? challengesState;
 
-  RxBool isLoading = true.obs;
-  //  FIRST CONTAINER //
-
-  // Initial list of checkbox labels
-  RxList<String> checkboxLabels = [
+  RxList<String> goalLabels = [
     "Improve health",
     "Relaxing stretching",
     "Welness at work",
     "Regulate emotions",
     "Fall asleep easily",
   ].obs;
+  RxList<bool> goalValues = List<bool>.filled(5, true).obs;
 
-  // List of additional checkbox labels
   List<String> periodLabels = ["7일", "14일", "21일", "30일"];
   RxList<bool> periodValues = List<bool>.filled(4, true).obs;
-  // Initial list of checkbox values
-  RxList<bool> checkboxValues = List<bool>.filled(5, true).obs;
 
-  RxBool showMore = false.obs;
+  RxList<bool> statusValues = List<bool>.filled(2, true).obs;
+
   RxBool isChecked = true.obs;
-  RxList<bool> secondCheckboxValues = List<bool>.filled(2, true).obs;
 
-  void toggleCheckbox(int index, bool value) {
-    checkboxValues[index] = value;
-  }
-
-  void toggleSecondCheckbox(int index, bool value) {
-    secondCheckboxValues[index] = value;
-  }
-
-  //DROPDOWN BUTTON
   RxString selectedOrder = '등록순'.obs;
-  void updateSelectedOrder(String newOrder) {
-    selectedOrder.value = newOrder;
-  }
-
-  //DATA TABLE
-  void updateSelected(String id, bool isSelected) {
-    selectedIds[id] = isSelected;
-  }
-
   RxInt activePage = 1.obs;
-  void loadNewPage(int pageNum) {
-    activePage.value = pageNum;
-  }
 
   @override
   Future<void> onInit() async {
@@ -73,100 +45,115 @@ class ChallengeManageController extends GetxController {
     await initData();
   }
 
-  RxBool selected = false.obs;
-  void updateValue() {
-    selected.value = !selected.value;
-  }
-
   Future<void> initData() async {
     isLoading.value = true;
-    isInited.value = false;
 
     if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    challengesModel = await ChallengesRepository().get(
-      ChallengesReqGet(
-        page: 1,
-        // sortBy: selectedOrder.value,
-      ),
-    );
-    challengesState =
-        (challengesModel.status!.map((status) => !status).toList()).obs;
+    await loadNewPage(1);
 
-    if (!challengesModel.isSuccess) {
-      challengesModel = ChallengesModel().copyWith(
-        id: List.generate(10, (_) => ""),
-        goal: List.generate(10, (_) => ""),
-        name: List.generate(10, (_) => 'akdlsemtkdlxm@nodamen.com'),
-        participants: List.generate(10, (_) => 111),
-        finished: List.generate(10, (_) => 111),
-        liked: List.generate(10, (_) => 111),
-        status: List.generate(10, (_) => true),
-        total: 10,
-      );
-      challengesModel.length = challengesModel.id!.length;
-      challengesState =
-          (challengesModel.status!.map((status) => status).toList()).obs;
-    }
     isLoading.value = false;
     isInited.value = true;
   }
 
+  void toggleGoalCheckbox(int index, bool value) {
+    goalValues[index] = value;
+
+    loadNewPage(1);
+  }
+
+  void togglePeriodCheckbox(int index, bool value) {
+    periodValues[index] = value;
+
+    loadNewPage(1);
+  }
+
+  void toggleStatusCheckbox(int index, bool value) {
+    statusValues[index] = value;
+
+    loadNewPage(1);
+  }
+
+  void updateSelectedOrder(String newOrder) {
+    selectedOrder.value = newOrder;
+
+    loadNewPage(1);
+  }
+
+  void updateSelected(String id, bool isSelected) {
+    selectedIds[id] = isSelected;
+  }
+
+  Future<void> loadNewPage(int pageNum) async {
+    isLoading.value = true;
+
+    List<String> goal = [
+      for (int i = 0; i < goalLabels.length; i++)
+        if (goalValues[i]) goalLabels[i]
+    ];
+    if (goalValues.every((element) => element == true)) {
+      goal = [];
+    }
+    if (goalValues.every((element) => element == false)) {
+      goal = ['known'];
+    }
+
+    List<int> days = [
+      for (int i = 0; i < periodLabels.length; i++)
+        if (periodValues[i])
+          periodLabels[i] == "7일"
+              ? 7
+              : periodLabels[i] == "14일"
+                  ? 14
+                  : periodLabels[i] == "21일"
+                      ? 21
+                      : 30
+    ];
+    if (periodValues.every((element) => element == true)) {
+      days = [];
+    }
+    if (periodValues.every((element) => element == false)) {
+      days = [0];
+    }
+
+    challengesModel = await ChallengesRepository().get(
+      ChallengesReqGet(
+        page: pageNum,
+        goal: goal,
+        days: days,
+        search: searchOn.value == true ? searchValue.value : null,
+        status: (statusValues.contains(false) ? statusValues[0] : null),
+        sortBy: selectedOrder.value,
+      ),
+    );
+
+    isLoading.value = false;
+    activePage.value = pageNum;
+  }
+
   Future<void> onStatusChange(int index) async {
+    isLoading.value = true;
+
     challengesStatusModel = await ChallengesStatusRepository().put(
         ChallengesStatusReqPut(
-            challengesId: [challengesModel.id![index]],
-            status: !challengesState![index]));
-    // if (membersStatusModel.isSuccess) {
-    //   isLoading.value = true;
-    //   selectedMembers = [
-    //     false,
-    //     false,
-    //     false,
-    //     false,
-    //     false,
-    //     false,
-    //     false,
-    //     false,
-    //     false,
-    //     false,
-    //   ].obs;
-    //   membersModel = await MembersRepository().get(MembersReqGet(
-    //     page: 1,
-    //     disabled: false,
-    //   ).toJson());
-    //   memberState = membersModel.status!.obs;
-    //   isLoading.value = false;
-    //   isInited.value = true;
-    // }
+            challengeIds: [challengesModel.id![index]],
+            status: !challengesModel.status![index]));
+
+    isLoading.value = false;
+
+    if (challengesStatusModel.isSuccess) {
+      challengesModel.status![index] = !challengesModel.status![index];
+    }
   }
 
   Future<void> onSearch(String? search) async {
     searchOn.value = true;
     searchValue.value = search!;
 
-    isLoading.value = true;
-    // List<String> affiliation = [
-    //   for (int i = 0; i < membershipLabels.length; i++)
-    //     if (membershipValues[i]) membershipLabels[i]
-    // ];
-    // if (membershipValues.every((element) => element == true)) {
-    //   affiliation = [];
-    // } //TODO remove later
-    // membersModel = await MembersRepository().get(MembersReqGet(
-    //   page: 1,
-    //   affiliation: affiliation,
-    //   search: search,
-    //   disabled: false,
-    // ).toJson());
-    // memberState =
-    //     (membersModel.status!.map((status) => !status).toList()).obs;
-
-    activePage.value = 1;
-    isLoading.value = false;
+    await loadNewPage(1);
   }
 
   void goToEdit(int index) {

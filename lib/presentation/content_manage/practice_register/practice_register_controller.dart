@@ -5,60 +5,41 @@ import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart
 import 'package:mindsight_admin_page/data/practices_data/practices_data_model.dart';
 import 'package:mindsight_admin_page/data/practices_data/practices_data_repository.dart';
 import 'package:mindsight_admin_page/data/practices_data/practices_data_req_post.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_manage/practice_manage_controller.dart';
 
 class PracticeRegisterController extends GetxController {
-  RxBool fetchedData = false.obs;
+  RxBool isLoading = true.obs;
+  RxBool isInited = false.obs;
 
   late ContentListModel contentListModel;
   late PracticesDataModel practicesDataModel;
+
+  RxBool fetchedData = false.obs;
 
   final TextEditingController textController = TextEditingController();
 
   var selectedIndex = (-1).obs; // Initialize with -1 indicating no selection
   RxString selectedBodyName = "".obs;
-  String selectedBodyId = "";
+  String? selectedBodyId;
   RxString selectedBreathName = "".obs;
-  String selectedBreathId = "";
+  String? selectedBreathId;
 
   List<String> contentType = [];
 
-  RxBool isLoading = true.obs;
-  RxBool isInited = false.obs;
+  var selected = false.obs;
+  var activePage = 1.obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+
     isLoading.value = false;
     isInited.value = true;
-    // loadData();
   }
-
-  // Future<void>initData() async {
-  //   isLoading.value = true;
-  //   isInited.value = false;
-  //   isLoading.value = false;
-  //   isInited.value = true;
-  // }
-
-  void goToEdit() {
-    Get.offAllNamed(AppRoutes.challengeEdit);
-  }
-
-  var data = [].obs;
-  var selected = false.obs;
-  var activePage = 1.obs;
-
-  // Method to update the value
-  // void updateBodyValue(int index) {
-  //   selectedContent[index] = !selectedContent[index];
-  // }
 
   void updateSelectedIndex(int index) {
     selectedIndex.value = index;
   }
 
-  // Method to load new data for the page
   Future<void> loadNewPage(int pageNum) async {
     selectedIndex.value = (-1);
 
@@ -75,7 +56,6 @@ class PracticeRegisterController extends GetxController {
     isLoading.value = false;
   }
 
-  // Method to simulate data fetch
   Future<void> fetchBodyData(String? search) async {
     selectedIndex.value = (-1);
     contentType = [
@@ -116,17 +96,18 @@ class PracticeRegisterController extends GetxController {
     fetchedData.value = true;
   }
 
-  void goToPractice() {
-    Get.offAllNamed(AppRoutes.contentPracticeManage);
-  }
-
-  void resetData() {
+  Future<void> initSearchDialogData(bool isBody) async {
     contentListModel = ContentListModel();
     contentType = [];
     fetchedData.value = false;
-    selected.value = false;
     activePage.value = 1;
     textController.clear();
+
+    if (isBody) {
+      await fetchBodyData(textController.text);
+    } else {
+      await fetchBreathData(textController.text);
+    }
   }
 
   void onBodyButtonPressed() {
@@ -139,50 +120,25 @@ class PracticeRegisterController extends GetxController {
     selectedBreathId = contentListModel.id![selectedIndex.value];
   }
 
-  Future<void> saveChanges() async {
+  Future<void> onSave() async {
+    if (selectedBodyId == null || selectedBreathId == null) {
+      showSimpleMessage(Get.context!, "콘텐츠를 선택 해 주십시오");
+      return;
+    }
+
+    isLoading.value = true;
+
     practicesDataModel = await PracticesDataRepository().post(
         PracticesDataReqPost(
             bodyId: selectedBodyId, breathId: selectedBreathId));
+
+    isLoading.value = false;
+
     if (practicesDataModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.contentPracticeManage);
+      showSimpleMessage(Get.context!, "저장 되었습니다");
+      // Get.offAllNamed(AppRoutes.contentPracticeManage);
+    } else {
+      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
     }
   }
 }
-
-//   RxBool isLoading = true.obs;
-//   RxBool isInited = false.obs;
-//   @override
-//   Future<void> onInit() async {
-//     super.onInit();
-//     isLoading.value = false;
-//     isInited.value = true;
-//   }
-
-//   void goToEdit() {
-//     Get.offAllNamed(AppRoutes.challengeEdit);
-//   }
-
-//   var data = [].obs; // Your data list
-//   var selected = false.obs; // Selection state
-//   var activePage = 1.obs; // Active page state
-
-//   // Method to update the value
-//   void updateValue() {
-//     selected.value = !selected.value;
-//   }
-
-//   // Method to load new data for the page
-//   void loadNewPage(int pageNum) {
-//     activePage.value = pageNum;
-//     // Fetch new data based on the page number
-//   }
-
-//   // Method to simulate data fetch
-//   void fetchData() {
-//     data.value = [
-//       {'type': 'Type A', 'title': 'Title A', 'status': 'Active'},
-//       {'type': 'Type B', 'title': 'Title B', 'status': 'Inactive'},
-//       // Add more data as needed
-//     ];
-//   }
-// }

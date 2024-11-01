@@ -8,26 +8,9 @@ enum PasswordValidEnum { waiting, valid, invalid }
 class SubAdminRegisterController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    isLoading.value = false;
-    isInited.value = true;
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-    passwordController.dispose();
-  }
+  late AdminRegisterModel adminRegisterModel;
 
-  // dropdown  button
-  RxString selectedOrder = 'Select Option'.obs;
-  void updateSelectedOrder(String newOrder) {
-    selectedOrder.value = newOrder;
-  }
-
-  //
   RxBool isShowPasswordOne = true.obs;
 
   final TextEditingController passwordController = TextEditingController();
@@ -38,8 +21,6 @@ class SubAdminRegisterController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController departmentController = TextEditingController();
 
-  late AdminRegisterModel adminRegisterModel;
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   List<Rx<PasswordValidEnum>> isPasswordValid = [
@@ -48,47 +29,29 @@ class SubAdminRegisterController extends GetxController {
     PasswordValidEnum.waiting.obs
   ];
 
-  // bool checkPasswordValid(String value, bool showInvalidRedColor) {
-  //   _wordChecker.check(value);
+  RxString selectedOrder = 'Select Option'.obs;
 
-  //   Logger.log("$value ${_wordChecker.is8Characters}");
+  @override
+  Future<void> onInit() async {
+    super.onInit();
 
-  //   if (_wordChecker.is8Characters) {
-  //     isPasswordValid[0].value = PasswordValidEnum.valid;
-  //   } else {
-  //     if (showInvalidRedColor) {
-  //       isPasswordValid[0].value = PasswordValidEnum.invalid;
-  //     } else {
-  //       isPasswordValid[0].value = PasswordValidEnum.waiting;
-  //     }
-  //   }
+    isInited.value = true;
+    isLoading.value = false;
+  }
 
-  //   if (_wordChecker.isUpperLowerLetter) {
-  //     isPasswordValid[1].value = PasswordValidEnum.valid;
-  //   } else {
-  //     if (showInvalidRedColor) {
-  //       isPasswordValid[1].value = PasswordValidEnum.invalid;
-  //     } else {
-  //       isPasswordValid[1].value = PasswordValidEnum.waiting;
-  //     }
-  //   }
+  @override
+  void onClose() {
+    super.onClose();
+    passwordController.dispose();
+  }
 
-  //   if (_wordChecker.is1Symbol) {
-  //     isPasswordValid[2].value = PasswordValidEnum.valid;
-  //   } else {
-  //     if (showInvalidRedColor) {
-  //       isPasswordValid[2].value = PasswordValidEnum.invalid;
-  //     } else {
-  //       isPasswordValid[2].value = PasswordValidEnum.waiting;
-  //     }
-  //   }
+  void updateSelectedOrder(String newOrder) {
+    selectedOrder.value = newOrder;
+  }
 
-  //   return _wordChecker.is8Characters &&
-  //       _wordChecker.isUpperLowerLetter &&
-  //       _wordChecker.is1Symbol;
-  // }
+  Future<void> onSave() async {
+    isLoading.value = true;
 
-  Future<void> saveChanges() async {
     adminRegisterModel =
         await AdminRegisterRepository().post(AdminRegisterReqPost(
       id: 'id',
@@ -101,8 +64,12 @@ class SubAdminRegisterController extends GetxController {
       adminEmail: adminEmailController.text,
     ));
 
+    isLoading.value = false;
+
     if (adminRegisterModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.subAdminSettings);
+      showSimpleMessage(Get.context!, "저장 되었습니다");
+    } else {
+      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
     }
   }
 }
