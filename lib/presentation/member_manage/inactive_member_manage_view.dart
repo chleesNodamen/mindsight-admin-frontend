@@ -28,19 +28,11 @@ class InactiveMemberManageView
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  TobBarSearch(
-                                    name: "비활성 회원 관리",
-                                    searchShow: true,
-                                    viewCount: false,
-                                    searchText: "이메일 주소, 사용자 이름 검색",
-                                    memberShow: true,
-                                    memberCount: controller.membersModel.total,
-                                    onSearch: controller.onSearch,
-                                  ),
+                                  _buildTitle(),
                                   const SizedBox(height: 32),
                                   _buildCheckBox(),
                                   const SizedBox(height: 16),
-                                  _pagePage(),
+                                  _buildPage(),
                                 ],
                               ),
                             ),
@@ -53,6 +45,18 @@ class InactiveMemberManageView
               : const SizedBox.shrink(),
         ),
       ),
+    );
+  }
+
+  TobBarSearch _buildTitle() {
+    return TobBarSearch(
+      name: "비활성 회원 관리",
+      searchShow: true,
+      viewCount: false,
+      searchText: "이메일 주소, 이름 검색",
+      memberShow: true,
+      memberCount: controller.membersModel.total,
+      onSearch: controller.onSearch,
     );
   }
 
@@ -94,7 +98,7 @@ class InactiveMemberManageView
     );
   }
 
-  SingleChildScrollView _pagePage() {
+  SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(

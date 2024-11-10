@@ -55,8 +55,10 @@ class TobBarSearch extends StatelessWidget {
                     ),
                     Text(
                         viewCount!
-                            ? "${NumberFormat('#,###').format(viewNumber)} 건"
-                            : "${NumberFormat('#,###').format(memberCount)} 명",
+                            // ? "${NumberFormat('#,###').format(viewNumber)} 건"
+                            // : "${NumberFormat('#,###').format(memberCount)} 명",
+                            ? NumberFormat('#,###').format(viewNumber)
+                            : NumberFormat('#,###').format(memberCount),
                         style: CustomTextStyles.bodyMediumGray
                             .copyWith(fontWeight: FontWeight.w500)),
                   ],

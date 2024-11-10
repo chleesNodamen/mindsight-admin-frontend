@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/content_type.dart';
+import 'package:mindsight_admin_page/constants/sort_condition.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_model.dart';
@@ -25,29 +27,36 @@ class ContentManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  RxList<String> bodyLabels = [
-    "Basic body",
-    "Intermediate body",
-    "Advance body",
+  RxList<ContentType> bodyLabels = [
+    ContentType.basicBody,
+    ContentType.intermediateBody,
+    ContentType.advanceBody,
   ].obs;
 
-  RxList<String> breathingLabels =
-      ["Nature breathing", "Guided meditation"].obs;
+  RxList<ContentType> breathingLabels =
+      [ContentType.natureBreathing, ContentType.guidedMeditation].obs;
 
-  List<String> otherLabels = [
-    "Mindful Art",
-    "Art with music",
-    "Nature",
-    "K-ASMR"
+  List<ContentType> otherLabels = [
+    ContentType.mindfulArt,
+    ContentType.artWithMusic,
+    ContentType.nature,
+    ContentType.kAsmr
+  ];
+
+  List<ContentType> theoryLabels = [
+    ContentType.emotionManagement,
+    ContentType.philosophy,
+    ContentType.selfDevelopment
   ];
 
   RxList<bool> bodyValues = List<bool>.filled(3, true).obs;
   RxList<bool> breathingValues = List<bool>.filled(2, true).obs;
   RxList<bool> otherValues = List<bool>.filled(4, true).obs;
+  RxList<bool> theoryValues = List<bool>.filled(3, true).obs;
   RxList<bool> serviceValues = List<bool>.filled(2, true).obs;
 
   RxInt activePage = 1.obs;
-  RxString selectedOrder = '등록순'.obs;
+  Rx<SortCondition?> selectedOrder = SortCondition.registration.obs;
 
   @override
   Future<void> onInit() async {
@@ -58,13 +67,14 @@ class ContentManageController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    searchOn.value = false;
-    searchValue.value = "";
-    bodyValues = List<bool>.filled(3, true).obs;
-    breathingValues = List<bool>.filled(2, true).obs;
-    otherValues = List<bool>.filled(4, true).obs;
-    serviceValues = List<bool>.filled(2, true).obs;
-    selectedContent = List.generate(20, (_) => false).obs;
+    // searchOn.value = false;
+    // searchValue.value = "";
+    // bodyValues = List<bool>.filled(3, true).obs;
+    // breathingValues = List<bool>.filled(2, true).obs;
+    // otherValues = List<bool>.filled(4, true).obs;
+    // theoryValues = List<bool>.filled(3, true).obs;
+    // serviceValues = List<bool>.filled(2, true).obs;
+    // selectedContent = List.generate(20, (_) => false).obs;
 
     if (AppConstant.test) {
       await AuthRepository().post(AuthReqPost(
@@ -89,6 +99,12 @@ class ContentManageController extends GetxController {
     await loadNewPage(1);
   }
 
+  Future<void> toggleTheoryCheckbox(int index, bool value) async {
+    theoryValues[index] = value;
+
+    await loadNewPage(1);
+  }
+
   Future<void> toggleOtherCheckbox(int index, bool value) async {
     otherValues[index] = value;
 
@@ -101,7 +117,7 @@ class ContentManageController extends GetxController {
     await loadNewPage(1);
   }
 
-  Future<void> updateSelectedOrder(String newOrder) async {
+  Future<void> updateSelectedOrder(SortCondition newOrder) async {
     selectedOrder.value = newOrder;
 
     await loadNewPage(1);
@@ -120,7 +136,7 @@ class ContentManageController extends GetxController {
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,
       status: (serviceValues.contains(false) ? serviceValues[0] : null),
-      sortBy: selectedOrder.value,
+      sortBy: selectedOrder.value?.keywordName,
       pageSize: 20,
     ));
 
@@ -187,20 +203,24 @@ class ContentManageController extends GetxController {
   List<String> getChosenType() {
     if (bodyValues.every((a) => a == false) &&
         breathingValues.every((a) => a == false) &&
+        theoryValues.every((a) => a == false) &&
         otherValues.every((a) => a == false)) {
-      return ['known'];
+      return [ContentType.unknown.keywordName];
     }
     return bodyValues.every((a) => a == true) &&
             breathingValues.every((a) => a == true) &&
+            theoryValues.every((a) => a == true) &&
             otherValues.every((a) => a == true)
         ? []
         : [
             for (int i = 0; i < bodyLabels.length; i++)
-              if (bodyValues[i]) bodyLabels[i],
+              if (bodyValues[i]) bodyLabels[i].keywordName,
             for (int i = 0; i < otherLabels.length; i++)
-              if (otherValues[i]) otherLabels[i],
+              if (otherValues[i]) otherLabels[i].keywordName,
+            for (int i = 0; i < theoryLabels.length; i++)
+              if (theoryValues[i]) theoryLabels[i].keywordName,
             for (int i = 0; i < breathingLabels.length; i++)
-              if (breathingValues[i]) breathingLabels[i],
+              if (breathingValues[i]) breathingLabels[i].keywordName,
           ];
   }
 

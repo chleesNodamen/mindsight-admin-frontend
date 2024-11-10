@@ -1,17 +1,17 @@
 enum Category {
-  unknown('Unknown', 'unknown'),
-  body('Body', 'Body'),
-  breath('Breath', 'Breath'),
-  mindfulness('Mindfulness', 'Mindfulness'),
-  theory('Theory', 'Theory');
+  unknown('알수없음', 'unknown'),
+  body('바디', 'Body'),
+  breath('호흡', 'Breath'),
+  mindfulness('마음챙김', 'Mindfulness'),
+  theory('이론', 'Theory');
 
-  final String displayName;
-  final String keywordName;
+  final String _displayName;
+  final String _keywordName;
 
-  const Category(this.displayName, this.keywordName);
+  const Category(this._displayName, this._keywordName);
 
-  String toDisplayName() => displayName;
-  String toKeywordName() => keywordName;
+  String get displayName => _displayName;
+  String get keywordName => _keywordName;
 
   static Category fromKeyword(String value) {
     return Category.values.firstWhere(

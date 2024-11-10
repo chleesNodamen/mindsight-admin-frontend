@@ -28,7 +28,9 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                               const SizedBox(height: 32),
                               _buildSubMenu(),
                               const SizedBox(height: 32),
-                              buildContainers()
+                              _buildInfo(),
+                              const SizedBox(height: 24),
+                              _buildData()
                             ],
                           ),
                         ),
@@ -42,19 +44,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
     );
   }
 
-  Column buildContainers() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildFirstContainer(),
-        const SizedBox(height: 24),
-        buildSecondContainer(),
-      ],
-    );
-  }
-
-  Container buildSecondContainer() {
+  Container _buildData() {
     return Container(
       decoration: BoxDecoration(
         color: appTheme.white,
@@ -129,7 +119,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
     );
   }
 
-  Container buildFirstContainer() {
+  Container _buildInfo() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -142,7 +132,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('회차', style: CustomTextStyles.labelLargeGray),
+              Text('콘텐츠 등록', style: CustomTextStyles.labelLargeGray),
               InkWell(
                 onTap: controller.onPracticeTap,
                 child: Text(
@@ -157,31 +147,18 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           const SizedBox(
             height: 16,
           ),
-          Text("${controller.practiceDetailsModel.level.toString()}회차",
-              style: CustomTextStyles.bodyMediumBlack),
-          const SizedBox(
-            height: 24,
-          ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
-          ),
-          Text('콘텐츠 등록', style: CustomTextStyles.labelLargeGray),
-          const SizedBox(
-            height: 16,
-          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(Category.body.toDisplayName(),
+                  Text(Category.body.displayName,
                       style: CustomTextStyles.bodyMediumSkyBlue),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(Category.breath.toDisplayName(),
+                  Text(Category.breath.displayName,
                       style: CustomTextStyles.bodyMediumSkyBlue),
                 ],
               ),

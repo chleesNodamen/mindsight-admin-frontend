@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/goal.dart';
+import 'package:mindsight_admin_page/constants/sort_condition.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/challenges/challenges_model.dart';
@@ -20,13 +22,14 @@ class ChallengeManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  RxList<String> goalLabels = [
-    "Improve health",
-    "Relaxing stretching",
-    "Welness at work",
-    "Regulate emotions",
-    "Fall asleep easily",
+  RxList<Goal> goalLabels = [
+    Goal.improveHealth,
+    Goal.relaxingStretching,
+    Goal.welnessAtWork,
+    Goal.regulateEmotions,
+    Goal.fallAsleepEasily
   ].obs;
+
   RxList<bool> goalValues = List<bool>.filled(5, true).obs;
 
   List<String> periodLabels = ["7일", "14일", "21일", "30일"];
@@ -36,7 +39,7 @@ class ChallengeManageController extends GetxController {
 
   RxBool isChecked = true.obs;
 
-  RxString selectedOrder = '등록순'.obs;
+  Rx<SortCondition> selectedOrder = SortCondition.registration.obs;
   RxInt activePage = 1.obs;
 
   @override
@@ -77,7 +80,7 @@ class ChallengeManageController extends GetxController {
     loadNewPage(1);
   }
 
-  void updateSelectedOrder(String newOrder) {
+  void updateSelectedOrder(SortCondition newOrder) {
     selectedOrder.value = newOrder;
 
     loadNewPage(1);
@@ -92,7 +95,7 @@ class ChallengeManageController extends GetxController {
 
     List<String> goal = [
       for (int i = 0; i < goalLabels.length; i++)
-        if (goalValues[i]) goalLabels[i]
+        if (goalValues[i]) goalLabels[i].keywordName
     ];
     if (goalValues.every((element) => element == true)) {
       goal = [];
@@ -126,7 +129,7 @@ class ChallengeManageController extends GetxController {
         days: days,
         search: searchOn.value == true ? searchValue.value : null,
         status: (statusValues.contains(false) ? statusValues[0] : null),
-        sortBy: selectedOrder.value,
+        sortBy: selectedOrder.value.keywordName,
       ),
     );
 

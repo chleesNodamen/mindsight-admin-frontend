@@ -1,6 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_details/content_details_controller.dart';
 import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
+import 'package:mindsight_admin_page/widgets/video_actions_widget.dart';
 
 class ContentDetailsView extends GetWidget<ContentDetailsController> {
   const ContentDetailsView({super.key});
@@ -112,9 +113,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("기본 정보",
-                  style: CustomTextStyles.labelLargeBlack
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("기본 정보", style: CustomTextStyles.labelLargeBlack),
               InkWell(
                 onTap: controller.onEdit,
                 child: Text("수정",
@@ -128,20 +127,16 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('제목',
-                  style: CustomTextStyles.labelMediumGray
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text('제목', style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
               Text(controller.contentDetailsModel.name!,
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -181,12 +176,50 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('수준', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text("상", style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('타겟 언어', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text("영어", style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('노출 상태', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text("노출", style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+            ],
+          ),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -198,24 +231,26 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
-          const SizedBox(height: 24),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('소개', style: CustomTextStyles.labelMediumBlack),
+              Text('소개', style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
               Text(controller.contentDetailsModel.intro!,
                   style: CustomTextStyles.bodyMediumBlack)
             ],
           ),
-          const SizedBox(height: 24),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(height: 24),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,25 +263,27 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('동영상 파일', style: CustomTextStyles.labelLargeGray),
+                      Text('미디어 파일', style: CustomTextStyles.labelMediumGray),
                       const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          InkWell(
-                            child: Text(
-                              "동영상 재생",
-                              style: CustomTextStyles.bodyMediumSkyBlue
-                                  .copyWith(
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: appTheme.skyBlue),
-                            ),
-                            onTap: () => SwitchNativeWeb.downloadFile(
-                                url: controller.contentDetailsModel.video ?? "",
-                                fileName: "download.mp4",
-                                dataType: "data:video/MPEG-4"),
-                          ),
-                        ],
-                      ),
+                      VideoActionsWidget(
+                          videoUrl: controller.contentDetailsModel.video!)
+                      // Row(
+                      //   children: [
+                      //     InkWell(
+                      //       child: Text(
+                      //         "미디어 재생",
+                      //         style: CustomTextStyles.bodyMediumSkyBlue
+                      //             .copyWith(
+                      //                 decoration: TextDecoration.underline,
+                      //                 decorationColor: appTheme.skyBlue),
+                      //       ),
+                      //       onTap: () => SwitchNativeWeb.downloadFile(
+                      //           url: controller.contentDetailsModel.video ?? "",
+                      //           fileName: "download.mp4",
+                      //           dataType: "data:video/MPEG-4"),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   const SizedBox(width: 60),
@@ -254,54 +291,14 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('썸네일 파일', style: CustomTextStyles.labelLargeGray),
+                      Text('썸네일 파일', style: CustomTextStyles.labelMediumGray),
                       const SizedBox(height: 16),
                       ImageActionsWidget(
                         imageUrl: controller.contentDetailsModel.thumbnail!,
                       ),
                     ],
                   ),
-                  const SizedBox(width: 60),
-                  // Column(
-                  //   mainAxisAlignment: MainAxisAlignment.start,
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Text('자막 파일', style: CustomTextStyles.labelLargeGray),
-                  //     const SizedBox(height: 16),
-                  //     (controller.contentDetailsModel.cc == null ||
-                  //             controller.contentDetailsModel.cc!.isEmpty)
-                  //         ? const SizedBox(
-                  //             height: 25,
-                  //           )
-                  //         : Row(
-                  //             children: [
-                  //               InkWell(
-                  //                 child: Text(
-                  //                   "파일 보기",
-                  //                   style: CustomTextStyles.bodyMediumSkyBlue
-                  //                       .copyWith(
-                  //                           decoration:
-                  //                               TextDecoration.underline,
-                  //                           decorationColor: appTheme.skyBlue),
-                  //                 ),
-                  //                 onTap: () {
-                  //                   launchUrl(Uri.parse(
-                  //                       controller.contentDetailsModel.cc!));
-                  //                 },
-                  //               ),
-                  //               const SizedBox(width: 4),
-                  //               CustomImageView(
-                  //                 onTap: () => SwitchNativeWeb.downloadFile(
-                  //                     url: controller.contentDetailsModel.cc ??
-                  //                         "",
-                  //                     fileName: "download.txt",
-                  //                     dataType: "data:text/txt"),
-                  //                 imagePath: IconConstant.download,
-                  //               )
-                  //             ],
-                  //           ),
-                  //   ],
-                  // ),
+                  // const SizedBox(width: 60),
                 ],
               ),
             ],

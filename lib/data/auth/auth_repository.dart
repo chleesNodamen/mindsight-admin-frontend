@@ -21,7 +21,7 @@ class AuthRepository extends BaseRepository {
       PrefUtils.to.setSigninId(dto.email!);
       PrefUtils.to.setSigninTime();
     } else {
-      Logger.log("log in unsuccessful");
+      Logger.info("log in unsuccessful ${model.getErrorCode()}");
     }
 
     return model;

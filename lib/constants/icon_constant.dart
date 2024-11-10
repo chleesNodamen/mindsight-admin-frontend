@@ -1,7 +1,7 @@
 class IconConstant {
   static String iconPath = 'assets/icons';
 
-  static String aabbcc = '$iconPath/icon_dashboard.svg';
+  static String aabbcc = '$iconPath/icon_upload.svg';
 
   static String arrowRight = '$iconPath/icon_arrow_right.svg';
   static String newTab = '$iconPath/icon_newtab.svg';
@@ -31,4 +31,5 @@ class IconConstant {
   static String user = '$iconPath/icon_user_20.svg';
   static String more = '$iconPath/icon_more.svg';
   static String close = '$iconPath/icon_close.svg';
+  static String receiptLong = '$iconPath/icon_receipt_long.svg';
 }

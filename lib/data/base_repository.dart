@@ -38,27 +38,6 @@ class BaseRepository {
         errorCode: _handleErrorCode(response),
         data: response.body);
 
-    // try {
-    //   if (response.statusCode >= 200 && response.statusCode < 300) {
-    //     Map<String, dynamic> body = isValidJson(response.body);
-    //     model = fromJson(body);
-    //   } else {
-    //     model = fromJson({});
-    //   }
-
-    //   model.handleStatus(
-    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
-    //       errorCode: _handleErrorCode(response),
-    //       data: response.body);
-    // } catch (e) {
-    //   Logger.error("Repository Exception(fetchJsonData) ${toString()}");
-
-    //   model = fromJson({});
-    //   model.handleStatus(
-    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
-    //       data: response.body);
-    // }
-
     _handleLog(response);
     return model;
   }
@@ -78,37 +57,12 @@ class BaseRepository {
         errorCode: _handleErrorCode(response),
         data: response.body);
 
-    // try {
-    //   if (response.statusCode >= 200 && response.statusCode < 300) {
-    //     List<dynamic> list = isValidListJson(response.body);
-    //     model = fromJson(list);
-    //   } else {
-    //     model = fromJson([]);
-    //   }
-
-    //   model.handleStatus(
-    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
-    //       errorCode: _handleErrorCode(response),
-    //       data: response.body);
-    // } catch (e) {
-    //   Logger.error("Repository Exception(fetchListJsonData) ${toString()}");
-
-    //   model = fromJson([]);
-    //   model.handleStatus(
-    //       isOk: response.statusCode >= 200 && response.statusCode < 300,
-    //       data: response.body);
-    // }
-
     _handleLog(response);
     return model;
   }
 
   void _handleLog(http.Response response) {
     httpClient.forTest2 = "Api response body: ${response.body}";
-
-    // if (AppConstant.showHttpLog) {
-    //   Logger.log(httpClient.forTest2);
-    // }
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       _showExceptionDialog(response.statusCode, response.body);

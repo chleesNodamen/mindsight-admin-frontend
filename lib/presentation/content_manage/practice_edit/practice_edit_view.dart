@@ -28,7 +28,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                               const SizedBox(height: 32),
                               _buildSubMenu(),
                               const SizedBox(height: 32),
-                              buildTextFields()
+                              _buildRegister()
                             ],
                           ),
                         ),
@@ -42,19 +42,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
     );
   }
 
-  Column buildTextFields() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildFirstRow(),
-        const SizedBox(height: 24),
-        buildLastRow(),
-      ],
-    );
-  }
-
-  Column buildLastRow() {
+  Column _buildRegister() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

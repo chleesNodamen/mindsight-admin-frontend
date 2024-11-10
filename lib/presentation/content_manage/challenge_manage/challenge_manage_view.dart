@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_controller.dart';
 
 class ChallengeManageView extends GetWidget<ChallengeManageController> {
@@ -28,6 +29,8 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                                 children: [
                                   _buildTitle(),
                                   const SizedBox(height: 32),
+                                  _buildRegisterButton(),
+                                  const SizedBox(height: 32),
                                   _buildSelect(),
                                   const SizedBox(height: 16),
                                   _buildSortDropdown(),
@@ -45,6 +48,19 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
               : const SizedBox.shrink(),
         ),
       ),
+    );
+  }
+
+  CustomElevatedButton _buildRegisterButton() {
+    return CustomElevatedButton(
+      onPressed: () {
+        Get.offAllNamed(AppRoutes.challengeRegister);
+      },
+      text: "신규 등록",
+      height: 44,
+      width: 107,
+      decoration:
+          BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
   }
 
@@ -284,17 +300,17 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
               children: List.generate(controller.goalValues.length, (index) {
                 return CustomCheckboxWidget(
                   isChecked: controller.goalValues[index],
-                  label: controller.goalLabels[index],
+                  label: controller.goalLabels[index].displayName,
                   onChanged: (value) =>
                       controller.toggleGoalCheckbox(index, value),
                 );
               }),
             ),
           ),
-          const SizedBox(height: 25),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Row(
             children: [
@@ -363,7 +379,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 6, right: 0, top: 0, bottom: 0),
-        child: DropdownButton<String>(
+        child: DropdownButton<SortCondition>(
           value: controller.selectedOrder.value,
           underline: Container(),
           padding: const EdgeInsets.only(left: 6),
@@ -371,17 +387,22 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
           // icon: const Icon(Icons.),
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),
-          onChanged: (String? newValue) {
+          onChanged: (SortCondition? newValue) {
             if (newValue != null) {
               controller.updateSelectedOrder(newValue);
             }
           },
-          items: <String>['등록순', '참여자 많은 순', '참여자 낮은 순 ', '별점 높은 순 ', '좋아요순']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
+          items: <SortCondition>[
+            SortCondition.registration,
+            SortCondition.mostParticipants,
+            SortCondition.fewestParticipants,
+            SortCondition.highestRatings,
+            SortCondition.likes
+          ].map<DropdownMenuItem<SortCondition>>((SortCondition value) {
+            return DropdownMenuItem<SortCondition>(
               value: value,
               child: Text(
-                value,
+                value.displayName,
                 style: CustomTextStyles.labelLargeBlack,
               ),
             );

@@ -60,7 +60,7 @@ class PracticeEditController extends GetxController {
     isInited.value = true;
   }
 
-  void goToEdit() {
+  void onEdit() {
     Get.offAllNamed(AppRoutes.challengeEdit);
   }
 

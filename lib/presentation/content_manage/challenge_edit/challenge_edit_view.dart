@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/goal.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_edit/challenge_edit_controller.dart';
 
 class ChallengeEditView extends GetWidget<ChallengeEditController> {
@@ -302,31 +303,32 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                 color: appTheme.white,
                 borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
-              child: DropdownButton<String>(
+              child: DropdownButton<Goal>(
                 isExpanded: true,
-                value: controller.selectedGoal.value,
+                // value: controller.selectedGoal.value,
+                value: Goal.improveHealth,
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
                 borderRadius: BorderRadiusStyle.roundedBorder12,
                 // icon: const Icon(Icons.),
                 elevation: 16,
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    controller.selectedGoal.value = newValue;
-                  }
+                onChanged: (Goal? newValue) {
+                  // if (newValue != null) {
+                  //   controller.selectedGoal.value = newValue;
+                  // }
                 },
-                items: <String>[
-                  'Improve health',
-                  'Relaxing Stretching',
-                  'Wellness at work',
-                  'Regulate emotions',
-                  'Fall a sleep easily'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
+                items: <Goal>[
+                  Goal.improveHealth,
+                  Goal.relaxingStretching,
+                  Goal.welnessAtWork,
+                  Goal.regulateEmotions,
+                  Goal.fallAsleepEasily
+                ].map<DropdownMenuItem<Goal>>((Goal value) {
+                  return DropdownMenuItem<Goal>(
                     value: value,
                     child: Text(
-                      value,
+                      value.displayName,
                       style: CustomTextStyles.bodyMediumBlack,
                     ),
                   );

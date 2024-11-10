@@ -14,12 +14,26 @@ import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_setti
 import 'package:mindsight_admin_page/presentation/authentication/auth_binding.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_details_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_details_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_mass_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_mass_register_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_register_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/inactive_company_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/inactive_company_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_edit/challenge_edit_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_edit/challenge_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_register/challenge_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/content_manage/challenge_register/challenge_register_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_details/content_details_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_details/content_details_view.dart';
@@ -38,6 +52,18 @@ import 'package:mindsight_admin_page/presentation/content_manage/practice_regist
 import 'package:mindsight_admin_page/presentation/content_manage/practice_register/practice_register_view.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_binding.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/inactive_master_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/inactive_master_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_details_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_details_view.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_mass_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_mass_register_view.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_register_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_details_binding.dart';
@@ -46,6 +72,10 @@ import 'package:mindsight_admin_page/presentation/member_manage/member_edit_bind
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_mass_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_mass_register_view.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/member_manage/member_register_view.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_binding.dart';
@@ -59,6 +89,22 @@ class AppRoutes {
   static const String inactiveMemberManage = "/inactive_member_manage";
   static const String memberDetails = "/member_details";
   static const String memberEdit = "/member_edit";
+  static const String memberRegister = "/member_register";
+  static const String memberMassRegister = "/member_mass_register";
+  static const String masterManage = "/master_manage";
+  static const String masterRegister = "/master_register";
+  static const String masterMassRegister = "/master_mass_register";
+  static const String inactiveMasterManage = "/inactive_master_manage";
+  static const String masterDetails = "/master_details";
+  static const String masterEdit = "/master_edit";
+
+  static const String companyManage = "/company_manage";
+  static const String companyRegister = "/company_register";
+  static const String companyMassRegister = "/company_mass_register";
+  static const String inactiveCompanyManage = "/inactive_company_manage";
+  static const String companyDetails = "/company_details";
+  static const String companyEdit = "/company_edit";
+
   static const String contentManage = "/content_manage";
   static const String contentDetails = "/content_details";
   static const String contentManageList = "/content_manage_list";
@@ -71,6 +117,7 @@ class AppRoutes {
   static const String contentChallengeManage = "/content_challenge_manage";
   static const String challengeDetails = "/challenge_details";
   static const String challengeEdit = "/challenge_edit";
+  static const String challengeRegister = "/challenge_register";
   static const String activityManage = "/activity_manage";
   static const String settlementManage = "/settlement_manage";
   static const String revenueShareManage = "/revenue_share_manage";
@@ -119,6 +166,78 @@ class AppRoutes {
       page: () => const MemberEditView(),
       bindings: [MemberEditBinding()],
     ),
+    GetPage(
+      name: memberRegister,
+      page: () => const MemberRegisterView(),
+      bindings: [MemberRegisterBinding()],
+    ),
+    GetPage(
+      name: memberMassRegister,
+      page: () => const MemberMassRegisterView(),
+      bindings: [MemberMassRegisterBinding()],
+    ),
+    GetPage(
+      name: masterManage,
+      page: () => const MasterManageView(),
+      bindings: [MasterManageBinding()],
+    ),
+    GetPage(
+      name: masterRegister,
+      page: () => const MasterRegisterView(),
+      bindings: [MasterRegisterBinding()],
+    ),
+    GetPage(
+      name: masterMassRegister,
+      page: () => const MasterMassRegisterView(),
+      bindings: [MasterMassRegisterBinding()],
+    ),
+    GetPage(
+      name: inactiveMasterManage,
+      page: () => const InactiveMasterManageView(),
+      bindings: [InactiveMasterManageBinding()],
+    ),
+    GetPage(
+      name: masterDetails,
+      page: () => const MasterDetailsView(),
+      bindings: [MasterDetailsBinding()],
+    ),
+    GetPage(
+      name: masterEdit,
+      page: () => const MasterEditView(),
+      bindings: [MasterEditBinding()],
+    ),
+
+    GetPage(
+      name: companyManage,
+      page: () => const CompanyManageView(),
+      bindings: [CompanyManageBinding()],
+    ),
+    GetPage(
+      name: companyRegister,
+      page: () => const CompanyRegisterView(),
+      bindings: [CompanyRegisterBinding()],
+    ),
+    GetPage(
+      name: companyMassRegister,
+      page: () => const CompanyMassRegisterView(),
+      bindings: [CompanyMassRegisterBinding()],
+    ),
+    GetPage(
+      name: inactiveCompanyManage,
+      page: () => const InactiveCompanyManageView(),
+      bindings: [InactiveCompanyManageBinding()],
+    ),
+    GetPage(
+      name: companyDetails,
+      page: () => const CompanyDetailsView(),
+      bindings: [CompanyDetailsBinding()],
+    ),
+    GetPage(
+      name: companyEdit,
+      page: () => const CompanyEditView(),
+      bindings: [CompanyEditBinding()],
+    ),
+
     GetPage(
       name: contentManage,
       page: () => const ContentManageView(),
@@ -180,6 +299,12 @@ class AppRoutes {
       page: () => const ChallengeEditView(),
       bindings: [ChallengeEditBinding()],
     ),
+    GetPage(
+      name: challengeRegister,
+      page: () => const ChallengeRegisterView(),
+      bindings: [ChallengeRegisterBinding()],
+    ),
+
     GetPage(
       name: activityManage,
       page: () => const ActivityManageView(),

@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 
 class ContentManageView extends GetWidget<ContentManageController> {
@@ -66,11 +67,11 @@ class ContentManageView extends GetWidget<ContentManageController> {
   TobBarSearch _buildTitle() {
     return TobBarSearch(
       name: "콘텐츠 목록",
-      searchShow: false,
+      searchShow: true,
       viewCount: true,
-      // searchText: "제목, 마스터 이름, 태그 검색",
+      searchText: "제목, 마스터 이름, 태그 검색",
       viewNumber: controller.contentListModel.value.total,
-      // onSearch: controller.onSearch,
+      onSearch: controller.onSearch,
     );
   }
 
@@ -116,6 +117,9 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   DataColumn(
                       label:
                           Text('미리보기', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('노출', style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label:
                           Text('상태', style: CustomTextStyles.labelLargeGray)),
@@ -184,8 +188,8 @@ class ContentManageView extends GetWidget<ContentManageController> {
                             child: DropdownButton<String>(
                               value: controller
                                       .contentListModel.value.status![index]
-                                  ? '정상'
-                                  : '안함',
+                                  ? '노출'
+                                  : '비노출',
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
                               borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -197,14 +201,58 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                 }
                               },
                               items: <String>[
-                                '정상',
-                                '안함'
+                                '노출',
+                                '비노출'
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(
                                     value,
-                                    style: value == "정상"
+                                    style: value == "노출"
+                                        ? CustomTextStyles.labelLargeGreen
+                                        : CustomTextStyles.labelLargeRed,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        )),
+                        DataCell(DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadiusStyle.roundedBorder8,
+                            border: Border.all(
+                              width: 1,
+                              color: appTheme.grayScale2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 6, right: 0, top: 0, bottom: 0),
+                            child: DropdownButton<String>(
+                              value: controller
+                                      .contentListModel.value.status![index]
+                                  ? '승인'
+                                  : '비승인',
+                              underline: Container(),
+                              padding: const EdgeInsets.only(left: 6),
+                              borderRadius: BorderRadiusStyle.roundedBorder12,
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  controller.onStatusChange(index);
+                                }
+                              },
+                              items: <String>[
+                                '승인',
+                                '비승인'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: value == "승인"
                                         ? CustomTextStyles.labelLargeGreen
                                         : CustomTextStyles.labelLargeRed,
                                   ),
@@ -282,7 +330,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       children: List.generate(3, (index) {
                         return CustomCheckboxWidget(
                           isChecked: controller.bodyValues[index],
-                          label: controller.bodyLabels[index],
+                          label: controller.bodyLabels[index].displayName,
                           onChanged: (value) =>
                               controller.toggleBodyCheckbox(index, value),
                         );
@@ -296,7 +344,8 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         (index) {
                           return CustomCheckboxWidget(
                             isChecked: controller.breathingValues[index],
-                            label: controller.breathingLabels[index],
+                            label:
+                                controller.breathingLabels[index].displayName,
                             onChanged: (value) => controller
                                 .toggleBreathingCheckbox(index, value),
                           );
@@ -307,19 +356,41 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       visible: controller.showMore.value,
                       child: Container(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: Wrap(
-                          runSpacing: 18,
-                          children: List.generate(
-                            controller.otherValues.length,
-                            (index) {
-                              return CustomCheckboxWidget(
-                                isChecked: controller.otherValues[index],
-                                label: controller.otherLabels[index],
-                                onChanged: (value) => controller
-                                    .toggleOtherCheckbox(index, value),
-                              );
-                            },
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Wrap(
+                              runSpacing: 18,
+                              children: List.generate(
+                                controller.otherValues.length,
+                                (index) {
+                                  return CustomCheckboxWidget(
+                                    isChecked: controller.otherValues[index],
+                                    label: controller
+                                        .otherLabels[index].displayName,
+                                    onChanged: (value) => controller
+                                        .toggleOtherCheckbox(index, value),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Wrap(
+                              runSpacing: 18,
+                              children: List.generate(
+                                controller.theoryValues.length,
+                                (index) {
+                                  return CustomCheckboxWidget(
+                                    isChecked: controller.theoryValues[index],
+                                    label: controller
+                                        .theoryLabels[index].displayName,
+                                    onChanged: (value) => controller
+                                        .toggleTheoryCheckbox(index, value),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -344,10 +415,10 @@ class ContentManageView extends GetWidget<ContentManageController> {
               ],
             ),
           ),
-          const SizedBox(height: 25),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Text('상태', style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 15),
@@ -382,7 +453,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 6, right: 0, top: 0, bottom: 0),
-        child: DropdownButton<String>(
+        child: DropdownButton<SortCondition>(
           value: controller.selectedOrder.value,
           underline: Container(),
           padding: const EdgeInsets.only(left: 6),
@@ -390,17 +461,20 @@ class ContentManageView extends GetWidget<ContentManageController> {
           // icon: const Icon(Icons.),
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),
-          onChanged: (String? newValue) {
+          onChanged: (SortCondition? newValue) {
             if (newValue != null) {
               controller.updateSelectedOrder(newValue);
             }
           },
-          items: <String>['등록순', '조회순', '좋아요순']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
+          items: <SortCondition>[
+            SortCondition.registration,
+            SortCondition.views,
+            SortCondition.likes
+          ].map<DropdownMenuItem<SortCondition>>((SortCondition value) {
+            return DropdownMenuItem<SortCondition>(
               value: value,
               child: Text(
-                value,
+                value.displayName,
                 style: CustomTextStyles.labelLargeBlack,
               ),
             );

@@ -1,4 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/content_exposure.dart';
+import 'package:mindsight_admin_page/constants/content_language.dart';
+import 'package:mindsight_admin_page/constants/content_level.dart';
+import 'package:mindsight_admin_page/constants/content_type.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_register/content_register_controller.dart';
 
 class ContentRegisterView extends GetWidget<ContentRegisterController> {
@@ -31,89 +35,15 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      TobBarSearch(
-                                        name: "콘텐츠 신규 등록",
-                                        searchShow: false,
-                                        viewCount: false,
-                                      ),
+                                      _buildTitle(),
                                       const SizedBox(height: 16),
-                                      Row(
-                                        children: [
-                                          InkWell(
-                                              child: Text(
-                                                "콘텐츠 목록",
-                                                style: CustomTextStyles
-                                                    .bodyMediumSkyBlue
-                                                    .copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  decorationColor:
-                                                      appTheme.skyBlue,
-                                                ),
-                                              ),
-                                              onTap: () => Get.offAllNamed(
-                                                  AppRoutes.contentManage)),
-                                          CustomImageView(
-                                            imagePath: IconConstant.arrowRight,
-                                          ),
-                                          Text('콘텐츠 신규 등록',
-                                              style: CustomTextStyles
-                                                  .bodyMediumGray),
-                                        ],
-                                      ),
+                                      _buildSubMenu(),
                                       const SizedBox(height: 32),
-                                      Text('기본 정보',
-                                          style:
-                                              CustomTextStyles.bodyMediumBlack),
-                                      const SizedBox(height: 24),
-                                      _enterTitle(),
-                                      const SizedBox(height: 24),
-                                      buildThirdRow(),
-                                      const SizedBox(height: 24),
-                                      _enterMaster(),
-                                      const SizedBox(height: 24),
-                                      _enterTags(),
-                                      const SizedBox(height: 24),
-                                      _enterIntro(),
+                                      _buildBasicInfo(),
                                       const SizedBox(height: 32),
-                                      buildLastRow(),
+                                      _buildFile(),
                                       const SizedBox(height: 32),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          CustomElevatedButton(
-                                            text: '저장',
-                                            buttonTextStyle: CustomTextStyles
-                                                .bodyMediumWhiteBold,
-                                            buttonStyle:
-                                                CustomButtonStyles.fillPrimary,
-                                            width: 90,
-                                            height: 44,
-                                            onPressed: () {
-                                              if (formKey.currentState!
-                                                      .validate() &&
-                                                  controller.isSaveValidate()) {
-                                                controller.onSave();
-                                              }
-                                            },
-                                          ),
-                                          CustomElevatedButton(
-                                            text: '취소',
-                                            buttonTextStyle: CustomTextStyles
-                                                .bodyMediumRedBold,
-                                            buttonStyle: CustomButtonStyles
-                                                .fillRedTransparent,
-                                            margin:
-                                                const EdgeInsets.only(left: 16),
-                                            width: 90,
-                                            height: 44,
-                                            onPressed: () => Get.offAllNamed(
-                                                AppRoutes.contentManage),
-                                          ),
-                                        ],
-                                      )
+                                      _buildSaveNCancel(formKey)
                                     ],
                                   ),
                                 ),
@@ -129,7 +59,272 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         )));
   }
 
-  Widget _enterMaster() {
+  Row _buildSaveNCancel(GlobalKey<FormState> formKey) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomElevatedButton(
+          text: '임시 저장',
+          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+          buttonStyle: CustomButtonStyles.fillPrimary,
+          width: 90,
+          height: 44,
+          margin: const EdgeInsets.only(right: 16),
+          onPressed: () {
+            if (formKey.currentState!.validate() &&
+                controller.isSaveValidate()) {
+              controller.onSave();
+            }
+          },
+        ),
+        CustomElevatedButton(
+          text: '승인 요청',
+          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+          buttonStyle: CustomButtonStyles.fillPrimary,
+          width: 90,
+          height: 44,
+          margin: const EdgeInsets.only(right: 16),
+          onPressed: () {
+            showSimpleMessage(Get.context!,
+                "승인 요청 되었습니다. 최대 2영업일이 소요 됩니다.\n승인이 완료 되면 메일과 푸쉬메세지로 알림 드리겠습니다.");
+          },
+        ),
+        CustomElevatedButton(
+          text: '취소',
+          buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+          buttonStyle: CustomButtonStyles.fillRedTransparent,
+          width: 90,
+          height: 44,
+          onPressed: () => Get.offAllNamed(AppRoutes.contentManage),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBasicInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('기본 정보', style: CustomTextStyles.bodyMediumBlack),
+        const SizedBox(height: 24),
+        _buildInputTitle(),
+        const SizedBox(height: 24),
+        _buildInputCategoryNType(),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            _buildInputLevel(),
+            const SizedBox(width: 24),
+            _buildInputTargetLanguage(),
+          ],
+        ),
+        const SizedBox(height: 24),
+        _buildInputExposured(),
+        const SizedBox(height: 24),
+        _buildInputTags(),
+        const SizedBox(height: 24),
+        _buildInputIntro(),
+      ],
+    );
+  }
+
+  Widget _buildInputExposured() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "노출 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentExposured>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: null,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentExposured? newValue) {},
+            items: controller.contentExposured
+                .map<DropdownMenuItem<ContentExposured>>(
+                    (ContentExposured value) {
+              return DropdownMenuItem<ContentExposured>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildInputLevel() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "수준 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentLevel>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            // value: controller.selectedMaster.value == ""
+            //     ? null
+            //     : controller.selectedMaster.value,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentLevel? newValue) {
+              // if (newValue != null) {
+              //   controller.selectedMaster.value = newValue;
+              // }
+            },
+            items: controller.contentLevel
+                .map<DropdownMenuItem<ContentLevel>>((ContentLevel value) {
+              return DropdownMenuItem<ContentLevel>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildInputTargetLanguage() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "타겟 언어 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentLanguage>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            // value: controller.selectedMaster.value == ""
+            //     ? null
+            //     : controller.selectedMaster.value,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentLanguage? newValue) {
+              // if (newValue != null) {
+              //   controller.selectedMaster.value = newValue;
+              // }
+            },
+            items: controller.contentLanguage
+                .map<DropdownMenuItem<ContentLanguage>>(
+                    (ContentLanguage value) {
+              return DropdownMenuItem<ContentLanguage>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Row _buildSubMenu() {
+    return Row(
+      children: [
+        InkWell(
+            child: Text(
+              "콘텐츠 목록",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              ),
+            ),
+            onTap: () => Get.offAllNamed(AppRoutes.contentManage)),
+        CustomImageView(
+          imagePath: IconConstant.arrowRight,
+        ),
+        Text('콘텐츠 신규 등록', style: CustomTextStyles.bodyMediumGray),
+      ],
+    );
+  }
+
+  TobBarSearch _buildTitle() {
+    return TobBarSearch(
+      name: "콘텐츠 신규 등록",
+      searchShow: false,
+      viewCount: false,
+    );
+  }
+
+  Widget _buildInputMaster() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -179,7 +374,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _enterTitle() {
+  Widget _buildInputTitle() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,7 +406,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Row buildThirdRow() {
+  Row _buildInputCategoryNType() {
     return Row(
       children: [
         Column(
@@ -267,7 +462,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   return DropdownMenuItem<Category>(
                     value: value,
                     child: Text(
-                      value.toDisplayName(),
+                      value.displayName,
                       style: CustomTextStyles.bodyMediumBlack,
                     ),
                   );
@@ -313,21 +508,19 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                     : appTheme.white,
                 borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
-              child: DropdownButton<String>(
+              child: DropdownButton<ContentType>(
                   enableFeedback: controller.categorySelected.value,
                   hint: Text('Select Option',
                       style: CustomTextStyles.bodyMediumGray),
                   isExpanded: true,
-                  value: controller.selectedType.value == ""
-                      ? null
-                      : controller.selectedType.value,
+                  // value: controller.selectedType.value,
                   underline: Container(),
                   padding: const EdgeInsets.only(
                       left: 16, right: 16, top: 2, bottom: 2),
                   borderRadius: BorderRadiusStyle.roundedBorder12,
                   // icon: const Icon(Icons.),
                   elevation: 16,
-                  onChanged: (String? newValue) {
+                  onChanged: (ContentType? newValue) {
                     if (newValue != null) {
                       controller.selectedType.value = newValue;
                       controller.enableTypeError.value = false;
@@ -335,21 +528,22 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   },
                   items: controller.categorySelected.value
                       ? controller.types[controller.selectedCategory.value]!
-                          .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
+                          .map<DropdownMenuItem<ContentType>>(
+                              (ContentType value) {
+                          return DropdownMenuItem<ContentType>(
                             value: value,
                             child: Text(
-                              value,
+                              value.displayName,
                               style: CustomTextStyles.bodyMediumBlack,
                             ),
                           );
                         }).toList()
-                      : <String>[]
-                          .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
+                      : <ContentType>[].map<DropdownMenuItem<ContentType>>(
+                          (ContentType value) {
+                          return DropdownMenuItem<ContentType>(
                             value: value,
                             child: Text(
-                              value,
+                              value.displayName,
                               style: CustomTextStyles.bodyMediumBlack,
                             ),
                           );
@@ -370,7 +564,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _enterTags() {
+  Widget _buildInputTags() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -466,15 +660,19 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _enterIntro() {
+  Widget _buildInputIntro() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '소개',
-          style: CustomTextStyles.labelLargeBlack,
-        ),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "소개 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
         const SizedBox(
           height: 8,
         ),
@@ -501,148 +699,229 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget buildLastRow() {
+  Widget _buildFile() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("파일", style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "동영상 파일 ",
-                  style: CustomTextStyles.labelLargeBlack
-                      .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Text('사전 등록 후 저장된 링크를 입력해주세요.',
-                style: CustomTextStyles.labelLargeGray),
-            const SizedBox(height: 8),
-            CustomTextFormField(
-                controller: controller.videoController,
-                width: 730,
-                validator: (value) {
-                  if (controller.videoController.text == '') {
-                    return "필수 입력 항목입니다.".tr;
-                  }
-                  return null;
-                },
-                contentPadding:
-                    const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                filled: true),
+            _buildVideoOrSoundFile(),
+            const SizedBox(width: 24),
+            _buildThumnailFile(),
           ],
         ),
         const SizedBox(height: 24),
-        Row(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: "썸네일 파일 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-                ])),
-                const SizedBox(height: 8),
-                Container(
-                  width: 353,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      border: Border.all(
-                          color: controller.enableThumbnailError.value
-                              ? appTheme.alertNegative
-                              : appTheme.grayScale3),
-                      color: controller.enableThumbnailError.value
-                          ? appTheme.alertNegative.withOpacity(0.1)
-                          : appTheme.white),
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 280,
-                        child: Text(
-                          controller.thumbnailName == "".obs
-                              ? '파일 추가 혹은 여기로 드래그 (.jpg)'
-                              : controller.thumbnailName.value,
-                          style: controller.thumbnailName == "".obs
-                              ? CustomTextStyles.bodyMediumGray
-                              : CustomTextStyles.bodyMediumBlack,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      CustomImageView(
-                        imagePath: IconConstant.upload,
-                        onTap: () {
-                          controller.pickFile("thumbnail");
-                        },
-                      )
-                    ],
-                  ),
+        _buildDubbing(),
+      ],
+    );
+  }
+
+  Widget _buildDubbing() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(text: "더빙 ", style: CustomTextStyles.bodyMediumBlack),
+        ])),
+        const SizedBox(height: 24),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadiusStyle.roundedBorder12,
+              border: Border.all(
+                  color: controller.enableThumbnailError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3),
+              color: controller.enableThumbnailError.value
+                  ? appTheme.alertNegative.withOpacity(0.1)
+                  : appTheme.white),
+          padding: const EdgeInsets.all(16),
+          child: Wrap(
+            runSpacing: 18,
+            children: List.generate(3, (index) {
+              return CustomCheckboxWidget(
+                  isChecked: false,
+                  label: controller.contentLanguage[index].displayName,
+                  onChanged: (value) {});
+            }),
+          ),
+        ),
+        controller.enableThumbnailError.value
+            ? Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
+                ],
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+
+  Widget _buildThumnailFile() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(text: "썸네일 파일 ", style: CustomTextStyles.labelLargeBlack),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red)),
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadiusStyle.roundedBorder12,
+              border: Border.all(
+                  color: controller.enableThumbnailError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3),
+              color: controller.enableThumbnailError.value
+                  ? appTheme.alertNegative.withOpacity(0.1)
+                  : appTheme.white),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 280,
+                child: Text(
+                  controller.thumbnailName == "".obs
+                      ? '300 x 300 최대 10메가 (.jpg)'
+                      : controller.thumbnailName.value,
+                  style: controller.thumbnailName == "".obs
+                      ? CustomTextStyles.bodyMediumGray
+                      : CustomTextStyles.bodyMediumBlack,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                controller.enableThumbnailError.value
-                    ? Column(
-                        children: [
-                          const SizedBox(height: 8),
-                          Text('필수 입력 항목입니다.',
-                              style: CustomTextStyles.labelMediumRed),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
-              ],
+              ),
+              CustomImageView(
+                imagePath: IconConstant.upload,
+                onTap: () {
+                  controller.pickFile("thumbnail");
+                },
+              )
+            ],
+          ),
+        ),
+        controller.enableThumbnailError.value
+            ? Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
+                ],
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+
+  Widget _buildVideoOrSoundFile() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
+              width: 170,
+              child: ListTile(
+                  horizontalTitleGap: 0,
+                  minLeadingWidth: 0,
+                  minTileHeight: 0,
+                  minVerticalPadding: 0,
+                  contentPadding: EdgeInsets.zero,
+                  //     const EdgeInsets.only(left: 0.0, right: 0.0),
+                  title: Row(
+                    children: <Widget>[
+                      Radio<ActivityType>(
+                        value: ActivityType.practice,
+                        groupValue: ActivityType.practice,
+                        onChanged: (ActivityType? value) {
+                          // controller.onChangeType(value);
+                        },
+                      ),
+                      Text("미디어 파일", style: CustomTextStyles.labelLargeBlack),
+                    ],
+                  )),
             ),
-            const SizedBox(
-              width: 24,
-            ),
-            // Column(
-            //   mainAxisAlignment: MainAxisAlignment.start,
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Text("자막 파일 ", style: CustomTextStyles.labelLargeBlack),
-            //     const SizedBox(height: 8),
-            //     Container(
-            //       width: 353,
-            //       decoration: BoxDecoration(
-            //           borderRadius: BorderRadiusStyle.roundedBorder12,
-            //           border: Border.all(color: appTheme.grayScale3),
-            //           color: appTheme.white),
-            //       padding: const EdgeInsets.all(16),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           SizedBox(
-            //             width: 280,
-            //             child: Text(
-            //               controller.ccName == "".obs
-            //                   ? '파일 추가 혹은 여기로 드래그 (.srt)'
-            //                   : controller.ccName.value,
-            //               style: controller.ccName == "".obs
-            //                   ? CustomTextStyles.bodyMediumGray
-            //                   : CustomTextStyles.bodyMediumBlack,
-            //               overflow: TextOverflow.ellipsis,
-            //             ),
-            //           ),
-            //           CustomImageView(
-            //             imagePath: IconConstant.upload,
-            //             onTap: () {
-            //               controller.pickFile("cc");
-            //             },
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            SizedBox(
+              height: 20,
+              width: 170,
+              child: ListTile(
+                  horizontalTitleGap: 0,
+                  minLeadingWidth: 0,
+                  minTileHeight: 0,
+                  minVerticalPadding: 0,
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
+                    children: <Widget>[
+                      Radio<ActivityType>(
+                        value: ActivityType.challenge,
+                        groupValue: ActivityType.practice,
+                        onChanged: (ActivityType? value) {
+                          // controller.onChangeType(value);
+                        },
+                      ),
+                      Text("사운드 파일", style: CustomTextStyles.labelLargeBlack),
+                    ],
+                  )),
+            )
           ],
         ),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadiusStyle.roundedBorder12,
+              border: Border.all(
+                  color: controller.enableThumbnailError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3),
+              color: controller.enableThumbnailError.value
+                  ? appTheme.alertNegative.withOpacity(0.1)
+                  : appTheme.white),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 280,
+                child: Text(
+                  controller.thumbnailName == "".obs
+                      ? '최대 2기가 (.mpeg)'
+                      : controller.thumbnailName.value,
+                  style: controller.thumbnailName == "".obs
+                      ? CustomTextStyles.bodyMediumGray
+                      : CustomTextStyles.bodyMediumBlack,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              CustomImageView(
+                imagePath: IconConstant.upload,
+                onTap: () {
+                  controller.pickFile("thumbnail");
+                },
+              )
+            ],
+          ),
+        ),
+        controller.enableThumbnailError.value
+            ? Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
+                ],
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }

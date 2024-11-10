@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/gender.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
@@ -8,7 +9,6 @@ import 'package:mindsight_admin_page/data/members_data/members_data_repository.d
 import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_repository.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_req_put.dart';
-import 'package:mindsight_admin_page/function/show_simple_message.dart';
 
 class MemberEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -21,7 +21,7 @@ class MemberEditController extends GetxController {
     "UN Women",
   ];
   RxString affiliation = "".obs;
-  RxString gender = "".obs;
+  Rx<Gender?> gender = Rx<Gender?>(Gender.unknown);
 
   final TextEditingController yearController = TextEditingController();
   final TextEditingController positionController = TextEditingController();
@@ -49,7 +49,7 @@ class MemberEditController extends GetxController {
 
     membersDataModel = await MembersDataRepository().get(id);
     affiliation.value = membersDataModel.affiliation ?? "";
-    gender.value = membersDataModel.gender ?? "";
+    gender.value = Gender.fromKeyword(membersDataModel.gender);
     firstNameController.text = membersDataModel.firstName ?? "";
     lastNameController.text = membersDataModel.lastName ?? "";
     departmentController.text = membersDataModel.department ?? "";
@@ -73,7 +73,7 @@ class MemberEditController extends GetxController {
           position: positionController.text,
           firstName: firstNameController.text,
           lastName: lastNameController.text,
-          gender: gender.value,
+          gender: gender.value?.keywordName,
           yearOfBirth: int.parse(yearController.text),
         ));
 

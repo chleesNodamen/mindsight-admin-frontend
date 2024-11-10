@@ -27,14 +27,14 @@ class MemberManageView extends GetWidget<MemberManageController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  TobBarSearch(
-                                    name: "회원 목록",
-                                    searchShow: true,
-                                    viewCount: false,
-                                    searchText: "이메일 주소, 사용자 이름 검색",
-                                    memberShow: true,
-                                    memberCount: controller.membersModel.total,
-                                    onSearch: controller.onSearch,
+                                  _buildTitle(),
+                                  const SizedBox(height: 32),
+                                  Row(
+                                    children: [
+                                      _buildRegisterButton(),
+                                      const SizedBox(width: 16),
+                                      _buildMassRegisterButton(),
+                                    ],
                                   ),
                                   const SizedBox(height: 32),
                                   _buildCheckBox(),
@@ -52,6 +52,44 @@ class MemberManageView extends GetWidget<MemberManageController> {
               : const SizedBox.shrink(),
         ),
       ),
+    );
+  }
+
+  TobBarSearch _buildTitle() {
+    return TobBarSearch(
+      name: "회원 목록",
+      searchShow: true,
+      viewCount: false,
+      searchText: "이메일 주소, 이름 검색",
+      memberShow: true,
+      memberCount: controller.membersModel.total,
+      onSearch: controller.onSearch,
+    );
+  }
+
+  CustomElevatedButton _buildRegisterButton() {
+    return CustomElevatedButton(
+      onPressed: () {
+        Get.offAllNamed(AppRoutes.memberRegister);
+      },
+      text: "신규 등록",
+      height: 44,
+      width: 107,
+      decoration:
+          BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
+    );
+  }
+
+  CustomElevatedButton _buildMassRegisterButton() {
+    return CustomElevatedButton(
+      onPressed: () {
+        Get.offAllNamed(AppRoutes.memberMassRegister);
+      },
+      text: "대량 신규 등록",
+      height: 44,
+      width: 107,
+      decoration:
+          BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
   }
 

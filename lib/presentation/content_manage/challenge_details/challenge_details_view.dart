@@ -139,9 +139,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("기본 정보",
-                  style: CustomTextStyles.labelLargeBlack
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("기본 정보", style: CustomTextStyles.labelLargeBlack),
               InkWell(
                 onTap: controller.onEdit,
                 child: Text("수정",
@@ -156,20 +154,16 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('제목',
-                  style: CustomTextStyles.labelMediumGray
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text('제목', style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
               Text(controller.challengeDetailsModel.name!,
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -199,12 +193,10 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               )
             ],
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -216,16 +208,16 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                   style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
-          const SizedBox(height: 24),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Day 세션', style: CustomTextStyles.labelMediumBlack),
+              Text('Day 세션', style: CustomTextStyles.labelLargeBlack),
               const SizedBox(height: 16),
               Wrap(
                 spacing: 8.0, // Horizontal spacing
@@ -234,15 +226,17 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(height: 24),
-          _buildDayContent(),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(height: 24),
+          _buildDayContent(),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

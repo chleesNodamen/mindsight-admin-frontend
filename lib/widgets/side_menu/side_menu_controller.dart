@@ -22,6 +22,18 @@ class SideMenuController extends GetxController {
       SubMenuItem(inactiveMemberManagePageDisplayName,
           AppRoutes.inactiveMemberManage, () {}),
     ],
+    masterManagePageDisplayName: [
+      SubMenuItem(
+          masterManagePageSubMenuDisplayName, AppRoutes.masterManage, () {}),
+      SubMenuItem(inactiveMasterManagePageDisplayName,
+          AppRoutes.inactiveMasterManage, () {}),
+    ],
+    companyManagePageDisplayName: [
+      SubMenuItem(
+          companyManagePageSubMenuDisplayName, AppRoutes.companyManage, () {}),
+      SubMenuItem(inactiveCompanyManagePageDisplayName,
+          AppRoutes.inactiveCompanyManage, () {}),
+    ],
     contentManagePageDisplayName: [
       SubMenuItem(
           contentManageContentDisplayName, AppRoutes.contentManage, () {}),
@@ -79,6 +91,10 @@ class SideMenuController extends GetxController {
         return CustomImageView(
             imagePath:
                 '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+      case masterManagePageDisplayName:
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case contentManagePageDisplayName:
         return CustomImageView(
             imagePath:
@@ -94,7 +110,7 @@ class SideMenuController extends GetxController {
       case settlementManagePageDisplayName:
         return CustomImageView(
             imagePath:
-                '${IconConstant.aabbcc.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+                '${IconConstant.receiptLong.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       // case authenticationPageDisplayName:
       //   return _customIcon(Icons.exit_to_app, itemName);
       default:

@@ -2,6 +2,7 @@
 import 'dart:html';
 import 'package:file_picker/file_picker.dart';
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/goal.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_detail_days.dart';
@@ -26,7 +27,7 @@ class ChallengeEditController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController introController = TextEditingController();
 
-  var selectedGoal = ''.obs;
+  RxString selectedGoal = "".obs;
 
   @override
   Future<void> onInit() async {

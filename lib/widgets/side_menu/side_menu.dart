@@ -19,10 +19,30 @@ const memberDetailsPageRoute = "/member_details";
 const memberDetailsPageDisplayName = "회원 상세";
 
 const memberEditPageRoute = "/member_edit";
-const memberEditPageDisplayName = "사전 정보 수정";
+const memberEditPageDisplayName = "회원 정보 수정";
 
 const inactiveMemberManagePageRoute = "/inactive_member_manage";
 const inactiveMemberManagePageDisplayName = "비활성 회원 관리";
+
+const masterManagePageRoute = "/master_manage";
+const masterManagePageDisplayName = "마스터 관리";
+const masterManagePageSubMenuDisplayName = "마스터 목록";
+
+const inactiveMasterManagePageRoute = "/inactive_master_manage";
+const inactiveMasterManagePageDisplayName = "비승인 마스터 관리";
+
+const masterDetailsPageRoute = "/master_details";
+const masterDetailsPageDisplayName = "마스터 상세";
+
+const masterEditPageRoute = "/master_edit";
+const masterEditPageDisplayName = "마스터 정보 수정";
+
+const companyManagePageRoute = "/company_manage";
+const companyManagePageDisplayName = "회사 관리";
+const companyManagePageSubMenuDisplayName = "회사 목록";
+
+const inactiveCompanyManagePageRoute = "/inactive_company_manage";
+const inactiveCompanyManagePageDisplayName = "비승인 회사 관리";
 
 const contentManagePageDisplayName = "콘텐츠 관리";
 const contentManagePageRoute = "/content_manage";
@@ -54,6 +74,8 @@ const authenticationPageRoute = "/auth";
 List<MenuItem> sideMenuItemRoutes = [
   MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
   MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {}),
+  MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
+  MenuItem(companyManagePageDisplayName, AppRoutes.companyManage, () {}),
   MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {}),
   MenuItem(activityManagePageDisplayName, AppRoutes.activityManage, () {}),
   MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage, () {}),

@@ -197,12 +197,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               ),
               Text(controller.activityDetailsModel.level ?? "",
                   style: CustomTextStyles.labelLargeBlack),
-              const SizedBox(
-                height: 24,
-              ),
-              Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-              const SizedBox(
-                height: 24,
+              Divider(
+                height: 49,
+                thickness: 1,
+                color: appTheme.grayScale2,
               ),
               Text('콘텐츠 등록', style: CustomTextStyles.labelLargeGray),
               const SizedBox(
@@ -214,12 +212,12 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(Category.body.toDisplayName(),
+                      Text(Category.body.displayName,
                           style: CustomTextStyles.labelLargeSkyBlue),
                       const SizedBox(
                         height: 16,
                       ),
-                      Text(Category.breath.toDisplayName(),
+                      Text(Category.breath.displayName,
                           style: CustomTextStyles.labelLargeSkyBlue),
                     ],
                   ),
@@ -277,12 +275,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               ),
               Text(controller.activityDetailsModel.title ?? "",
                   style: CustomTextStyles.labelLargeBlack),
-              const SizedBox(
-                height: 24,
-              ),
-              Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-              const SizedBox(
-                height: 24,
+              Divider(
+                height: 49,
+                thickness: 1,
+                color: appTheme.grayScale2,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,12 +307,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   )
                 ],
               ),
-              const SizedBox(
-                height: 24,
-              ),
-              Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-              const SizedBox(
-                height: 24,
+              Divider(
+                height: 49,
+                thickness: 1,
+                color: appTheme.grayScale2,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -453,12 +447,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                       style: CustomTextStyles.labelLargeGray),
                 ],
               )),
-          const SizedBox(
-            height: 24,
-          ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Text('챗봇 기록', style: CustomTextStyles.labelLargeGray),
           const SizedBox(
@@ -480,12 +472,10 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               }
             },
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -103,7 +103,7 @@ class CustomHttpClient {
       final response = await client.post(uri,
           headers: {..._headers, ...?headers}, body: jsonEncode(body));
       if (AppConstant.showHttpLog) {
-        Logger.log('Api POST 응답: ${response.statusCode} ${response.body}');
+        Logger.log('Api POST 응답: ${response.body}');
       }
       return response;
     } catch (e) {

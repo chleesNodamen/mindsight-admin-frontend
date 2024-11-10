@@ -141,10 +141,10 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(
-            height: 24,
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
           ),
           Row(
             children: [

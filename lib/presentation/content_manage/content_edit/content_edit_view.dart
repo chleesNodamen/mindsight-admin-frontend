@@ -1,6 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/content_details/content_details_controller.dart';
+import 'package:mindsight_admin_page/constants/content_exposure.dart';
+import 'package:mindsight_admin_page/constants/content_language.dart';
+import 'package:mindsight_admin_page/constants/content_level.dart';
+import 'package:mindsight_admin_page/constants/content_type.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_edit/content_edit_controller.dart';
 
 class ContentEditView extends GetWidget<ContentEditController> {
@@ -30,76 +32,13 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  TobBarSearch(
-                                    name: "콘텐츠 수정",
-                                    searchShow: false,
-                                    viewCount: false,
-                                  ),
+                                  _buildTitle(),
                                   const SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      InkWell(
-                                          child: Text(
-                                            "콘텐츠 목록",
-                                            style: CustomTextStyles
-                                                .bodyMediumSkyBlue
-                                                .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              decorationColor: appTheme.skyBlue,
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            Get.offAllNamed(
-                                                AppRoutes.contentManage);
-                                          }),
-                                      CustomImageView(
-                                        imagePath: IconConstant.arrowRight,
-                                      ),
-                                      InkWell(
-                                          child: Text(
-                                            "콘텐츠 상세",
-                                            style: CustomTextStyles
-                                                .bodyMediumSkyBlue
-                                                .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              decorationColor: appTheme.skyBlue,
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            Get.offAllNamed(
-                                                AppRoutes.contentDetails,
-                                                arguments: {
-                                                  RouteArguments.id:
-                                                      controller.id
-                                                });
-                                          }),
-                                      CustomImageView(
-                                        imagePath: IconConstant.arrowRight,
-                                      ),
-                                      Text('콘텐츠 수정',
-                                          style:
-                                              CustomTextStyles.bodyMediumGray),
-                                    ],
-                                  ),
+                                  _buildSubMenu(),
                                   const SizedBox(height: 32),
-                                  Text('기본 정보',
-                                      style: CustomTextStyles.bodyMediumBlack),
-                                  const SizedBox(height: 24),
-                                  _enterTitle(),
-                                  const SizedBox(height: 24),
-                                  buildThirdRow(),
-                                  const SizedBox(height: 24),
-                                  _enterMaster(),
-                                  const SizedBox(height: 24),
-                                  _enterTags(),
-                                  const SizedBox(height: 24),
-                                  _enterIntro(),
+                                  _buildBasicInfo(),
                                   const SizedBox(height: 32),
-                                  buildLastRow(),
+                                  _buildFile(),
                                   const SizedBox(height: 32),
                                 ],
                               ),
@@ -150,11 +89,60 @@ class ContentEditView extends GetWidget<ContentEditController> {
         ));
   }
 
-  Widget _enterTitle() {
+  Row _buildSubMenu() {
+    return Row(
+      children: [
+        InkWell(
+            child: Text(
+              "콘텐츠 목록",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              ),
+            ),
+            onTap: () {
+              Get.offAllNamed(AppRoutes.contentManage);
+            }),
+        CustomImageView(
+          imagePath: IconConstant.arrowRight,
+        ),
+        InkWell(
+            child: Text(
+              "콘텐츠 상세",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              ),
+            ),
+            onTap: () {
+              Get.offAllNamed(AppRoutes.contentDetails,
+                  arguments: {RouteArguments.id: controller.id});
+            }),
+        CustomImageView(
+          imagePath: IconConstant.arrowRight,
+        ),
+        Text('콘텐츠 수정', style: CustomTextStyles.bodyMediumGray),
+      ],
+    );
+  }
+
+  TobBarSearch _buildTitle() {
+    return TobBarSearch(
+      name: "콘텐츠 수정",
+      searchShow: false,
+      viewCount: false,
+    );
+  }
+
+  Widget _buildBasicInfo() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('기본 정보', style: CustomTextStyles.bodyMediumBlack),
+        const SizedBox(height: 24),
         RichText(
             text: TextSpan(children: [
           TextSpan(
@@ -176,6 +164,176 @@ class ContentEditView extends GetWidget<ContentEditController> {
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
             filled: true),
+        const SizedBox(height: 24),
+        _buildCategoryNType(),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            _buildLevel(),
+            const SizedBox(width: 24),
+            _buildTargetLanguage()
+          ],
+        ),
+        const SizedBox(height: 24),
+        _buildExposured(),
+        const SizedBox(height: 24),
+        _buildTags(),
+        const SizedBox(height: 24),
+        _enterIntro(),
+      ],
+    );
+  }
+
+  Row _buildCategoryNType() {
+    return Row(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "카테고리 ",
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+            ])),
+            const SizedBox(height: 8),
+            Container(
+              width: 353,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: controller.enableCategoryError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3,
+                ),
+                color: controller.enableCategoryError.value
+                    ? appTheme.alertNegative.withOpacity(0.1)
+                    : appTheme.white,
+                borderRadius: BorderRadiusStyle.roundedBorder12,
+              ),
+              child: DropdownButton<Category>(
+                hint: Text('Select Option',
+                    style: CustomTextStyles.bodyMediumGray),
+                isExpanded: true,
+                value: controller.selectedCategory.value,
+                underline: Container(),
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 2, bottom: 2),
+                borderRadius: BorderRadiusStyle.roundedBorder12,
+                elevation: 16,
+                onChanged: (Category? newValue) {
+                  if (newValue != null) {
+                    controller.selectCategory(newValue);
+                  }
+                },
+                items: controller.categories
+                    .map<DropdownMenuItem<Category>>((Category value) {
+                  return DropdownMenuItem<Category>(
+                    value: value,
+                    child: Text(
+                      value.displayName,
+                      style: CustomTextStyles.bodyMediumBlack,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+            controller.enableCategoryError.value
+                ? Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text('필수 입력 항목입니다.',
+                          style: CustomTextStyles.labelMediumRed),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+          ],
+        ),
+        const SizedBox(width: 24),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "타입 ",
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+            ])),
+            const SizedBox(height: 8),
+            Container(
+              width: 353,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: controller.enableTypeError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3,
+                ),
+                color: controller.enableTypeError.value
+                    ? appTheme.alertNegative.withOpacity(0.1)
+                    : appTheme.white,
+                borderRadius: BorderRadiusStyle.roundedBorder12,
+              ),
+              child: DropdownButton<ContentType>(
+                  enableFeedback: controller.categorySelected.value,
+                  hint: Text('Select Option',
+                      style: CustomTextStyles.bodyMediumGray),
+                  isExpanded: true,
+                  value: controller.selectedType.value == ""
+                      ? null
+                      : controller.selectedType.value,
+                  underline: Container(),
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 2, bottom: 2),
+                  borderRadius: BorderRadiusStyle.roundedBorder12,
+                  // icon: const Icon(Icons.),
+                  elevation: 16,
+                  onChanged: (ContentType? newValue) {
+                    if (newValue != null) {
+                      controller.selectedType.value = newValue;
+                      controller.enableTypeError.value = false;
+                    }
+                  },
+                  items: controller.categorySelected.value
+                      ? controller.types[controller.selectedCategory.value]!
+                          .map<DropdownMenuItem<ContentType>>(
+                              (ContentType value) {
+                          return DropdownMenuItem<ContentType>(
+                            value: value,
+                            child: Text(
+                              value.displayName,
+                              style: CustomTextStyles.bodyMediumBlack,
+                            ),
+                          );
+                        }).toList()
+                      : <ContentType>[].map<DropdownMenuItem<ContentType>>(
+                          (ContentType value) {
+                          return DropdownMenuItem<ContentType>(
+                            value: value,
+                            child: Text(
+                              value.displayName,
+                              style: CustomTextStyles.bodyMediumBlack,
+                            ),
+                          );
+                        }).toList()),
+            ),
+            controller.enableTypeError.value
+                ? Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text('필수 입력 항목입니다.',
+                          style: CustomTextStyles.labelMediumRed),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+          ],
+        ),
       ],
     );
   }
@@ -230,7 +388,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   return DropdownMenuItem<Category>(
                     value: value,
                     child: Text(
-                      value.toDisplayName(),
+                      value.displayName,
                       style: CustomTextStyles.bodyMediumBlack,
                     ),
                   );
@@ -276,7 +434,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                     : appTheme.white,
                 borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
-              child: DropdownButton<String>(
+              child: DropdownButton<ContentType>(
                   enableFeedback: controller.categorySelected.value,
                   hint: Text('Select Option',
                       style: CustomTextStyles.bodyMediumGray),
@@ -290,7 +448,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   borderRadius: BorderRadiusStyle.roundedBorder12,
                   // icon: const Icon(Icons.),
                   elevation: 16,
-                  onChanged: (String? newValue) {
+                  onChanged: (ContentType? newValue) {
                     if (newValue != null) {
                       controller.selectedType.value = newValue;
                       controller.enableTypeError.value = false;
@@ -298,21 +456,22 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   },
                   items: controller.categorySelected.value
                       ? controller.types[controller.selectedCategory.value]!
-                          .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
+                          .map<DropdownMenuItem<ContentType>>(
+                              (ContentType value) {
+                          return DropdownMenuItem<ContentType>(
                             value: value,
                             child: Text(
-                              value,
+                              value.displayName,
                               style: CustomTextStyles.bodyMediumBlack,
                             ),
                           );
                         }).toList()
-                      : <String>[]
-                          .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
+                      : <ContentType>[].map<DropdownMenuItem<ContentType>>(
+                          (ContentType value) {
+                          return DropdownMenuItem<ContentType>(
                             value: value,
                             child: Text(
-                              value,
+                              value.displayName,
                               style: CustomTextStyles.bodyMediumBlack,
                             ),
                           );
@@ -333,12 +492,134 @@ class ContentEditView extends GetWidget<ContentEditController> {
     );
   }
 
+  Widget _buildLevel() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "수준 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentLevel>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            // value: controller.selectedMaster.value == ""
+            //     ? null
+            //     : controller.selectedMaster.value,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentLevel? newValue) {
+              // if (newValue != null) {
+              //   controller.selectedMaster.value = newValue;
+              // }
+            },
+            items: controller.contentLevel
+                .map<DropdownMenuItem<ContentLevel>>((ContentLevel value) {
+              return DropdownMenuItem<ContentLevel>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildTargetLanguage() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "타겟 언어 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentLanguage>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            // value: controller.selectedMaster.value == ""
+            //     ? null
+            //     : controller.selectedMaster.value,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentLanguage? newValue) {
+              // if (newValue != null) {
+              //   controller.selectedMaster.value = newValue;
+              // }
+            },
+            items: controller.contentLanguage
+                .map<DropdownMenuItem<ContentLanguage>>(
+                    (ContentLanguage value) {
+              return DropdownMenuItem<ContentLanguage>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _enterMaster() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text('마스터', style: CustomTextStyles.labelLargeBlack),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "마스터 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
         const SizedBox(height: 8),
         Container(
           width: 353,
@@ -383,7 +664,59 @@ class ContentEditView extends GetWidget<ContentEditController> {
     );
   }
 
-  Widget _enterTags() {
+  Widget _buildExposured() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "노출 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentExposured>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: null,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentExposured? newValue) {},
+            items: controller.contentExposured
+                .map<DropdownMenuItem<ContentExposured>>(
+                    (ContentExposured value) {
+              return DropdownMenuItem<ContentExposured>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildTags() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -484,10 +817,14 @@ class ContentEditView extends GetWidget<ContentEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '소개',
-          style: CustomTextStyles.labelLargeBlack,
-        ),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "소개 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
         const SizedBox(
           height: 8,
         ),
@@ -514,6 +851,234 @@ class ContentEditView extends GetWidget<ContentEditController> {
     );
   }
 
+  Widget _buildFile() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("파일", style: CustomTextStyles.bodyMediumBlack),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            _buildVideoOrSoundFile(),
+            const SizedBox(width: 24),
+            _buildThumnailFile(),
+          ],
+        ),
+        const SizedBox(height: 24),
+        _buildDubbing(),
+      ],
+    );
+  }
+
+  Widget _buildDubbing() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(text: "더빙 ", style: CustomTextStyles.bodyMediumBlack),
+        ])),
+        const SizedBox(height: 24),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadiusStyle.roundedBorder12,
+              border: Border.all(
+                  color: controller.enableThumbnailError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3),
+              color: controller.enableThumbnailError.value
+                  ? appTheme.alertNegative.withOpacity(0.1)
+                  : appTheme.white),
+          padding: const EdgeInsets.all(16),
+          child: Wrap(
+            runSpacing: 18,
+            children: List.generate(controller.contentLanguage.length, (index) {
+              return CustomCheckboxWidget(
+                  isChecked: false,
+                  label: controller.contentLanguage[index].displayName,
+                  // label: "영어",
+                  onChanged: (value) {});
+            }),
+          ),
+        ),
+        controller.enableThumbnailError.value
+            ? Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
+                ],
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+
+  Widget _buildThumnailFile() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(text: "썸네일 파일 ", style: CustomTextStyles.labelLargeBlack),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red)),
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadiusStyle.roundedBorder12,
+              border: Border.all(
+                  color: controller.enableThumbnailError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3),
+              color: controller.enableThumbnailError.value
+                  ? appTheme.alertNegative.withOpacity(0.1)
+                  : appTheme.white),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 280,
+                child: Text(
+                  controller.thumbnailName == "".obs
+                      ? '300 x 300 최대 10메가 (.jpg)'
+                      : controller.thumbnailName.value,
+                  style: controller.thumbnailName == "".obs
+                      ? CustomTextStyles.bodyMediumGray
+                      : CustomTextStyles.bodyMediumBlack,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              CustomImageView(
+                imagePath: IconConstant.upload,
+                onTap: () {
+                  controller.pickFile("thumbnail");
+                },
+              )
+            ],
+          ),
+        ),
+        controller.enableThumbnailError.value
+            ? Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
+                ],
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+
+  Widget _buildVideoOrSoundFile() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
+              width: 170,
+              child: ListTile(
+                  horizontalTitleGap: 0,
+                  minLeadingWidth: 0,
+                  minTileHeight: 0,
+                  minVerticalPadding: 0,
+                  contentPadding: EdgeInsets.zero,
+                  //     const EdgeInsets.only(left: 0.0, right: 0.0),
+                  title: Row(
+                    children: <Widget>[
+                      Radio<ActivityType>(
+                        value: ActivityType.practice,
+                        groupValue: ActivityType.practice,
+                        onChanged: (ActivityType? value) {
+                          // controller.onChangeType(value);
+                        },
+                      ),
+                      Text("미디어 파일", style: CustomTextStyles.labelLargeBlack),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: 20,
+              width: 170,
+              child: ListTile(
+                  horizontalTitleGap: 0,
+                  minLeadingWidth: 0,
+                  minTileHeight: 0,
+                  minVerticalPadding: 0,
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
+                    children: <Widget>[
+                      Radio<ActivityType>(
+                        value: ActivityType.challenge,
+                        groupValue: ActivityType.practice,
+                        onChanged: (ActivityType? value) {
+                          // controller.onChangeType(value);
+                        },
+                      ),
+                      Text("사운드 파일", style: CustomTextStyles.labelLargeBlack),
+                    ],
+                  )),
+            )
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadiusStyle.roundedBorder12,
+              border: Border.all(
+                  color: controller.enableThumbnailError.value
+                      ? appTheme.alertNegative
+                      : appTheme.grayScale3),
+              color: controller.enableThumbnailError.value
+                  ? appTheme.alertNegative.withOpacity(0.1)
+                  : appTheme.white),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 280,
+                child: Text(
+                  controller.thumbnailName == "".obs
+                      ? '최대 2기가 (.mpeg)'
+                      : controller.thumbnailName.value,
+                  style: controller.thumbnailName == "".obs
+                      ? CustomTextStyles.bodyMediumGray
+                      : CustomTextStyles.bodyMediumBlack,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              CustomImageView(
+                imagePath: IconConstant.upload,
+                onTap: () {
+                  controller.pickFile("thumbnail");
+                },
+              )
+            ],
+          ),
+        ),
+        controller.enableThumbnailError.value
+            ? Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
+                ],
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+
   Widget buildLastRow() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -528,7 +1093,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "동영상 파일 ",
+                  text: "미디어 파일 ",
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: "*", style: TextStyle(color: appTheme.red))

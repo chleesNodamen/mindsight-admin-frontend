@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/content_type.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_model.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_repository.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart';
@@ -58,17 +59,16 @@ class PracticeRegisterController extends GetxController {
 
   Future<void> fetchBodyData(String? search) async {
     selectedIndex.value = (-1);
-    contentType = [
-      "Basic body",
-      "Intermediate body",
-      "Advance body",
-    ];
 
     contentListModel = await ContentListRepository().get(ContentListReqGet(
       page: 1,
-      type: contentType,
+      type: [
+        ContentType.basicBody.keywordName,
+        ContentType.intermediateBody.keywordName,
+        ContentType.advanceBody.keywordName
+      ],
       search: textController.text,
-      pageSize: 5,
+      pageSize: 4,
       status: true,
     ));
 
@@ -77,19 +77,12 @@ class PracticeRegisterController extends GetxController {
 
   Future<void> fetchBreathData(String? search) async {
     selectedIndex.value = (-1);
-    contentType = [
-      "Relax breathing",
-      "Focus breathing",
-      "Energy breathing",
-      "Nature breathing",
-      "Guided breathing"
-    ];
 
     contentListModel = await ContentListRepository().get(ContentListReqGet(
       page: 1,
-      type: contentType,
+      type: [ContentType.natureBreathing.keywordName],
       search: textController.text,
-      pageSize: 5,
+      pageSize: 4,
       status: true,
     ));
 

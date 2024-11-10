@@ -68,10 +68,7 @@ class AuthenticationController extends GetxController {
       Get.offAllNamed(AppRoutes.dashboard);
       PrefUtils.to.setIsLogined(true);
     } else {
-      formKey.currentState!.validate();
-      if (authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
-        return false;
-      }
+      showSimpleMessage(Get.context!, "로그인에 실패 하였습니다");
     }
 
     return true;

@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/sort_condition.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/practices/practices_model.dart';
@@ -14,7 +15,7 @@ class PracticeManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  RxString selectedOrder = '회차순'.obs;
+  Rx<SortCondition> selectedOrder = SortCondition.registration.obs;
   RxInt activePage = 1.obs;
 
   @override
@@ -41,7 +42,7 @@ class PracticeManageController extends GetxController {
     Get.offAllNamed(AppRoutes.practiceRegister);
   }
 
-  void updateSelectedOrder(String newOrder) {
+  void updateSelectedOrder(SortCondition newOrder) {
     selectedOrder.value = newOrder;
   }
 
@@ -51,7 +52,7 @@ class PracticeManageController extends GetxController {
     practicesModel = await PracticesRepository().get(PracticesReqGet(
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,
-      sortBy: selectedOrder.value,
+      sortBy: selectedOrder.value.keywordName,
     ));
 
     isLoading.value = false;

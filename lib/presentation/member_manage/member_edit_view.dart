@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/gender.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_edit_controller.dart';
 
 class MemberEditView extends GetWidget<MemberEditController> {
@@ -32,58 +33,9 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      TobBarSearch(
-                                        name: "사전 정보 수정",
-                                        searchShow: false,
-                                        viewCount: false,
-                                      ),
+                                      _buildTitle(),
                                       const SizedBox(height: 16),
-                                      Row(
-                                        children: [
-                                          InkWell(
-                                              child: Text(
-                                                "회원 목록",
-                                                style: CustomTextStyles
-                                                    .bodyMediumSkyBlue
-                                                    .copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  decorationColor:
-                                                      appTheme.skyBlue,
-                                                ),
-                                              ),
-                                              onTap: () {
-                                                Get.offAllNamed(
-                                                    AppRoutes.memberManage);
-                                              }),
-                                          CustomImageView(
-                                            imagePath: IconConstant.arrowRight,
-                                          ),
-                                          InkWell(
-                                            child: Text(
-                                              "회원 상세",
-                                              style: CustomTextStyles
-                                                  .bodyMediumSkyBlue
-                                                  .copyWith(
-                                                fontWeight: FontWeight.w500,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationColor:
-                                                    appTheme.skyBlue,
-                                              ),
-                                            ),
-                                            onTap: () =>
-                                                controller.goMemberDatailPage(),
-                                          ),
-                                          CustomImageView(
-                                            imagePath: IconConstant.arrowRight,
-                                          ),
-                                          Text('사전 정보 수정',
-                                              style: CustomTextStyles
-                                                  .bodyMediumGray),
-                                        ],
-                                      ),
+                                      _buildSubMenu(),
                                       const SizedBox(height: 24),
                                       _buildCompany(),
                                       const SizedBox(height: 24),
@@ -95,40 +47,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                       const SizedBox(height: 24),
                                       _buildEmail(),
                                       const SizedBox(height: 32),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          CustomElevatedButton(
-                                            text: '저장',
-                                            buttonTextStyle: CustomTextStyles
-                                                .bodyMediumWhiteBold,
-                                            buttonStyle:
-                                                CustomButtonStyles.fillPrimary,
-                                            width: 90,
-                                            height: 44,
-                                            onPressed: () {
-                                              if (formKey.currentState!
-                                                  .validate()) {
-                                                controller.onSaveChanges();
-                                              }
-                                            },
-                                          ),
-                                          CustomElevatedButton(
-                                            text: '취소',
-                                            buttonTextStyle: CustomTextStyles
-                                                .bodyMediumRedBold,
-                                            buttonStyle: CustomButtonStyles
-                                                .fillRedTransparent,
-                                            margin:
-                                                const EdgeInsets.only(left: 16),
-                                            width: 90,
-                                            height: 44,
-                                            onPressed: () =>
-                                                controller.goMemberDatailPage(),
-                                          ),
-                                        ],
-                                      )
+                                      _buildSaveOrCancel(formKey)
                                     ],
                                   ),
                                 ),
@@ -143,6 +62,80 @@ class MemberEditView extends GetWidget<MemberEditController> {
               : const SizedBox.shrink(),
         ),
       ),
+    );
+  }
+
+  Row _buildSaveOrCancel(GlobalKey<FormState> formKey) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomElevatedButton(
+          text: '저장',
+          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+          buttonStyle: CustomButtonStyles.fillPrimary,
+          width: 90,
+          height: 44,
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              controller.onSaveChanges();
+            }
+          },
+        ),
+        CustomElevatedButton(
+          text: '취소',
+          buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+          buttonStyle: CustomButtonStyles.fillRedTransparent,
+          margin: const EdgeInsets.only(left: 16),
+          width: 90,
+          height: 44,
+          onPressed: () => controller.goMemberDatailPage(),
+        ),
+      ],
+    );
+  }
+
+  Row _buildSubMenu() {
+    return Row(
+      children: [
+        InkWell(
+            child: Text(
+              "회원 목록",
+              style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+                decorationColor: appTheme.skyBlue,
+              ),
+            ),
+            onTap: () {
+              Get.offAllNamed(AppRoutes.memberManage);
+            }),
+        CustomImageView(
+          imagePath: IconConstant.arrowRight,
+        ),
+        InkWell(
+          child: Text(
+            "회원 상세",
+            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.underline,
+              decorationColor: appTheme.skyBlue,
+            ),
+          ),
+          onTap: () => controller.goMemberDatailPage(),
+        ),
+        CustomImageView(
+          imagePath: IconConstant.arrowRight,
+        ),
+        Text('회원 정보 수정', style: CustomTextStyles.bodyMediumGray),
+      ],
+    );
+  }
+
+  TobBarSearch _buildTitle() {
+    return TobBarSearch(
+      name: "회원 정보 수정",
+      searchShow: false,
+      viewCount: false,
     );
   }
 
@@ -216,31 +209,28 @@ class MemberEditView extends GetWidget<MemberEditController> {
                 color: appTheme.white,
                 borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
-              child: DropdownButton<String>(
+              child: DropdownButton<Gender>(
                 hint: Text('Select Option',
                     style: CustomTextStyles.bodyMediumGray),
                 isExpanded: true,
-                value: controller.gender.value == "" ||
-                        controller.gender.value == "-"
-                    ? null
-                    : controller.gender.value,
+                value: controller.gender.value,
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
                 borderRadius: BorderRadiusStyle.roundedBorder12,
                 // icon: const Icon(Icons.),
                 elevation: 16,
-                onChanged: (String? newValue) {
+                onChanged: (Gender? newValue) {
                   if (newValue != null) {
                     controller.gender.value = newValue;
                   }
                 },
-                items: <String>['Male', 'Female', 'Nonbinary']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
+                items: <Gender>[Gender.male, Gender.female, Gender.nonbinary]
+                    .map<DropdownMenuItem<Gender>>((Gender value) {
+                  return DropdownMenuItem<Gender>(
                     value: value,
                     child: Text(
-                      value,
+                      value.displayName,
                       style: CustomTextStyles.bodyMediumBlack,
                     ),
                   );

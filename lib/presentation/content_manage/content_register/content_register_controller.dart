@@ -1,5 +1,9 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
+import 'package:mindsight_admin_page/constants/content_exposure.dart';
+import 'package:mindsight_admin_page/constants/content_language.dart';
+import 'package:mindsight_admin_page/constants/content_level.dart';
+import 'package:mindsight_admin_page/constants/content_type.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/content_master/master_model.dart';
@@ -25,18 +29,46 @@ class ContentRegisterController extends GetxController {
     Category.theory,
   ];
 
-  final Map<Category, List<String>> types = {
-    Category.body: ["Basic body", "Intermediate body", "Advance body"],
-    Category.breath: [
-      'Relaxing breath',
-      'Focus breath',
-      'Energy breathing',
-      'Nature breathing',
-      'Guided meditation'
+  final Map<Category, List<ContentType>> types = {
+    Category.body: [
+      ContentType.basicBody,
+      ContentType.intermediateBody,
+      ContentType.advanceBody
     ],
-    Category.mindfulness: ['Mindful art', 'Art with music', 'Nature', 'K-ASMR'],
-    Category.theory: ['Theory-0', 'Theory-1', 'Theory-2', 'Theory-3']
+    Category.breath: [
+      ContentType.natureBreathing,
+      ContentType.guidedMeditation,
+    ],
+    Category.mindfulness: [
+      ContentType.mindfulArt,
+      ContentType.artWithMusic,
+      ContentType.nature,
+      ContentType.kAsmr
+    ],
+    Category.theory: [
+      ContentType.emotionManagement,
+      ContentType.philosophy,
+      ContentType.selfDevelopment
+    ]
   };
+
+  final List<ContentExposured> contentExposured = [
+    ContentExposured.exposed,
+    ContentExposured.nonExposed,
+  ];
+
+  final List<ContentLevel> contentLevel = [
+    ContentLevel.all,
+    ContentLevel.upper,
+    ContentLevel.middle,
+    ContentLevel.lower,
+  ];
+
+  final List<ContentLanguage> contentLanguage = [
+    ContentLanguage.english,
+    ContentLanguage.korean,
+    ContentLanguage.japanese
+  ];
 
   final TextEditingController tagController = TextEditingController();
   final TextEditingController introController = TextEditingController();
@@ -46,7 +78,7 @@ class ContentRegisterController extends GetxController {
 
   Rx<Category?> selectedCategory = Rx<Category?>(null);
   RxBool categorySelected = false.obs;
-  RxString selectedType = "".obs;
+  Rx<ContentType?> selectedType = Rx<ContentType?>(null);
   RxList<String> tags = <String>[].obs;
   RxString selectedMaster = "".obs;
   RxString thumbnailName = "".obs;
@@ -85,7 +117,7 @@ class ContentRegisterController extends GetxController {
   void selectCategory(Category category) {
     selectedCategory.value = category;
     categorySelected.value = true;
-    selectedType.value = "";
+    selectedType.value = ContentType.unknown;
     enableCategoryError.value = false;
   }
 
@@ -173,8 +205,8 @@ class ContentRegisterController extends GetxController {
     }
     contentRegisterModel =
         await ContentRegisterRepository().post(ContentRegisterReqPost(
-      category: selectedCategory.value?.toKeywordName(),
-      type: selectedType.value,
+      category: selectedCategory.value?.keywordName,
+      type: selectedType.value?.keywordName,
       master: selectedMaster.value,
       tags: tags,
       intro: introController.text,

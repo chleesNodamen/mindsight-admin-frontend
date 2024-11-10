@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_manage/practice_manage_controller.dart';
 
 class PracticeManageView extends GetWidget<PracticeManageController> {
@@ -64,7 +65,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
       name: "Practice plan 관리",
       searchShow: true,
       viewCount: false,
-      searchText: "회차, 콘텐츠 제목 검색",
+      searchText: "마스터, 콘텐츠 제목 검색",
     );
   }
 
@@ -80,7 +81,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 6, right: 0, top: 0, bottom: 0),
-        child: DropdownButton<String>(
+        child: DropdownButton<SortCondition>(
           value: controller.selectedOrder.value,
           underline: Container(),
           padding: const EdgeInsets.only(left: 6),
@@ -88,17 +89,21 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
           // icon: const Icon(Icons.),
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),
-          onChanged: (String? newValue) {
+          onChanged: (SortCondition? newValue) {
             if (newValue != null) {
               controller.updateSelectedOrder(newValue);
             }
           },
-          items: <String>['회차순', '완료율 높은 순', '완료율 낮은 순', '좋아요순']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
+          items: <SortCondition>[
+            SortCondition.registration,
+            SortCondition.highestCompletionRate,
+            SortCondition.lowestCompletionRate,
+            SortCondition.likes
+          ].map<DropdownMenuItem<SortCondition>>((SortCondition value) {
+            return DropdownMenuItem<SortCondition>(
               value: value,
               child: Text(
-                value,
+                value.displayName,
                 style: CustomTextStyles.labelLargeBlack,
               ),
             );
@@ -135,10 +140,11 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Padding(
-                    padding: const EdgeInsets.only(left: 64.0),
-                    child: Text('회차', style: CustomTextStyles.labelLargeGray),
-                  )),
+                      label:
+                          Text('마스터', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('컨텐츠 명',
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('완료 회원 수',
                           style: CustomTextStyles.labelLargeGray)),
@@ -154,17 +160,15 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                 ],
                 rows: List.generate(controller.practicesModel.length, (index) {
                   return DataRow(cells: [
-                    DataCell(InkWell(
-                      onTap: () => controller.onDetails(index),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 64.0),
-                        child: Text(
-                          "${controller.practicesModel.level![index]}회차",
-                          style: CustomTextStyles.bodyLargeBlack
-                              .copyWith(decoration: TextDecoration.underline),
-                        ),
-                      ),
+                    DataCell(Text(
+                      "마스터이름",
+                      style: CustomTextStyles.bodyLargeBlack,
                     )),
+                    DataCell(InkWell(
+                        onTap: () => controller.onDetails(index),
+                        child: Text("컨텐츠 이름",
+                            style: CustomTextStyles.bodyLargeBlack.copyWith(
+                                decoration: TextDecoration.underline)))),
                     DataCell(Text(
                         controller.practicesModel.finished![index].toString(),
                         style: CustomTextStyles.bodyLargeBlack)),

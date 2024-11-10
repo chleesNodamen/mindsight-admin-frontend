@@ -35,6 +35,10 @@ class BaseModel {
     return _isOk;
   }
 
+  String getErrorCode() {
+    return _errorCode;
+  }
+
   bool compareErrorCode(String code) {
     if (code == _errorCode) {
       return true;

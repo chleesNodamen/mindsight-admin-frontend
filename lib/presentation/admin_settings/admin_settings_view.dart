@@ -116,9 +116,11 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
               )
             ],
           ),
-          const SizedBox(height: 24),
-          Divider(height: 1, thickness: 1, color: appTheme.grayScale2),
-          const SizedBox(height: 24),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
