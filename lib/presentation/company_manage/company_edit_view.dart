@@ -60,40 +60,42 @@ class CompanyEditView extends GetWidget<CompanyEditController> {
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("회사 이름", true),
+            _buildInput("회사 이름", true, controller.companyNameController),
             const SizedBox(width: 24),
-            _buildInput("대표자", true),
+            _buildInput("대표자", true, controller.representativeController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("사업자 번호", true),
+            _buildInput("사업자 번호", true, controller.businessNumberController),
             const SizedBox(width: 24),
-            _buildInput("전화", true),
+            _buildInput("전화", true, controller.phoneController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("담당자 명", true),
+            _buildInput("담당자 명", true, controller.contactNameController),
             const SizedBox(width: 24),
-            _buildInput("담당자 이메일", true),
+            _buildInput("담당자 이메일", true, controller.contactEmailController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("담당자 전화번호", true),
+            _buildInput("담당자 전화번호", true, controller.contactPhoneController),
             const SizedBox(width: 24),
-            _buildInput("주소", true),
+            _buildInput("주소", true, controller.addressController),
           ],
         ),
       ],
     );
   }
 
-  Column _buildInput(String text, bool essential, {String? hint}) {
+  Column _buildInput(
+      String text, bool essential, TextEditingController textController,
+      {String? hint}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +111,7 @@ class CompanyEditView extends GetWidget<CompanyEditController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            // controller: controller.titleController,
+            controller: textController,
             width: 353,
             hintText: hint ?? "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,
@@ -149,7 +151,7 @@ class CompanyEditView extends GetWidget<CompanyEditController> {
           margin: const EdgeInsets.only(left: 16),
           width: 90,
           height: 44,
-          onPressed: () => controller.onCancel(),
+          onPressed: () => controller.goCompanyDatail(),
         ),
       ],
     );
@@ -186,7 +188,7 @@ class CompanyEditView extends GetWidget<CompanyEditController> {
               decorationColor: appTheme.skyBlue,
             ),
           ),
-          onTap: () => controller.onMemberDatail(),
+          onTap: () => controller.goCompanyDatail(),
         ),
         CustomImageView(
           imagePath: IconConstant.arrowRight,

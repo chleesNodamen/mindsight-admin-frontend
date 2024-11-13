@@ -438,7 +438,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           .ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
-                        // controller.loadNewPage(pageNum);
+                        // controller.loadPage(pageNum);
                       }),
                 ],
               ),
@@ -778,7 +778,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                                     .ceil(),
                                 activePage: controller.activePage.value,
                                 onTap: (int pageNum) {
-                                  // controller.loadNewPage(pageNum);
+                                  // controller.loadPage(pageNum);
                                 }),
                           ],
                         ),

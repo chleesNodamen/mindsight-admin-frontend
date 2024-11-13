@@ -7,7 +7,8 @@ class MembersStatusRepository extends BaseRepository {
   Future<MembersStatusModel> put(MembersStatusReqPut dto) async {
     // req
     String endpoint = "members/status";
-    Response response = await httpClient.putRequest(endpoint, body: dto);
+    Response response =
+        await httpClient.putRequest(endpoint, body: dto.toJson());
 
     // result
     MembersStatusModel model = fetchJsonData<MembersStatusModel>(

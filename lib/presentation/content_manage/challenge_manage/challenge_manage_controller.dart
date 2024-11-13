@@ -56,7 +56,7 @@ class ChallengeManageController extends GetxController {
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    await loadNewPage(1);
+    await loadPage(1);
 
     isLoading.value = false;
     isInited.value = true;
@@ -65,32 +65,32 @@ class ChallengeManageController extends GetxController {
   void toggleGoalCheckbox(int index, bool value) {
     goalValues[index] = value;
 
-    loadNewPage(1);
+    loadPage(1);
   }
 
   void togglePeriodCheckbox(int index, bool value) {
     periodValues[index] = value;
 
-    loadNewPage(1);
+    loadPage(1);
   }
 
   void toggleStatusCheckbox(int index, bool value) {
     statusValues[index] = value;
 
-    loadNewPage(1);
+    loadPage(1);
   }
 
   void updateSelectedOrder(SortCondition newOrder) {
     selectedOrder.value = newOrder;
 
-    loadNewPage(1);
+    loadPage(1);
   }
 
   void updateSelected(String id, bool isSelected) {
     selectedIds[id] = isSelected;
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     isLoading.value = true;
 
     List<String> goal = [
@@ -156,7 +156,7 @@ class ChallengeManageController extends GetxController {
     searchOn.value = true;
     searchValue.value = search!;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   void goToEdit(int index) {

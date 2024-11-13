@@ -68,7 +68,7 @@ class PracticeEditController extends GetxController {
     selectedIndex.value = index;
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     selectedIndex.value = (-1);
 
     isLoading.value = true;

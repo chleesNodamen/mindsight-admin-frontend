@@ -32,7 +32,7 @@ class PracticeManageController extends GetxController {
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    await loadNewPage(1);
+    await loadPage(1);
 
     isLoading.value = false;
     isInited.value = true;
@@ -46,7 +46,7 @@ class PracticeManageController extends GetxController {
     selectedOrder.value = newOrder;
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     isLoading.value = true;
 
     practicesModel = await PracticesRepository().get(PracticesReqGet(

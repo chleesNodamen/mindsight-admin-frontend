@@ -81,7 +81,7 @@ class ContentManageController extends GetxController {
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    await loadNewPage(1);
+    await loadPage(1);
 
     isInited.value = true;
     isLoading.value = false;
@@ -90,40 +90,40 @@ class ContentManageController extends GetxController {
   Future<void> toggleBodyCheckbox(int index, bool value) async {
     bodyValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> toggleBreathingCheckbox(int index, bool value) async {
     breathingValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> toggleTheoryCheckbox(int index, bool value) async {
     theoryValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> toggleOtherCheckbox(int index, bool value) async {
     otherValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> toggleServiceValues(int index, bool value) async {
     serviceValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> updateSelectedOrder(SortCondition newOrder) async {
     selectedOrder.value = newOrder;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     selectedContent = List.generate(20, (_) => false).obs;
 
     isLoading.value = true;
@@ -189,7 +189,7 @@ class ContentManageController extends GetxController {
     isLoading.value = false;
 
     if (contentStatusModel.isSuccess) {
-      loadNewPage(1);
+      loadPage(1);
     }
   }
 
@@ -197,7 +197,7 @@ class ContentManageController extends GetxController {
     searchOn.value = true;
     searchValue.value = search!;
 
-    loadNewPage(1);
+    loadPage(1);
   }
 
   List<String> getChosenType() {
@@ -238,7 +238,7 @@ class ContentManageController extends GetxController {
         await Future.delayed(const Duration(seconds: 3));
       }
     }
-    loadNewPage(activePage.value);
+    loadPage(activePage.value);
   }
 
   void onDetails(int index) {

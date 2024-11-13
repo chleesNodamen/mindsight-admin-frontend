@@ -37,8 +37,6 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                                     ],
                                   ),
                                   const SizedBox(height: 32),
-                                  // _buildCheckBox(),
-                                  // const SizedBox(height: 16),
                                   _buildPage(),
                                 ],
                               ),
@@ -62,7 +60,7 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
       viewCount: false,
       searchText: "회사 이름 검색",
       memberShow: true,
-      memberCount: controller.membersModel.total,
+      memberCount: controller.companyListModel.total,
       onSearch: controller.onSearch,
     );
   }
@@ -90,44 +88,6 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
       width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
-    );
-  }
-
-  Widget _buildCheckBox() {
-    return Container(
-      decoration: BoxDecoration(
-        color: appTheme.white,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      height: 122,
-      width: double.infinity,
-      padding: const EdgeInsets.all(32.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text('소속', style: CustomTextStyles.labelMediumGray),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Wrap(
-                runSpacing: 18,
-                children:
-                    List.generate(controller.membershipValues.length, (index) {
-                  return CustomCheckboxWidget(
-                    isChecked: controller.membershipValues[index],
-                    label: controller.membershipLabels[index],
-                    onChanged: (value) =>
-                        controller.onCheckMembership(index, value),
-                  );
-                }),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 
@@ -164,46 +124,52 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label:
-                          Text('등록일', style: CustomTextStyles.labelLargeGray)),
+                          Text("등록일", style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label:
-                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                          Text("상태", style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows: List.generate(controller.membersModel.length, (index) {
+                rows:
+                    List.generate(controller.companyListModel.total!, (index) {
                   return DataRow(
-                      selected: controller.selectedMembers[index],
+                      selected: controller.selectedCompany[index],
                       onSelectChanged: (bool? value) {
-                        controller.updateValue(index);
+                        controller.onSelectedCompany(index);
                       },
                       cells: [
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: InkWell(
                             onTap: () {
-                              controller.onMasterTap(
-                                  controller.membersModel.id![index]);
+                              controller.onCompanyTap(
+                                  controller.companyListModel.id![index]);
                             },
-                            child: Text("회사이름 표시",
+                            child: Text(
+                                controller.companyListModel.companyName![index],
                                 style: CustomTextStyles.bodyLargeBlack.copyWith(
                                     decoration: TextDecoration.underline)),
                           ),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text("대표자 이름 표시",
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text("사업자 번호 표시",
+                          child: Text(
+                              controller
+                                  .companyListModel.representative![index],
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller.membersModel.createdAt != null
-                                  ? DateFormat('yyyy-MM-dd').format(
-                                      controller.membersModel.createdAt![index])
+                              controller
+                                  .companyListModel.businessNumber![index],
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
+                              controller.companyListModel.createdAt != null
+                                  ? DateFormat('yyyy-MM-dd').format(controller
+                                      .companyListModel.createdAt![index])
                                   : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
@@ -221,28 +187,30 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                                 left: 6, right: 0, top: 0, bottom: 0),
                             child: DropdownButton<String>(
                               value:
-                                  controller.memberState![index] ? '승인' : '비승인',
+                                  controller.companyListModel.verified![index]
+                                      ? "승인"
+                                      : "비승인",
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
                               borderRadius: BorderRadiusStyle.roundedBorder12,
                               elevation: 16,
                               style: const TextStyle(color: Colors.deepPurple),
                               onChanged: (String? newValue) {
-                                // if (newValue != null) {
-                                //   controller.memberState![index] =
-                                //       !controller.memberState![index];
-                                //   controller.onStatusChange(index);
-                                // }
+                                if (newValue != null) {
+                                  controller.companyVerified![index] =
+                                      !controller.companyVerified![index];
+                                  controller.onVerifiedChange(index);
+                                }
                               },
                               items: <String>[
-                                '승인',
-                                '비승인'
+                                "승인",
+                                "비승인"
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(
                                     value,
-                                    style: value == "활성"
+                                    style: value == "승인"
                                         ? CustomTextStyles.labelLargeGreen
                                         : CustomTextStyles.labelLargeRed,
                                   ),
@@ -262,20 +230,20 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
               alignment: Alignment.centerLeft,
               children: [
                 CustomElevatedButton(
-                  text: '비승인',
+                  text: "비승인",
                   buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                   buttonStyle: CustomButtonStyles.fillRedTransparent,
                   // margin: const EdgeInsets.symmetric(
                   //     vertical: 11, horizontal: 24),
                   width: 90,
                   height: 44,
-                  // onPressed: controller.onButtonPressed,
+                  onPressed: controller.onVerifiedButton,
                 ),
                 Pages(
-                    pages: (controller.membersModel.total! / 20).ceil(),
+                    pages: (controller.companyListModel.total! / 20).ceil(),
                     activePage: controller.activePage.value,
                     onTap: (int pageNum) {
-                      controller.loadNewPage(pageNum);
+                      controller.loadPage(pageNum);
                     }),
               ],
             ),

@@ -1,24 +1,41 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/content_language.dart';
-import 'package:mindsight_admin_page/constants/nation.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
+import 'package:mindsight_admin_page/data/company_register/company_register_repository.dart';
+import 'package:mindsight_admin_page/data/company_register/company_register_req_post.dart';
 
 class CompanyRegisterController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  List<Nation> nationLabels = [Nation.us, Nation.korea, Nation.japan];
-  List<ContentLanguage> languageLabels = [
-    ContentLanguage.english,
-    ContentLanguage.korean,
-    ContentLanguage.japanese
-  ];
+  TextEditingController companyNameController = TextEditingController();
+  TextEditingController representativeController = TextEditingController();
+  TextEditingController businessNumberController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController contactNameController = TextEditingController();
+  TextEditingController contactEmailController = TextEditingController();
+  TextEditingController contactPhoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   @override
   Future<void> onInit() async {
     super.onInit();
     await initData();
+  }
+
+  @override
+  Future<void> onClose() async {
+    super.onClose();
+
+    companyNameController.dispose();
+    representativeController.dispose();
+    businessNumberController.dispose();
+    phoneController.dispose();
+    contactNameController.dispose();
+    contactEmailController.dispose();
+    contactPhoneController.dispose();
+    addressController.dispose();
   }
 
   Future<void> initData() async {
@@ -32,8 +49,21 @@ class CompanyRegisterController extends GetxController {
   }
 
   Future<void> onSave() async {
-    isLoading.value = true;
+    BaseModel model = await CompanyRegisterRepository().post(
+        CompanyRegisterReqPost(
+            companyName: companyNameController.text,
+            representative: representativeController.text,
+            businessNumber: businessNumberController.text,
+            phone: phoneController.text,
+            contactName: contactNameController.text,
+            contactEmail: contactEmailController.text,
+            contactPhone: contactPhoneController.text,
+            address: addressController.text));
 
-    isLoading.value = false;
+    if (model.isSuccess) {
+      showSimpleMessage(Get.context!, "저장 되었습니다");
+    } else {
+      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
+    }
   }
 }

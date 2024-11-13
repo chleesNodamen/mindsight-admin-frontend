@@ -312,7 +312,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                     pages: (controller.membersModel.total! / 20).ceil(),
                     activePage: controller.activePage.value,
                     onTap: (int pageNum) {
-                      controller.loadNewPage(pageNum);
+                      controller.loadPage(pageNum);
                     }),
               ],
             ),

@@ -67,7 +67,7 @@ class ActivityManageController extends GetxController {
     membershipLabels = affiliationModel.affiliation!;
     membershipValues = List<bool>.filled(affiliationModel.length, true).obs;
 
-    await loadNewPage(1);
+    await loadPage(1);
 
     isInited.value = true;
     isLoading.value = false;
@@ -76,19 +76,19 @@ class ActivityManageController extends GetxController {
   Future<void> toggleMembership(int index, bool value) async {
     membershipValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> toggleChatbot(int index, bool value) async {
     chatbotValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> toggleFeedback(int index, bool value) async {
     feedbackValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   List<String> getCheckedAffiliation() {
@@ -110,7 +110,7 @@ class ActivityManageController extends GetxController {
     return affiliation;
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     isLoading.value = true;
 
     activityModel = await ActivityRepository().get(ActivityReqGet(
@@ -165,7 +165,7 @@ class ActivityManageController extends GetxController {
     }
     type.value = newType;
 
-    await loadNewPage(1);
+    await loadPage(1);
 
     membershipValues.value =
         List.generate(membershipValues.length, (_) => true);
@@ -179,6 +179,6 @@ class ActivityManageController extends GetxController {
     searchOn.value = true;
     searchValue.value = search!;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 }

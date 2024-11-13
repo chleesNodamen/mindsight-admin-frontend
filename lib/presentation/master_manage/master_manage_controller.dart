@@ -52,7 +52,7 @@ class MasterManageController extends GetxController {
     affiliationModel = await AffiliationRepository().get();
     membershipLabels = affiliationModel.affiliation!;
 
-    await loadNewPage(1);
+    await loadPage(1);
 
     isInited.value = true;
     isLoading.value = false;
@@ -83,17 +83,17 @@ class MasterManageController extends GetxController {
 
     membershipValues[index] = value;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
   Future<void> onSearch(String? search) async {
     searchOn.value = true;
     searchValue.value = search!;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     isLoading.value = true;
 
     selectedMembers = List.generate(20, (_) => false).obs;
@@ -127,7 +127,7 @@ class MasterManageController extends GetxController {
             ids: [membersModel.id![index]], status: !memberState![index]));
 
     if (membersStatusModel.isSuccess) {
-      await loadNewPage(activePage.value);
+      await loadPage(activePage.value);
     }
 
     isLoading.value = false;
@@ -144,7 +144,7 @@ class MasterManageController extends GetxController {
         .put(MembersStatusReqPut(ids: ids, status: true));
 
     if (membersStatusModel.isSuccess) {
-      await loadNewPage(activePage.value);
+      await loadPage(activePage.value);
     }
 
     isLoading.value = false;

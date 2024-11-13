@@ -211,7 +211,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                               .ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
-                        // controller.loadNewPage(pageNum);
+                        // controller.loadPage(pageNum);
                       }),
                 ],
               ),

@@ -40,7 +40,7 @@ class SubAdminSettingsController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     activePage.value = pageNum;
 
     isLoading.value = true;
@@ -79,7 +79,7 @@ class SubAdminSettingsController extends GetxController {
       showSimpleMessage(Get.context!, "삭제에 실패 하였습니다");
     }
 
-    await loadNewPage(activePage.value);
+    await loadPage(activePage.value);
   }
 
   void onRegister() {

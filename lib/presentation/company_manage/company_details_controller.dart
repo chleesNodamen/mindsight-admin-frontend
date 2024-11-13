@@ -1,17 +1,16 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/members_data/members_data_model.dart';
-import 'package:mindsight_admin_page/data/members_data/members_data_repository.dart';
+import 'package:mindsight_admin_page/data/company_data/company_data_model.dart';
+import 'package:mindsight_admin_page/data/company_data/company_data_repository.dart';
 
 class CompanyDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
-  final String dash = "-";
+
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
-  RxString lastName = "".obs;
 
-  late MembersDataModel membersDataModel;
+  late CompanyDataModel companyDataModel;
 
   @override
   Future<void> onInit() async {
@@ -27,17 +26,17 @@ class CompanyDetailsController extends GetxController {
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    membersDataModel = await MembersDataRepository().get(id);
-    lastName.value = membersDataModel.lastName ?? dash;
+    companyDataModel = await CompanyDataRepository().get(id);
+
     isLoading.value = false;
     isInited.value = true;
   }
 
-  void onMasterEdit() {
+  void onEdit() {
     Get.offAllNamed(AppRoutes.companyEdit, arguments: {RouteArguments.id: id});
   }
 
-  void onMasterList() {
+  void onList() {
     if (SideMenuController.to.isActiveSubItem("회사 목록")) {
       Get.offAllNamed(AppRoutes.companyManage);
     } else {

@@ -7,7 +7,8 @@ class MembersEditRepository extends BaseRepository {
   Future<MembersEditModel> put(String id, MembersEditReqPut dto) async {
     // req
     String endpoint = "members/$id";
-    Response response = await httpClient.putRequest(endpoint, body: dto);
+    Response response =
+        await httpClient.putRequest(endpoint, body: dto.toJson());
 
     // result
     MembersEditModel model =

@@ -49,7 +49,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                                           ),
                                         ),
                                         onTap: () {
-                                          controller.onMasterList();
+                                          controller.onList();
                                         },
                                       ),
                                       CustomImageView(
@@ -90,11 +90,11 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('회사 정보', style: CustomTextStyles.labelLargeBlack),
+              Text("회사 정보", style: CustomTextStyles.labelLargeBlack),
               InkWell(
-                  onTap: controller.onMasterEdit,
+                  onTap: controller.onEdit,
                   child: Text(
-                    '수정',
+                    "수정",
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -105,8 +105,6 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
             height: 24,
           ),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,41 +114,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("노다멘", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('대표자', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("이원준", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-            ],
-          ),
-          Divider(
-            height: 49,
-            thickness: 1,
-            color: appTheme.grayScale2,
-          ),
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('사업자 번호', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("1111111-2222222",
+                  Text(controller.companyDataModel.companyName!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -161,11 +125,12 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('전화', style: CustomTextStyles.labelMediumGray),
+                  Text("대표자", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("02-1111-2222", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.companyDataModel.representative!,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
             ],
@@ -181,25 +146,11 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('담당자 명', style: CustomTextStyles.labelMediumGray),
+                  Text("사업자 번호", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("이미래", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('담당자 이메일', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("mrlee@nodamen.com",
+                  Text(controller.companyDataModel.businessNumber!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -210,11 +161,63 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('담당자 전화번호', style: CustomTextStyles.labelMediumGray),
+                  Text("전화", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("02-1111-2222", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.companyDataModel.phone!,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+            ],
+          ),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
+          Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("담당자 명", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.companyDataModel.contactName!,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("담당자 이메일", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.companyDataModel.contactEmail!,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("담당자 전화번호", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.companyDataModel.contactPhone!,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
               const SizedBox(
@@ -233,11 +236,11 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('주소', style: CustomTextStyles.labelMediumGray),
+                  Text("주소", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("대한민국 서울시 강남구 강남빌딩",
+                  Text(controller.companyDataModel.address!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),

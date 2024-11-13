@@ -160,7 +160,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                 controller.affiliation.value = newValue;
               }
             },
-            items: controller.membershipLabels
+            items: controller.affiliationModel.affiliation!
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -318,7 +318,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                 controller: controller.firstNameController,
                 width: 353,
                 validator: (value) {
-                  if (value != null && value.isNotEmpty && value.length > 10) {
+                  if (value != null && value.isNotEmpty && value.length > 25) {
                     return "Input is too long".tr;
                   }
                   return null;
@@ -339,7 +339,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                 controller: controller.lastNameController,
                 width: 353,
                 validator: (value) {
-                  if (value != null && value.isNotEmpty && value.length > 10) {
+                  if (value != null && value.isNotEmpty && value.length > 25) {
                     return "Input is too long".tr;
                   }
                   return null;
@@ -371,10 +371,10 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
             ),
             const SizedBox(height: 8),
             CustomTextFormField(
-                controller: controller.lastNameController,
+                controller: controller.emailController,
                 width: 353,
                 validator: (value) {
-                  if (value != null && value.isNotEmpty && value.length > 10) {
+                  if (value != null && value.isNotEmpty && value.length > 50) {
                     return "Input is too long".tr;
                   }
                   return null;

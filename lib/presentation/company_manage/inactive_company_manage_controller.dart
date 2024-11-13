@@ -1,61 +1,30 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
-import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
 import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/members/members_model.dart';
-import 'package:mindsight_admin_page/data/members/members_repository.dart';
-import 'package:mindsight_admin_page/data/members/members_req_get.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_repository.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_req_put.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
+import 'package:mindsight_admin_page/data/company_list/company_list_model.dart';
+import 'package:mindsight_admin_page/data/company_list/company_list_repository.dart';
+import 'package:mindsight_admin_page/data/company_list/company_list_req_get.dart';
+import 'package:mindsight_admin_page/data/company_verified/company_verified_repository.dart';
+import 'package:mindsight_admin_page/data/company_verified/company_verified_req_put.dart';
 
 class InactiveCompanyManageController extends GetxController {
-  static InactiveCompanyManageController get to =>
-      Get.find<InactiveCompanyManageController>();
-  List<String> membershipLabels = [
-    "Nodamen",
-    "UNHCR",
-    "UN Women",
-  ];
-  RxInt activePage = 1.obs;
-  RxList<bool> membershipValues = List<bool>.filled(3, true).obs;
-
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+
+  late CompanyListModel companyListModel;
+
+  RxInt activePage = 1.obs;
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  late MembersModel membersModel;
-  late MembersStatusModel membersStatusModel;
-  late AffiliationModel affiliationModel;
-
-  RxList<bool> selectedMembers = List.generate(20, (_) => false).obs;
-  RxList<bool>? memberState;
+  RxList<bool> selectedCompany = List.generate(20, (_) => false).obs;
+  RxList<bool>? companyVerified;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     await initData();
-  }
-
-  List<String> getCheckedAffiliation() {
-    List<String> affiliation = [
-      for (int i = 0; i < membershipLabels.length; i++)
-        if (membershipValues[i]) membershipLabels[i]
-    ];
-
-    // 모두 체크 되었을 떄..조건 주지 않음..
-    if (membershipValues.every((element) => element == true)) {
-      affiliation = [];
-    }
-
-    // 아무것도 체크 안되었을때는..검색이 안되어야 된다..
-    if (membershipValues.every((element) => element == false)) {
-      affiliation = ['known'];
-    }
-
-    return affiliation;
   }
 
   Future<void> initData() async {
@@ -69,80 +38,76 @@ class InactiveCompanyManageController extends GetxController {
       await AuthRepository().post(AuthReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
-    affiliationModel = await AffiliationRepository().get();
-    membershipLabels = affiliationModel.affiliation!;
 
-    await loadNewPage(1);
+    await loadPage(1);
 
     isInited.value = true;
     isLoading.value = false;
-  }
-
-  Future<void> onCheckMembership(int index, bool value) async {
-    searchOn.value = false;
-    searchValue.value = "";
-    membershipValues[index] = value;
-
-    await loadNewPage(1);
   }
 
   Future<void> onSearch(String? search) async {
     searchOn.value = true;
     searchValue.value = search!;
 
-    await loadNewPage(1);
+    await loadPage(1);
   }
 
-  Future<void> loadNewPage(int pageNum) async {
+  Future<void> loadPage(int pageNum) async {
     isLoading.value = true;
 
-    selectedMembers = List.generate(20, (_) => false).obs;
+    selectedCompany = List.generate(20, (_) => false).obs;
 
-    membersModel = await MembersRepository().get(MembersReqGet(
-        page: pageNum,
-        disabled: true,
-        search: searchOn.value == true ? searchValue.value : null,
-        affiliation: getCheckedAffiliation()));
+    companyListModel = await CompanyListRepository().get(CompanyListReqGet(
+      page: pageNum,
+      verified: false,
+      search: searchOn.value == true ? searchValue.value : null,
+    ));
 
-    memberState = (membersModel.status!.map((status) => !status).toList()).obs;
+    companyVerified =
+        (companyListModel.verified!.map((verified) => verified).toList()).obs;
     activePage.value = pageNum;
 
     isLoading.value = false;
   }
 
-  void onMemberTap(String id) {
+  void onCompanyTap(String id) {
     Get.offAllNamed(AppRoutes.memberDetails,
         arguments: {RouteArguments.id: id});
   }
 
-  void updateValue(int index) {
-    selectedMembers[index] = !selectedMembers[index];
+  void onSelectedCompany(int index) {
+    selectedCompany[index] = !selectedCompany[index];
   }
 
-  Future<void> onStatusChange(int index) async {
+  Future<void> onVerifiedChange(int index) async {
     isLoading.value = true;
 
-    membersStatusModel = await MembersStatusRepository().put(
-        MembersStatusReqPut(
-            ids: [membersModel.id![index]], status: !memberState![index]));
+    Logger.info(companyVerified![index]);
 
-    await loadNewPage(1);
+    BaseModel model = await CompanyVerifiedRepository().put(
+        CompanyVerifiedReqPut(
+            ids: [companyListModel.id![index]],
+            verified: companyVerified![index]));
+
+    if (model.isSuccess) {
+      await loadPage(1);
+    }
 
     isLoading.value = false;
   }
 
-  Future<void> onButtonPressed() async {
+  Future<void> onVerifiedButton() async {
     isLoading.value = true;
 
     List<String> ids = [
-      for (int i = 0; i < membersModel.length; i++)
-        if (selectedMembers[i]) membersModel.id![i]
+      for (int i = 0; i < companyListModel.total!; i++)
+        if (selectedCompany[i]) companyListModel.id![i]
     ];
-    membersStatusModel = await MembersStatusRepository()
-        .put(MembersStatusReqPut(ids: ids, status: false));
+    BaseModel model = await CompanyVerifiedRepository()
+        .put(CompanyVerifiedReqPut(ids: ids, verified: true));
 
-    if (membersStatusModel.isSuccess) {
-      await loadNewPage(1);
+    if (model.isSuccess) {
+      await loadPage(1);
     }
 
     isLoading.value = false;

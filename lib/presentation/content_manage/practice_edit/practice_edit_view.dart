@@ -406,7 +406,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
                                           .ceil(),
                                   activePage: controller.activePage.value,
                                   onTap: (int pageNum) {
-                                    controller.loadNewPage(pageNum);
+                                    controller.loadPage(pageNum);
                                   },
                                 ),
                               ),
