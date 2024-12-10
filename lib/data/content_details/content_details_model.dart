@@ -14,9 +14,17 @@ class ContentDetailsModel extends BaseModel {
   int? seen;
   int? liked;
   int? durationTime;
+  bool? status;
+  bool? exposure;
+  String? level;
+  String? targetLanguage;
 
   ContentDetailsModel(
       {this.id,
+      this.status,
+      this.exposure,
+      this.level,
+      this.targetLanguage,
       this.category,
       this.type,
       this.master,
@@ -30,39 +38,13 @@ class ContentDetailsModel extends BaseModel {
       this.liked,
       this.durationTime});
 
-  ContentDetailsModel copyWith(
-          {String? id,
-          String? category,
-          String? type,
-          String? master,
-          List<String>? tags,
-          String? intro,
-          String? thumbnail,
-          String? video,
-          String? cc,
-          String? name,
-          int? seen,
-          int? liked,
-          int? durationTime}) =>
-      ContentDetailsModel(
-        id: id ?? this.id,
-        category: category ?? this.category,
-        type: type ?? this.type,
-        master: master ?? this.master,
-        tags: tags ?? this.tags,
-        intro: intro ?? this.intro,
-        thumbnail: thumbnail ?? this.thumbnail,
-        video: video ?? this.video,
-        cc: cc ?? this.cc,
-        name: name ?? this.name,
-        seen: seen ?? this.seen,
-        liked: liked ?? this.liked,
-        durationTime: durationTime ?? this.durationTime,
-      );
-
   factory ContentDetailsModel.fromJson(Map<String, dynamic> json) =>
       ContentDetailsModel(
         id: json["id"],
+        status: json["status"],
+        exposure: json["exposure"],
+        level: json["level"],
+        targetLanguage: json["targetLanguage"],
         category: json["category"],
         type: json["type"],
         master: json["master"],
@@ -78,20 +60,4 @@ class ContentDetailsModel extends BaseModel {
         liked: json["liked"],
         durationTime: json["durationTime"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "category": category,
-        "type": type,
-        "master": master,
-        "tags": tags == null ? [] : List<dynamic>.from(tags!.map((x) => x)),
-        "intro": intro,
-        "thumbnail": thumbnail,
-        "video": video,
-        "cc": cc,
-        "name": name,
-        "seen": seen,
-        "liked": liked,
-        "durationTime": durationTime,
-      };
 }

@@ -1,8 +1,10 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/content_language.dart';
-import 'package:mindsight_admin_page/constants/nation.dart';
+import 'package:mindsight_admin_page/constants/enum/content_language.dart';
+import 'package:mindsight_admin_page/constants/enum/contry.dart';
+import 'package:mindsight_admin_page/constants/enum/file_extension.dart';
 import 'package:mindsight_admin_page/function/show_company_search_dialog.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_edit_controller.dart';
+import 'package:mindsight_admin_page/widgets/pick_file.dart';
 
 class MasterEditView extends GetWidget<MasterEditController> {
   const MasterEditView({super.key});
@@ -69,15 +71,16 @@ class MasterEditView extends GetWidget<MasterEditController> {
           children: [
             _buildEmail("이메일 주소 (아이디)", true),
             const SizedBox(width: 24),
-            _buildInput("닉네임", true),
+            _buildInput("닉네임", true, controller.nicknameController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("비밀번호", true),
+            _buildInput("비밀번호 수정", false, controller.passwordController),
             const SizedBox(width: 24),
-            _buildInput("비밀번호 확인", true),
+            _buildInput(
+                "비밀번호 수정 확인", false, controller.passwordCofirmController),
           ],
         ),
       ],
@@ -92,17 +95,36 @@ class MasterEditView extends GetWidget<MasterEditController> {
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("이름", true),
+            _buildInput("이름", true, controller.nameController),
             const SizedBox(width: 24),
-            _buildPhoto(),
+            // _buildPhoto(),
+            PickFile(
+              labelText: "사진",
+              hintText: "300 x 300 최대 10메가 (.jpg)",
+              fileExtension: FileExtension.jpg.keywordName,
+              initialUrl: controller.photoUrl.value,
+              onFilePicked: (pickedFile) {
+                controller.onPickPhoto(pickedFile);
+              },
+            ),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildHandphone(),
+            _buildInput("핸드폰 번호", true, controller.phoneNumberController),
             const SizedBox(width: 24),
-            _buildIDCard(),
+            PickFile(
+              labelText: "신분증",
+              hintText: "최대 10메가 (.jpg)",
+              fileExtension: FileExtension.jpg.keywordName,
+              initialUrl: controller.idPhotoUrl.value,
+              onFilePicked: (pickedFile) {
+                controller.onPickIdPhoto(pickedFile);
+              },
+            ),
+
+            // _buildIDCard(),
           ],
         ),
         const SizedBox(height: 24),
@@ -110,15 +132,17 @@ class MasterEditView extends GetWidget<MasterEditController> {
           children: [
             _buildNation(),
             const SizedBox(width: 24),
-            _buildInput("주소", true),
+            _buildInput("주소", true, controller.addressController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildLanguage("제1언어", true),
+            _buildLanguage(
+                "제1언어", true, controller.selectedPrimaryLanguage.value),
             const SizedBox(width: 24),
-            _buildLanguage("제2언어", false),
+            _buildLanguage(
+                "제2언어", false, controller.selectedSecondaryLanguage.value),
           ],
         ),
         const SizedBox(height: 24),
@@ -131,10 +155,12 @@ class MasterEditView extends GetWidget<MasterEditController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('회사 정보', style: CustomTextStyles.bodyMediumBlack),
+        Text("회사 정보", style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         InkWell(
-          onTap: () => showCompanySearchDialog(),
+          onTap: () async {
+            controller.selectedCompany.value = await showCompanySearchDialog();
+          },
           child: Container(
             width: 353,
             decoration: BoxDecoration(
@@ -145,7 +171,11 @@ class MasterEditView extends GetWidget<MasterEditController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("", style: CustomTextStyles.bodyMediumGray),
+                Text(
+                    controller.selectedCompany.value == null
+                        ? ""
+                        : controller.selectedCompany.value!["name"]!,
+                    style: CustomTextStyles.bodyMediumGray),
                 CustomImageView(
                   imagePath: IconConstant.search,
                 )
@@ -156,12 +186,12 @@ class MasterEditView extends GetWidget<MasterEditController> {
         const SizedBox(
           height: 10,
         ),
-        _buildCompanyAddDownload(),
+        _buildCompanyAddButton(),
       ],
     );
   }
 
-  Row _buildCompanyAddDownload() {
+  Row _buildCompanyAddButton() {
     return Row(
       children: [
         Text(
@@ -172,248 +202,149 @@ class MasterEditView extends GetWidget<MasterEditController> {
         CustomImageView(
           imagePath: IconConstant.add,
           onTap: () {
-            showCompanyAddDialog();
+            Get.offAllNamed(AppRoutes.companyManage);
           },
         )
       ],
     );
   }
 
-  Future<void> showCompanyAddDialog() async {
-    // await controller.initSearchDialogData(isBody);
-    Get.dialog(
-      Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusStyle.roundedBorder12,
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-            color: appTheme.background,
-          ),
-          padding: const EdgeInsets.all(32.0),
-          width: 800,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "회사 정보 새로 등록하기",
-                    style: CustomTextStyles.bodyMediumBlack,
-                  ),
-                  CustomImageView(
-                    imagePath: IconConstant.close,
-                    onTap: () => Get.back(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      _buildInput("회사 이름", true),
-                      const SizedBox(width: 24),
-                      _buildInput("대표자", true),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      _buildInput("사업자 번호", true),
-                      const SizedBox(width: 24),
-                      _buildInput("전화", true),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      _buildInput("담당자 명", true),
-                      const SizedBox(width: 24),
-                      _buildInput("담당자 이메일", true),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      _buildInput("담당자 전화번호", true),
-                      const SizedBox(width: 24),
-                      _buildInput("주소", true),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomElevatedButton(
-                          text: '저장',
-                          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-                          buttonStyle: CustomButtonStyles.fillPrimary,
-                          margin: const EdgeInsets.only(right: 16),
-                          width: 90,
-                          height: 44,
-                          onPressed: () async {
-                            Get.back();
-                          }),
-                      CustomElevatedButton(
-                          text: '취소',
-                          buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                          buttonStyle: CustomButtonStyles.fillRedTransparent,
-                          width: 90,
-                          height: 44,
-                          onPressed: () async {
-                            Get.back();
-                          }),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Row _buildIDCard() {
+  //   return Row(
+  //     children: [
+  //       Column(
+  //         mainAxisAlignment: MainAxisAlignment.start,
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           RichText(
+  //               text: TextSpan(children: [
+  //             TextSpan(text: "신분증 ", style: CustomTextStyles.labelLargeBlack),
+  //             TextSpan(text: "*", style: TextStyle(color: appTheme.red)),
+  //           ])),
+  //           const SizedBox(height: 8),
+  //           Container(
+  //             width: 353,
+  //             decoration: BoxDecoration(
+  //                 borderRadius: BorderRadiusStyle.roundedBorder12,
+  //                 border: Border.all(color: appTheme.grayScale3),
+  //                 color: appTheme.white),
+  //             padding: const EdgeInsets.all(16),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 SizedBox(
+  //                   width: 280,
+  //                   child: Text(
+  //                     controller.idPhotoUrl.value ?? "최대 10메가 (.jpg)",
+  //                     style: CustomTextStyles.bodyMediumGray,
+  //                     overflow: TextOverflow.ellipsis,
+  //                   ),
+  //                 ),
+  //                 CustomImageView(
+  //                   imagePath: IconConstant.upload,
+  //                   onTap: () async {
+  //                     await controller.onPickIdPhoto();
+  //                   },
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Row _buildIDCard() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(text: "신분증 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red)),
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.white),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 280,
-                    child: Text(
-                      '최대 10메가 (.jpg)',
-                      style: CustomTextStyles.bodyMediumGray,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  CustomImageView(
-                    imagePath: IconConstant.upload,
-                    onTap: () {},
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  // Row _buildPhoto() {
+  //   return Row(
+  //     children: [
+  //       Column(
+  //         mainAxisAlignment: MainAxisAlignment.start,
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           RichText(
+  //               text: TextSpan(children: [
+  //             TextSpan(text: "사진 ", style: CustomTextStyles.labelLargeBlack),
+  //             TextSpan(text: "*", style: TextStyle(color: appTheme.red)),
+  //           ])),
+  //           const SizedBox(height: 8),
+  //           Container(
+  //             width: 353,
+  //             decoration: BoxDecoration(
+  //                 borderRadius: BorderRadiusStyle.roundedBorder12,
+  //                 border: Border.all(color: appTheme.grayScale3),
+  //                 color: appTheme.white),
+  //             padding: const EdgeInsets.all(16),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 SizedBox(
+  //                   width: 280,
+  //                   child: Text(
+  //                     controller.photoUrl.value ?? "300 x 300 최대 10메가 (.jpg)",
+  //                     style: CustomTextStyles.bodyMediumGray,
+  //                     overflow: TextOverflow.ellipsis,
+  //                   ),
+  //                 ),
+  //                 CustomImageView(
+  //                   imagePath: IconConstant.upload,
+  //                   onTap: () async {
+  //                     await controller.onPickPhoto();
+  //                   },
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Row _buildPhoto() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(text: "사진 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red)),
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.white),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 280,
-                    child: Text(
-                      '300 x 300 최대 10메가 (.jpg)',
-                      style: CustomTextStyles.bodyMediumGray,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  CustomImageView(
-                    imagePath: IconConstant.upload,
-                    onTap: () {},
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Row _buildHandphone() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "핸드폰 번호 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.white),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 280,
-                    child: Text(
-                      '인증 하기',
-                      style: CustomTextStyles.bodyMediumGray,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  CustomImageView(
-                    imagePath: IconConstant.aabbcc,
-                    onTap: () {},
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  // Row _buildHandphone() {
+  //   return Row(
+  //     children: [
+  //       Column(
+  //         mainAxisAlignment: MainAxisAlignment.start,
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           RichText(
+  //               text: TextSpan(children: [
+  //             TextSpan(
+  //                 text: "핸드폰 번호 ", style: CustomTextStyles.labelLargeBlack),
+  //             TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+  //           ])),
+  //           const SizedBox(height: 8),
+  //           Container(
+  //             width: 353,
+  //             decoration: BoxDecoration(
+  //                 borderRadius: BorderRadiusStyle.roundedBorder12,
+  //                 border: Border.all(color: appTheme.grayScale3),
+  //                 color: appTheme.white),
+  //             padding: const EdgeInsets.all(16),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 SizedBox(
+  //                   width: 280,
+  //                   child: Text(
+  //                     '인증 하기',
+  //                     style: CustomTextStyles.bodyMediumGray,
+  //                     overflow: TextOverflow.ellipsis,
+  //                   ),
+  //                 ),
+  //                 CustomImageView(
+  //                   imagePath: IconConstant.aabbcc,
+  //                   onTap: () {},
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildNation() {
     return Column(
@@ -439,24 +370,24 @@ class MasterEditView extends GetWidget<MasterEditController> {
             color: appTheme.white,
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
-          child: DropdownButton<Nation>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+          child: DropdownButton<Contry>(
+            hint: Text("Select Option", style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: null,
+            value: controller.selectedContry.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
             borderRadius: BorderRadiusStyle.roundedBorder12,
             // icon: const Icon(Icons.),
             elevation: 16,
-            onChanged: (Nation? newValue) {
+            onChanged: (Contry? newValue) {
               if (newValue != null) {
                 // controller.selectedMaster.value = newValue;
               }
             },
-            items: controller.nationLabels
-                .map<DropdownMenuItem<Nation>>((Nation value) {
-              return DropdownMenuItem<Nation>(
+            items: controller.contryLabels
+                .map<DropdownMenuItem<Contry>>((Contry value) {
+              return DropdownMenuItem<Contry>(
                 value: value,
                 child: Text(
                   value.displayName,
@@ -470,7 +401,8 @@ class MasterEditView extends GetWidget<MasterEditController> {
     );
   }
 
-  Widget _buildLanguage(String text, bool essential) {
+  Widget _buildLanguage(
+      String text, bool essential, ContentLanguage? language) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -498,7 +430,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
           child: DropdownButton<ContentLanguage>(
             hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: null,
+            value: language,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -542,7 +474,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
           width: 730,
           textInputType: TextInputType.multiline,
           maxLines: 6,
-          // controller: controller.introController,
+          controller: controller.introController,
           hintText: hint ?? "Input Text".tr,
           contentPadding: const EdgeInsets.all(16),
         ),
@@ -550,7 +482,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
     );
   }
 
-  Column _buildEmail(String text, bool essential, {String? hint}) {
+  Column _buildEmail(String text, bool essential) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -572,14 +504,16 @@ class MasterEditView extends GetWidget<MasterEditController> {
               border: Border.all(color: appTheme.grayScale3),
               color: appTheme.grayScale2),
           padding: const EdgeInsets.all(16),
-          child:
-              Text("mrlee@nodamen.com", style: CustomTextStyles.bodyMediumGray),
+          child: Text(controller.masterDetailModel.email,
+              style: CustomTextStyles.bodyMediumGray),
         ),
       ],
     );
   }
 
-  Column _buildInput(String text, bool essential, {String? hint}) {
+  Column _buildInput(
+      String text, bool essential, TextEditingController textEditingController,
+      {String? hint}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -595,7 +529,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            // controller: controller.titleController,
+            controller: textEditingController,
             width: 353,
             hintText: hint ?? "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,

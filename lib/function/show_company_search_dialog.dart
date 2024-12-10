@@ -1,17 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mindsight_admin_page/constants/icon_constant.dart';
-import 'package:mindsight_admin_page/theme/app_decoration.dart';
-import 'package:mindsight_admin_page/theme/custom_button_style.dart';
-import 'package:mindsight_admin_page/theme/custom_text_style.dart';
-import 'package:mindsight_admin_page/theme/theme_helper.dart';
-import 'package:mindsight_admin_page/widgets/custom_elevated_button.dart';
-import 'package:mindsight_admin_page/widgets/custom_image_view.dart';
-import 'package:mindsight_admin_page/widgets/pages.dart';
+import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/company_list/company_list_model.dart';
+import 'package:mindsight_admin_page/data/company_list/company_list_repository.dart';
+import 'package:mindsight_admin_page/data/company_list/company_list_req_get.dart';
 
-Future<void> showCompanySearchDialog() async {
+Future<Map<String, String>?> showCompanySearchDialog() async {
   // await controller.initSearchDialogData(isBody);
-  Get.dialog(
+  TextEditingController searchController = TextEditingController();
+  String searchKeyword = "";
+  Map<String, String>? result;
+  int selectedCompany = 0;
+
+  CompanyListModel model = await CompanyListRepository().get(CompanyListReqGet(
+    page: 1,
+    search: searchKeyword.isNotEmpty ? searchKeyword : null,
+    verified: true,
+  ));
+
+  if (model.total! > 0) {
+    selectedCompany = 0;
+    result = {
+      "id": model.id![selectedCompany],
+      "name": model.companyName![selectedCompany]
+    };
+  }
+
+  await Get.dialog(
     Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -48,7 +61,7 @@ Future<void> showCompanySearchDialog() async {
                   child: SizedBox(
                     height: 45,
                     child: TextFormField(
-                      // controller: controller.textController,
+                      controller: searchController,
                       decoration: InputDecoration(
                         fillColor: appTheme.white,
                         filled: true,
@@ -136,7 +149,25 @@ Future<void> showCompanySearchDialog() async {
                     ),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      searchKeyword = searchController.text;
+                      model =
+                          await CompanyListRepository().get(CompanyListReqGet(
+                        page: 1,
+                        search: searchKeyword.isNotEmpty ? searchKeyword : null,
+                        verified: true,
+                      ));
+
+                      if (model.total! > 0) {
+                        selectedCompany = 0;
+                        result = {
+                          "id": model.id![selectedCompany],
+                          "name": model.companyName![selectedCompany]
+                        };
+                      } else {
+                        result = null;
+                      }
+                    },
                     child: Text(
                       "검색",
                       style: CustomTextStyles.bodyMediumWhite,
@@ -170,24 +201,24 @@ Future<void> showCompanySearchDialog() async {
                           ),
                           columns: [
                             DataColumn(
-                              label: Text('',
+                              label: Text("",
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text('타입',
+                              label: Text("타입",
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text('이름',
+                              label: Text("이름",
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text('상태',
+                              label: Text("상태",
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                           ],
                           rows: List.generate(
-                            4,
+                            model.total!,
                             (index) {
                               return DataRow(
                                 cells: [
@@ -195,7 +226,11 @@ Future<void> showCompanySearchDialog() async {
                                     Radio<int>(
                                       value: index,
                                       groupValue: 0,
-                                      onChanged: (int? value) {},
+                                      onChanged: (int? value) {
+                                        if (value != null) {
+                                          selectedCompany = value;
+                                        }
+                                      },
                                     ),
                                   ), // Radio button cell
                                   DataCell(
@@ -203,7 +238,7 @@ Future<void> showCompanySearchDialog() async {
                                         style: CustomTextStyles.bodyLargeBlack),
                                   ),
                                   DataCell(
-                                    Text("노다멘 주식회사",
+                                    Text(model.companyName![index],
                                         style: CustomTextStyles.bodyLargeBlack),
                                   ),
                                   DataCell(
@@ -221,7 +256,7 @@ Future<void> showCompanySearchDialog() async {
                         alignment: Alignment.centerLeft,
                         children: [
                           CustomElevatedButton(
-                              text: '선택 완료',
+                              text: "선택 완료",
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumWhiteBold,
                               buttonStyle: CustomButtonStyles.fillPrimary,
@@ -235,7 +270,26 @@ Future<void> showCompanySearchDialog() async {
                             child: Pages(
                               pages: 1,
                               activePage: 1,
-                              onTap: (int pageNum) {},
+                              onTap: (int pageNum) async {
+                                model = await CompanyListRepository()
+                                    .get(CompanyListReqGet(
+                                  page: pageNum,
+                                  search: searchKeyword.isNotEmpty
+                                      ? searchKeyword
+                                      : null,
+                                  verified: true,
+                                ));
+
+                                if (model.total! > 0) {
+                                  selectedCompany = 0;
+                                  result = {
+                                    "id": model.id![selectedCompany],
+                                    "name": model.companyName![selectedCompany]
+                                  };
+                                } else {
+                                  result = null;
+                                }
+                              },
                             ),
                           ),
                         ],
@@ -250,4 +304,6 @@ Future<void> showCompanySearchDialog() async {
       ),
     ),
   );
+
+  return result;
 }

@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/account_constant.dart';
+import 'package:mindsight_admin_page/constants/enum/account_role.dart';
 
 class MenuItem {
   final String name;
@@ -71,16 +73,27 @@ const adminSettingsPageRoute = "/admin_settings";
 const authenticationPageDisplayName = "Log out";
 const authenticationPageRoute = "/auth";
 
-List<MenuItem> sideMenuItemRoutes = [
-  MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
-  MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {}),
-  MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
-  MenuItem(companyManagePageDisplayName, AppRoutes.companyManage, () {}),
-  MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {}),
-  MenuItem(activityManagePageDisplayName, AppRoutes.activityManage, () {}),
-  MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage, () {}),
-  MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings, () {}),
-];
+List<MenuItem> sideMenuItemRoutes = Account.isAdmin
+    ? [
+        MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
+        MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {}),
+        MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
+        MenuItem(companyManagePageDisplayName, AppRoutes.companyManage, () {}),
+        MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {}),
+        MenuItem(
+            activityManagePageDisplayName, AppRoutes.activityManage, () {}),
+        MenuItem(
+            settlementManagePageDisplayName, AppRoutes.settlementManage, () {}),
+        MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings, () {}),
+      ]
+    : [
+        MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
+        MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
+        MenuItem(companyManagePageDisplayName, AppRoutes.companyManage, () {}),
+        MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {}),
+        MenuItem(
+            settlementManagePageDisplayName, AppRoutes.settlementManage, () {}),
+      ];
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -119,7 +132,9 @@ class SideMenu extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: Text(
-                        "Admin",
+                        Account.isAdmin
+                            ? AccountRole.admin.displayName
+                            : AccountRole.master.displayName,
                         style: CustomTextStyles.labelLargeWhite,
                       ),
                     ),
@@ -180,13 +195,15 @@ class SideMenu extends StatelessWidget {
                       const SizedBox(height: 16),
                       Text(
                         // 'ms_content@nodamen.com',
-                        PrefUtils.to.getSigninId(),
+                        // PrefUtils.to.getSigninId(),
+                        Account.email,
                         style: CustomTextStyles.labelLargeBlack,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         // '2024-01-12-11:32:23',
-                        PrefUtils.to.getSigninTime(),
+                        // PrefUtils.to.getSigninTime(),
+                        Account.signinTime,
                         style: CustomTextStyles.labelLargeGray,
                       ),
                       const SizedBox(
@@ -211,7 +228,7 @@ class SideMenu extends StatelessWidget {
   }
 
   void _logout() async {
-    PrefUtils.to.setIsLogined(false);
+    // PrefUtils.to.setIsLogined(false);
     await Get.offAllNamed(AppRoutes.auth);
   }
 }

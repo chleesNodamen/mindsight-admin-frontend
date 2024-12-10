@@ -5,6 +5,7 @@ class ContentListReqGet {
   bool? status;
   String? search;
   int? pageSize;
+  String? masterId;
 
   ContentListReqGet({
     this.page,
@@ -13,6 +14,7 @@ class ContentListReqGet {
     this.status,
     this.search,
     this.pageSize,
+    this.masterId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -22,5 +24,6 @@ class ContentListReqGet {
         "status": status,
         "search": search,
         "pageSize": pageSize,
+        "masterId": masterId,
       };
 }

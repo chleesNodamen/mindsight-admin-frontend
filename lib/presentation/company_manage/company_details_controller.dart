@@ -1,8 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/company_data/company_data_model.dart';
-import 'package:mindsight_admin_page/data/company_data/company_data_repository.dart';
+import 'package:mindsight_admin_page/data/company_detail/company_detail_model.dart';
+import 'package:mindsight_admin_page/data/company_detail/company_detail_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class CompanyDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -10,7 +10,7 @@ class CompanyDetailsController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  late CompanyDataModel companyDataModel;
+  late CompanyDetailModel companyDetailModel;
 
   @override
   Future<void> onInit() async {
@@ -22,11 +22,11 @@ class CompanyDetailsController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    companyDataModel = await CompanyDataRepository().get(id);
+    companyDetailModel = await CompanyDetailRepository().get(id);
 
     isLoading.value = false;
     isInited.value = true;

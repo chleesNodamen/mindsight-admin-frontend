@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/challenges_delete/challenges_delete_mo
 class ChallengesDeleteRepository extends BaseRepository {
   Future<ChallengesDeleteModel> delete() async {
     // req
-    String endpoint = "contents/challenges";
+    String endpoint = "contents/challenge";
     Response response = await httpClient.deleteRequest(endpoint);
 
     // result

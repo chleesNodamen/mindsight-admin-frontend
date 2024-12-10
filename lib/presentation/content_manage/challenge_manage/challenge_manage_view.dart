@@ -1,5 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/sort_condition.dart';
+import 'package:mindsight_admin_page/constants/enum/goal.dart';
+import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_controller.dart';
 
 class ChallengeManageView extends GetWidget<ChallengeManageController> {
@@ -119,6 +120,9 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                   DataColumn(
                       label:
                           Text('상태', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('노출', style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.challengesModel.length, (index) {
                   String id = controller.challengesModel.id![index];
@@ -131,7 +135,10 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                         DataCell(
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 24.0),
-                            child: Text(controller.challengesModel.goal![index],
+                            child: Text(
+                                Goal.fromKeyword(
+                                        controller.challengesModel.goal![index])
+                                    .displayName,
                                 style: CustomTextStyles.bodyLargeBlack),
                           ),
                         ),
@@ -139,7 +146,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 24.0),
                             child: InkWell(
-                              onTap: () => controller.goToEdit(index),
+                              onTap: () => controller.onDetail(index),
                               child: Text(
                                 controller.challengesModel.name![index],
                                 style:
@@ -193,8 +200,8 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                                   left: 6, right: 0, top: 0, bottom: 0),
                               child: DropdownButton<String>(
                                 value: controller.challengesModel.status![index]
-                                    ? '정상'
-                                    : "안함",
+                                    ? '승인'
+                                    : "비승인",
                                 underline: Container(),
                                 padding: const EdgeInsets.only(left: 6),
                                 borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -206,14 +213,14 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                                     controller.onStatusChange(index);
                                   }
                                 },
-                                items: <String>['정상', '안함']
+                                items: <String>['승인', '비승인']
                                     .map<DropdownMenuItem<String>>(
                                   (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(
                                         value,
-                                        style: value == "정상"
+                                        style: value == "승인"
                                             ? CustomTextStyles.labelLargeGreen
                                             : CustomTextStyles.labelLargeRed,
                                       ),
@@ -224,6 +231,49 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                             ),
                           ),
                         ),
+                        DataCell(DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadiusStyle.roundedBorder8,
+                            border: Border.all(
+                              width: 1,
+                              color: appTheme.grayScale2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 6, right: 0, top: 0, bottom: 0),
+                            child: DropdownButton<String>(
+                              value: controller.challengesModel.exposure![index]
+                                  ? '노출'
+                                  : '비노출',
+                              underline: Container(),
+                              padding: const EdgeInsets.only(left: 6),
+                              borderRadius: BorderRadiusStyle.roundedBorder12,
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  controller.onExposureChange(index);
+                                }
+                              },
+                              items: <String>[
+                                '노출',
+                                '비노출'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: value == "노출"
+                                        ? CustomTextStyles.labelLargeGreen
+                                        : CustomTextStyles.labelLargeRed,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        )),
                       ]);
                 }).toList(),
               ),
@@ -244,7 +294,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                       width: 107,
                       height: 44,
                       onPressed: () {
-                        showSimpleMessage(Get.context!, "서비스 준비 중 입니다");
+                        showSimpleMessage("서비스 준비 중 입니다");
                       },
                     ),
                     CustomElevatedButton(
@@ -255,7 +305,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                       width: 76,
                       height: 44,
                       onPressed: () {
-                        showSimpleMessage(Get.context!, "서비스 준비 중 입니다");
+                        showSimpleMessage("서비스 준비 중 입니다");
                       },
                     ),
                   ],
@@ -325,7 +375,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                         List.generate(controller.periodValues.length, (index) {
                       return CustomCheckboxWidget(
                         isChecked: controller.periodValues[index],
-                        label: controller.periodLabels[index],
+                        label: '${controller.periodLabels[index]}${'일'.tr}',
                         onChanged: (value) =>
                             controller.togglePeriodCheckbox(index, value),
                       );
@@ -346,13 +396,13 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                     children: [
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[0],
-                        label: '정상',
+                        label: '승인',
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             0, value), // Adjust as needed
                       ),
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[1],
-                        label: '서비스 안함',
+                        label: '비승인',
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             1, value), // Adjust as needed
                       ),

@@ -1,35 +1,26 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
-import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/members/members_model.dart';
-import 'package:mindsight_admin_page/data/members/members_repository.dart';
-import 'package:mindsight_admin_page/data/members/members_req_get.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
+import 'package:mindsight_admin_page/data/master_list/master_list_model.dart';
+import 'package:mindsight_admin_page/data/master_list/master_list_repository.dart';
+import 'package:mindsight_admin_page/data/master_list/master_list_req_get.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_verified/master_verified_repository.dart';
+import 'package:mindsight_admin_page/data/master_verified/master_verified_req_put.dart';
 import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_repository.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_req_put.dart';
 
 class MasterManageController extends GetxController {
-  List<String> membershipLabels = [
-    "Nodamen",
-    "UNHCR",
-    "UN Women",
-  ];
-  RxInt activePage = 1.obs;
-  RxList<bool> membershipValues = List<bool>.filled(3, true).obs;
-
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
+
+  late MasterListModel masterListModel;
+  late MembersStatusModel membersStatusModel;
+
+  RxInt activePage = 1.obs;
+  RxList<bool> membershipValues = List<bool>.filled(3, true).obs;
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
-
-  late MembersModel membersModel;
-  late MembersStatusModel membersStatusModel;
-  late AffiliationModel affiliationModel;
-
-  RxList<bool> selectedMembers = List.generate(20, (_) => false).obs;
-  RxList<bool>? memberState;
+  RxList<bool> selectedMaster = List.generate(20, (_) => false).obs;
 
   @override
   Future<void> onInit() async {
@@ -45,45 +36,14 @@ class MasterManageController extends GetxController {
     activePage = 1.obs;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
-
-    affiliationModel = await AffiliationRepository().get();
-    membershipLabels = affiliationModel.affiliation!;
 
     await loadPage(1);
 
     isInited.value = true;
     isLoading.value = false;
-  }
-
-  List<String> getCheckedAffiliation() {
-    List<String> affiliation = [
-      for (int i = 0; i < membershipLabels.length; i++)
-        if (membershipValues[i]) membershipLabels[i]
-    ];
-
-    // 모두 체크 되었을 떄..조건 주지 않음
-    if (membershipValues.every((element) => element == true)) {
-      affiliation = [];
-    }
-
-    // 아무것도 체크 안되었을때는..검색이 안되어야 된다..
-    if (membershipValues.every((element) => element == false)) {
-      affiliation = ['known'];
-    }
-
-    return affiliation;
-  }
-
-  Future<void> onCheckMembership(int index, bool value) async {
-    searchOn.value = false;
-    searchValue.value = "";
-
-    membershipValues[index] = value;
-
-    await loadPage(1);
   }
 
   Future<void> onSearch(String? search) async {
@@ -96,15 +56,13 @@ class MasterManageController extends GetxController {
   Future<void> loadPage(int pageNum) async {
     isLoading.value = true;
 
-    selectedMembers = List.generate(20, (_) => false).obs;
+    selectedMaster = List.generate(20, (_) => false).obs;
 
-    membersModel = await MembersRepository().get(MembersReqGet(
-      affiliation: getCheckedAffiliation(),
+    masterListModel = await MasterListRepository().get(MasterListReqGet(
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,
-      disabled: false,
+      verified: true,
     ));
-    memberState = (membersModel.status!.map((status) => !status).toList()).obs;
 
     activePage.value = pageNum;
     isLoading.value = false;
@@ -115,35 +73,45 @@ class MasterManageController extends GetxController {
         arguments: {RouteArguments.id: id});
   }
 
-  void updateValue(int index) {
-    selectedMembers[index] = !selectedMembers[index];
+  void onMasterSelectChanged(int index) {
+    selectedMaster[index] = !selectedMaster[index];
   }
 
-  Future<void> onStatusChange(int index) async {
+  Future<void> onVerifiedChanged(int index) async {
+    if (!Account.isAdminWithMsg) {
+      return;
+    }
     isLoading.value = true;
 
-    membersStatusModel = await MembersStatusRepository().put(
-        MembersStatusReqPut(
-            ids: [membersModel.id![index]], status: !memberState![index]));
+    masterListModel.verified![index] = !masterListModel.verified![index];
 
-    if (membersStatusModel.isSuccess) {
+    BaseModel model = await MasterVerifiedRepository().put(MasterVerifiedReqPut(
+        ids: [masterListModel.id![index]],
+        verified: masterListModel.verified![index]));
+
+    if (model.isSuccess) {
       await loadPage(activePage.value);
     }
 
     isLoading.value = false;
   }
 
-  Future<void> onButtonPressed() async {
+  Future<void> onVerfiedButtonPressed() async {
+    if (!Account.isAdminWithMsg) {
+      return;
+    }
+
     isLoading.value = true;
 
     List<String> ids = [
-      for (int i = 0; i < membersModel.length; i++)
-        if (selectedMembers[i]) membersModel.id![i]
+      for (int i = 0; i < masterListModel.length; i++)
+        if (selectedMaster[i]) masterListModel.id![i]
     ];
-    membersStatusModel = await MembersStatusRepository()
-        .put(MembersStatusReqPut(ids: ids, status: true));
 
-    if (membersStatusModel.isSuccess) {
+    BaseModel model = await MasterVerifiedRepository()
+        .put(MasterVerifiedReqPut(ids: ids, verified: false));
+
+    if (model.isSuccess) {
       await loadPage(activePage.value);
     }
 

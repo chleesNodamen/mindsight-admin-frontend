@@ -36,8 +36,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                   ),
                                   const SizedBox(height: 32),
                                   CustomElevatedButton(
-                                    onPressed: () => showSimpleMessage(
-                                        Get.context!, "서비스 준비 중 입니다"),
+                                    onPressed: () =>
+                                        showSimpleMessage("서비스 준비 중 입니다"),
                                     text: "신규 등록",
                                     height: 44,
                                     width: 107,

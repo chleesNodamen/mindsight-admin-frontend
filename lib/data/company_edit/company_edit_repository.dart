@@ -6,7 +6,7 @@ import 'package:mindsight_admin_page/data/company_edit/company_edit_req_put.dart
 class CompanyEditRepository extends BaseRepository {
   Future<BaseModel> put(String id, CompanyEditReqPut dto) async {
     // req
-    String endpoint = "companies/$id";
+    String endpoint = "company/$id";
     Response response =
         await httpClient.putRequest(endpoint, body: dto.toJson());
 

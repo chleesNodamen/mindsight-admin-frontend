@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_details_controller.dart';
 import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
@@ -28,38 +27,9 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  TobBarSearch(
-                                    name: "마스터 상세",
-                                    searchShow: false,
-                                    viewCount: false,
-                                  ),
+                                  _buildTitle(),
                                   const SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      InkWell(
-                                        child: Text(
-                                          "마스터 목록",
-                                          style: CustomTextStyles
-                                              .bodyMediumSkyBlue
-                                              .copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationColor: appTheme.skyBlue,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          controller.onMasterList();
-                                        },
-                                      ),
-                                      CustomImageView(
-                                        imagePath: IconConstant.arrowRight,
-                                      ),
-                                      Text('마스터 상세',
-                                          style:
-                                              CustomTextStyles.bodyMediumGray),
-                                    ],
-                                  ),
+                                  _buildSubMenu(),
                                   const SizedBox(height: 32),
                                   _buildInfo(),
                                 ],
@@ -77,6 +47,38 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
     );
   }
 
+  Row _buildSubMenu() {
+    return Row(
+      children: [
+        InkWell(
+          child: Text(
+            "마스터 목록",
+            style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.underline,
+              decorationColor: appTheme.skyBlue,
+            ),
+          ),
+          onTap: () {
+            controller.onMasterList();
+          },
+        ),
+        CustomImageView(
+          imagePath: IconConstant.arrowRight,
+        ),
+        Text("마스터 상세", style: CustomTextStyles.bodyMediumGray),
+      ],
+    );
+  }
+
+  TobBarSearch _buildTitle() {
+    return TobBarSearch(
+      name: "마스터 상세",
+      searchShow: false,
+      viewCount: false,
+    );
+  }
+
   Widget _buildInfo() {
     return Container(
       decoration: BoxDecoration(
@@ -90,11 +92,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('계정 정보', style: CustomTextStyles.labelLargeBlack),
+              Text("계정 정보", style: CustomTextStyles.labelLargeBlack),
               InkWell(
                   onTap: controller.onMasterEdit,
                   child: Text(
-                    '수정',
+                    "수정",
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -105,18 +107,16 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
             height: 24,
           ),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('이메일 주소 (아이디)', style: CustomTextStyles.labelMediumGray),
+                  Text("이메일 주소 (아이디)", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("mrlee@nodamen.com",
+                  Text(controller.masterDetailModel.email,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -127,11 +127,12 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('닉네임', style: CustomTextStyles.labelMediumGray),
+                  Text("닉네임", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("chlees", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.masterDetailModel.nickname,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
             ],
@@ -141,7 +142,7 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
             thickness: 1,
             color: appTheme.grayScale2,
           ),
-          Text('기본 정보', style: CustomTextStyles.labelLargeBlack),
+          Text("기본 정보", style: CustomTextStyles.labelLargeBlack),
           const SizedBox(
             height: 24,
           ),
@@ -151,41 +152,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('이름', style: CustomTextStyles.labelMediumGray),
+                  Text("이름", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("이충헌", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('사진', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const ImageActionsWidget(
-                      imageUrl:
-                          "https://cdn.mindsight.im/release/9c22a3e0-9856-11ef-b9ba-6536e645bda9.jpg")
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('핸드폰 번호', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("010-1111-2222",
+                  Text(controller.masterDetailModel.name,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -196,13 +167,42 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('신분증', style: CustomTextStyles.labelMediumGray),
+                  Text("사진", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  const ImageActionsWidget(
-                      imageUrl:
-                          "https://cdn.mindsight.im/release/9c22a3e0-9856-11ef-b9ba-6536e645bda9.jpg")
+                  ImageActionsWidget(
+                      imageUrl: controller.masterDetailModel.photoUrl!)
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("핸드폰 번호", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.masterDetailModel.phoneNumber,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("신분증", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ImageActionsWidget(
+                      imageUrl: controller.masterDetailModel.idPhotoUrl!)
                 ],
               ),
             ],
@@ -218,25 +218,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('국가', style: CustomTextStyles.labelMediumGray),
+                  Text("국가", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("대한민국", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('주소', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("대한민국 서울시 강남구 강남타워",
+                  Text(controller.contry.displayName,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -247,11 +233,12 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('제1언어', style: CustomTextStyles.labelMediumGray),
+                  Text("주소", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("영어", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.masterDetailModel.address,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
               const SizedBox(
@@ -261,11 +248,27 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('제2언어', style: CustomTextStyles.labelMediumGray),
+                  Text("제1언어", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("한국어", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.primaryLanguage.displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("제2언어", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.secondaryLanguage.displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
             ],
@@ -281,11 +284,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('자기소개', style: CustomTextStyles.labelMediumGray),
+                  Text("자기소개", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("안녕하세요! 명상 강사 이미래 입니다!",
+                  Text(controller.masterDetailModel.intro,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -303,7 +306,7 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('최근 활동', style: CustomTextStyles.labelLargeGray),
+                Text("최근 활동", style: CustomTextStyles.labelLargeGray),
                 const SizedBox(
                   width: 8,
                 ),
@@ -315,10 +318,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                   width: 8,
                 ),
                 Text(
-                    controller.membersDataModel.lastLogin != null
-                        ? DateFormat('yyyy-MM-dd-HH:mm:ss')
-                            .format(controller.membersDataModel.lastLogin!)
-                        : controller.dash,
+                    // controller.masterDetailModel.lastLogin != null
+                    //     ? DateFormat('yyyy-MM-dd-HH:mm:ss')
+                    //         .format(controller.masterDetailModel.lastLogin!)
+                    //     : "-",
+                    "-",
                     style: CustomTextStyles.labelLargeGray),
               ],
             ),
@@ -328,7 +332,7 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
             thickness: 1,
             color: appTheme.grayScale2,
           ),
-          Text('회사 정보', style: CustomTextStyles.labelLargeBlack),
+          Text("회사 정보", style: CustomTextStyles.labelLargeBlack),
           const SizedBox(
             height: 24,
           ),
@@ -338,39 +342,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('회사 이름', style: CustomTextStyles.labelMediumGray),
+                  Text("회사 이름", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("노다멘", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('대표자', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("이원준", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('사업자 번호', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("11111111-111111111",
+                  Text(controller.masterDetailModel.companyName ?? "-",
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -381,11 +357,42 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('전화', style: CustomTextStyles.labelMediumGray),
+                  Text("대표자", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("02-1111-2222", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.masterDetailModel.representative ?? "-",
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("사업자 번호", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.masterDetailModel.businessNumber ?? "-",
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("전화", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.masterDetailModel.companyPhone ?? "-",
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
             ],
@@ -401,25 +408,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('담당자 명', style: CustomTextStyles.labelMediumGray),
+                  Text("담당자 명", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("이미래", style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('담당자 이메일', style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text("mrlee@nodamen.com",
+                  Text(controller.masterDetailModel.contactName ?? "-",
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -430,11 +423,12 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('담당자 전화번호', style: CustomTextStyles.labelMediumGray),
+                  Text("담당자 이메일", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("02-1111-2222", style: CustomTextStyles.bodyMediumBlack),
+                  Text(controller.masterDetailModel.contactEmail ?? "-",
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
               const SizedBox(
@@ -444,11 +438,26 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('주소', style: CustomTextStyles.labelMediumGray),
+                  Text("담당자 전화번호", style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("대한민국 서울시 강남구 강남타워",
+                  Text(controller.masterDetailModel.contactPhone ?? "-",
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("주소", style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(controller.masterDetailModel.contactAddress ?? "-",
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),

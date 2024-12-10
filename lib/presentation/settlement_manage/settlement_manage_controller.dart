@@ -1,13 +1,15 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_model.dart';
 import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_repository.dart';
 import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_req_get.dart';
 import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_model.dart';
 import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_repository.dart';
 import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_req_get.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/purchase_list/purchase_list_model.dart';
 import 'package:mindsight_admin_page/data/purchase_list/purchase_list_repository.dart';
 import 'package:mindsight_admin_page/data/purchase_list/purchase_list_req_get.dart';
@@ -49,7 +51,7 @@ class SettlementManageController extends GetxController {
   @override
   Future<void> onInit() async {
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 

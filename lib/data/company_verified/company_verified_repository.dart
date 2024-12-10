@@ -6,7 +6,7 @@ import 'package:mindsight_admin_page/data/company_verified/company_verified_req_
 class CompanyVerifiedRepository extends BaseRepository {
   Future<BaseModel> put(CompanyVerifiedReqPut dto) async {
     // req
-    String endpoint = "companies/verified";
+    String endpoint = "company/verified";
     Response response =
         await httpClient.putRequest(endpoint, body: dto.toJson());
 

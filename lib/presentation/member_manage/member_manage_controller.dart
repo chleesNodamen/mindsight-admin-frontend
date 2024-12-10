@@ -1,11 +1,13 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/members/members_model.dart';
-import 'package:mindsight_admin_page/data/members/members_repository.dart';
-import 'package:mindsight_admin_page/data/members/members_req_get.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/members_list/members_list_model.dart';
+import 'package:mindsight_admin_page/data/members_list/members_list_repository.dart';
+import 'package:mindsight_admin_page/data/members_list/members_list_req_get.dart';
 import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
 import 'package:mindsight_admin_page/data/members_status/members_status_repository.dart';
 import 'package:mindsight_admin_page/data/members_status/members_status_req_put.dart';
@@ -24,7 +26,7 @@ class MemberManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  late MembersModel membersModel;
+  late MembersListModel membersModel;
   late MembersStatusModel membersStatusModel;
   late AffiliationModel affiliationModel;
 
@@ -45,7 +47,7 @@ class MemberManageController extends GetxController {
     activePage = 1.obs;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -98,7 +100,7 @@ class MemberManageController extends GetxController {
 
     selectedMembers = List.generate(20, (_) => false).obs;
 
-    membersModel = await MembersRepository().get(MembersReqGet(
+    membersModel = await MembersListRepository().get(MembersListReqGet(
       affiliation: getCheckedAffiliation(),
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,

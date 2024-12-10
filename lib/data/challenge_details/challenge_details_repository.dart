@@ -5,7 +5,7 @@ import 'package:mindsight_admin_page/data/challenge_details/challenge_details_mo
 class ChallengeDetailsRepository extends BaseRepository {
   Future<ChallengeDetailsModel> get(String id) async {
     // req
-    String endpoint = "contents/challenges/$id";
+    String endpoint = "contents/challenge/$id";
     Response response = await httpClient.getRequest(endpoint);
 
     // result

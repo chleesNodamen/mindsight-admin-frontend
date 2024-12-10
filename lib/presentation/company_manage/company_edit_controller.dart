@@ -1,11 +1,11 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
-import 'package:mindsight_admin_page/data/company_data/company_data_model.dart';
-import 'package:mindsight_admin_page/data/company_data/company_data_repository.dart';
+import 'package:mindsight_admin_page/data/company_detail/company_detail_model.dart';
+import 'package:mindsight_admin_page/data/company_detail/company_detail_repository.dart';
 import 'package:mindsight_admin_page/data/company_edit/company_edit_repository.dart';
 import 'package:mindsight_admin_page/data/company_edit/company_edit_req_put.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class CompanyEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -13,7 +13,7 @@ class CompanyEditController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  late CompanyDataModel companyDataModel;
+  late CompanyDetailModel companyDataModel;
 
   TextEditingController companyNameController = TextEditingController();
   TextEditingController representativeController = TextEditingController();
@@ -46,11 +46,11 @@ class CompanyEditController extends GetxController {
 
   Future<void> initData() async {
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    companyDataModel = await CompanyDataRepository().get(id);
+    companyDataModel = await CompanyDetailRepository().get(id);
 
     companyNameController.text = companyDataModel.companyName ?? "";
     representativeController.text = companyDataModel.representative ?? "";
@@ -82,9 +82,9 @@ class CompanyEditController extends GetxController {
         ));
 
     if (model.isSuccess) {
-      showSimpleMessage(Get.context!, "저장 되었습니다");
+      showSimpleMessage("저장 되었습니다");
     } else {
-      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
+      showSimpleMessage("저장에 실패 하였습니다");
     }
 
     isLoading.value = false;

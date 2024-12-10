@@ -3,22 +3,20 @@
 class CompanyListReqGet {
   int? page;
   String? search;
+  String? masterId;
   bool? verified;
 
   CompanyListReqGet({
     this.page,
     this.search,
+    this.masterId,
     this.verified,
   });
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {
-      "page": page ?? 1,
-      "verified": verified ?? false,
-    };
-    if (search != null && search!.isNotEmpty) {
-      data["search"] = search;
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "page": page,
+        "search": search,
+        "masterId": masterId,
+        "verified": verified,
+      };
 }

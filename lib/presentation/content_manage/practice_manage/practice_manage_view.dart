@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/sort_condition.dart';
+import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_manage/practice_manage_controller.dart';
 
 class PracticeManageView extends GetWidget<PracticeManageController> {
@@ -56,7 +56,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
       width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
-      onPressed: controller.onRegisterTap,
+      onPressed: controller.onPressedRegister,
     );
   }
 
@@ -91,7 +91,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
           style: const TextStyle(color: Colors.deepPurple),
           onChanged: (SortCondition? newValue) {
             if (newValue != null) {
-              controller.updateSelectedOrder(newValue);
+              controller.onChangedSelectedOrder(newValue);
             }
           },
           items: <SortCondition>[
@@ -141,34 +141,46 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                 columns: [
                   DataColumn(
                       label:
-                          Text('마스터', style: CustomTextStyles.labelLargeGray)),
+                          Text("마스터", style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('컨텐츠 명',
+                      label: Text("컨텐츠 명",
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('완료 회원 수',
+                      label: Text("완료 회원",
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('참여 회원 수',
+                      label: Text("참여 회원",
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label:
-                          Text('완료율', style: CustomTextStyles.labelLargeGray)),
+                          Text("완료율", style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('좋아요 수',
-                          style: CustomTextStyles.labelLargeGray)),
+                      label:
+                          Text("좋아요", style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('노출', style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.practicesModel.length, (index) {
                   return DataRow(cells: [
-                    DataCell(Text(
-                      "마스터이름",
-                      style: CustomTextStyles.bodyLargeBlack,
+                    DataCell(SizedBox(
+                      width: 150,
+                      child: Text(
+                        controller.practicesModel.masterName![index],
+                        style: CustomTextStyles.bodyLargeBlack,
+                      ),
                     )),
                     DataCell(InkWell(
-                        onTap: () => controller.onDetails(index),
-                        child: Text("컨텐츠 이름",
-                            style: CustomTextStyles.bodyLargeBlack.copyWith(
-                                decoration: TextDecoration.underline)))),
+                        onTap: () => controller.onTapDetail(index),
+                        child: SizedBox(
+                          width: 300,
+                          child: Text(controller.practicesModel.name![index],
+                              style: CustomTextStyles.bodyLargeBlack.copyWith(
+                                  decoration: TextDecoration.underline)),
+                        ))),
                     DataCell(Text(
                         controller.practicesModel.finished![index].toString(),
                         style: CustomTextStyles.bodyLargeBlack)),
@@ -181,6 +193,88 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                     DataCell(Text(
                         controller.practicesModel.liked![index].toString(),
                         style: CustomTextStyles.bodyLargeBlack)),
+                    DataCell(DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: appTheme.white,
+                        borderRadius: BorderRadiusStyle.roundedBorder8,
+                        border: Border.all(
+                          width: 1,
+                          color: appTheme.grayScale2,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 6, right: 0, top: 0, bottom: 0),
+                        child: DropdownButton<String>(
+                          value: controller.practicesModel.status![index]
+                              ? '승인'
+                              : '비승인',
+                          underline: Container(),
+                          padding: const EdgeInsets.only(left: 6),
+                          borderRadius: BorderRadiusStyle.roundedBorder12,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              controller.onStatusChange(index);
+                            }
+                          },
+                          items: <String>['승인', '비승인']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: value == "승인"
+                                    ? CustomTextStyles.labelLargeGreen
+                                    : CustomTextStyles.labelLargeRed,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    )),
+                    DataCell(DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: appTheme.white,
+                        borderRadius: BorderRadiusStyle.roundedBorder8,
+                        border: Border.all(
+                          width: 1,
+                          color: appTheme.grayScale2,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 6, right: 0, top: 0, bottom: 0),
+                        child: DropdownButton<String>(
+                          value: controller.practicesModel.exposure![index]
+                              ? '노출'
+                              : '비노출',
+                          underline: Container(),
+                          padding: const EdgeInsets.only(left: 6),
+                          borderRadius: BorderRadiusStyle.roundedBorder12,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              controller.onExposureChange(index);
+                            }
+                          },
+                          items: <String>['노출', '비노출']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: value == "노출"
+                                    ? CustomTextStyles.labelLargeGreen
+                                    : CustomTextStyles.labelLargeRed,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    )),
                   ]);
                 }).toList(),
               ),

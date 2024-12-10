@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/goal.dart';
+import 'package:mindsight_admin_page/constants/enum/goal.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_edit/challenge_edit_controller.dart';
 
 class ChallengeEditView extends GetWidget<ChallengeEditController> {
@@ -30,7 +30,13 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                                 const SizedBox(height: 32),
                                 _buildSubMenu(),
                                 const SizedBox(height: 32),
-                                buildTextFields()
+                                _buildBasicInfo(),
+                                const SizedBox(height: 32),
+                                _buildDaySession(),
+                                const SizedBox(height: 32),
+                                _buildFile(),
+                                const SizedBox(height: 44),
+                                _buildSaveNCancel(),
                               ],
                             ),
                           ),
@@ -45,29 +51,53 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
     );
   }
 
-  Column buildTextFields() {
+  Column _buildFile() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 정보", style: CustomTextStyles.bodyMediumBlack),
+        Text("파일", style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        buildFirstRow(),
-        const SizedBox(height: 24),
-        buildSecondRow(),
-        const SizedBox(height: 24),
-        buildThirdRow(),
-        const SizedBox(height: 24),
-        buildForthRow(),
-        const SizedBox(height: 24),
-        buildFifthRow(),
-        const SizedBox(height: 24),
-        buildLastRow(),
+        PickFile(
+          labelText: "썸네일 파일",
+          initialUrl: controller.challengeDetailsModel.thumbnail,
+          hintText: "300 x 300 최대 10메가 (.jpg)",
+          fileExtension: FileExtension.jpg.keywordName,
+          onFilePicked: (pickedFile) {
+            controller.onPickThumbnail(pickedFile);
+          },
+        ),
       ],
     );
   }
 
-  Column buildForthRow() {
+  Row _buildSaveNCancel() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomElevatedButton(
+          text: '저장',
+          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+          buttonStyle: CustomButtonStyles.fillPrimary,
+          width: 90,
+          height: 44,
+          onPressed: controller.onSave,
+        ),
+        CustomElevatedButton(
+          text: '취소',
+          buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+          buttonStyle: CustomButtonStyles.fillRedTransparent,
+          margin: const EdgeInsets.only(left: 16),
+          width: 90,
+          height: 44,
+          onPressed: () => Get.offAllNamed(AppRoutes.challengeDetails,
+              arguments: {RouteArguments.id: controller.id}),
+        ),
+      ],
+    );
+  }
+
+  Column _buildDaySession() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,13 +107,172 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
         Wrap(
           spacing: 8.0, // Horizontal spacing
           runSpacing: 8.0, // Vertical spacing
-          children: _buildNumberWidgets(),
+          children: _buildDays(),
+        ),
+        const SizedBox(height: 24),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildInput("제목", true, controller.dayNameController),
+            const SizedBox(width: 24),
+            Column(
+              children: List.generate(
+                  controller.selectedDayDetail.contentNames!.length, (index) {
+                return Container(
+                  width: 353,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
+                      border: Border.all(color: appTheme.grayScale3),
+                      color: appTheme.grayScale2),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 280,
+                        child: Text(
+                          controller.selectedDayDetail.contentNames![index],
+                          style: CustomTextStyles.bodyMediumGray,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      CustomImageView(
+                        imagePath: IconConstant.search,
+                      )
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ],
         )
       ],
     );
   }
 
-  List<Widget> _buildNumberWidgets() {
+  Column _buildBasicInfo() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("기본 정보", style: CustomTextStyles.bodyMediumBlack),
+        const SizedBox(height: 24),
+        _buildInput("제목", true, controller.nameController),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: "목적 ", style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                ])),
+                const SizedBox(height: 8),
+                Container(
+                  width: 353,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: appTheme.grayScale3,
+                    ),
+                    color: appTheme.white,
+                    borderRadius: BorderRadiusStyle.roundedBorder12,
+                  ),
+                  child: DropdownButton<Goal>(
+                    isExpanded: true,
+                    value: controller.selectedGoal.value,
+                    underline: Container(),
+                    padding: const EdgeInsets.only(
+                        left: 16, right: 16, top: 2, bottom: 2),
+                    borderRadius: BorderRadiusStyle.roundedBorder12,
+                    // icon: const Icon(Icons.),
+                    elevation: 16,
+                    onChanged: (Goal? newValue) {
+                      if (newValue != null) {
+                        controller.selectedGoal.value = newValue;
+                      }
+                    },
+                    items: <Goal>[
+                      Goal.improveHealth,
+                      Goal.relaxingStretching,
+                      Goal.welnessAtWork,
+                      Goal.regulateEmotions,
+                      Goal.fallAsleepEasily
+                    ].map<DropdownMenuItem<Goal>>((Goal value) {
+                      return DropdownMenuItem<Goal>(
+                        value: value,
+                        child: Text(
+                          value.displayName,
+                          style: CustomTextStyles.bodyMediumBlack,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(width: 24),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: "기간 ", style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                ])),
+                const SizedBox(height: 8),
+                Container(
+                  width: 353,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
+                      border: Border.all(color: appTheme.grayScale3),
+                      color: appTheme.grayScale2),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          '${controller.challengeDetailsModel.duration!.toString()}${"일".tr}',
+                          style: CustomTextStyles.bodyMediumGray),
+                      CustomImageView(
+                        imagePath: IconConstant.more,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(text: "소개 ", style: CustomTextStyles.labelLargeBlack),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        CustomTextFormField(
+            controller: controller.introController,
+            maxLines: 5,
+            width: 730,
+            contentPadding:
+                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
+            filled: true),
+        const SizedBox(height: 24),
+        _buildExposured()
+      ],
+    );
+  }
+
+  List<Widget> _buildDays() {
     List<Widget> widgets = [];
     for (int i = 0; i < controller.challengeDetailsModel.days!.length; i++) {
       if (i > 0 && i % 14 == 0) {
@@ -121,286 +310,37 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
     return widgets;
   }
 
-  Row buildFifthRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(text: "제목 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            CustomTextFormField(
-                controller: TextEditingController(
-                    text: controller.selectedDayDetails.name),
-                width: 353,
-                hintText: "Input text",
-                hintStyle: CustomTextStyles.bodyMediumGray,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                contentPadding:
-                    const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-                filled: true),
-          ],
-        ),
-        const SizedBox(width: 24),
-        Column(
-          children: List.generate(
-              controller.selectedDayDetails.contents!.length, (index) {
-            return Container(
-              width: 353,
-              margin: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.grayScale2),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 280,
-                    child: Text(
-                      controller.selectedDayDetails.contents![index],
-                      style: CustomTextStyles.bodyMediumGray,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  CustomImageView(
-                    imagePath: IconConstant.search,
-                  )
-                ],
-              ),
-            );
-          }),
-        ),
-      ],
-    );
-  }
-
-  Row buildLastRow() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("파일", style: CustomTextStyles.bodyMediumBlack),
-            const SizedBox(height: 24),
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "썸네일 파일 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.white),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 280,
-                    child: Text(
-                      controller.challengeDetailsModel.thumbnail!,
-                      style: CustomTextStyles.bodyMediumBlack,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  CustomImageView(
-                    imagePath: IconConstant.upload,
-                    onTap: () {
-                      controller.pickFile("thumbnail");
-                    },
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 44),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CustomElevatedButton(
-                  text: '저장',
-                  buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-                  buttonStyle: CustomButtonStyles.fillPrimary,
-                  width: 90,
-                  height: 44,
-                  onPressed: controller.onSave,
-                ),
-                CustomElevatedButton(
-                  text: '취소',
-                  buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                  buttonStyle: CustomButtonStyles.fillRedTransparent,
-                  margin: const EdgeInsets.only(left: 16),
-                  width: 90,
-                  height: 44,
-                  onPressed: () => Get.offAllNamed(AppRoutes.challengeDetails,
-                      arguments: {RouteArguments.id: controller.id}),
-                ),
-              ],
-            )
-          ],
-        ),
-      ],
-    );
-  }
-
-  Column buildThirdRow() {
+  Column _buildInput(
+      String text, bool essential, TextEditingController textController,
+      {String? hint}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "소개 ", style: CustomTextStyles.labelLargeBlack),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(
+              text: "$text ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(
+              text: essential ? "*" : "", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            controller: controller.introController,
-            maxLines: 5,
-            width: 730,
+            controller: textController,
+            width: 353,
+            hintText: hint ?? "Input text",
+            hintStyle: CustomTextStyles.bodyMediumGray,
+            validator: (value) {
+              if (value == null) {
+                return "필수 입력 항목입니다.".tr;
+              }
+              return null;
+            },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
             filled: true),
-      ],
-    );
-  }
-
-  Row buildSecondRow() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(text: "목적 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: appTheme.grayScale3,
-                ),
-                color: appTheme.white,
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-              ),
-              child: DropdownButton<Goal>(
-                isExpanded: true,
-                // value: controller.selectedGoal.value,
-                value: Goal.improveHealth,
-                underline: Container(),
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 2, bottom: 2),
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-                // icon: const Icon(Icons.),
-                elevation: 16,
-                onChanged: (Goal? newValue) {
-                  // if (newValue != null) {
-                  //   controller.selectedGoal.value = newValue;
-                  // }
-                },
-                items: <Goal>[
-                  Goal.improveHealth,
-                  Goal.relaxingStretching,
-                  Goal.welnessAtWork,
-                  Goal.regulateEmotions,
-                  Goal.fallAsleepEasily
-                ].map<DropdownMenuItem<Goal>>((Goal value) {
-                  return DropdownMenuItem<Goal>(
-                    value: value,
-                    child: Text(
-                      value.displayName,
-                      style: CustomTextStyles.bodyMediumBlack,
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(width: 24),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(text: "기간 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.grayScale2),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                      '${controller.challengeDetailsModel.duration!.toString()}일',
-                      style: CustomTextStyles.bodyMediumGray),
-                  CustomImageView(
-                    imagePath: IconConstant.more,
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Row buildFirstRow() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                      text: "제목 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
-            CustomTextFormField(
-                controller: controller.nameController,
-                width: 353,
-                onChange: (value) {
-                  // controller.checkPasswordValid(value, false);
-                },
-                contentPadding: const EdgeInsets.only(
-                    left: 16, top: 17, bottom: 17, right: 5),
-                filled: true),
-          ],
-        ),
       ],
     );
   }
@@ -448,6 +388,120 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
       searchShow: false,
       viewCount: false,
       searchText: "",
+    );
+  }
+
+  Widget _buildStatus() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "승인 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentStatus>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: ContentStatus.fromKeyword(
+                controller.challengeDetailsModel.status!),
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentStatus? newValue) {
+              controller.isLoading.value = true;
+              controller.challengeDetailsModel.status = newValue?.keywordName;
+              controller.isLoading.value = false;
+            },
+            items: [ContentStatus.approve, ContentStatus.disapprove]
+                .map<DropdownMenuItem<ContentStatus>>((ContentStatus value) {
+              return DropdownMenuItem<ContentStatus>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildExposured() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "노출 ",
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentExposure>(
+            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: ContentExposure.fromKeyword(
+                controller.challengeDetailsModel.exposure!),
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (ContentExposure? newValue) {
+              controller.isLoading.value = true;
+              controller.challengeDetailsModel.exposure = newValue?.keywordName;
+              controller.isLoading.value = false;
+            },
+            items: [
+              ContentExposure.exposed,
+              ContentExposure.nonExposed
+            ].map<DropdownMenuItem<ContentExposure>>((ContentExposure value) {
+              return DropdownMenuItem<ContentExposure>(
+                value: value,
+                child: Text(
+                  value.displayName,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        )
+      ],
     );
   }
 }

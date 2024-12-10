@@ -1,8 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_model.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class ContentDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -10,10 +10,6 @@ class ContentDetailsController extends GetxController {
   RxBool isInited = false.obs;
 
   late ContentDetailsModel contentDetailsModel;
-
-  // RxString ccLink = "".obs;
-  // RxString thumbnailLink = "".obs;
-  // RxString videoLink = "".obs;
 
   @override
   Future<void> onInit() async {
@@ -25,7 +21,7 @@ class ContentDetailsController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -58,7 +54,7 @@ class ContentDetailsController extends GetxController {
       );
     } else {
       // URL을 열 수 없는 경우 사용자에게 알림
-      showSimpleMessage(Get.context!, "해당 URL을 열 수 없습니다");
+      showSimpleMessage("해당 URL을 열 수 없습니다");
     }
   }
 }

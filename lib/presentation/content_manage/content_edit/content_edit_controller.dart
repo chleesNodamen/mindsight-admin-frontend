@@ -1,65 +1,44 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
-import 'package:mindsight_admin_page/constants/content_exposure.dart';
-import 'package:mindsight_admin_page/constants/content_language.dart';
-import 'package:mindsight_admin_page/constants/content_level.dart';
-import 'package:mindsight_admin_page/constants/content_type.dart';
-import 'package:mindsight_admin_page/data/content_master/master_model.dart';
-import 'package:mindsight_admin_page/data/content_master/master_repository.dart';
-import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/content_details/content_details_controller.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_model.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_repository.dart';
-import 'package:mindsight_admin_page/data/content_edit/content_edit_model.dart';
 import 'package:mindsight_admin_page/data/content_edit/content_edit_repository.dart';
 import 'package:mindsight_admin_page/data/content_edit/content_edit_req_put.dart';
+import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
+import 'package:mindsight_admin_page/utils/transcoding_uploader.dart';
 
 class ContentEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
 
-  final List<Category> categories = [
-    Category.body,
-    Category.breath,
-    Category.mindfulness,
-    Category.theory,
-  ];
+  RxBool isLoading = true.obs;
+  RxBool isInited = false.obs;
 
-  final Map<Category, List<ContentType>> types = {
-    Category.body: [
+  late Rx<ContentDetailsModel> contentDetailsModel;
+
+  final Map<ContentCategory, List<ContentType>> types = {
+    ContentCategory.body: [
       ContentType.basicBody,
       ContentType.intermediateBody,
       ContentType.advanceBody
     ],
-    Category.breath: [
+    ContentCategory.breath: [
       ContentType.natureBreathing,
       ContentType.guidedMeditation,
     ],
-    Category.mindfulness: [
+    ContentCategory.mindfulness: [
       ContentType.mindfulArt,
       ContentType.artWithMusic,
       ContentType.nature,
       ContentType.kAsmr
     ],
-    Category.theory: [
+    ContentCategory.theory: [
       ContentType.emotionManagement,
       ContentType.philosophy,
       ContentType.selfDevelopment
     ]
   };
-
-  final List<ContentExposured> contentExposured = [
-    ContentExposured.exposed,
-    ContentExposured.nonExposed,
-  ];
-
-  final List<ContentLevel> contentLevel = [
-    ContentLevel.all,
-    ContentLevel.upper,
-    ContentLevel.middle,
-    ContentLevel.lower,
-  ];
 
   final List<ContentLanguage> contentLanguage = [
     ContentLanguage.english,
@@ -67,123 +46,38 @@ class ContentEditController extends GetxController {
     ContentLanguage.japanese
   ];
 
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController tagController = TextEditingController();
   final TextEditingController introController = TextEditingController();
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController videoController = TextEditingController();
+  final TextEditingController mediaController = TextEditingController();
   late final focusNode = FocusNode();
 
-  Rx<Category?> selectedCategory = Rx<Category?>(null);
-  RxBool categorySelected = false.obs;
-  Rx<ContentType?> selectedType = Rx<ContentType?>(null);
-  RxList<String> tags = <String>[].obs;
-  RxString selectedMaster = "".obs;
-  List<String> masters = <String>[];
-  RxString thumbnailName = "".obs;
-  RxString ccName = "".obs;
-
-  RxBool enableCategoryError = false.obs;
-  RxBool enableTypeError = false.obs;
-  RxBool enableThumbnailError = false.obs;
-
-  File? ccFile;
   File? thumbnailFile;
-  String? ccUrl;
-  String? thumbnailUrl;
+  File? mediaFile;
 
-  RxBool isLoading = true.obs;
-  RxBool isInited = false.obs;
-
-  late ContentDetailsModel contentDetailsModel;
-  late ContentEditModel contentEditModel;
-  late MasterModel masterModel;
+  final transcodingUploader = TranscodingUploader();
 
   @override
   Future<void> onInit() async {
     super.onInit();
 
-    masterModel = await MasterRepository().get();
-    contentDetailsModel = await ContentDetailsRepository().get(id);
-
-    // if (AppConstant.test) {
-    //   masterModel = await MasterRepository().get();
-    //   contentDetailsModel = await ContentDetailsRepository().get(id);
-    // } else {
-    //   masterModel =
-    //       MasterModel().copyWith(id: [""], name: ["Mindsight master"]);
-    //   contentDetailsModel = ContentDetailsModel().copyWith(
-    //     id: id,
-    //     category: "Body",
-    //     type: "Basic body",
-    //     master: "Mindsight master",
-    //     tags: ["sleep", "good night", "bed", "calm", "relax"],
-    //     intro:
-    //         "This exercise strengthen the lower body and straigthen the spine. The mountain pose and lunge pose help strengthen the lower body and relieve stress. Back rolls aid in stimulating the spine and improving internal function.",
-    //     thumbnail: "https://nodamen.akamaized.net/Mi...",
-    //     video: "https://nodamen.akamaized.net/Mi...",
-    //     cc: "https://nodamen.akamaized.net/Mi...",
-    //     name: "Spine & Lower Body",
-    //     seen: 99999,
-    //     liked: 4221,
-    //     durationTime: 10,
-    //   );
-    // }
+    contentDetailsModel = (await ContentDetailsRepository().get(id)).obs;
 
     introController.addListener(formatText);
 
-    if (masterModel.name != null) {
-      masters = masterModel.name!;
-    }
-    if (contentDetailsModel.intro != null) {
-      introController.text = contentDetailsModel.intro!;
-    } else {
-      introController.text = "";
-    }
-    if (contentDetailsModel.name != null) {
-      titleController.text = contentDetailsModel.name!;
-    } else {
-      titleController.text = "";
-    }
-    if (contentDetailsModel.category != null) {
-      selectedCategory.value =
-          Category.fromKeyword(contentDetailsModel.category!);
-      categorySelected.value = true;
-    }
-    // if (contentDetailsModel.type != null) {
-    //   selectedType.value = contentDetailsModel.type!;
-    // }
+    nameController.text = contentDetailsModel.value.name!;
+    introController.text = contentDetailsModel.value.intro!;
 
-    if (contentDetailsModel.master != null) {
-      selectedMaster.value = contentDetailsModel.master!;
-    }
-    if (contentDetailsModel.tags != null) {
-      tags.value = contentDetailsModel.tags!;
-    }
-    if (contentDetailsModel.video != null) {
-      videoController.text = contentDetailsModel.video!;
-    } else {
-      videoController.text = "";
-    }
-    if (contentDetailsModel.thumbnail != null) {
-      thumbnailName.value = contentDetailsModel.thumbnail!;
-    }
-    if (contentDetailsModel.cc != null) {
-      ccName.value = contentDetailsModel.cc!;
-    }
+    // tags.value = contentDetailsModel.value.tags!;
+
+    mediaController.text = contentDetailsModel.value.video!;
+
     isLoading.value = false;
     isInited.value = true;
   }
 
-  void selectCategory(Category category) {
-    selectedCategory.value = category;
-    categorySelected.value = true;
-    selectedType.value = ContentType.unknown;
-    enableCategoryError.value = false;
-  }
-
   void addTag(String tag) {
-    // tags.add(tag.toLowerCase());
-    tags.add(tag);
+    contentDetailsModel.value.tags!.add(tag);
     tagController.text = "";
   }
 
@@ -230,89 +124,77 @@ class ContentEditController extends GetxController {
   }
 
   bool isSaveOk() {
-    if (selectedCategory.value == "") {
-      enableCategoryError.value = true;
-    } else {
-      enableCategoryError.value = false;
+    return true;
+  }
+
+  void onPickThumbnail(File? pickedFile) {
+    if (pickedFile != null) {
+      thumbnailFile = pickedFile;
+      contentDetailsModel.value.thumbnail = pickedFile.name;
     }
-    if (selectedType.value == "") {
-      enableTypeError.value = true;
-    } else {
-      enableTypeError.value = false;
-    }
-    if (thumbnailFile == null && thumbnailName.value == "") {
-      enableThumbnailError.value = true;
-    } else {
-      enableThumbnailError.value = false;
-    }
-    if (enableCategoryError.value ||
-        enableTypeError.value ||
-        enableThumbnailError.value) {
-      return false;
-    } else {
-      return true;
+  }
+
+  void onPickMedia(File? pickedFile) {
+    if (pickedFile != null) {
+      mediaFile = pickedFile;
+      contentDetailsModel.value.video = pickedFile.name;
     }
   }
 
   Future<void> onSave() async {
     isLoading.value = true;
 
-    if (ccFile != null) {
-      ccUrl = await UploadRepository().uploadFile(ccFile!);
-    }
     if (thumbnailFile != null) {
-      thumbnailUrl = await UploadRepository().uploadFile(thumbnailFile!);
+      contentDetailsModel.value.thumbnail =
+          (await UploadRepository().uploadFile(thumbnailFile!)).url;
     }
-    contentEditModel = await ContentEditRepository().put(
+
+    if (mediaFile != null) {
+      contentDetailsModel.value.video =
+          await transcodingUploader.uploadTranscoding(mediaFile!);
+    }
+
+    BaseModel contentEditModel = await ContentEditRepository().put(
       id,
       ContentEditReqPut(
-        category: selectedCategory.value?.keywordName,
-        type: selectedType.value?.keywordName,
-        master: selectedMaster.value,
-        tags: tags,
+        name: nameController.text,
+        category: contentDetailsModel.value.category,
+        type: contentDetailsModel.value.type,
+        level: contentDetailsModel.value.level,
+        targetLanguage: contentDetailsModel.value.targetLanguage,
+        status: contentDetailsModel.value.status,
+        exposure: contentDetailsModel.value.exposure,
+        tags: contentDetailsModel.value.tags!,
         intro: introController.text,
-        thumbnail: thumbnailUrl ?? thumbnailName.value,
-        video: videoController.text,
-        cc: ccUrl ?? ccName.value,
-        name: titleController.text,
+        thumbnail: contentDetailsModel.value.thumbnail,
+        video: contentDetailsModel.value.video,
+        cc: contentDetailsModel.value.cc,
       ),
     );
 
-    if (contentEditModel.isSuccess) {
-      // Get.offAllNamed(AppRoutes.contentDetails,
-      //     arguments: {RouteArguments.id: id});
-      showSimpleMessage(Get.context!, "수정 되었습니다");
-    } else {
-      showSimpleMessage(Get.context!, "수정에 실패 하였습니다");
-    }
-
     isLoading.value = false;
+
+    if (contentEditModel.isSuccess) {
+      await showSimpleMessage("수정 되었습니다");
+
+      Get.offAllNamed(AppRoutes.contentDetails,
+          arguments: {RouteArguments.id: id});
+    } else {
+      showSimpleMessage("수정에 실패 하였습니다");
+    }
   }
 
-  void pickFile(String type) async {
-    List<String> extensions;
-    if (type == "cc") {
-      extensions = ['srt'];
-    } else {
-      extensions = ['jpg'];
+  void onChangeStatus(ContentStatus? newValue) {
+    if (Account.isAdminWithMsg) {
+      isLoading.value = true;
+      contentDetailsModel.value.status = newValue?.keywordName;
+      isLoading.value = false;
     }
+  }
 
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: extensions,
-    );
-
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      if (type == "cc") {
-        ccName.value = file.name;
-        ccFile = File([file.bytes!], file.name);
-      } else {
-        thumbnailName.value = file.name;
-        thumbnailFile = File([file.bytes!], file.name);
-      }
-    } else {
-      return;
-    }
+  void onExposureChange(ContentExposure? newValue) {
+    isLoading.value = true;
+    contentDetailsModel.value.exposure = newValue?.keywordName;
+    isLoading.value = false;
   }
 }

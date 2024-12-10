@@ -212,12 +212,12 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(Category.body.displayName,
+                      Text(ContentCategory.body.displayName,
                           style: CustomTextStyles.labelLargeSkyBlue),
                       const SizedBox(
                         height: 16,
                       ),
-                      Text(Category.breath.displayName,
+                      Text(ContentCategory.breath.displayName,
                           style: CustomTextStyles.labelLargeSkyBlue),
                     ],
                   ),

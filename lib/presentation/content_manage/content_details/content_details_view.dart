@@ -148,7 +148,10 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('카테고리', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.contentDetailsModel.category!,
+                  Text(
+                      ContentCategory.fromKeyword(
+                              controller.contentDetailsModel.category!)
+                          .displayName,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -159,7 +162,8 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('타입', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.contentDetailsModel.type!,
+                  Text(
+                      '${ContentType.fromKeyword(controller.contentDetailsModel.type!)?.displayName}',
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -191,7 +195,9 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('수준', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("상", style: CustomTextStyles.bodyMediumBlack),
+                  Text(
+                      '${ContentLevel.fromKeyword(controller.contentDetailsModel.level)?.displayName}',
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
               const SizedBox(width: 70),
@@ -201,7 +207,25 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('타겟 언어', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("영어", style: CustomTextStyles.bodyMediumBlack),
+                  Text(
+                      ContentLanguage.fromKeyword(
+                              controller.contentDetailsModel.targetLanguage!)
+                          .displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('승인 상태', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(
+                      ContentStatus.fromKeyword(
+                              controller.contentDetailsModel.status!)
+                          .displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
               const SizedBox(width: 70),
@@ -211,7 +235,11 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 children: [
                   Text('노출 상태', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text("노출", style: CustomTextStyles.bodyMediumBlack),
+                  Text(
+                      ContentExposure.fromKeyword(
+                              controller.contentDetailsModel.exposure!)
+                          .displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
             ],

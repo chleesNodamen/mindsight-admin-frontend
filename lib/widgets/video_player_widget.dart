@@ -24,7 +24,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
 
-    Logger.log("로드 비디오: ${widget.videoUrl}");
+    Logger.info("로드 비디오: ${widget.videoUrl}");
 
     _controller.initialize().then((_) {
       setState(() {

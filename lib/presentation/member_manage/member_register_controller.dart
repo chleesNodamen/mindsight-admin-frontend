@@ -1,9 +1,11 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/gender.dart';
+import 'package:mindsight_admin_page/constants/enum/gender.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/members_register/members_register_model.dart';
 import 'package:mindsight_admin_page/data/members_register/members_register_repository.dart';
 import 'package:mindsight_admin_page/data/members_register/members_register_req_post.dart';
@@ -46,7 +48,7 @@ class MemberRegisterController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -72,9 +74,9 @@ class MemberRegisterController extends GetxController {
             email: emailController.text));
 
     if (model.isSuccess) {
-      showSimpleMessage(Get.context!, "저장 되었습니다");
+      showSimpleMessage("저장 되었습니다");
     } else {
-      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
+      showSimpleMessage("저장에 실패 하였습니다");
     }
 
     isLoading.value = false;

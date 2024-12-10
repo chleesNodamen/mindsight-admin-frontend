@@ -32,6 +32,32 @@
 
   <title>mindsight admin</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- 트랜스코딩 라이브러리 -->
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" crossorigin="anonymous" async></script>
+
+  <!-- 비디오재생 라이브러리
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    function initializeHls(videoId, videoUrl) {
+      var video = document.getElementById(videoId);
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          video.play();
+        });
+      }
+      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoUrl;
+        video.addEventListener('loadedmetadata', function () {
+          video.play();
+        });
+      }
+    }
+  </script>
+   -->
 </head>
 
 <body>

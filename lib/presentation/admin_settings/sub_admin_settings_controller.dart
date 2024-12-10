@@ -5,8 +5,10 @@ import 'package:mindsight_admin_page/data/admin_delete/admin_delete_req_delete.d
 import 'package:mindsight_admin_page/data/admin_list/admin_list_model.dart';
 import 'package:mindsight_admin_page/data/admin_list/admin_list_repository.dart';
 import 'package:mindsight_admin_page/data/admin_list/admin_list_req_get.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class SubAdminSettingsController extends GetxController {
   RxBool isLoading = true.obs;
@@ -28,7 +30,7 @@ class SubAdminSettingsController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -74,9 +76,9 @@ class SubAdminSettingsController extends GetxController {
     selectedIds.clear();
 
     if (adminDeleteModel.isSuccess) {
-      showSimpleMessage(Get.context!, "삭제 되었습니다");
+      showSimpleMessage("삭제 되었습니다");
     } else {
-      showSimpleMessage(Get.context!, "삭제에 실패 하였습니다");
+      showSimpleMessage("삭제에 실패 하였습니다");
     }
 
     await loadPage(activePage.value);

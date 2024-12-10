@@ -1,8 +1,10 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/members_data/members_data_model.dart';
-import 'package:mindsight_admin_page/data/members_data/members_data_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/members_detail/members_detail_model.dart';
+import 'package:mindsight_admin_page/data/members_detail/members_detail_repository.dart';
 
 class MemberDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -11,7 +13,7 @@ class MemberDetailsController extends GetxController {
   RxBool isInited = false.obs;
   RxString lastName = "".obs;
 
-  late MembersDataModel membersDataModel;
+  late MembersDetailModel membersDataModel;
 
   @override
   Future<void> onInit() async {
@@ -23,11 +25,11 @@ class MemberDetailsController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    membersDataModel = await MembersDataRepository().get(id);
+    membersDataModel = await MembersDetailRepository().get(id);
     lastName.value = membersDataModel.lastName ?? dash;
     isLoading.value = false;
     isInited.value = true;

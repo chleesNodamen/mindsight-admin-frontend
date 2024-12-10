@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/gender.dart';
+import 'package:mindsight_admin_page/constants/enum/gender.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_register_controller.dart';
 
 class MemberRegisterView extends GetWidget<MemberRegisterController> {

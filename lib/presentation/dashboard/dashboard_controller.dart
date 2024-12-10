@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_model.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_repository.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_req_get.dart';
@@ -9,6 +9,8 @@ import 'package:mindsight_admin_page/data/dashboard_practice/dashboard_practice_
 import 'package:mindsight_admin_page/data/dashboard_practice/dashboard_practice_req_get.dart';
 import 'package:mindsight_admin_page/data/dashboard_registered/dashboard_registered_model.dart';
 import 'package:mindsight_admin_page/data/dashboard_registered/dashboard_registered_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class DashboardController extends GetxController {
   late DashboardChallengeModel challengeModel;
@@ -27,7 +29,7 @@ class DashboardController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 

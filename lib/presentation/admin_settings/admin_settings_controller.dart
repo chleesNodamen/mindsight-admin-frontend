@@ -4,8 +4,10 @@ import 'package:mindsight_admin_page/data/admin_mydata/admin_mydata_repository.d
 import 'package:mindsight_admin_page/data/admin_password/admin_password_model.dart';
 import 'package:mindsight_admin_page/data/admin_password/admin_password_repository.dart';
 import 'package:mindsight_admin_page/data/admin_password/admin_password_req_put.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 enum PasswordValidEnum { waiting, valid, invalid }
 
@@ -40,7 +42,7 @@ class AdminSettingsController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -68,9 +70,9 @@ class AdminSettingsController extends GetxController {
     isLoading.value = false;
 
     if (adminPasswordModel.isSuccess) {
-      showSimpleMessage(Get.context!, "성공적으로 저장 되었습니다");
+      showSimpleMessage("성공적으로 저장 되었습니다");
     } else {
-      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
+      showSimpleMessage("저장에 실패 하였습니다");
     }
   }
 }

@@ -1,21 +1,22 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/goal.dart';
-import 'package:mindsight_admin_page/constants/sort_condition.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/challenges/challenges_model.dart';
-import 'package:mindsight_admin_page/data/challenges/challenges_repository.dart';
-import 'package:mindsight_admin_page/data/challenges/challenges_req_get.dart';
-import 'package:mindsight_admin_page/data/challenges_status/challenges_status_model.dart';
+import 'package:mindsight_admin_page/constants/enum/goal.dart';
+import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
+import 'package:mindsight_admin_page/data/challenges_exposure/challenges_exposure_repository.dart';
+import 'package:mindsight_admin_page/data/challenges_exposure/challenges_exposure_req_put.dart';
+import 'package:mindsight_admin_page/data/challenges_list/challenges_list_model.dart';
+import 'package:mindsight_admin_page/data/challenges_list/challenges_list_repository.dart';
+import 'package:mindsight_admin_page/data/challenges_list/challenges_list_req_get.dart';
 import 'package:mindsight_admin_page/data/challenges_status/challenges_status_repository.dart';
 import 'package:mindsight_admin_page/data/challenges_status/challenges_status_req_put.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class ChallengeManageController extends GetxController {
   RxBool isInited = false.obs;
   RxBool isLoading = true.obs;
 
-  late ChallengesModel challengesModel;
-  late ChallengesStatusModel challengesStatusModel;
+  late ChallengesListModel challengesModel;
 
   RxMap<String, bool> selectedIds = <String, bool>{}.obs;
 
@@ -32,7 +33,7 @@ class ChallengeManageController extends GetxController {
 
   RxList<bool> goalValues = List<bool>.filled(5, true).obs;
 
-  List<String> periodLabels = ["7일", "14일", "21일", "30일"];
+  List<String> periodLabels = ["7", "14", "21", "30"];
   RxList<bool> periodValues = List<bool>.filled(4, true).obs;
 
   RxList<bool> statusValues = List<bool>.filled(2, true).obs;
@@ -52,7 +53,7 @@ class ChallengeManageController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -106,14 +107,7 @@ class ChallengeManageController extends GetxController {
 
     List<int> days = [
       for (int i = 0; i < periodLabels.length; i++)
-        if (periodValues[i])
-          periodLabels[i] == "7일"
-              ? 7
-              : periodLabels[i] == "14일"
-                  ? 14
-                  : periodLabels[i] == "21일"
-                      ? 21
-                      : 30
+        if (periodValues[i]) int.parse(periodLabels[i])
     ];
     if (periodValues.every((element) => element == true)) {
       days = [];
@@ -122,8 +116,8 @@ class ChallengeManageController extends GetxController {
       days = [0];
     }
 
-    challengesModel = await ChallengesRepository().get(
-      ChallengesReqGet(
+    challengesModel = await ChallengesListRepository().get(
+      ChallengesListReqGet(
         page: pageNum,
         goal: goal,
         days: days,
@@ -138,18 +132,37 @@ class ChallengeManageController extends GetxController {
   }
 
   Future<void> onStatusChange(int index) async {
+    if (!Account.isAdminWithMsg) {
+      return;
+    }
+
     isLoading.value = true;
 
-    challengesStatusModel = await ChallengesStatusRepository().put(
+    BaseModel model = await ChallengesStatusRepository().put(
         ChallengesStatusReqPut(
             challengeIds: [challengesModel.id![index]],
             status: !challengesModel.status![index]));
 
     isLoading.value = false;
 
-    if (challengesStatusModel.isSuccess) {
+    if (model.isSuccess) {
       challengesModel.status![index] = !challengesModel.status![index];
     }
+  }
+
+  Future<void> onExposureChange(int index) async {
+    isLoading.value = true;
+
+    BaseModel model = await ChallengesExposureRepository().put(
+        ChallengesExposureReqPut(
+            challengeIds: [challengesModel.id![index]],
+            exposure: !challengesModel.exposure![index]));
+
+    if (model.isSuccess) {
+      challengesModel.exposure![index] = !challengesModel.exposure![index];
+    }
+
+    isLoading.value = false;
   }
 
   Future<void> onSearch(String? search) async {
@@ -159,7 +172,7 @@ class ChallengeManageController extends GetxController {
     await loadPage(1);
   }
 
-  void goToEdit(int index) {
+  void onDetail(int index) {
     Get.offAllNamed(AppRoutes.challengeDetails, arguments: {
       RouteArguments.id: Uri.encodeComponent(challengesModel.id![index])
     });

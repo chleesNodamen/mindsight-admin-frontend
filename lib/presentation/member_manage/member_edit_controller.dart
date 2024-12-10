@@ -1,11 +1,13 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/gender.dart';
+import 'package:mindsight_admin_page/constants/enum/gender.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
-import 'package:mindsight_admin_page/data/members_data/members_data_model.dart';
-import 'package:mindsight_admin_page/data/members_data/members_data_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/members_detail/members_detail_model.dart';
+import 'package:mindsight_admin_page/data/members_detail/members_detail_repository.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_repository.dart';
 import 'package:mindsight_admin_page/data/members_edit/members_edit_req_put.dart';
@@ -21,7 +23,7 @@ class MemberEditController extends GetxController {
     "UN Women",
   ];
   RxString affiliation = "".obs;
-  Rx<Gender?> gender = Rx<Gender?>(Gender.unknown);
+  Rx<Gender?> gender = Rx<Gender?>(null);
 
   final TextEditingController yearController = TextEditingController();
   final TextEditingController positionController = TextEditingController();
@@ -29,7 +31,7 @@ class MemberEditController extends GetxController {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
 
-  late MembersDataModel membersDataModel;
+  late MembersDetailModel membersDataModel;
   late MembersEditModel membersEditModel;
   late AffiliationModel affiliationModel;
 
@@ -43,11 +45,11 @@ class MemberEditController extends GetxController {
     isLoading.value = true;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    membersDataModel = await MembersDataRepository().get(id);
+    membersDataModel = await MembersDetailRepository().get(id);
     affiliation.value = membersDataModel.affiliation ?? "";
     gender.value = Gender.fromKeyword(membersDataModel.gender);
     firstNameController.text = membersDataModel.firstName ?? "";
@@ -78,9 +80,9 @@ class MemberEditController extends GetxController {
         ));
 
     if (membersEditModel.isSuccess) {
-      showSimpleMessage(Get.context!, "저장 되었습니다");
+      showSimpleMessage("저장 되었습니다");
     } else {
-      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
+      showSimpleMessage("저장에 실패 하였습니다");
     }
 
     isLoading.value = false;

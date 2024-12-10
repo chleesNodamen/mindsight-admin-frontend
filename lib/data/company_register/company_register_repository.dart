@@ -8,7 +8,7 @@ import 'package:mindsight_admin_page/data/company_register/company_register_req_
 class CompanyRegisterRepository extends BaseRepository {
   Future<BaseModel> post(CompanyRegisterReqPost dto) async {
     // req
-    String endpoint = "companies";
+    String endpoint = "company";
     Response response =
         await httpClient.postRequest(endpoint, body: dto.toJson());
 

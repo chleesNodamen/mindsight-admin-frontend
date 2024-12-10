@@ -66,60 +66,59 @@ class CompanyListModel extends BaseModel {
 
   factory CompanyListModel.fromJson(Map<String, dynamic> json) =>
       CompanyListModel(
-        id: json["companies"] == null
+        id: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["id"].toString())),
-        companyName: json["companies"] == null
+                json["company"]!.map((x) => x["id"].toString())),
+        companyName: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["companyName"] ?? "-")),
-        representative: json["companies"] == null
+                json["company"]!.map((x) => x["companyName"] ?? "-")),
+        representative: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["representative"] ?? "-")),
-        businessNumber: json["companies"] == null
+                json["company"]!.map((x) => x["representative"] ?? "-")),
+        businessNumber: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["businessNumber"] ?? "-")),
-        phone: json["companies"] == null
+                json["company"]!.map((x) => x["businessNumber"] ?? "-")),
+        phone: json["company"] == null
+            ? []
+            : List<String>.from(json["company"]!.map((x) => x["phone"] ?? "-")),
+        contactName: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["phone"] ?? "-")),
-        contactName: json["companies"] == null
+                json["company"]!.map((x) => x["contactName"] ?? "-")),
+        contactEmail: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["contactName"] ?? "-")),
-        contactEmail: json["companies"] == null
+                json["company"]!.map((x) => x["contactEmail"] ?? "-")),
+        contactPhone: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["contactEmail"] ?? "-")),
-        contactPhone: json["companies"] == null
+                json["company"]!.map((x) => x["contactPhone"] ?? "-")),
+        address: json["company"] == null
             ? []
             : List<String>.from(
-                json["companies"]!.map((x) => x["contactPhone"] ?? "-")),
-        address: json["companies"] == null
+                json["company"]!.map((x) => x["address"] ?? "-")),
+        verified: json["company"] == null
             ? []
-            : List<String>.from(
-                json["companies"]!.map((x) => x["address"] ?? "-")),
-        verified: json["companies"] == null
-            ? []
-            : List<bool>.from(json["companies"]!.map((x) => x["verified"])),
-        createdAt: json["companies"] == null
+            : List<bool>.from(json["company"]!.map((x) => x["verified"])),
+        createdAt: json["company"] == null
             ? []
             : List<DateTime>.from(
-                json["companies"]!.map((x) => DateTime.parse(x["createdAt"])),
+                json["company"]!.map((x) => DateTime.parse(x["createdAt"])),
               ),
-        updatedAt: json["companies"] == null
+        updatedAt: json["company"] == null
             ? []
             : List<DateTime>.from(
-                json["companies"]!.map((x) => DateTime.parse(x["updatedAt"])),
+                json["company"]!.map((x) => DateTime.parse(x["updatedAt"])),
               ),
         total: json["total"],
       );
 
   Map<String, dynamic> toJson() => {
-        "companies": id == null
+        "company": id == null
             ? []
             : List<dynamic>.from(id!.asMap().entries.map((entry) {
                 int idx = entry.key;

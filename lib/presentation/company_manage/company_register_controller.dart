@@ -1,9 +1,11 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/company_register/company_register_repository.dart';
 import 'package:mindsight_admin_page/data/company_register/company_register_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class CompanyRegisterController extends GetxController {
   RxBool isLoading = true.obs;
@@ -40,7 +42,7 @@ class CompanyRegisterController extends GetxController {
 
   Future<void> initData() async {
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -61,9 +63,9 @@ class CompanyRegisterController extends GetxController {
             address: addressController.text));
 
     if (model.isSuccess) {
-      showSimpleMessage(Get.context!, "저장 되었습니다");
+      showSimpleMessage("저장 되었습니다");
     } else {
-      showSimpleMessage(Get.context!, "저장에 실패 하였습니다");
+      showSimpleMessage("저장에 실패 하였습니다");
     }
   }
 }

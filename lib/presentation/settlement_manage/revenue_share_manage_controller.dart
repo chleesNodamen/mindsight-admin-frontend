@@ -1,12 +1,14 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_change/master_profit_rate_change_model.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_change/master_profit_rate_change_repository.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_change/master_profit_rate_change_req_patch.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_list/master_profit_rate_list_model.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_list/master_profit_rate_list_repository.dart';
 import 'package:mindsight_admin_page/data/master_profit_rate_list/master_profit_rate_list_req_get.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_model.dart';
 import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_repository.dart';
 import 'package:mindsight_admin_page/data/settlement_summary/settlement_summary_req_get.dart';
@@ -44,7 +46,7 @@ class RevenueShareManageController extends GetxController {
     activePage = 1.obs;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 

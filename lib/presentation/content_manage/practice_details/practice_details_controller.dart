@@ -1,9 +1,10 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/practice_details/practice_details_model.dart';
 import 'package:mindsight_admin_page/data/practice_details/practice_details_repository.dart';
-import 'package:mindsight_admin_page/presentation/content_manage/practice_edit/practice_edit_controller.dart';
 
 class PracticeDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -22,7 +23,7 @@ class PracticeDetailsController extends GetxController {
     isInited.value = false;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 

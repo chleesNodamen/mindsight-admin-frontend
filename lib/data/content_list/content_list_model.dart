@@ -7,6 +7,7 @@ class ContentListModel extends BaseModel {
   List<int>? seen;
   List<int>? liked;
   List<bool>? status;
+  List<bool>? exposure;
   int? total;
 
   ContentListModel({
@@ -16,27 +17,9 @@ class ContentListModel extends BaseModel {
     this.seen,
     this.liked,
     this.status,
+    this.exposure,
     this.total,
   });
-
-  ContentListModel copyWith({
-    List<String>? id,
-    List<String>? type,
-    List<String>? name,
-    List<int>? seen,
-    List<int>? liked,
-    List<bool>? status,
-    int? total,
-  }) =>
-      ContentListModel(
-        id: id ?? this.id,
-        type: type ?? this.type,
-        name: name ?? this.name,
-        seen: seen ?? this.seen,
-        liked: liked ?? this.liked,
-        status: status ?? this.status,
-        total: total ?? this.total,
-      );
 
   factory ContentListModel.fromJson(Map<String, dynamic> json) =>
       ContentListModel(
@@ -59,17 +42,9 @@ class ContentListModel extends BaseModel {
         status: json["status"] == null
             ? []
             : List<bool>.from(json["status"]!.map((x) => x)),
+        exposure: json["exposure"] == null
+            ? []
+            : List<bool>.from(json["exposure"]!.map((x) => x)),
         total: json["total"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? [] : List<dynamic>.from(id!.map((x) => x)),
-        "type": type == null ? [] : List<dynamic>.from(type!.map((x) => x)),
-        "name": name == null ? [] : List<dynamic>.from(name!.map((x) => x)),
-        "seen": seen == null ? [] : List<dynamic>.from(seen!.map((x) => x)),
-        "liked": liked == null ? [] : List<dynamic>.from(liked!.map((x) => x)),
-        "status":
-            status == null ? [] : List<dynamic>.from(status!.map((x) => x)),
-        "total": total,
-      };
 }

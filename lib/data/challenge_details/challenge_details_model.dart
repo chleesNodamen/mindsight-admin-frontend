@@ -1,5 +1,29 @@
 import 'package:mindsight_admin_page/data/base_model.dart';
-import 'package:mindsight_admin_page/data/challenge_details/challenge_detail_days.dart';
+
+class ChallengeDetailDay {
+  String? id;
+  int? day;
+  String? name;
+  List<String>? contentNames;
+
+  ChallengeDetailDay({
+    required this.id,
+    required this.day,
+    required this.name,
+    required this.contentNames,
+  });
+
+  factory ChallengeDetailDay.fromJson(Map<String, dynamic> json) {
+    return ChallengeDetailDay(
+      id: json['id'] as String,
+      day: json['day'] as int,
+      name: json['name'] as String,
+      contentNames: json['contentNames'] != null
+          ? List<String>.from(json['contentNames'])
+          : [],
+    );
+  }
+}
 
 class ChallengeDetailsModel extends BaseModel {
   String? id;
@@ -7,12 +31,15 @@ class ChallengeDetailsModel extends BaseModel {
   String? goal;
   int? duration;
   String? intro;
-  List<ChallengeDetailDays>? days;
+  List<ChallengeDetailDay>? days;
   String? thumbnail;
+  String? masterNickname;
   int? participants;
   int? challengers;
   int? completed;
   double? rating;
+  bool? status;
+  bool? exposure;
 
   ChallengeDetailsModel({
     this.id,
@@ -22,38 +49,14 @@ class ChallengeDetailsModel extends BaseModel {
     this.intro,
     this.days,
     this.thumbnail,
+    this.masterNickname,
     this.participants,
     this.challengers,
     this.completed,
+    this.status,
+    this.exposure,
     this.rating,
   });
-
-  ChallengeDetailsModel copyWith({
-    String? id,
-    String? name,
-    String? goal,
-    int? duration,
-    String? intro,
-    List<ChallengeDetailDays>? days,
-    String? thumbnail,
-    int? participants,
-    int? challengers,
-    int? completed,
-    double? rating,
-  }) =>
-      ChallengeDetailsModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        goal: goal ?? this.goal,
-        duration: duration ?? this.duration,
-        intro: intro ?? this.intro,
-        days: days ?? this.days,
-        thumbnail: thumbnail ?? this.thumbnail,
-        participants: participants ?? this.participants,
-        challengers: challengers ?? this.challengers,
-        completed: completed ?? this.completed,
-        rating: rating ?? this.rating,
-      );
 
   factory ChallengeDetailsModel.fromJson(Map<String, dynamic> json) =>
       ChallengeDetailsModel(
@@ -64,26 +67,15 @@ class ChallengeDetailsModel extends BaseModel {
         intro: json["intro"],
         days: json["days"] == null
             ? []
-            : List<ChallengeDetailDays>.from(
-                json["days"]!.map((x) => ChallengeDetailDays.fromJson(x))),
+            : List<ChallengeDetailDay>.from(
+                json["days"]!.map((x) => ChallengeDetailDay.fromJson(x))),
         thumbnail: json["thumbnail"],
+        masterNickname: json["masterNickname"],
         participants: json["participants"],
         challengers: json["challengers"],
         completed: json["completed"],
         rating: json["rating"],
+        status: json["status"],
+        exposure: json["exposure"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "goal": goal,
-        "duration": duration,
-        "intro": intro,
-        "days": days == null ? [] : List<dynamic>.from(days!.map((x) => x)),
-        "thumbnail": thumbnail,
-        "participants": participants,
-        "challengers": challengers,
-        "completed": completed,
-        "rating": rating,
-      };
 }

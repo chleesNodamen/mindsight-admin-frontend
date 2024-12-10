@@ -20,14 +20,14 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "로그인",
+                  "마스터 로그인",
                   style: CustomTextStyles.headlineLargeBlack,
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 CustomText(
-                  text: "Mindsight 관리자페이지",
+                  text: "Mindsight 마스터페이지",
                   color: appTheme.grayScale6,
                 ),
                 const SizedBox(

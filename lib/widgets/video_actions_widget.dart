@@ -8,6 +8,9 @@ class VideoActionsWidget extends StatelessWidget {
 
   // 비디오 보기 함수
   void _openVideoPlayer(BuildContext context) {
+    showSimpleMessage("서비스 준비 중 입니다");
+    return;
+
     if (videoUrl.isNotEmpty) {
       showDialog(
         context: context,
@@ -36,7 +39,7 @@ class VideoActionsWidget extends StatelessWidget {
         },
       );
     } else {
-      showSimpleMessage(Get.context!, "비디오 URL이 유효하지 않습니다");
+      showSimpleMessage("비디오 URL이 유효하지 않습니다");
     }
   }
 

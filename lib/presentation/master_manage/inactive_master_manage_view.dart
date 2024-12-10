@@ -30,8 +30,8 @@ class InactiveMasterManageView
                                 children: [
                                   _buildTitle(),
                                   const SizedBox(height: 32),
-                                  _buildCheckBox(),
-                                  const SizedBox(height: 16),
+                                  // _buildCheckBox(),
+                                  // const SizedBox(height: 16),
                                   _buildPage(),
                                 ],
                               ),
@@ -55,46 +55,8 @@ class InactiveMasterManageView
       viewCount: false,
       searchText: "이메일 주소, 이름 검색",
       memberShow: true,
-      memberCount: controller.membersModel.total,
+      memberCount: controller.masterListModel.total,
       onSearch: controller.onSearch,
-    );
-  }
-
-  Widget _buildCheckBox() {
-    return Container(
-      decoration: BoxDecoration(
-        color: appTheme.white,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      height: 122,
-      width: double.infinity,
-      padding: const EdgeInsets.all(32.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text('소속', style: CustomTextStyles.labelMediumGray),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Wrap(
-                runSpacing: 18,
-                children:
-                    List.generate(controller.membershipValues.length, (index) {
-                  return CustomCheckboxWidget(
-                    isChecked: controller.membershipValues[index],
-                    label: controller.membershipLabels[index],
-                    onChanged: (value) =>
-                        controller.onCheckMembership(index, value),
-                  );
-                }),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 
@@ -136,50 +98,53 @@ class InactiveMasterManageView
                       label:
                           Text('상태', style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows: List.generate(controller.membersModel.length, (index) {
+                rows: List.generate(controller.masterListModel.length, (index) {
                   return DataRow(
-                      selected: controller.selectedMembers[index],
+                      selected: controller.selectedMaster[index],
                       onSelectChanged: (bool? value) {
-                        controller.updateValue(index);
+                        controller.onMasterSelectChanged(index);
                       },
                       cells: [
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller.membersModel.affiliation![index],
-                              style: controller.memberState![index]
+                              controller.masterListModel.companyName![index],
+                              style: controller.masterListModel.verified![index]
                                   ? CustomTextStyles.bodyLargeBlack
                                   : CustomTextStyles.bodyLargeGray),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: InkWell(
-                            child: Text(controller.membersModel.email![index],
-                                style: controller.memberState![index]
+                            child: Text(
+                                controller.masterListModel.email![index],
+                                style: controller
+                                        .masterListModel.verified![index]
                                     ? CustomTextStyles.bodyLargeBlack.copyWith(
                                         decoration: TextDecoration.underline)
                                     : CustomTextStyles.bodyLargeGray.copyWith(
                                         decoration: TextDecoration.underline,
                                         decorationColor: appTheme.grayScale5)),
                             onTap: () {
-                              controller.onMemberTap(
-                                  controller.membersModel.id![index]);
+                              controller.onMasterTap(
+                                  controller.masterListModel.id![index]);
                             },
                           ),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(controller.membersModel.username![index],
-                              style: controller.memberState![index]
+                          child: Text(
+                              controller.masterListModel.nickname![index],
+                              style: controller.masterListModel.verified![index]
                                   ? CustomTextStyles.bodyLargeBlack
                                   : CustomTextStyles.bodyLargeGray),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller.membersModel.createdAt != null
-                                  ? DateFormat('yyyy-MM-dd').format(
-                                      controller.membersModel.createdAt![index])
+                              controller.masterListModel.createdAt != null
+                                  ? DateFormat('yyyy-MM-dd').format(controller
+                                      .masterListModel.createdAt![index])
                                   : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
@@ -195,30 +160,27 @@ class InactiveMasterManageView
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value:
-                                  controller.memberState![index] ? '활성' : '비활성',
+                            child: DropdownButton<ContentStatus>(
+                              value: ContentStatus.fromKeyword(
+                                  controller.masterListModel.verified![index]),
                               underline: Container(),
                               padding: const EdgeInsets.only(left: 6),
                               borderRadius: BorderRadiusStyle.roundedBorder12,
                               elevation: 16,
                               style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.memberState![index] =
-                                      !controller.memberState![index];
-                                  controller.onStatusChange(index);
-                                }
+                              onChanged: (ContentStatus? newValue) {
+                                controller.onVerifiedChanged(index);
                               },
-                              items: <String>[
-                                '활성',
-                                '비활성'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
+                              items: <ContentStatus>[
+                                ContentStatus.approve,
+                                ContentStatus.disapprove
+                              ].map<DropdownMenuItem<ContentStatus>>(
+                                  (ContentStatus value) {
+                                return DropdownMenuItem<ContentStatus>(
                                   value: value,
                                   child: Text(
-                                    value,
-                                    style: value == "활성"
+                                    value.displayName,
+                                    style: value == ContentStatus.approve
                                         ? CustomTextStyles.labelLargeGreen
                                         : CustomTextStyles.labelLargeRed,
                                   ),
@@ -241,14 +203,14 @@ class InactiveMasterManageView
                   Row(
                     children: [
                       CustomElevatedButton(
-                        text: '활성',
+                        text: '승인',
                         buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                         // margin: const EdgeInsets.symmetric(
                         //     vertical: 11, horizontal: 24),
                         width: 90,
                         height: 44,
-                        onPressed: controller.onButtonPressed,
+                        onPressed: controller.onVerfiedButtonPressed,
                       ),
                       // CustomElevatedButton(
                       //   text: '비활성',
@@ -261,7 +223,7 @@ class InactiveMasterManageView
                     ],
                   ),
                   Pages(
-                      pages: (controller.membersModel.total! / 20).ceil(),
+                      pages: (controller.masterListModel.total! / 20).ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
                         controller.loadPage(pageNum);

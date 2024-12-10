@@ -1,4 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/account_constant.dart';
+import 'package:mindsight_admin_page/constants/enum/account_role.dart';
 
 AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
     AppBar(
@@ -23,7 +25,11 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
         children: [
           Visibility(
             visible: !ResponsiveWidget.isSmallScreen(context),
-            child: Text('Admin', style: CustomTextStyles.labelLargeWhite),
+            child: Text(
+                Account.isAdmin
+                    ? AccountRole.admin.displayName
+                    : AccountRole.master.displayName,
+                style: CustomTextStyles.labelLargeWhite),
           ),
           Expanded(child: Container()),
           IconButton(

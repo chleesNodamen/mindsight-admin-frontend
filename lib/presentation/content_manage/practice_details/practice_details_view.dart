@@ -153,12 +153,12 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(Category.body.displayName,
+                  Text(ContentCategory.body.displayName,
                       style: CustomTextStyles.bodyMediumSkyBlue),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(Category.breath.displayName,
+                  Text(ContentCategory.breath.displayName,
                       style: CustomTextStyles.bodyMediumSkyBlue),
                 ],
               ),
@@ -178,7 +178,54 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                 ],
               )
             ],
-          )
+          ),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
+          Row(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('마스터', style: CustomTextStyles.labelLargeGray),
+                  const SizedBox(height: 16),
+                  Text(controller.practiceDetailsModel.masterNickname!,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('승인 상태', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(
+                      ContentStatus.fromKeyword(
+                              controller.practiceDetailsModel.status!)
+                          .displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('노출 상태', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(
+                      ContentExposure.fromKeyword(
+                              controller.practiceDetailsModel.exposure!)
+                          .displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

@@ -1,8 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/content_exposure.dart';
-import 'package:mindsight_admin_page/constants/content_language.dart';
-import 'package:mindsight_admin_page/constants/content_level.dart';
-import 'package:mindsight_admin_page/constants/content_type.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_register/content_register_controller.dart';
 
 class ContentRegisterView extends GetWidget<ContentRegisterController> {
@@ -85,7 +81,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           height: 44,
           margin: const EdgeInsets.only(right: 16),
           onPressed: () {
-            showSimpleMessage(Get.context!,
+            showSimpleMessage(
                 "승인 요청 되었습니다. 최대 2영업일이 소요 됩니다.\n승인이 완료 되면 메일과 푸쉬메세지로 알림 드리겠습니다.");
           },
         ),
@@ -107,28 +103,28 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       children: [
         Text('기본 정보', style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        _buildInputTitle(),
+        _buildName(),
         const SizedBox(height: 24),
-        _buildInputCategoryNType(),
+        _buildCategoryNType(),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInputLevel(),
+            _buildLevel(),
             const SizedBox(width: 24),
-            _buildInputTargetLanguage(),
+            _buildTargetLanguage(),
           ],
         ),
         const SizedBox(height: 24),
-        _buildInputExposured(),
+        _buildExposured(),
         const SizedBox(height: 24),
-        _buildInputTags(),
+        _buildTags(),
         const SizedBox(height: 24),
-        _buildInputIntro(),
+        _buildIntro(),
       ],
     );
   }
 
-  Widget _buildInputExposured() {
+  Widget _buildExposured() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -152,21 +148,24 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             color: appTheme.white,
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
-          child: DropdownButton<ContentExposured>(
+          child: DropdownButton<ContentExposure>(
             hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: null,
+            value: controller.selectedExposure.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
             borderRadius: BorderRadiusStyle.roundedBorder12,
             // icon: const Icon(Icons.),
             elevation: 16,
-            onChanged: (ContentExposured? newValue) {},
-            items: controller.contentExposured
-                .map<DropdownMenuItem<ContentExposured>>(
-                    (ContentExposured value) {
-              return DropdownMenuItem<ContentExposured>(
+            onChanged: (ContentExposure? newValue) {
+              controller.selectedExposure.value = newValue;
+            },
+            items: [
+              ContentExposure.exposed,
+              ContentExposure.nonExposed,
+            ].map<DropdownMenuItem<ContentExposure>>((ContentExposure value) {
+              return DropdownMenuItem<ContentExposure>(
                 value: value,
                 child: Text(
                   value.displayName,
@@ -180,7 +179,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _buildInputLevel() {
+  Widget _buildLevel() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -207,9 +206,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           child: DropdownButton<ContentLevel>(
             hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            // value: controller.selectedMaster.value == ""
-            //     ? null
-            //     : controller.selectedMaster.value,
+            value: controller.selectedLevel.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -217,12 +214,14 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             // icon: const Icon(Icons.),
             elevation: 16,
             onChanged: (ContentLevel? newValue) {
-              // if (newValue != null) {
-              //   controller.selectedMaster.value = newValue;
-              // }
+              controller.selectedLevel.value = newValue;
             },
-            items: controller.contentLevel
-                .map<DropdownMenuItem<ContentLevel>>((ContentLevel value) {
+            items: [
+              ContentLevel.all,
+              ContentLevel.upper,
+              ContentLevel.middle,
+              ContentLevel.lower,
+            ].map<DropdownMenuItem<ContentLevel>>((ContentLevel value) {
               return DropdownMenuItem<ContentLevel>(
                 value: value,
                 child: Text(
@@ -237,7 +236,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _buildInputTargetLanguage() {
+  Widget _buildTargetLanguage() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -264,9 +263,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           child: DropdownButton<ContentLanguage>(
             hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            // value: controller.selectedMaster.value == ""
-            //     ? null
-            //     : controller.selectedMaster.value,
+            value: controller.selectedTargetLanguage.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -274,9 +271,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             // icon: const Icon(Icons.),
             elevation: 16,
             onChanged: (ContentLanguage? newValue) {
-              // if (newValue != null) {
-              //   controller.selectedMaster.value = newValue;
-              // }
+              controller.selectedTargetLanguage.value = newValue;
             },
             items: controller.contentLanguage
                 .map<DropdownMenuItem<ContentLanguage>>(
@@ -324,57 +319,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _buildInputMaster() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text('마스터', style: CustomTextStyles.labelLargeBlack),
-        const SizedBox(height: 8),
-        Container(
-          width: 353,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: appTheme.grayScale3,
-            ),
-            color: appTheme.white,
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-          ),
-          child: DropdownButton<String>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
-            isExpanded: true,
-            value: controller.selectedMaster.value == ""
-                ? null
-                : controller.selectedMaster.value,
-            underline: Container(),
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-            // icon: const Icon(Icons.),
-            elevation: 16,
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                controller.selectedMaster.value = newValue;
-              }
-            },
-            items: controller.masterModel.name!
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  style: CustomTextStyles.bodyMediumBlack,
-                ),
-              );
-            }).toList(),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _buildInputTitle() {
+  Widget _buildName() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,7 +334,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            controller: controller.titleController,
+            controller: controller.nameController,
             width: 353,
             hintText: "Input text",
             hintStyle: CustomTextStyles.bodyMediumGray,
@@ -406,7 +351,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Row _buildInputCategoryNType() {
+  Row _buildCategoryNType() {
     return Row(
       children: [
         Column(
@@ -427,16 +372,12 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
-                  color: controller.enableCategoryError.value
-                      ? appTheme.alertNegative
-                      : appTheme.grayScale3,
+                  color: appTheme.grayScale3,
                 ),
-                color: controller.enableCategoryError.value
-                    ? appTheme.alertNegative.withOpacity(0.1)
-                    : appTheme.white,
+                color: appTheme.white,
                 borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
-              child: DropdownButton<Category>(
+              child: DropdownButton<ContentCategory>(
                 hint: Text(
                   'Select Option',
                   style: CustomTextStyles.bodyMediumGray,
@@ -452,14 +393,17 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 ),
                 borderRadius: BorderRadiusStyle.roundedBorder12,
                 elevation: 16,
-                onChanged: (Category? newValue) {
-                  if (newValue != null) {
-                    controller.selectCategory(newValue);
-                  }
+                onChanged: (ContentCategory? newValue) {
+                  controller.selectCategory(newValue);
                 },
-                items: controller.categories
-                    .map<DropdownMenuItem<Category>>((Category value) {
-                  return DropdownMenuItem<Category>(
+                items: [
+                  ContentCategory.body,
+                  ContentCategory.breath,
+                  ContentCategory.mindfulness,
+                  ContentCategory.theory,
+                ].map<DropdownMenuItem<ContentCategory>>(
+                    (ContentCategory value) {
+                  return DropdownMenuItem<ContentCategory>(
                     value: value,
                     child: Text(
                       value.displayName,
@@ -469,15 +413,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 }).toList(),
               ),
             ),
-            controller.enableCategoryError.value
-                ? Column(
-                    children: [
-                      const SizedBox(height: 8),
-                      Text('필수 입력 항목입니다.',
-                          style: CustomTextStyles.labelMediumRed),
-                    ],
-                  )
-                : const SizedBox.shrink(),
           ],
         ),
         const SizedBox(width: 24),
@@ -499,21 +434,17 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
-                  color: controller.enableTypeError.value
-                      ? appTheme.alertNegative
-                      : appTheme.grayScale3,
+                  color: appTheme.grayScale3,
                 ),
-                color: controller.enableTypeError.value
-                    ? appTheme.alertNegative.withOpacity(0.1)
-                    : appTheme.white,
+                color: appTheme.white,
                 borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
               child: DropdownButton<ContentType>(
-                  enableFeedback: controller.categorySelected.value,
+                  // enableFeedback: controller.categorySelected.value,
                   hint: Text('Select Option',
                       style: CustomTextStyles.bodyMediumGray),
                   isExpanded: true,
-                  // value: controller.selectedType.value,
+                  value: controller.selectedType.value,
                   underline: Container(),
                   padding: const EdgeInsets.only(
                       left: 16, right: 16, top: 2, bottom: 2),
@@ -521,50 +452,26 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   // icon: const Icon(Icons.),
                   elevation: 16,
                   onChanged: (ContentType? newValue) {
-                    if (newValue != null) {
-                      controller.selectedType.value = newValue;
-                      controller.enableTypeError.value = false;
-                    }
+                    controller.selectedType.value = newValue;
                   },
-                  items: controller.categorySelected.value
-                      ? controller.types[controller.selectedCategory.value]!
-                          .map<DropdownMenuItem<ContentType>>(
-                              (ContentType value) {
-                          return DropdownMenuItem<ContentType>(
-                            value: value,
-                            child: Text(
-                              value.displayName,
-                              style: CustomTextStyles.bodyMediumBlack,
-                            ),
-                          );
-                        }).toList()
-                      : <ContentType>[].map<DropdownMenuItem<ContentType>>(
-                          (ContentType value) {
-                          return DropdownMenuItem<ContentType>(
-                            value: value,
-                            child: Text(
-                              value.displayName,
-                              style: CustomTextStyles.bodyMediumBlack,
-                            ),
-                          );
-                        }).toList()),
+                  items: controller.categoryContentType
+                      .map<DropdownMenuItem<ContentType>>((ContentType value) {
+                    return DropdownMenuItem<ContentType>(
+                      value: value,
+                      child: Text(
+                        value.displayName,
+                        style: CustomTextStyles.bodyMediumBlack,
+                      ),
+                    );
+                  }).toList()),
             ),
-            controller.enableTypeError.value
-                ? Column(
-                    children: [
-                      const SizedBox(height: 8),
-                      Text('필수 입력 항목입니다.',
-                          style: CustomTextStyles.labelMediumRed),
-                    ],
-                  )
-                : const SizedBox.shrink(),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildInputTags() {
+  Widget _buildTags() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -660,7 +567,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _buildInputIntro() {
+  Widget _buildIntro() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -708,13 +615,31 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildVideoOrSoundFile(),
+            PickFile(
+              labelText: "미디어 파일",
+              hintText: controller.mediaFile?.name ?? "최대 2기가 (.mp4)",
+              fileExtension: FileExtension.mp4.keywordName,
+              onFilePicked: (pickedFile) {
+                controller.onPickMedia(pickedFile);
+              },
+            ),
             const SizedBox(width: 24),
-            _buildThumnailFile(),
+            PickFile(
+              labelText: "썸네일 파일",
+              hintText:
+                  controller.thumbnailFile?.name ?? "300 x 300 최대 10메가 (.jpg)",
+              fileExtension: FileExtension.jpg.keywordName,
+              onFilePicked: (pickedFile) {
+                controller.onPickThumbnail(pickedFile);
+              },
+            ),
           ],
         ),
         const SizedBox(height: 24),
         _buildDubbing(),
+        const SizedBox(height: 24),
+        Text(controller.transcodingUploader.ffmpegStatus.value,
+            style: CustomTextStyles.bodyMediumBlack),
       ],
     );
   }
@@ -733,13 +658,8 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           width: 353,
           decoration: BoxDecoration(
               borderRadius: BorderRadiusStyle.roundedBorder12,
-              border: Border.all(
-                  color: controller.enableThumbnailError.value
-                      ? appTheme.alertNegative
-                      : appTheme.grayScale3),
-              color: controller.enableThumbnailError.value
-                  ? appTheme.alertNegative.withOpacity(0.1)
-                  : appTheme.white),
+              border: Border.all(color: appTheme.grayScale3),
+              color: appTheme.white),
           padding: const EdgeInsets.all(16),
           child: Wrap(
             runSpacing: 18,
@@ -751,14 +671,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             }),
           ),
         ),
-        controller.enableThumbnailError.value
-            ? Column(
-                children: [
-                  const SizedBox(height: 8),
-                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
-                ],
-              )
-            : const SizedBox.shrink(),
       ],
     );
   }
@@ -778,13 +690,8 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           width: 353,
           decoration: BoxDecoration(
               borderRadius: BorderRadiusStyle.roundedBorder12,
-              border: Border.all(
-                  color: controller.enableThumbnailError.value
-                      ? appTheme.alertNegative
-                      : appTheme.grayScale3),
-              color: controller.enableThumbnailError.value
-                  ? appTheme.alertNegative.withOpacity(0.1)
-                  : appTheme.white),
+              border: Border.all(color: appTheme.grayScale3),
+              color: appTheme.white),
           padding: const EdgeInsets.all(16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -804,20 +711,12 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               CustomImageView(
                 imagePath: IconConstant.upload,
                 onTap: () {
-                  controller.pickFile("thumbnail");
+                  // controller.pickFile("thumbnail");
                 },
               )
             ],
           ),
         ),
-        controller.enableThumbnailError.value
-            ? Column(
-                children: [
-                  const SizedBox(height: 8),
-                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
-                ],
-              )
-            : const SizedBox.shrink(),
       ],
     );
   }
@@ -882,13 +781,8 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           width: 353,
           decoration: BoxDecoration(
               borderRadius: BorderRadiusStyle.roundedBorder12,
-              border: Border.all(
-                  color: controller.enableThumbnailError.value
-                      ? appTheme.alertNegative
-                      : appTheme.grayScale3),
-              color: controller.enableThumbnailError.value
-                  ? appTheme.alertNegative.withOpacity(0.1)
-                  : appTheme.white),
+              border: Border.all(color: appTheme.grayScale3),
+              color: appTheme.white),
           padding: const EdgeInsets.all(16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -908,20 +802,12 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               CustomImageView(
                 imagePath: IconConstant.upload,
                 onTap: () {
-                  controller.pickFile("thumbnail");
+                  // controller.pickFile("thumbnail");
                 },
               )
             ],
           ),
         ),
-        controller.enableThumbnailError.value
-            ? Column(
-                children: [
-                  const SizedBox(height: 8),
-                  Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
-                ],
-              )
-            : const SizedBox.shrink(),
       ],
     );
   }

@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/sort_condition.dart';
+import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 
 class ContentManageView extends GetWidget<ContentManageController> {
@@ -114,15 +114,15 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   DataColumn(
                       label: Text('좋아요 수',
                           style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label:
-                          Text('미리보기', style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label:
-                          Text('노출', style: CustomTextStyles.labelLargeGray)),
+                  // DataColumn(
+                  //     label:
+                  //         Text('미리보기', style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label:
                           Text('상태', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('노출', style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.contentListModel.value.length,
                     (index) {
@@ -136,7 +136,10 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              controller.contentListModel.value.type![index],
+                              ContentType.fromKeyword(controller
+                                          .contentListModel.value.type![index])
+                                      ?.displayName ??
+                                  "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(
@@ -168,55 +171,11 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                   .toString(),
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text('재생',
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value: controller
-                                      .contentListModel.value.status![index]
-                                  ? '노출'
-                                  : '비노출',
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.onStatusChange(index);
-                                }
-                              },
-                              items: <String>[
-                                '노출',
-                                '비노출'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: value == "노출"
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        )),
+                        // DataCell(Padding(
+                        //   padding: const EdgeInsets.symmetric(vertical: 24.0),
+                        //   child: Text('재생',
+                        //       style: CustomTextStyles.bodyLargeBlack),
+                        // )),
                         DataCell(DecoratedBox(
                           decoration: BoxDecoration(
                             color: appTheme.white,
@@ -261,6 +220,50 @@ class ContentManageView extends GetWidget<ContentManageController> {
                             ),
                           ),
                         )),
+                        DataCell(DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: appTheme.white,
+                            borderRadius: BorderRadiusStyle.roundedBorder8,
+                            border: Border.all(
+                              width: 1,
+                              color: appTheme.grayScale2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 6, right: 0, top: 0, bottom: 0),
+                            child: DropdownButton<String>(
+                              value: controller
+                                      .contentListModel.value.exposure![index]
+                                  ? '노출'
+                                  : '비노출',
+                              underline: Container(),
+                              padding: const EdgeInsets.only(left: 6),
+                              borderRadius: BorderRadiusStyle.roundedBorder12,
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  controller.onExposureChange(index);
+                                }
+                              },
+                              items: <String>[
+                                '노출',
+                                '비노출'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: value == "노출"
+                                        ? CustomTextStyles.labelLargeGreen
+                                        : CustomTextStyles.labelLargeRed,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        )),
                       ]);
                 }).toList(),
               ),
@@ -280,7 +283,16 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       margin: const EdgeInsets.only(right: 16),
                       width: 107,
                       height: 44,
-                      onPressed: controller.onStatusChangeForAll,
+                      onPressed: () => controller.onStatusChangeForAll(),
+                    ),
+                    CustomElevatedButton(
+                      text: '노출 변경',
+                      buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                      buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                      margin: const EdgeInsets.only(right: 16),
+                      width: 107,
+                      height: 44,
+                      onPressed: () => controller.onExposureChangeForAll(false),
                     ),
                   ],
                 ),
@@ -426,12 +438,12 @@ class ContentManageView extends GetWidget<ContentManageController> {
             children: [
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[0],
-                label: '정상',
+                label: '승인',
                 onChanged: (value) => controller.toggleServiceValues(0, value),
               ),
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[1],
-                label: '서비스 안함',
+                label: '비승인',
                 onChanged: (value) => controller.toggleServiceValues(1, value),
               ),
             ],
@@ -454,7 +466,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
       child: Padding(
         padding: const EdgeInsets.only(left: 6, right: 0, top: 0, bottom: 0),
         child: DropdownButton<SortCondition>(
-          value: controller.selectedOrder.value,
+          value: controller.selectedSort.value,
           underline: Container(),
           padding: const EdgeInsets.only(left: 6),
           borderRadius: BorderRadiusStyle.roundedBorder12,

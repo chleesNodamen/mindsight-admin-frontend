@@ -1,1 +1,0 @@
-enum ActivityType { practice, challenge }

@@ -8,7 +8,10 @@ class PracticeDetailsModel extends BaseModel {
   int? finished;
   int? participated;
   String? ratio;
+  String? masterNickname;
   int? liked;
+  bool? status;
+  bool? exposure;
 
   PracticeDetailsModel(
       {this.id,
@@ -18,27 +21,10 @@ class PracticeDetailsModel extends BaseModel {
       this.finished,
       this.participated,
       this.ratio,
+      this.masterNickname,
+      this.status,
+      this.exposure,
       this.liked});
-
-  PracticeDetailsModel copyWith(
-          {String? id,
-          int? level,
-          String? body,
-          String? breath,
-          int? finished,
-          int? participated,
-          String? ratio,
-          int? liked}) =>
-      PracticeDetailsModel(
-        id: id ?? this.id,
-        level: level ?? this.level,
-        body: body ?? this.body,
-        breath: breath ?? this.breath,
-        finished: finished ?? this.finished,
-        participated: participated ?? this.participated,
-        ratio: ratio ?? this.ratio,
-        liked: liked ?? this.liked,
-      );
 
   factory PracticeDetailsModel.fromJson(Map<String, dynamic> json) =>
       PracticeDetailsModel(
@@ -49,17 +35,9 @@ class PracticeDetailsModel extends BaseModel {
         finished: json["finished"],
         participated: json["participated"],
         ratio: json["ratio"],
+        masterNickname: json["masterNickname"],
         liked: json["liked"],
+        status: json["status"],
+        exposure: json["exposure"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "level": level,
-        "body": body,
-        "breath": breath,
-        "finished": finished,
-        "participated": participated,
-        "ratio": ratio,
-        "liked": liked,
-      };
 }

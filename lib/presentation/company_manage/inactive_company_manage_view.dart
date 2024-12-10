@@ -98,8 +98,8 @@ class InactiveCompanyManageView
                       label:
                           Text("상태", style: CustomTextStyles.labelLargeGray)),
                 ],
-                rows:
-                    List.generate(controller.companyListModel.total!, (index) {
+                rows: List.generate(controller.companyListModel.id!.length,
+                    (index) {
                   return DataRow(
                       selected: controller.selectedCompany[index],
                       onSelectChanged: (bool? value) {
@@ -108,23 +108,23 @@ class InactiveCompanyManageView
                       cells: [
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(
-                              controller.companyListModel.companyName![index],
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: InkWell(
-                            child: Text(
-                                controller
-                                    .companyListModel.representative![index],
-                                style: CustomTextStyles.bodyLargeBlack.copyWith(
-                                    decoration: TextDecoration.underline)),
                             onTap: () {
                               controller.onCompanyTap(
                                   controller.companyListModel.id![index]);
                             },
+                            child: Text(
+                                controller.companyListModel.companyName![index],
+                                style: CustomTextStyles.bodyLargeBlack.copyWith(
+                                    decoration: TextDecoration.underline)),
                           ),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
+                              controller
+                                  .companyListModel.representative![index],
+                              style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
@@ -165,8 +165,6 @@ class InactiveCompanyManageView
                               style: const TextStyle(color: Colors.deepPurple),
                               onChanged: (String? newValue) {
                                 if (newValue != null) {
-                                  controller.companyVerified![index] =
-                                      !controller.companyVerified![index];
                                   controller.onVerifiedChange(index);
                                 }
                               },

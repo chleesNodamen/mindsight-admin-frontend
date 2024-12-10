@@ -1,7 +1,5 @@
-import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/company_manage/company_details_controller.dart';
-import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
 class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
   const CompanyDetailsView({super.key});
@@ -114,7 +112,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.companyName!,
+                  Text(controller.companyDetailModel.companyName!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -129,7 +127,32 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.representative!,
+                  Text(controller.companyDetailModel.representative!,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('만든 마스터', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(controller.companyDetailModel.createMasterNickname!,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('승인 상태', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(
+                      ContentStatus.fromKeyword(
+                              controller.companyDetailModel.verified!)
+                          .displayName,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -150,7 +173,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.businessNumber!,
+                  Text(controller.companyDetailModel.businessNumber!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -165,7 +188,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.phone!,
+                  Text(controller.companyDetailModel.phone!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -186,7 +209,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.contactName!,
+                  Text(controller.companyDetailModel.contactName!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -201,7 +224,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.contactEmail!,
+                  Text(controller.companyDetailModel.contactEmail!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -216,7 +239,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.contactPhone!,
+                  Text(controller.companyDetailModel.contactPhone!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -240,7 +263,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(controller.companyDataModel.address!,
+                  Text(controller.companyDetailModel.address!,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),

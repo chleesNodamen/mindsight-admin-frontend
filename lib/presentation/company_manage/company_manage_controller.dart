@@ -1,12 +1,12 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/company_list/company_list_model.dart';
 import 'package:mindsight_admin_page/data/company_list/company_list_repository.dart';
 import 'package:mindsight_admin_page/data/company_list/company_list_req_get.dart';
 import 'package:mindsight_admin_page/data/company_verified/company_verified_repository.dart';
 import 'package:mindsight_admin_page/data/company_verified/company_verified_req_put.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class CompanyManageController extends GetxController {
   RxBool isLoading = true.obs;
@@ -35,7 +35,7 @@ class CompanyManageController extends GetxController {
     activePage = 1.obs;
 
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -79,6 +79,10 @@ class CompanyManageController extends GetxController {
   }
 
   Future<void> onVerifiedChange(int index) async {
+    if (!Account.isAdminWithMsg) {
+      return;
+    }
+
     isLoading.value = true;
 
     Logger.info(companyVerified![index]);
@@ -96,6 +100,10 @@ class CompanyManageController extends GetxController {
   }
 
   Future<void> onVerifiedButton() async {
+    if (!Account.isAdminWithMsg) {
+      return;
+    }
+
     isLoading.value = true;
 
     List<String> ids = [

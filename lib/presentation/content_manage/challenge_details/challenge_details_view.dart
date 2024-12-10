@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/enum/goal.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
 import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
@@ -150,14 +151,57 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
             ],
           ),
           const SizedBox(height: 24),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Text('제목', style: CustomTextStyles.labelMediumGray),
-              const SizedBox(height: 16),
-              Text(controller.challengeDetailsModel.name!,
-                  style: CustomTextStyles.bodyMediumBlack),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('제목', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(controller.challengeDetailsModel.name!,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('마스터', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text("${controller.challengeDetailsModel.masterNickname}",
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('승인 상태', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(
+                      ContentStatus.fromKeyword(
+                              controller.challengeDetailsModel.status!)
+                          .displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
+              const SizedBox(width: 70),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('노출 상태', style: CustomTextStyles.labelMediumGray),
+                  const SizedBox(height: 16),
+                  Text(
+                      ContentExposure.fromKeyword(
+                              controller.challengeDetailsModel.exposure!)
+                          .displayName,
+                      style: CustomTextStyles.bodyMediumBlack),
+                ],
+              ),
             ],
           ),
           Divider(
@@ -175,7 +219,9 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 children: [
                   Text('목적', style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.challengeDetailsModel.goal!,
+                  Text(
+                      Goal.fromKeyword(controller.challengeDetailsModel.goal!)
+                          .displayName,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -336,8 +382,9 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
         Text('콘텐츠', style: CustomTextStyles.labelMediumGray),
         const SizedBox(height: 16),
         Column(
-          children: selectedDayDetails.contents?.map((content) {
-                int index = selectedDayDetails.contents!.indexOf(content) + 1;
+          children: selectedDayDetails.contentNames!.map((content) {
+                int index =
+                    selectedDayDetails.contentNames!.indexOf(content) + 1;
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(

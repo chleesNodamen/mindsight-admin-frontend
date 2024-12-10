@@ -1,4 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/account_constant.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_controller.dart';
 import 'package:intl/intl.dart';
 
@@ -28,71 +29,9 @@ class DashboardView extends GetWidget<DashboardController> {
                       Expanded(
                         child: ListView(
                           children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("대시보드",
-                                      style:
-                                          CustomTextStyles.headlineLargeBlack),
-                                  const SizedBox(
-                                    height: 32,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 1,
-                                          child:
-                                              _buildYesterdayLoggedInMembersNumber()),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                          flex: 1,
-                                          child: _buildLast7DaysEventNumber()),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                          flex: 1,
-                                          child:
-                                              _buildLast7DaysReturningMembersNumber()),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 1, child: _buildMembersGraph()),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                          flex: 2,
-                                          child:
-                                              _buildPracticePlanCompletionRate()),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 1,
-                                          child: _buildPopularChallenge()),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 80,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            Account.isAdmin
+                                ? _buildAdminDashboard()
+                                : _buildMasterDashboard(),
                           ],
                         ),
                       ),
@@ -101,6 +40,71 @@ class DashboardView extends GetWidget<DashboardController> {
                 )
               : const SizedBox.shrink(),
         ),
+      ),
+    );
+  }
+
+  Container _buildMasterDashboard() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text("마스터 대시보드", style: CustomTextStyles.headlineLargeBlack),
+        ],
+      ),
+    );
+  }
+
+  Container _buildAdminDashboard() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text("대시보드", style: CustomTextStyles.headlineLargeBlack),
+          const SizedBox(
+            height: 32,
+          ),
+          Row(
+            children: [
+              Expanded(flex: 1, child: _buildYesterdayLoggedInMembersNumber()),
+              const SizedBox(
+                width: 16,
+              ),
+              Expanded(flex: 1, child: _buildLast7DaysEventNumber()),
+              const SizedBox(
+                width: 16,
+              ),
+              Expanded(flex: 1, child: _buildLast7DaysReturningMembersNumber()),
+            ],
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Row(
+            children: [
+              Expanded(flex: 1, child: _buildMembersGraph()),
+              const SizedBox(
+                width: 16,
+              ),
+              Expanded(flex: 2, child: _buildPracticePlanCompletionRate()),
+            ],
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Row(
+            children: [
+              Expanded(flex: 1, child: _buildPopularChallenge()),
+            ],
+          ),
+          const SizedBox(
+            height: 80,
+          ),
+        ],
       ),
     );
   }

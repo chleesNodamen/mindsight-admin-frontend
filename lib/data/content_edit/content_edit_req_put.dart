@@ -1,73 +1,44 @@
 class ContentEditReqPut {
   String? category;
   String? type;
-  String? master;
   List<String>? tags;
   String? intro;
   String? thumbnail;
   String? video;
   String? cc;
   String? name;
+  String? level;
+  String? targetLanguage;
+  bool? status;
+  bool? exposure;
 
   ContentEditReqPut({
     this.category,
     this.type,
-    this.master,
     this.tags,
     this.intro,
     this.thumbnail,
     this.video,
     this.cc,
     this.name,
+    this.level,
+    this.targetLanguage,
+    this.status,
+    this.exposure,
   });
-
-  ContentEditReqPut copyWith(
-          {String? category,
-          String? type,
-          String? master,
-          List<String>? tags,
-          String? intro,
-          String? thumbnail,
-          String? video,
-          String? cc,
-          String? name,
-          int? durationTime}) =>
-      ContentEditReqPut(
-        category: category ?? this.category,
-        type: type ?? this.type,
-        master: master ?? this.master,
-        tags: tags ?? this.tags,
-        intro: intro ?? this.intro,
-        thumbnail: thumbnail ?? this.thumbnail,
-        video: video ?? this.video,
-        cc: cc ?? this.cc,
-        name: name ?? this.name,
-      );
-
-  factory ContentEditReqPut.fromJson(Map<String, dynamic> json) =>
-      ContentEditReqPut(
-        category: json["category"],
-        type: json["type"],
-        master: json["master"],
-        tags: json["tags"] == null
-            ? []
-            : List<String>.from(json["tags"].map((x) => x)),
-        intro: json["intro"],
-        thumbnail: json["thumbnail"],
-        video: json["video"],
-        cc: json["cc"],
-        name: json["name"],
-      );
 
   Map<String, dynamic> toJson() => {
         "category": category,
         "type": type,
-        "master": master,
         "tags": tags ?? [],
         "intro": intro,
         "thumbnail": thumbnail,
         "video": video,
         "cc": cc,
         "name": name,
+        "level": level,
+        "targetLanguage": targetLanguage,
+        "status": status,
+        "exposure": exposure,
       };
 }

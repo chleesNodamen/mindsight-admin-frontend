@@ -1,10 +1,13 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/auth/auth_model.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_model.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_model.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class AuthenticationController extends GetxController {
-  late AuthModel authModel;
+  late MasterSigninModel masterSigninModel;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -21,8 +24,10 @@ class AuthenticationController extends GetxController {
     super.onInit();
     emailController.addListener(_updateTextStatus);
     isInited.value = true;
-    emailController.text = "admin@mindsight.com";
-    passwordController.text = "1234";
+    // emailController.text = "admin@mindsight.com";
+    // passwordController.text = "1234";
+    emailController.text = AppConstant.defaultEmail;
+    passwordController.text = AppConstant.defaultPassword;
   }
 
   @override
@@ -39,8 +44,8 @@ class AuthenticationController extends GetxController {
   String? emailValidator(String? value) {
     if (value == null ||
         !isValidEmail(value, isRequired: true) ||
-        authModel.compareErrorCode(ApiErrorCode.credentialsInvalid) ||
-        authModel.compareErrorCode(ApiErrorCode.emailNotVerified)) {
+        masterSigninModel.compareErrorCode(ApiErrorCode.credentialsInvalid) ||
+        masterSigninModel.compareErrorCode(ApiErrorCode.emailNotVerified)) {
       return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요. ".tr;
     }
 
@@ -50,7 +55,7 @@ class AuthenticationController extends GetxController {
   String? passwordValidator(String? value) {
     if (value == null ||
         !isValidPassword(value, isRequired: true) ||
-        authModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
+        masterSigninModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
       return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요.".tr;
     }
     return null;
@@ -59,16 +64,16 @@ class AuthenticationController extends GetxController {
   Future<bool> onContinue() async {
     isLoading.value = true;
 
-    authModel = await AuthRepository().post(AuthReqPost(
+    masterSigninModel = await MasterSigninRepository().post(MasterSigninReqPost(
         email: emailController.text, password: passwordController.text));
 
     isLoading.value = false;
 
-    if (authModel.isSuccess) {
+    if (masterSigninModel.isSuccess) {
       Get.offAllNamed(AppRoutes.dashboard);
-      PrefUtils.to.setIsLogined(true);
+      // PrefUtils.to.setIsLogined(true);
     } else {
-      showSimpleMessage(Get.context!, "로그인에 실패 하였습니다");
+      showSimpleMessage("로그인에 실패 하였습니다");
     }
 
     return true;

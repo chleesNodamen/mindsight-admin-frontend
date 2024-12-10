@@ -1,18 +1,17 @@
 import 'package:http/http.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
-import 'package:mindsight_admin_page/data/challenges_status/challenges_status_model.dart';
 import 'package:mindsight_admin_page/data/challenges_status/challenges_status_req_put.dart';
 
 class ChallengesStatusRepository extends BaseRepository {
-  Future<ChallengesStatusModel> put(ChallengesStatusReqPut dto) async {
+  Future<BaseModel> put(ChallengesStatusReqPut dto) async {
     // req
-    String endpoint = "contents/challenges/status";
+    String endpoint = "contents/challenge-status";
     Response response =
         await httpClient.putRequest(endpoint, body: dto.toJson());
 
     // result
-    ChallengesStatusModel model = fetchJsonData<ChallengesStatusModel>(
-        response, ChallengesStatusModel.fromJson);
+    BaseModel model = fetchJsonData<BaseModel>(response, BaseModel.fromJson);
 
     return model;
   }

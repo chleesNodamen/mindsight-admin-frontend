@@ -1,23 +1,26 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/content_type.dart';
-import 'package:mindsight_admin_page/constants/sort_condition.dart';
-import 'package:mindsight_admin_page/data/auth/auth_repository.dart';
-import 'package:mindsight_admin_page/data/auth/auth_req_post.dart';
+import 'package:mindsight_admin_page/constants/enum/content_type.dart';
+import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_model.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_repository.dart';
+import 'package:mindsight_admin_page/data/content_exposure/content_exposure_repository.dart';
+import 'package:mindsight_admin_page/data/content_exposure/content_exposure_req_put.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_model.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_repository.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart';
-import 'package:mindsight_admin_page/data/content_status/content_status_model.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_repository.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_req_put.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
+import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class ContentManageController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
   Rx<ContentListModel> contentListModel = ContentListModel().obs;
-  late ContentStatusModel contentStatusModel;
   late ContentDeleteModel contentDeleteModel;
 
   RxMap<String, bool> selectedIds = <String, bool>{}.obs;
@@ -56,7 +59,7 @@ class ContentManageController extends GetxController {
   RxList<bool> serviceValues = List<bool>.filled(2, true).obs;
 
   RxInt activePage = 1.obs;
-  Rx<SortCondition?> selectedOrder = SortCondition.registration.obs;
+  Rx<SortCondition?> selectedSort = SortCondition.registration.obs;
 
   @override
   Future<void> onInit() async {
@@ -67,17 +70,8 @@ class ContentManageController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    // searchOn.value = false;
-    // searchValue.value = "";
-    // bodyValues = List<bool>.filled(3, true).obs;
-    // breathingValues = List<bool>.filled(2, true).obs;
-    // otherValues = List<bool>.filled(4, true).obs;
-    // theoryValues = List<bool>.filled(3, true).obs;
-    // serviceValues = List<bool>.filled(2, true).obs;
-    // selectedContent = List.generate(20, (_) => false).obs;
-
     if (AppConstant.test) {
-      await AuthRepository().post(AuthReqPost(
+      await MasterSigninRepository().post(MasterSigninReqPost(
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
@@ -118,7 +112,7 @@ class ContentManageController extends GetxController {
   }
 
   Future<void> updateSelectedOrder(SortCondition newOrder) async {
-    selectedOrder.value = newOrder;
+    selectedSort.value = newOrder;
 
     await loadPage(1);
   }
@@ -128,15 +122,13 @@ class ContentManageController extends GetxController {
 
     isLoading.value = true;
 
-    Logger.info(serviceValues.contains(false) ? serviceValues[0] : null);
-
     contentListModel.value =
         await ContentListRepository().get(ContentListReqGet(
       type: getChosenType(),
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,
       status: (serviceValues.contains(false) ? serviceValues[0] : null),
-      sortBy: selectedOrder.value?.keywordName,
+      sortBy: selectedSort.value?.keywordName,
       pageSize: 20,
     ));
 
@@ -146,14 +138,18 @@ class ContentManageController extends GetxController {
   }
 
   Future<void> onStatusChange(int index) async {
+    if (!Account.isAdminWithMsg) {
+      return;
+    }
+
     isLoading.value = true;
 
-    contentStatusModel = await ContentStatusRepository().put(
-        ContentStatusReqPut(
-            contentIds: [contentListModel.value.id![index]],
-            status: !contentListModel.value.status![index]));
+    BaseModel model = await ContentStatusRepository().put(ContentStatusReqPut(
+      contentIds: [contentListModel.value.id![index]],
+      status: !contentListModel.value.status![index],
+    ));
 
-    if (contentStatusModel.isSuccess) {
+    if (model.isSuccess) {
       contentListModel.value.status![index] =
           !contentListModel.value.status![index];
     }
@@ -161,15 +157,39 @@ class ContentManageController extends GetxController {
     isLoading.value = false;
   }
 
+  Future<void> onExposureChange(int index) async {
+    isLoading.value = true;
+
+    BaseModel model = await ContentExposureRepository().put(
+        ContentExposureReqPut(
+            contentIds: [contentListModel.value.id![index]],
+            exposure: !contentListModel.value.exposure![index]));
+
+    if (model.isSuccess) {
+      contentListModel.value.exposure![index] =
+          !contentListModel.value.exposure![index];
+    }
+
+    isLoading.value = false;
+  }
+
   Future<void> onStatusChangeForAll() async {
+    if (!Account.isAdminWithMsg) {
+      return;
+    }
+
     List<String> contentIds = [
       for (int i = 0; i < selectedContent.length; i++)
         if (selectedContent[i]) contentListModel.value.id![i],
     ];
+
+    isLoading.value = true;
+
     List<bool> contentStatus = [
       for (int i = 0; i < selectedContent.length; i++)
         if (selectedContent[i]) contentListModel.value.status![i],
     ];
+
     List<String> positiveIds = [
       for (int i = 0; i < contentIds.length; i++)
         if (contentStatus[i]) contentIds[i],
@@ -179,18 +199,48 @@ class ContentManageController extends GetxController {
         if (!contentStatus[i]) contentIds[i],
     ];
 
-    isLoading.value = true;
-
-    contentStatusModel = await ContentStatusRepository()
+    await ContentStatusRepository()
         .put(ContentStatusReqPut(contentIds: positiveIds, status: false));
-    contentStatusModel = await ContentStatusRepository()
+
+    await ContentStatusRepository()
         .put(ContentStatusReqPut(contentIds: negativeIds, status: true));
 
     isLoading.value = false;
 
-    if (contentStatusModel.isSuccess) {
-      loadPage(1);
-    }
+    loadPage(activePage.value);
+  }
+
+  Future<void> onExposureChangeForAll(bool isStatusChange) async {
+    List<String> contentIds = [
+      for (int i = 0; i < selectedContent.length; i++)
+        if (selectedContent[i]) contentListModel.value.id![i],
+    ];
+
+    isLoading.value = true;
+
+    List<bool> contentExposure = [
+      for (int i = 0; i < selectedContent.length; i++)
+        if (selectedContent[i]) contentListModel.value.exposure![i],
+    ];
+
+    List<String> positiveIds = [
+      for (int i = 0; i < contentIds.length; i++)
+        if (contentExposure[i]) contentIds[i],
+    ];
+    List<String> negativeIds = [
+      for (int i = 0; i < contentIds.length; i++)
+        if (!contentExposure[i]) contentIds[i],
+    ];
+
+    await ContentExposureRepository()
+        .put(ContentExposureReqPut(contentIds: positiveIds, exposure: false));
+
+    await ContentExposureRepository()
+        .put(ContentExposureReqPut(contentIds: negativeIds, exposure: true));
+
+    isLoading.value = false;
+
+    loadPage(activePage.value);
   }
 
   Future<void> onSearch(String? search) async {
@@ -205,7 +255,7 @@ class ContentManageController extends GetxController {
         breathingValues.every((a) => a == false) &&
         theoryValues.every((a) => a == false) &&
         otherValues.every((a) => a == false)) {
-      return [ContentType.unknown.keywordName];
+      return [];
     }
     return bodyValues.every((a) => a == true) &&
             breathingValues.every((a) => a == true) &&
