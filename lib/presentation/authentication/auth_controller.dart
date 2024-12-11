@@ -1,7 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_model.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
@@ -24,10 +21,11 @@ class AuthenticationController extends GetxController {
     super.onInit();
     emailController.addListener(_updateTextStatus);
     isInited.value = true;
-    // emailController.text = "admin@mindsight.com";
-    // passwordController.text = "1234";
-    emailController.text = AppConstant.defaultEmail;
-    passwordController.text = AppConstant.defaultPassword;
+
+    if (AppConstant.test) {
+      emailController.text = AppConstant.testEmail;
+      passwordController.text = AppConstant.testPassword;
+    }
   }
 
   @override
