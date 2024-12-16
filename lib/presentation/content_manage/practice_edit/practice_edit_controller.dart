@@ -72,7 +72,8 @@ class PracticeEditController extends GetxController {
       Get.offAllNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: id});
     } else {
-      showSimpleMessage("저장에 실패 하였습니다");
+      showSimpleMessage(
+          "저장에 실패 하였습니다. ${practiceEditModel.getErrorMessage().tr}");
     }
   }
 

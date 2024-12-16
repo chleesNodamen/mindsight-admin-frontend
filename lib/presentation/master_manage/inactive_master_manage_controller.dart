@@ -1,6 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/master_list/master_list_model.dart';
 import 'package:mindsight_admin_page/data/master_list/master_list_repository.dart';
@@ -9,7 +7,6 @@ import 'package:mindsight_admin_page/data/master_signin/master_signin_repository
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_verified/master_verified_repository.dart';
 import 'package:mindsight_admin_page/data/master_verified/master_verified_req_put.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
 
 class InactiveMasterManageController extends GetxController {
   RxBool isLoading = true.obs;

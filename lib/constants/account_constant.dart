@@ -8,7 +8,7 @@ class Account {
   static String id = "";
 
   static bool get isAdmin {
-    return role != AccountRole.master;
+    return role == AccountRole.admin;
   }
 
   static bool get isAdminWithMsg {
@@ -37,8 +37,10 @@ class Account {
     email = signInEmail;
     signinTime = DateTime.now().toString();
 
-    if (email == AppConstant.defaultEmail) {
+    if (email == AppConstant.adminEmail) {
       role = AccountRole.admin;
+    } else {
+      role = AccountRole.master;
     }
   }
 }

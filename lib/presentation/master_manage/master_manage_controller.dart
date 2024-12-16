@@ -7,14 +7,13 @@ import 'package:mindsight_admin_page/data/master_signin/master_signin_repository
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_verified/master_verified_repository.dart';
 import 'package:mindsight_admin_page/data/master_verified/master_verified_req_put.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
 
 class MasterManageController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
   late MasterListModel masterListModel;
-  late MembersStatusModel membersStatusModel;
+  // late MembersStatusModel membersStatusModel;
 
   RxInt activePage = 1.obs;
   RxList<bool> membershipValues = List<bool>.filled(3, true).obs;

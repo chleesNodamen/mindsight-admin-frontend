@@ -98,7 +98,7 @@ class ChallengeRegisterController extends GetxController {
       await showSimpleMessage("저장 되었습니다");
       Get.offAllNamed(AppRoutes.contentPracticeManage);
     } else {
-      showSimpleMessage("저장에 실패 하였습니다");
+      showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }
   }
 

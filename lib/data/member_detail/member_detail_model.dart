@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/data/base_model.dart';
 
-class MembersDetailModel extends BaseModel {
+class MemberDetailModel extends BaseModel {
   String? id;
   String? affiliation;
   String? department;
@@ -18,7 +18,7 @@ class MembersDetailModel extends BaseModel {
   int? sessionsCompleted;
   int? minutesMeditated;
 
-  MembersDetailModel({
+  MemberDetailModel({
     this.id,
     this.affiliation,
     this.department,
@@ -37,7 +37,7 @@ class MembersDetailModel extends BaseModel {
     this.minutesMeditated,
   });
 
-  MembersDetailModel copyWith({
+  MemberDetailModel copyWith({
     String? id,
     String? affiliation,
     String? department,
@@ -55,7 +55,7 @@ class MembersDetailModel extends BaseModel {
     int? sessionsCompleted,
     int? minutesMeditated,
   }) =>
-      MembersDetailModel(
+      MemberDetailModel(
         id: id ?? this.id,
         affiliation: affiliation ?? this.affiliation,
         department: department ?? this.department,
@@ -74,8 +74,8 @@ class MembersDetailModel extends BaseModel {
         minutesMeditated: minutesMeditated ?? this.minutesMeditated,
       );
 
-  factory MembersDetailModel.fromJson(Map<String, dynamic> json) =>
-      MembersDetailModel(
+  factory MemberDetailModel.fromJson(Map<String, dynamic> json) =>
+      MemberDetailModel(
         id: json["id"],
         affiliation: json["affiliation"],
         department: json["department"],

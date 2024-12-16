@@ -1,16 +1,16 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
-import 'package:mindsight_admin_page/data/members_list/members_list_model.dart';
-import 'package:mindsight_admin_page/data/members_list/members_list_repository.dart';
-import 'package:mindsight_admin_page/data/members_list/members_list_req_get.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_repository.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_req_put.dart';
+import 'package:mindsight_admin_page/data/member_delete/member_status_repository.dart';
+import 'package:mindsight_admin_page/data/member_delete/member_status_req_put.dart';
+import 'package:mindsight_admin_page/data/member_list/member_list_model.dart';
+import 'package:mindsight_admin_page/data/member_list/member_list_repository.dart';
+import 'package:mindsight_admin_page/data/member_list/member_list_req_get.dart';
+import 'package:mindsight_admin_page/data/member_status/member_status_repository.dart';
+import 'package:mindsight_admin_page/data/member_status/member_status_req_put.dart';
 
 class InactiveMemberManageController extends GetxController {
   static InactiveMemberManageController get to =>
@@ -28,8 +28,7 @@ class InactiveMemberManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  late MembersListModel membersModel;
-  late MembersStatusModel membersStatusModel;
+  late MemberListModel membersModel;
   late AffiliationModel affiliationModel;
 
   RxList<bool> selectedMembers = List.generate(20, (_) => false).obs;
@@ -100,7 +99,7 @@ class InactiveMemberManageController extends GetxController {
 
     selectedMembers = List.generate(20, (_) => false).obs;
 
-    membersModel = await MembersListRepository().get(MembersListReqGet(
+    membersModel = await MemberListRepository().get(MemberListReqGet(
         page: pageNum,
         disabled: true,
         search: searchOn.value == true ? searchValue.value : null,
@@ -124,27 +123,47 @@ class InactiveMemberManageController extends GetxController {
   Future<void> onStatusChange(int index) async {
     isLoading.value = true;
 
-    membersStatusModel = await MembersStatusRepository().put(
-        MembersStatusReqPut(
-            ids: [membersModel.id![index]], status: !memberState![index]));
+    await MemberStatusRepository().put(MemberStatusReqPut(
+        ids: [membersModel.id![index]], status: !memberState![index]));
 
     await loadPage(1);
 
     isLoading.value = false;
   }
 
-  Future<void> onButtonPressed() async {
+  Future<void> onActivePressed() async {
     isLoading.value = true;
 
     List<String> ids = [
       for (int i = 0; i < membersModel.length; i++)
         if (selectedMembers[i]) membersModel.id![i]
     ];
-    membersStatusModel = await MembersStatusRepository()
-        .put(MembersStatusReqPut(ids: ids, status: false));
+    BaseModel model = await MemberStatusRepository()
+        .put(MemberStatusReqPut(ids: ids, status: false));
 
-    if (membersStatusModel.isSuccess) {
+    if (model.isSuccess) {
       await loadPage(1);
+    }
+
+    isLoading.value = false;
+  }
+
+  Future<void> onDeletePressed() async {
+    isLoading.value = true;
+
+    List<String> ids = [
+      for (int i = 0; i < membersModel.length; i++)
+        if (selectedMembers[i]) membersModel.id![i]
+    ];
+    BaseModel model = await MemberDeleteRepository()
+        .put(MemberDeleteReqPut(ids: ids, delete: true));
+
+    if (model.isSuccess) {
+      await loadPage(1);
+
+      showSimpleMessage("삭제 되었습니다");
+    } else {
+      showSimpleMessage("삭제에 실패 하였습니다. ${model.getErrorMessage()}");
     }
 
     isLoading.value = false;

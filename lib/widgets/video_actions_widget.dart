@@ -1,5 +1,71 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'video_player_widget.dart'; // VideoPlayerWidget 경로에 맞게 수정
+import 'package:video_player/video_player.dart';
+
+class VideoDialogContent extends StatefulWidget {
+  final String m3u8Url;
+
+  VideoDialogContent({required this.m3u8Url});
+
+  @override
+  _VideoDialogContentState createState() => _VideoDialogContentState();
+}
+
+class _VideoDialogContentState extends State<VideoDialogContent> {
+  late VideoPlayerController _controller;
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Logger.info("플레이: ${widget.m3u8Url}");
+
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.m3u8Url))
+      ..initialize().then((_) {
+        setState(() {
+          _isInitialized = true;
+          _controller.play();
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.maxFinite,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _isInitialized
+              ? AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                )
+              : Container(
+                  height: 200,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {
+                _controller.pause();
+                Navigator.of(context).pop();
+              },
+              child: const Text('닫기'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class VideoActionsWidget extends StatelessWidget {
   final String videoUrl;
@@ -8,36 +74,42 @@ class VideoActionsWidget extends StatelessWidget {
 
   // 비디오 보기 함수
   void _openVideoPlayer(BuildContext context) {
-    showSimpleMessage("서비스 준비 중 입니다");
-    return;
-
     if (videoUrl.isNotEmpty) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             contentPadding: EdgeInsets.zero,
-            content: SizedBox(
-              width: double.maxFinite,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // 비디오 플레이어
-                  VideoPlayerWidget(videoUrl: videoUrl),
-                  // 닫기 버튼
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('닫기'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            content: VideoDialogContent(m3u8Url: videoUrl),
           );
         },
       );
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return AlertDialog(
+      //       contentPadding: EdgeInsets.zero,
+      //       content: SizedBox(
+      //         width: double.maxFinite,
+      //         child: Column(
+      //           mainAxisSize: MainAxisSize.min,
+      //           children: [
+      //             // 비디오 플레이어
+      //             VideoPlayerWidget(videoUrl: videoUrl),
+      //             // 닫기 버튼
+      //             Align(
+      //               alignment: Alignment.centerRight,
+      //               child: TextButton(
+      //                 onPressed: () => Navigator.of(context).pop(),
+      //                 child: const Text('닫기'),
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     );
+      //   },
+      // );
     } else {
       showSimpleMessage("비디오 URL이 유효하지 않습니다");
     }

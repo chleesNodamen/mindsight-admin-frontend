@@ -6,11 +6,11 @@ import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.d
 import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
-import 'package:mindsight_admin_page/data/members_detail/members_detail_model.dart';
-import 'package:mindsight_admin_page/data/members_detail/members_detail_repository.dart';
-import 'package:mindsight_admin_page/data/members_edit/members_edit_model.dart';
-import 'package:mindsight_admin_page/data/members_edit/members_edit_repository.dart';
-import 'package:mindsight_admin_page/data/members_edit/members_edit_req_put.dart';
+import 'package:mindsight_admin_page/data/member_detail/member_detail_model.dart';
+import 'package:mindsight_admin_page/data/member_detail/member_detail_repository.dart';
+import 'package:mindsight_admin_page/data/member_edit/member_edit_model.dart';
+import 'package:mindsight_admin_page/data/member_edit/member_edit_repository.dart';
+import 'package:mindsight_admin_page/data/member_edit/member_edit_req_put.dart';
 
 class MemberEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -31,8 +31,8 @@ class MemberEditController extends GetxController {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
 
-  late MembersDetailModel membersDataModel;
-  late MembersEditModel membersEditModel;
+  late MemberDetailModel membersDataModel;
+  late MemberEditModel membersEditModel;
   late AffiliationModel affiliationModel;
 
   @override
@@ -49,7 +49,7 @@ class MemberEditController extends GetxController {
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    membersDataModel = await MembersDetailRepository().get(id);
+    membersDataModel = await MemberDetailRepository().get(id);
     affiliation.value = membersDataModel.affiliation ?? "";
     gender.value = Gender.fromKeyword(membersDataModel.gender);
     firstNameController.text = membersDataModel.firstName ?? "";
@@ -67,9 +67,9 @@ class MemberEditController extends GetxController {
 
   Future<void> onSaveChanges() async {
     isLoading.value = true;
-    membersEditModel = await MembersEditRepository().put(
+    membersEditModel = await MemberEditRepository().put(
         id,
-        MembersEditReqPut(
+        MemberEditReqPut(
           affiliation: affiliation.value,
           department: departmentController.text,
           position: positionController.text,
@@ -82,7 +82,8 @@ class MemberEditController extends GetxController {
     if (membersEditModel.isSuccess) {
       showSimpleMessage("저장 되었습니다");
     } else {
-      showSimpleMessage("저장에 실패 하였습니다");
+      showSimpleMessage(
+          "저장에 실패 하였습니다. ${membersEditModel.getErrorMessage().tr}");
     }
 
     isLoading.value = false;

@@ -1,23 +1,23 @@
-class MembersStatusReqPut {
+class MemberStatusReqPut {
   List<String>? ids;
   bool? status;
 
-  MembersStatusReqPut({
+  MemberStatusReqPut({
     this.ids,
     this.status,
   });
 
-  MembersStatusReqPut copyWith({
+  MemberStatusReqPut copyWith({
     List<String>? ids,
     bool? status,
   }) =>
-      MembersStatusReqPut(
+      MemberStatusReqPut(
         ids: ids ?? this.ids,
         status: status ?? this.status,
       );
 
-  factory MembersStatusReqPut.fromJson(Map<String, dynamic> json) =>
-      MembersStatusReqPut(
+  factory MemberStatusReqPut.fromJson(Map<String, dynamic> json) =>
+      MemberStatusReqPut(
         ids: json["ids"] == null
             ? []
             : List<String>.from(json["ids"]!.map((x) => x)),

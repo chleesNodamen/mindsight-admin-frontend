@@ -72,7 +72,8 @@ class AdminSettingsController extends GetxController {
     if (adminPasswordModel.isSuccess) {
       showSimpleMessage("성공적으로 저장 되었습니다");
     } else {
-      showSimpleMessage("저장에 실패 하였습니다");
+      showSimpleMessage(
+          "저장에 실패 하였습니다. ${adminPasswordModel.getErrorMessage().tr}");
     }
   }
 }

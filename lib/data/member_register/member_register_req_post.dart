@@ -1,4 +1,4 @@
-class MembersRegisterReqPost {
+class MemberRegisterReqPost {
   String? affiliation;
   String? department;
   String? position;
@@ -8,7 +8,7 @@ class MembersRegisterReqPost {
   int? yearOfBirth;
   String? email;
 
-  MembersRegisterReqPost({
+  MemberRegisterReqPost({
     this.affiliation,
     this.department,
     this.position,
@@ -19,7 +19,7 @@ class MembersRegisterReqPost {
     this.email,
   });
 
-  MembersRegisterReqPost copyWith({
+  MemberRegisterReqPost copyWith({
     String? affiliation,
     String? department,
     String? position,
@@ -29,7 +29,7 @@ class MembersRegisterReqPost {
     int? yearOfBirth,
     String? email,
   }) =>
-      MembersRegisterReqPost(
+      MemberRegisterReqPost(
         affiliation: affiliation ?? this.affiliation,
         department: department ?? this.department,
         position: position ?? this.position,
@@ -40,8 +40,8 @@ class MembersRegisterReqPost {
         email: gender ?? this.email,
       );
 
-  factory MembersRegisterReqPost.fromJson(Map<String, dynamic> json) =>
-      MembersRegisterReqPost(
+  factory MemberRegisterReqPost.fromJson(Map<String, dynamic> json) =>
+      MemberRegisterReqPost(
         affiliation: json["affiliation"],
         department: json["department"],
         position: json["position"],

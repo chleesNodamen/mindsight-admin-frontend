@@ -1,16 +1,14 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
-import 'package:mindsight_admin_page/data/members_list/members_list_model.dart';
-import 'package:mindsight_admin_page/data/members_list/members_list_repository.dart';
-import 'package:mindsight_admin_page/data/members_list/members_list_req_get.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_model.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_repository.dart';
-import 'package:mindsight_admin_page/data/members_status/members_status_req_put.dart';
+import 'package:mindsight_admin_page/data/member_list/member_list_model.dart';
+import 'package:mindsight_admin_page/data/member_list/member_list_repository.dart';
+import 'package:mindsight_admin_page/data/member_list/member_list_req_get.dart';
+import 'package:mindsight_admin_page/data/member_status/member_status_repository.dart';
+import 'package:mindsight_admin_page/data/member_status/member_status_req_put.dart';
 
 class MemberManageController extends GetxController {
   List<String> membershipLabels = [
@@ -26,8 +24,8 @@ class MemberManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  late MembersListModel membersModel;
-  late MembersStatusModel membersStatusModel;
+  late MemberListModel membersModel;
+  // late MembersStatusModel membersStatusModel;
   late AffiliationModel affiliationModel;
 
   RxList<bool> selectedMembers = List.generate(20, (_) => false).obs;
@@ -100,7 +98,7 @@ class MemberManageController extends GetxController {
 
     selectedMembers = List.generate(20, (_) => false).obs;
 
-    membersModel = await MembersListRepository().get(MembersListReqGet(
+    membersModel = await MemberListRepository().get(MemberListReqGet(
       affiliation: getCheckedAffiliation(),
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,
@@ -124,11 +122,10 @@ class MemberManageController extends GetxController {
   Future<void> onStatusChange(int index) async {
     isLoading.value = true;
 
-    membersStatusModel = await MembersStatusRepository().put(
-        MembersStatusReqPut(
-            ids: [membersModel.id![index]], status: !memberState![index]));
+    BaseModel model = await MemberStatusRepository().put(MemberStatusReqPut(
+        ids: [membersModel.id![index]], status: !memberState![index]));
 
-    if (membersStatusModel.isSuccess) {
+    if (model.isSuccess) {
       await loadPage(activePage.value);
     }
 
@@ -142,10 +139,10 @@ class MemberManageController extends GetxController {
       for (int i = 0; i < membersModel.length; i++)
         if (selectedMembers[i]) membersModel.id![i]
     ];
-    membersStatusModel = await MembersStatusRepository()
-        .put(MembersStatusReqPut(ids: ids, status: true));
+    BaseModel model = await MemberStatusRepository()
+        .put(MemberStatusReqPut(ids: ids, status: true));
 
-    if (membersStatusModel.isSuccess) {
+    if (model.isSuccess) {
       await loadPage(activePage.value);
     }
 

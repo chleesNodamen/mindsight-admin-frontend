@@ -565,7 +565,8 @@ class ContentRegisterController extends GetxController {
 
       Get.offAllNamed(AppRoutes.contentManage);
     } else {
-      showSimpleMessage("저장에 실패 하였습니다");
+      showSimpleMessage(
+          "저장에 실패 하였습니다. ${contentRegisterModel.getErrorMessage().tr}");
     }
   }
 

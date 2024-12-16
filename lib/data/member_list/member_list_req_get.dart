@@ -1,10 +1,10 @@
-class MembersListReqGet {
+class MemberListReqGet {
   int? page;
   List<String>? affiliation;
   String? search;
   bool? disabled;
 
-  MembersListReqGet({
+  MemberListReqGet({
     this.page,
     this.affiliation,
     this.search,

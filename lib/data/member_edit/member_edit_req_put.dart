@@ -1,4 +1,4 @@
-class MembersEditReqPut {
+class MemberEditReqPut {
   String? affiliation;
   String? department;
   String? position;
@@ -7,7 +7,7 @@ class MembersEditReqPut {
   String? gender;
   int? yearOfBirth;
 
-  MembersEditReqPut({
+  MemberEditReqPut({
     this.affiliation,
     this.department,
     this.position,
@@ -17,7 +17,7 @@ class MembersEditReqPut {
     this.yearOfBirth,
   });
 
-  MembersEditReqPut copyWith({
+  MemberEditReqPut copyWith({
     String? affiliation,
     String? department,
     String? position,
@@ -26,7 +26,7 @@ class MembersEditReqPut {
     String? gender,
     int? yearOfBirth,
   }) =>
-      MembersEditReqPut(
+      MemberEditReqPut(
         affiliation: affiliation ?? this.affiliation,
         department: department ?? this.department,
         position: position ?? this.position,
@@ -36,8 +36,8 @@ class MembersEditReqPut {
         yearOfBirth: yearOfBirth ?? this.yearOfBirth,
       );
 
-  factory MembersEditReqPut.fromJson(Map<String, dynamic> json) =>
-      MembersEditReqPut(
+  factory MemberEditReqPut.fromJson(Map<String, dynamic> json) =>
+      MemberEditReqPut(
         affiliation: json["affiliation"],
         department: json["department"],
         position: json["position"],

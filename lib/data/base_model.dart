@@ -3,15 +3,17 @@ import 'package:mindsight_admin_page/app_export.dart';
 class BaseModel {
   bool _isOk = false;
   String _errorCode = "";
-  dynamic data;
+  String _errorMessage = "";
+  // dynamic data;
   int length = 0;
 
   BaseModel();
 
-  void handleStatus({bool? isOk, String? errorCode, dynamic data}) {
+  void handleStatus({bool? isOk, String? errorCode, String? errorMessage}) {
     _isOk = isOk ?? false;
     _errorCode = errorCode ?? "";
-    this.data = data;
+    _errorMessage = errorMessage ?? "";
+    // this.data = data;
 
     // if (AppConstant.showHttpLog) {
     //   Logger.log('Api response isOk: $_isOk');
@@ -39,7 +41,11 @@ class BaseModel {
     return _errorCode;
   }
 
-  bool compareErrorCode(String code) {
+  String getErrorMessage() {
+    return _errorMessage;
+  }
+
+  bool isErrorCode(String code) {
     if (code == _errorCode) {
       return true;
     }

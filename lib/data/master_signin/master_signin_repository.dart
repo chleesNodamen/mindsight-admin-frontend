@@ -1,16 +1,16 @@
-import 'package:http/http.dart';
-import 'package:mindsight_admin_page/constants/account_constant.dart';
+import 'package:http/http.dart' as http;
+import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
-import 'package:mindsight_admin_page/utils/logger.dart';
-import 'package:mindsight_admin_page/utils/pref_utils_nouse.dart';
 
 class MasterSigninRepository extends BaseRepository {
   Future<MasterSigninModel> post(MasterSigninReqPost dto) async {
+    dto.version = AppConstant.version;
+
     // req
     String endpoint = "master/signin";
-    Response response =
+    http.Response response =
         await httpClient.postRequest(endpoint, body: dto.toJson());
 
     // result
@@ -19,11 +19,9 @@ class MasterSigninRepository extends BaseRepository {
 
     if (model.isSuccess) {
       httpClient.setBearerAuthorization(model.accessToken!);
-
-      // PrefUtils.to.setSigninId(dto.email!);
-      // PrefUtils.to.setSigninTime();
-
       Account.signinSuccess(model.id!, dto.email!);
+
+      setSideMenuItemRoutes();
     } else {
       Logger.info("master log in unsuccessful ${model.getErrorCode()}");
     }

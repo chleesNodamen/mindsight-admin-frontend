@@ -102,7 +102,7 @@ class ChallengeEditController extends GetxController {
       Get.offAllNamed(AppRoutes.challengeDetails,
           arguments: {RouteArguments.id: id});
     } else {
-      await showSimpleMessage("저장에 실패 하였습니다.");
+      await showSimpleMessage("저장에 실패 하였습니다.. ${model.getErrorMessage().tr}");
     }
   }
 

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         getPages: AppRoutes.pages,
         defaultTransition: Transition.noTransition,
         debugShowCheckedModeBanner: false,
-        title: 'Dashboard',
+        title: 'Mindsight 관리자',
         theme: theme,
         initialBinding: InitialBindings(),
       );

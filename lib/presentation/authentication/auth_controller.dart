@@ -42,8 +42,8 @@ class AuthenticationController extends GetxController {
   String? emailValidator(String? value) {
     if (value == null ||
         !isValidEmail(value, isRequired: true) ||
-        masterSigninModel.compareErrorCode(ApiErrorCode.credentialsInvalid) ||
-        masterSigninModel.compareErrorCode(ApiErrorCode.emailNotVerified)) {
+        masterSigninModel.isErrorCode(ApiErrorCode.credentialsInvalid) ||
+        masterSigninModel.isErrorCode(ApiErrorCode.emailNotVerified)) {
       return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요. ".tr;
     }
 
@@ -53,7 +53,7 @@ class AuthenticationController extends GetxController {
   String? passwordValidator(String? value) {
     if (value == null ||
         !isValidPassword(value, isRequired: true) ||
-        masterSigninModel.compareErrorCode(ApiErrorCode.credentialsMismatch)) {
+        masterSigninModel.isErrorCode(ApiErrorCode.credentialsMismatch)) {
       return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요.".tr;
     }
     return null;
@@ -68,10 +68,19 @@ class AuthenticationController extends GetxController {
     isLoading.value = false;
 
     if (masterSigninModel.isSuccess) {
-      Get.offAllNamed(AppRoutes.dashboard);
-      // PrefUtils.to.setIsLogined(true);
+      if (Account.isAdmin) {
+        Get.offAllNamed(AppRoutes.dashboard);
+        SideMenuController.to.changeActiveItemTo(dashboardPageDisplayName);
+        SideMenuController.to.changeActiveSubItem("");
+      } else {
+        Get.offAllNamed(AppRoutes.contentManage);
+        SideMenuController.to.changeActiveItemTo(contentManagePageDisplayName);
+        SideMenuController.to
+            .changeActiveSubItem(contentManageContentDisplayName);
+      }
     } else {
-      showSimpleMessage("로그인에 실패 하였습니다");
+      showSimpleMessage(
+          "로그인에 실패 하였습니다. ${masterSigninModel.getErrorMessage().tr}");
     }
 
     return true;

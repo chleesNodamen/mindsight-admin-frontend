@@ -295,23 +295,6 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                       const SizedBox(height: 16),
                       VideoActionsWidget(
                           videoUrl: controller.contentDetailsModel.video!)
-                      // Row(
-                      //   children: [
-                      //     InkWell(
-                      //       child: Text(
-                      //         "미디어 재생",
-                      //         style: CustomTextStyles.bodyMediumSkyBlue
-                      //             .copyWith(
-                      //                 decoration: TextDecoration.underline,
-                      //                 decorationColor: appTheme.skyBlue),
-                      //       ),
-                      //       onTap: () => SwitchNativeWeb.downloadFile(
-                      //           url: controller.contentDetailsModel.video ?? "",
-                      //           fileName: "download.mp4",
-                      //           dataType: "data:video/MPEG-4"),
-                      //     ),
-                      //   ],
-                      // ),
                     ],
                   ),
                   const SizedBox(width: 60),

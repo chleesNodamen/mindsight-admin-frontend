@@ -34,9 +34,11 @@ class BaseRepository {
     }
 
     model.handleStatus(
-        isOk: response.statusCode >= 200 && response.statusCode < 300,
-        errorCode: _handleErrorCode(response),
-        data: response.body);
+      isOk: response.statusCode >= 200 && response.statusCode < 300,
+      errorCode: _getErrorCode(response),
+      errorMessage: _getErrorMessage(response),
+      // data: response.body
+    );
 
     _handleLog(response);
     return model;
@@ -53,9 +55,11 @@ class BaseRepository {
       model = fromJson([]);
     }
     model.handleStatus(
-        isOk: response.statusCode >= 200 && response.statusCode < 300,
-        errorCode: _handleErrorCode(response),
-        data: response.body);
+      isOk: response.statusCode >= 200 && response.statusCode < 300,
+      errorCode: _getErrorCode(response),
+      errorMessage: _getErrorMessage(response),
+      // data: response.body);
+    );
 
     _handleLog(response);
     return model;
@@ -64,12 +68,14 @@ class BaseRepository {
   void _handleLog(http.Response response) {
     httpClient.forTest2 = "Api response body: ${response.body}";
 
-    if (response.statusCode < 200 || response.statusCode >= 300) {
-      _showExceptionDialog(response.statusCode, response.body);
+    if (AppConstant.test) {
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        _showExceptionDialog(response.statusCode, response.body);
+      }
     }
   }
 
-  String _handleErrorCode(http.Response response) {
+  String _getErrorCode(http.Response response) {
     String errorCode = "";
 
     try {
@@ -83,6 +89,22 @@ class BaseRepository {
     }
 
     return errorCode;
+  }
+
+  String _getErrorMessage(http.Response response) {
+    String errorMessage = "";
+
+    try {
+      Map<String, dynamic> body = isValidJson(response.body);
+      if (body["message"] is Map) {
+        var message = body["message"];
+        errorMessage = message["message"] ?? "";
+      }
+    } catch (e) {
+      // Ignore parsing errors
+    }
+
+    return errorMessage;
   }
 
   void _showExceptionDialog(int? statusCode, dynamic message) {

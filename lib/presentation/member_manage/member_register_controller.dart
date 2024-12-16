@@ -2,13 +2,11 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/constants/enum/gender.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
-import 'package:mindsight_admin_page/data/members_register/members_register_model.dart';
-import 'package:mindsight_admin_page/data/members_register/members_register_repository.dart';
-import 'package:mindsight_admin_page/data/members_register/members_register_req_post.dart';
+import 'package:mindsight_admin_page/data/member_register/member_register_repository.dart';
+import 'package:mindsight_admin_page/data/member_register/member_register_req_post.dart';
 
 class MemberRegisterController extends GetxController {
   RxBool isLoading = true.obs;
@@ -62,8 +60,8 @@ class MemberRegisterController extends GetxController {
   Future<void> onSave() async {
     isLoading.value = true;
 
-    MembersRegisterModel model = await MembersRegisterRepository().post(
-        MembersRegisterReqPost(
+    BaseModel model = await MemberRegisterRepository().post(
+        MemberRegisterReqPost(
             affiliation: affiliation.value,
             department: departmentController.text,
             position: positionController.text,
@@ -76,7 +74,7 @@ class MemberRegisterController extends GetxController {
     if (model.isSuccess) {
       showSimpleMessage("저장 되었습니다");
     } else {
-      showSimpleMessage("저장에 실패 하였습니다");
+      showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }
 
     isLoading.value = false;

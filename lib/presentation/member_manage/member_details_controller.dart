@@ -3,8 +3,8 @@ import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.d
 import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
-import 'package:mindsight_admin_page/data/members_detail/members_detail_model.dart';
-import 'package:mindsight_admin_page/data/members_detail/members_detail_repository.dart';
+import 'package:mindsight_admin_page/data/member_detail/member_detail_model.dart';
+import 'package:mindsight_admin_page/data/member_detail/member_detail_repository.dart';
 
 class MemberDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -13,7 +13,7 @@ class MemberDetailsController extends GetxController {
   RxBool isInited = false.obs;
   RxString lastName = "".obs;
 
-  late MembersDetailModel membersDataModel;
+  late MemberDetailModel membersDataModel;
 
   @override
   Future<void> onInit() async {
@@ -29,7 +29,7 @@ class MemberDetailsController extends GetxController {
           email: AppConstant.testEmail, password: AppConstant.testPassword));
     }
 
-    membersDataModel = await MembersDetailRepository().get(id);
+    membersDataModel = await MemberDetailRepository().get(id);
     lastName.value = membersDataModel.lastName ?? dash;
     isLoading.value = false;
     isInited.value = true;
