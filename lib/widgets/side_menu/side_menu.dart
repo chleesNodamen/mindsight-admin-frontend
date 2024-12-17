@@ -30,7 +30,7 @@ const masterManagePageDisplayName = "마스터 관리";
 const masterManagePageSubMenuDisplayName = "마스터 목록";
 
 const inactiveMasterManagePageRoute = "/inactive_master_manage";
-const inactiveMasterManagePageDisplayName = "비승인 마스터 관리";
+const inactiveMasterManagePageDisplayName = "비활성 마스터 관리";
 
 const masterDetailsPageRoute = "/master_details";
 const masterDetailsPageDisplayName = "마스터 상세";
@@ -43,7 +43,7 @@ const companyManagePageDisplayName = "회사 관리";
 const companyManagePageSubMenuDisplayName = "회사 목록";
 
 const inactiveCompanyManagePageRoute = "/inactive_company_manage";
-const inactiveCompanyManagePageDisplayName = "비승인 회사 관리";
+const inactiveCompanyManagePageDisplayName = "비활성 회사 관리";
 
 const contentManagePageDisplayName = "콘텐츠 관리";
 const contentManagePageRoute = "/content_manage";
@@ -260,6 +260,7 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   void _logout() async {
+    Account.signOutSuccess();
     await Get.offAllNamed(AppRoutes.auth);
   }
 }

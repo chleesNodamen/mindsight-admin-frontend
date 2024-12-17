@@ -19,7 +19,7 @@ class MasterSigninRepository extends BaseRepository {
 
     if (model.isSuccess) {
       httpClient.setBearerAuthorization(model.accessToken!);
-      Account.signinSuccess(model.id!, dto.email!);
+      Account.signInSuccess(model.id!, dto.email!);
 
       setSideMenuItemRoutes();
     } else {

@@ -73,10 +73,6 @@ class PracticeManageController extends GetxController {
   }
 
   Future<void> onStatusChange(int index) async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     isLoading.value = true;
 
     BaseModel model = await PracticeStatusRepository().put(PracticeStatusReqPut(

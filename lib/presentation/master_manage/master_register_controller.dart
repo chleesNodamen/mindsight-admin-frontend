@@ -100,9 +100,14 @@ class MasterRegisterController extends GetxController {
     ));
 
     if (model.isSuccess) {
-      showSimpleMessage(
+      await showSimpleMessage(
           "승인 요청 되었습니다. 최대 2영업일이 소요 됩니다.\n승인이 완료 되면 메일과 푸쉬메세지로 알림 드리겠습니다.");
-      Get.offAllNamed(AppRoutes.masterManage);
+
+      if (Account.isLogined) {
+        Get.offAllNamed(AppRoutes.masterManage);
+      } else {
+        Get.offAllNamed(AppRoutes.auth);
+      }
     } else {
       showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }

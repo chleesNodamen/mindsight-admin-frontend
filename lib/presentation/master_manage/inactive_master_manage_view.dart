@@ -50,7 +50,7 @@ class InactiveMasterManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "비승인 마스터 관리",
+      name: "비활성 마스터 관리",
       searchShow: true,
       viewCount: false,
       searchText: "이메일 주소, 이름 검색",
@@ -148,46 +148,12 @@ class InactiveMasterManageView
                                   : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<ContentStatus>(
-                              value: ContentStatus.fromKeyword(
-                                  controller.masterListModel.verified![index]),
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (ContentStatus? newValue) {
-                                controller.onVerifiedChanged(index);
-                              },
-                              items: <ContentStatus>[
-                                ContentStatus.approve,
-                                ContentStatus.disapprove
-                              ].map<DropdownMenuItem<ContentStatus>>(
-                                  (ContentStatus value) {
-                                return DropdownMenuItem<ContentStatus>(
-                                  value: value,
-                                  child: Text(
-                                    value.displayName,
-                                    style: value == ContentStatus.approve
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+                        DataCell(StatusDropdown(
+                          isEnable: Account.isAdmin,
+                          isActive: controller.masterListModel.verified![index],
+                          onChanged: (newState) {
+                            controller.onVerifiedChanged(index);
+                          },
                         )),
                       ]);
                 }).toList(),
@@ -202,15 +168,20 @@ class InactiveMasterManageView
                 children: [
                   Row(
                     children: [
-                      CustomElevatedButton(
-                        text: '승인',
-                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                        // margin: const EdgeInsets.symmetric(
-                        //     vertical: 11, horizontal: 24),
-                        width: 90,
-                        height: 44,
-                        onPressed: controller.onVerfiedButtonPressed,
+                      Visibility(
+                        visible: Account.isAdmin,
+                        child: CustomElevatedButton(
+                          text: '활성',
+                          buttonTextStyle:
+                              CustomTextStyles.bodyMediumSkyBlueBold,
+                          buttonStyle:
+                              CustomButtonStyles.fillPrimaryTransparent,
+                          // margin: const EdgeInsets.symmetric(
+                          //     vertical: 11, horizontal: 24),
+                          width: 90,
+                          height: 44,
+                          onPressed: controller.onVerfiedButtonPressed,
+                        ),
                       ),
                       // CustomElevatedButton(
                       //   text: '비활성',

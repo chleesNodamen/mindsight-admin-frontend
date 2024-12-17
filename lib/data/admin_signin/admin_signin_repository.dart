@@ -23,7 +23,7 @@ class AdminSigninRepository extends BaseRepository {
       // PrefUtils.to.setSigninId(dto.email!);
       // PrefUtils.to.setSigninTime();
 
-      Account.signinSuccess(model.id!, dto.email!);
+      Account.signInSuccess(model.id!, dto.email!);
     } else {
       Logger.info("log in unsuccessful ${model.getErrorCode()}");
     }

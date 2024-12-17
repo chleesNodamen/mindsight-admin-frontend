@@ -193,87 +193,19 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                     DataCell(Text(
                         controller.practicesModel.liked![index].toString(),
                         style: CustomTextStyles.bodyLargeBlack)),
-                    DataCell(DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: appTheme.white,
-                        borderRadius: BorderRadiusStyle.roundedBorder8,
-                        border: Border.all(
-                          width: 1,
-                          color: appTheme.grayScale2,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 6, right: 0, top: 0, bottom: 0),
-                        child: DropdownButton<String>(
-                          value: controller.practicesModel.status![index]
-                              ? '승인'
-                              : '비승인',
-                          underline: Container(),
-                          padding: const EdgeInsets.only(left: 6),
-                          borderRadius: BorderRadiusStyle.roundedBorder12,
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              controller.onStatusChange(index);
-                            }
-                          },
-                          items: <String>['승인', '비승인']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: value == "승인"
-                                    ? CustomTextStyles.labelLargeGreen
-                                    : CustomTextStyles.labelLargeRed,
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                    DataCell(StatusDropdown(
+                      isEnable: Account.isAdmin,
+                      isActive: controller.practicesModel.status![index],
+                      onChanged: (newState) {
+                        controller.onStatusChange(index);
+                      },
                     )),
-                    DataCell(DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: appTheme.white,
-                        borderRadius: BorderRadiusStyle.roundedBorder8,
-                        border: Border.all(
-                          width: 1,
-                          color: appTheme.grayScale2,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 6, right: 0, top: 0, bottom: 0),
-                        child: DropdownButton<String>(
-                          value: controller.practicesModel.exposure![index]
-                              ? '노출'
-                              : '비노출',
-                          underline: Container(),
-                          padding: const EdgeInsets.only(left: 6),
-                          borderRadius: BorderRadiusStyle.roundedBorder12,
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              controller.onExposureChange(index);
-                            }
-                          },
-                          items: <String>['노출', '비노출']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: value == "노출"
-                                    ? CustomTextStyles.labelLargeGreen
-                                    : CustomTextStyles.labelLargeRed,
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                    DataCell(StatusDropdown(
+                      isEnable: true,
+                      isActive: controller.practicesModel.exposure![index],
+                      onChanged: (newState) {
+                        controller.onExposureChange(index);
+                      },
                     )),
                   ]);
                 }).toList(),

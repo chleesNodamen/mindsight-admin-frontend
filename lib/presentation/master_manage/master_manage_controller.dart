@@ -77,9 +77,6 @@ class MasterManageController extends GetxController {
   }
 
   Future<void> onVerifiedChanged(int index) async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
     isLoading.value = true;
 
     masterListModel.verified![index] = !masterListModel.verified![index];
@@ -96,10 +93,6 @@ class MasterManageController extends GetxController {
   }
 
   Future<void> onVerfiedButtonPressed() async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     isLoading.value = true;
 
     List<String> ids = [

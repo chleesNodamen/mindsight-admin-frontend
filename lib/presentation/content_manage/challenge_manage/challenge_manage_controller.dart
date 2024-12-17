@@ -132,10 +132,6 @@ class ChallengeManageController extends GetxController {
   }
 
   Future<void> onStatusChange(int index) async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     isLoading.value = true;
 
     BaseModel model = await ChallengesStatusRepository().put(

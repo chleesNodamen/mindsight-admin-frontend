@@ -79,9 +79,7 @@ class CompanyManageController extends GetxController {
   }
 
   Future<void> onVerifiedChange(int index) async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
+    companyVerified![index] = !companyVerified![index];
 
     isLoading.value = true;
 
@@ -100,10 +98,6 @@ class CompanyManageController extends GetxController {
   }
 
   Future<void> onVerifiedButton() async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     isLoading.value = true;
 
     List<String> ids = [

@@ -1,6 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/company_register/company_register_repository.dart';
 import 'package:mindsight_admin_page/data/company_register/company_register_req_post.dart';
@@ -63,7 +61,10 @@ class CompanyRegisterController extends GetxController {
             address: addressController.text));
 
     if (model.isSuccess) {
-      showSimpleMessage("저장 되었습니다");
+      // showSimpleMessage("저장 되었습니다");
+      Get.offAllNamed(AppRoutes.inactiveCompanyManage);
+      SideMenuController.to
+          .changeActiveSubItem(inactiveCompanyManagePageDisplayName);
     } else {
       showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }

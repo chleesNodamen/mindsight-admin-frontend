@@ -80,10 +80,6 @@ class InactiveCompanyManageController extends GetxController {
   }
 
   Future<void> onVerifiedChange(int index) async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     isLoading.value = true;
 
     companyVerified![index] = !companyVerified![index];
@@ -103,10 +99,6 @@ class InactiveCompanyManageController extends GetxController {
   }
 
   Future<void> onVerifiedButton() async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     isLoading.value = true;
 
     List<String> ids = [

@@ -138,10 +138,6 @@ class ContentManageController extends GetxController {
   }
 
   Future<void> onStatusChange(int index) async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     isLoading.value = true;
 
     BaseModel model = await ContentStatusRepository().put(ContentStatusReqPut(
@@ -174,10 +170,6 @@ class ContentManageController extends GetxController {
   }
 
   Future<void> onStatusChangeForAll() async {
-    if (!Account.isAdminWithMsg) {
-      return;
-    }
-
     List<String> contentIds = [
       for (int i = 0; i < selectedContent.length; i++)
         if (selectedContent[i]) contentListModel.value.id![i],

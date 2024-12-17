@@ -244,49 +244,12 @@ class MemberManageView extends GetWidget<MemberManageController> {
                                   : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value:
-                                  controller.memberState![index] ? '활성' : '비활성',
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.memberState![index] =
-                                      !controller.memberState![index];
-                                  controller.onStatusChange(index);
-                                }
-                              },
-                              items: <String>[
-                                '활성',
-                                '비활성'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: value == "활성"
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+                        DataCell(StatusDropdown(
+                          isEnable: Account.isAdmin,
+                          isActive: controller.memberState![index],
+                          onChanged: (newState) {
+                            controller.onStatusChange(index, newState);
+                          },
                         )),
                       ]);
                 }).toList(),

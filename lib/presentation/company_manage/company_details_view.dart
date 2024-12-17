@@ -89,14 +89,18 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("회사 정보", style: CustomTextStyles.labelLargeBlack),
-              InkWell(
-                  onTap: controller.onEdit,
-                  child: Text(
-                    "수정",
-                    style: CustomTextStyles.labelLargeSkyBlue.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor: appTheme.skyBlue),
-                  ))
+              Visibility(
+                visible: Account.isMaster(
+                    controller.companyDetailModel.createMasterEmail!),
+                child: InkWell(
+                    onTap: controller.onEdit,
+                    child: Text(
+                      "수정",
+                      style: CustomTextStyles.labelLargeSkyBlue.copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: appTheme.skyBlue),
+                    )),
+              )
             ],
           ),
           const SizedBox(

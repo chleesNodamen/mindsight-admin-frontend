@@ -29,14 +29,21 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                                 children: [
                                   _buildTitle(),
                                   const SizedBox(height: 32),
-                                  Row(
-                                    children: [
-                                      _buildRegisterButton(),
-                                      const SizedBox(width: 16),
-                                      _buildMassRegisterButton(),
-                                    ],
+                                  Visibility(
+                                    visible: Account.isAdmin,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            _buildRegisterButton(),
+                                            const SizedBox(width: 16),
+                                            _buildMassRegisterButton(),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 32),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(height: 32),
                                   _buildPage(),
                                 ],
                               ),
@@ -173,51 +180,13 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                                   : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value:
-                                  controller.companyListModel.verified![index]
-                                      ? "승인"
-                                      : "비승인",
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.companyVerified![index] =
-                                      !controller.companyVerified![index];
-                                  controller.onVerifiedChange(index);
-                                }
-                              },
-                              items: <String>[
-                                "승인",
-                                "비승인"
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: value == "승인"
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+                        DataCell(StatusDropdown(
+                          isEnable: Account.isAdmin,
+                          isActive:
+                              controller.companyListModel.verified![index],
+                          onChanged: (newState) {
+                            controller.onVerifiedChange(index);
+                          },
                         )),
                       ]);
                 }).toList(),
@@ -229,15 +198,18 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
             Stack(
               alignment: Alignment.centerLeft,
               children: [
-                CustomElevatedButton(
-                  text: "비승인",
-                  buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                  buttonStyle: CustomButtonStyles.fillRedTransparent,
-                  // margin: const EdgeInsets.symmetric(
-                  //     vertical: 11, horizontal: 24),
-                  width: 90,
-                  height: 44,
-                  onPressed: controller.onVerifiedButton,
+                Visibility(
+                  visible: Account.isAdmin,
+                  child: CustomElevatedButton(
+                    text: "비활성",
+                    buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+                    buttonStyle: CustomButtonStyles.fillRedTransparent,
+                    // margin: const EdgeInsets.symmetric(
+                    //     vertical: 11, horizontal: 24),
+                    width: 90,
+                    height: 44,
+                    onPressed: controller.onVerifiedButton,
+                  ),
                 ),
                 Pages(
                     pages: (controller.companyListModel.total! / 20).ceil(),

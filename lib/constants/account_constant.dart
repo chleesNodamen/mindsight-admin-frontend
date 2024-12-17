@@ -6,6 +6,12 @@ class Account {
   static String email = "";
   static String signinTime = "";
   static String id = "";
+  static bool _isLogined = false;
+
+  static bool get isLogined {
+    Logger.info("isLogined $_isLogined");
+    return _isLogined;
+  }
 
   static bool get isAdmin {
     return role == AccountRole.admin;
@@ -22,20 +28,33 @@ class Account {
   }
 
   static bool isMasterWithMsg(String compareEmail) {
+    if (isMaster(compareEmail)) {
+      return true;
+    }
+
+    showSimpleMessage("권한이 없습니다");
+    return false;
+  }
+
+  static bool isMaster(String compareEmail) {
     if (isAdmin) {
       return true;
     }
     if (email == compareEmail) {
       return true;
     }
-    showSimpleMessage("권한이 없습니다");
     return false;
   }
 
-  static void signinSuccess(String signInId, String signInEmail) {
+  static void signOutSuccess() {
+    _isLogined = false;
+  }
+
+  static void signInSuccess(String signInId, String signInEmail) {
     id = signInId;
     email = signInEmail;
     signinTime = DateTime.now().toString();
+    _isLogined = true;
 
     if (email == AppConstant.adminEmail) {
       role = AccountRole.admin;

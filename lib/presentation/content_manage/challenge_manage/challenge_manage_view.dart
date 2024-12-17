@@ -185,94 +185,19 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                                 style: CustomTextStyles.bodyLargeBlack),
                           ),
                         ),
-                        DataCell(
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: appTheme.white,
-                              borderRadius: BorderRadiusStyle.roundedBorder8,
-                              border: Border.all(
-                                width: 1,
-                                color: appTheme.grayScale2,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 6, right: 0, top: 0, bottom: 0),
-                              child: DropdownButton<String>(
-                                value: controller.challengesModel.status![index]
-                                    ? '승인'
-                                    : "비승인",
-                                underline: Container(),
-                                padding: const EdgeInsets.only(left: 6),
-                                borderRadius: BorderRadiusStyle.roundedBorder12,
-                                elevation: 16,
-                                style:
-                                    const TextStyle(color: Colors.deepPurple),
-                                onChanged: (String? newValue) {
-                                  if (newValue != null) {
-                                    controller.onStatusChange(index);
-                                  }
-                                },
-                                items: <String>['승인', '비승인']
-                                    .map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        value,
-                                        style: value == "승인"
-                                            ? CustomTextStyles.labelLargeGreen
-                                            : CustomTextStyles.labelLargeRed,
-                                      ),
-                                    );
-                                  },
-                                ).toList(),
-                              ),
-                            ),
-                          ),
-                        ),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value: controller.challengesModel.exposure![index]
-                                  ? '노출'
-                                  : '비노출',
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.onExposureChange(index);
-                                }
-                              },
-                              items: <String>[
-                                '노출',
-                                '비노출'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: value == "노출"
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+                        DataCell(StatusDropdown(
+                          isEnable: Account.isAdmin,
+                          isActive: controller.challengesModel.status![index],
+                          onChanged: (newState) {
+                            controller.onStatusChange(index);
+                          },
+                        )),
+                        DataCell(StatusDropdown(
+                          isEnable: true,
+                          isActive: controller.challengesModel.exposure![index],
+                          onChanged: (newState) {
+                            controller.onExposureChange(index);
+                          },
                         )),
                       ]);
                 }).toList(),
@@ -286,27 +211,33 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
               children: [
                 Row(
                   children: [
-                    CustomElevatedButton(
-                      text: '상태 변경',
-                      buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                      buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                      margin: const EdgeInsets.only(right: 16),
-                      width: 107,
-                      height: 44,
-                      onPressed: () {
-                        showSimpleMessage("서비스 준비 중 입니다");
-                      },
+                    Visibility(
+                      visible: Account.isAdmin,
+                      child: CustomElevatedButton(
+                        text: '상태 변경',
+                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                        margin: const EdgeInsets.only(right: 16),
+                        width: 107,
+                        height: 44,
+                        onPressed: () {
+                          showSimpleMessage("서비스 준비 중 입니다");
+                        },
+                      ),
                     ),
-                    CustomElevatedButton(
-                      text: '삭제',
-                      buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                      buttonStyle:
-                          CustomButtonStyles.fillRedTransparent.copyWith(),
-                      width: 76,
-                      height: 44,
-                      onPressed: () {
-                        showSimpleMessage("서비스 준비 중 입니다");
-                      },
+                    Visibility(
+                      visible: Account.isAdmin,
+                      child: CustomElevatedButton(
+                        text: '삭제',
+                        buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+                        buttonStyle:
+                            CustomButtonStyles.fillRedTransparent.copyWith(),
+                        width: 76,
+                        height: 44,
+                        onPressed: () {
+                          showSimpleMessage("서비스 준비 중 입니다");
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -396,13 +327,13 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                     children: [
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[0],
-                        label: '승인',
+                        label: '활성',
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             0, value), // Adjust as needed
                       ),
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[1],
-                        label: '비승인',
+                        label: '비활성',
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             1, value), // Adjust as needed
                       ),

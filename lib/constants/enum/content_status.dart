@@ -1,6 +1,6 @@
 enum ContentStatus {
-  approve('승인', true),
-  disapprove('비승인', false);
+  approve('활성', true),
+  disapprove('비활성', false);
 
   final String _displayName;
   final bool _keywordName;

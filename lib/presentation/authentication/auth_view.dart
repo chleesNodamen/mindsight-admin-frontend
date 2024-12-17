@@ -33,139 +33,145 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                 const SizedBox(
                   height: 32,
                 ),
-                TextFormField(
-                  style: CustomTextStyles.bodyMediumBlack,
-                  controller: controller.emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    labelText: "이메일 주소",
-                    labelStyle: CustomTextStyles.bodyMediumGray,
-                    // floatingLabelStyle: TextStyle(color: appTheme.black),
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    // hintText: "abc@domain.com",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
+                SizedBox(
+                  height: 50,
+                  child: TextFormField(
+                    style: CustomTextStyles.bodyMediumBlack,
+                    controller: controller.emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "이메일 주소",
+                      labelStyle: CustomTextStyles.bodyMediumGray,
+                      // floatingLabelStyle: TextStyle(color: appTheme.black),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      // hintText: "abc@domain.com",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 2,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 2,
+                        ),
                       ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.red,
-                        width: 2,
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.red,
+                          width: 2,
+                        ),
                       ),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.red,
-                        width: 2,
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.red,
+                          width: 2,
+                        ),
                       ),
+                      errorStyle: TextStyle(
+                          color: appTheme.red,
+                          fontSize: 12.fSize,
+                          fontWeight: FontWeight.w500),
                     ),
-                    errorStyle: TextStyle(
-                        color: appTheme.red,
-                        fontSize: 12.fSize,
-                        fontWeight: FontWeight.w500),
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormField(
-                  controller: controller.passwordController,
-                  obscureText: controller.isObscured.value,
-                  style: CustomTextStyles.bodyMediumBlack,
-                  decoration: InputDecoration(
-                    suffixIcon: CustomImageView(
-                      onTap: () {
-                        controller.isObscured.value =
-                            !controller.isObscured.value;
-                      },
-                      margin: const EdgeInsets.only(
-                          right: 16, left: 12, top: 16, bottom: 16),
-                      imagePath: controller.isObscured.value
-                          ? IconConstant.visibilityFalse
-                          : IconConstant.visibilityTrue,
-                    ),
-                    // floatingLabelStyle: TextStyle(color: appTheme.black),
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelText: "비밀번호",
-                    labelStyle: CustomTextStyles.bodyMediumGray,
-                    // hintText: "123",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
+                SizedBox(
+                  height: 50,
+                  child: TextFormField(
+                    controller: controller.passwordController,
+                    obscureText: controller.isObscured.value,
+                    style: CustomTextStyles.bodyMediumBlack,
+                    decoration: InputDecoration(
+                      suffixIcon: CustomImageView(
+                        onTap: () {
+                          controller.isObscured.value =
+                              !controller.isObscured.value;
+                        },
+                        margin: const EdgeInsets.only(
+                            right: 16, left: 12, top: 16, bottom: 16),
+                        imagePath: controller.isObscured.value
+                            ? IconConstant.visibilityFalse
+                            : IconConstant.visibilityTrue,
                       ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
+                      // floatingLabelStyle: TextStyle(color: appTheme.black),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      labelText: "비밀번호",
+                      labelStyle: CustomTextStyles.bodyMediumGray,
+                      // hintText: "123",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 1,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.grayScale3,
-                        width: 2,
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.red,
-                        width: 2,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.grayScale3,
+                          width: 2,
+                        ),
                       ),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadiusStyle.roundedBorder12,
-                      borderSide: BorderSide(
-                        color: appTheme.red,
-                        width: 2,
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.red,
+                          width: 2,
+                        ),
                       ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadiusStyle.roundedBorder12,
+                        borderSide: BorderSide(
+                          color: appTheme.red,
+                          width: 2,
+                        ),
+                      ),
+                      errorStyle: TextStyle(
+                          color: appTheme.red,
+                          fontSize: 12.fSize,
+                          fontWeight: FontWeight.w500),
                     ),
-                    errorStyle: TextStyle(
-                        color: appTheme.red,
-                        fontSize: 12.fSize,
-                        fontWeight: FontWeight.w500),
                   ),
                 ),
                 const SizedBox(
@@ -178,6 +184,15 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                     controller.onContinue();
                   },
                 ),
+                CustomElevatedButton(
+                  margin: const EdgeInsets.only(top: 16),
+                  height: 56,
+                  text: "마스터 회원가입",
+                  onPressed: () {
+                    controller.onRegister();
+                  },
+                ),
+
                 const SizedBox(
                   height: 16,
                 ),

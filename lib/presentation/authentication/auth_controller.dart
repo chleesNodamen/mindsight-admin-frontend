@@ -85,4 +85,8 @@ class AuthenticationController extends GetxController {
 
     return true;
   }
+
+  void onRegister() {
+    Get.offAllNamed(AppRoutes.masterRegister);
+  }
 }

@@ -123,6 +123,9 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   DataColumn(
                       label:
                           Text('노출', style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label:
+                          Text('수정', style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.contentListModel.value.length,
                     (index) {
@@ -176,94 +179,37 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         //   child: Text('재생',
                         //       style: CustomTextStyles.bodyLargeBlack),
                         // )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value: controller
-                                      .contentListModel.value.status![index]
-                                  ? '승인'
-                                  : '비승인',
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.onStatusChange(index);
-                                }
-                              },
-                              items: <String>[
-                                '승인',
-                                '비승인'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: value == "승인"
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+                        DataCell(StatusDropdown(
+                          isEnable: Account.isAdmin,
+                          isActive:
+                              controller.contentListModel.value.status![index],
+                          onChanged: (newState) {
+                            controller.onStatusChange(index);
+                          },
                         )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<String>(
-                              value: controller
-                                      .contentListModel.value.exposure![index]
-                                  ? '노출'
-                                  : '비노출',
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.onExposureChange(index);
-                                }
-                              },
-                              items: <String>[
-                                '노출',
-                                '비노출'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: value == "노출"
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+
+                        DataCell(StatusDropdown(
+                          isEnable: true,
+                          isActive: controller
+                              .contentListModel.value.exposure![index],
+                          onChanged: (newState) {
+                            controller.onExposureChange(index);
+                          },
                         )),
+
+                        DataCell(CustomElevatedButton(
+                            text: "수정",
+                            buttonTextStyle:
+                                CustomTextStyles.bodyMediumWhiteBold,
+                            buttonStyle: CustomButtonStyles.fillBlack,
+                            width: 60,
+                            height: 30,
+                            onPressed: () => Get.offAllNamed(
+                                    AppRoutes.contentEdit,
+                                    arguments: {
+                                      RouteArguments.id: controller
+                                          .contentListModel.value.id![index],
+                                    }))),
                       ]);
                 }).toList(),
               ),
@@ -276,14 +222,17 @@ class ContentManageView extends GetWidget<ContentManageController> {
               children: [
                 Row(
                   children: [
-                    CustomElevatedButton(
-                      text: '상태 변경',
-                      buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                      buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                      margin: const EdgeInsets.only(right: 16),
-                      width: 107,
-                      height: 44,
-                      onPressed: () => controller.onStatusChangeForAll(),
+                    Visibility(
+                      visible: Account.isAdmin,
+                      child: CustomElevatedButton(
+                        text: '상태 변경',
+                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                        margin: const EdgeInsets.only(right: 16),
+                        width: 107,
+                        height: 44,
+                        onPressed: () => controller.onStatusChangeForAll(),
+                      ),
                     ),
                     CustomElevatedButton(
                       text: '노출 변경',
@@ -438,12 +387,12 @@ class ContentManageView extends GetWidget<ContentManageController> {
             children: [
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[0],
-                label: '승인',
+                label: '활성',
                 onChanged: (value) => controller.toggleServiceValues(0, value),
               ),
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[1],
-                label: '비승인',
+                label: '비활성',
                 onChanged: (value) => controller.toggleServiceValues(1, value),
               ),
             ],

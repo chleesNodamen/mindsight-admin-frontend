@@ -120,7 +120,8 @@ class InactiveMemberManageController extends GetxController {
     selectedMembers[index] = !selectedMembers[index];
   }
 
-  Future<void> onStatusChange(int index) async {
+  Future<void> onStatusChange(int index, bool newState) async {
+    memberState![index] = newState;
     isLoading.value = true;
 
     await MemberStatusRepository().put(MemberStatusReqPut(

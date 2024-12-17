@@ -1,10 +1,7 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/content_language.dart';
 import 'package:mindsight_admin_page/constants/enum/contry.dart';
-import 'package:mindsight_admin_page/constants/enum/file_extension.dart';
 import 'package:mindsight_admin_page/function/show_company_search_dialog.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_edit_controller.dart';
-import 'package:mindsight_admin_page/widgets/pick_file.dart';
 
 class MasterEditView extends GetWidget<MasterEditController> {
   const MasterEditView({super.key});

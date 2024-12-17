@@ -29,16 +29,21 @@ class MasterManageView extends GetWidget<MasterManageController> {
                                 children: [
                                   _buildTitle(),
                                   const SizedBox(height: 32),
-                                  Row(
-                                    children: [
-                                      _buildRegisterButton(),
-                                      const SizedBox(width: 16),
-                                      _buildMassRegisterButton(),
-                                    ],
+                                  Visibility(
+                                    visible: Account.isAdmin,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            _buildRegisterButton(),
+                                            const SizedBox(width: 16),
+                                            _buildMassRegisterButton(),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 32),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(height: 32),
-                                  // _buildCheckBox(),
-                                  // const SizedBox(height: 16),
                                   _buildPage(),
                                 ],
                               ),
@@ -92,44 +97,6 @@ class MasterManageView extends GetWidget<MasterManageController> {
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
   }
-
-  // Widget _buildCheckBox() {
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       color: appTheme.white,
-  //       borderRadius: const BorderRadius.all(Radius.circular(12)),
-  //     ),
-  //     height: 122,
-  //     width: double.infinity,
-  //     padding: const EdgeInsets.all(32.0),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       children: [
-  //         Text('소속', style: CustomTextStyles.labelMediumGray),
-  //         const SizedBox(height: 10),
-  //         Row(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           children: [
-  //             Wrap(
-  //               runSpacing: 18,
-  //               children:
-  //                   List.generate(controller.membershipValues.length, (index) {
-  //                 return CustomCheckboxWidget(
-  //                   isChecked: controller.membershipValues[index],
-  //                   label: controller.membershipLabels[index],
-  //                   onChanged: (value) =>
-  //                       controller.onCheckMasterhip(index, value),
-  //                 );
-  //               }),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   SingleChildScrollView _buildPage() {
     return SingleChildScrollView(
@@ -234,47 +201,54 @@ class MasterManageView extends GetWidget<MasterManageController> {
                                   : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        DataCell(DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: appTheme.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            border: Border.all(
-                              width: 1,
-                              color: appTheme.grayScale2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 0, top: 0, bottom: 0),
-                            child: DropdownButton<ContentStatus>(
-                              value: ContentStatus.fromKeyword(
-                                  controller.masterListModel.verified![index]),
-                              underline: Container(),
-                              padding: const EdgeInsets.only(left: 6),
-                              borderRadius: BorderRadiusStyle.roundedBorder12,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
-                              onChanged: (ContentStatus? newValue) {
-                                controller.onVerifiedChanged(index);
-                              },
-                              items: <ContentStatus>[
-                                ContentStatus.approve,
-                                ContentStatus.disapprove
-                              ].map<DropdownMenuItem<ContentStatus>>(
-                                  (ContentStatus value) {
-                                return DropdownMenuItem<ContentStatus>(
-                                  value: value,
-                                  child: Text(
-                                    value.displayName,
-                                    style: value == ContentStatus.approve
-                                        ? CustomTextStyles.labelLargeGreen
-                                        : CustomTextStyles.labelLargeRed,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+                        DataCell(StatusDropdown(
+                          isEnable: Account.isAdmin,
+                          isActive: controller.masterListModel.verified![index],
+                          onChanged: (newState) {
+                            controller.onVerifiedChanged(index);
+                          },
                         )),
+                        //   DataCell(DecoratedBox(
+                        //     decoration: BoxDecoration(
+                        //       color: appTheme.white,
+                        //       borderRadius: BorderRadiusStyle.roundedBorder8,
+                        //       border: Border.all(
+                        //         width: 1,
+                        //         color: appTheme.grayScale2,
+                        //       ),
+                        //     ),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.only(
+                        //           left: 6, right: 0, top: 0, bottom: 0),
+                        //       child: DropdownButton<ContentStatus>(
+                        //         value: ContentStatus.fromKeyword(
+                        //             controller.masterListModel.verified![index]),
+                        //         underline: Container(),
+                        //         padding: const EdgeInsets.only(left: 6),
+                        //         borderRadius: BorderRadiusStyle.roundedBorder12,
+                        //         elevation: 16,
+                        //         style: const TextStyle(color: Colors.deepPurple),
+                        //         onChanged: (ContentStatus? newValue) {
+                        //           controller.onVerifiedChanged(index);
+                        //         },
+                        //         items: <ContentStatus>[
+                        //           ContentStatus.approve,
+                        //           ContentStatus.disapprove
+                        //         ].map<DropdownMenuItem<ContentStatus>>(
+                        //             (ContentStatus value) {
+                        //           return DropdownMenuItem<ContentStatus>(
+                        //             value: value,
+                        //             child: Text(
+                        //               value.displayName,
+                        //               style: value == ContentStatus.approve
+                        //                   ? CustomTextStyles.labelLargeGreen
+                        //                   : CustomTextStyles.labelLargeRed,
+                        //             ),
+                        //           );
+                        //         }).toList(),
+                        //       ),
+                        //     ),
+                        //   )),
                       ]);
                 }).toList(),
               ),
@@ -285,15 +259,18 @@ class MasterManageView extends GetWidget<MasterManageController> {
             Stack(
               alignment: Alignment.centerLeft,
               children: [
-                CustomElevatedButton(
-                  text: "비승인",
-                  buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                  buttonStyle: CustomButtonStyles.fillRedTransparent,
-                  // margin: const EdgeInsets.symmetric(
-                  //     vertical: 11, horizontal: 24),
-                  width: 90,
-                  height: 44,
-                  onPressed: controller.onVerfiedButtonPressed,
+                Visibility(
+                  visible: Account.isAdmin,
+                  child: CustomElevatedButton(
+                    text: "비활성",
+                    buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+                    buttonStyle: CustomButtonStyles.fillRedTransparent,
+                    // margin: const EdgeInsets.symmetric(
+                    //     vertical: 11, horizontal: 24),
+                    width: 90,
+                    height: 44,
+                    onPressed: controller.onVerfiedButtonPressed,
+                  ),
                 ),
                 Pages(
                     pages: (controller.masterListModel.total! / 20).ceil(),

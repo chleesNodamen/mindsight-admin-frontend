@@ -1,10 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/content_language.dart';
+import 'package:mindsight_admin_page/constants/enum/account_role.dart';
 import 'package:mindsight_admin_page/constants/enum/contry.dart';
-import 'package:mindsight_admin_page/constants/enum/file_extension.dart';
 import 'package:mindsight_admin_page/function/show_company_search_dialog.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_register_controller.dart';
-import 'package:mindsight_admin_page/widgets/pick_file.dart';
 
 class MasterRegisterView extends GetWidget<MasterRegisterController> {
   const MasterRegisterView({super.key});
@@ -22,7 +20,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                   largeScreen: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SideMenu(),
+                      Account.isLogined ? const SideMenu() : _buildLogo(),
                       Expanded(
                         child: ListView(
                           children: [
@@ -35,14 +33,28 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     _buildTitle(),
-                                    const SizedBox(height: 16),
-                                    _buildSubMenu(),
+                                    Visibility(
+                                      visible: Account.isLogined,
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(height: 16),
+                                          _buildSubMenu(),
+                                        ],
+                                      ),
+                                    ),
                                     const SizedBox(height: 32),
                                     _buildAccountInfo(),
                                     const SizedBox(height: 32),
                                     _buildBasicInfo(),
                                     const SizedBox(height: 32),
-                                    _buildCompanyInfo(),
+                                    Visibility(
+                                      visible: Account.isLogined,
+                                      child: Column(
+                                        children: [
+                                          _buildCompanyInfo(),
+                                        ],
+                                      ),
+                                    ),
                                     const SizedBox(height: 32),
                                     _buildSaveNCancel(formKey)
                                   ],
@@ -59,6 +71,46 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         ),
       ),
     );
+  }
+
+  Widget _buildLogo() {
+    return Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadiusStyle.roundedBorder16,
+              color: appTheme.skyBlue,
+            ),
+            width: 297,
+            // height: 912,
+            child: ListView(children: [
+              Column(mainAxisSize: MainAxisSize.min, children: [
+                const SizedBox(
+                  height: 58,
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8, left: 24),
+                        child: CustomImageView(
+                          imagePath: "assets/logo.png",
+                          width: 154,
+                          height: 24,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          AccountRole.master.displayName,
+                          style: CustomTextStyles.labelLargeWhite,
+                        ),
+                      ),
+                      const SizedBox(width: 69),
+                    ])
+              ])
+            ])));
   }
 
   Widget _buildAccountInfo() {
@@ -495,7 +547,9 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
           margin: const EdgeInsets.only(left: 16),
           width: 90,
           height: 44,
-          onPressed: () => Get.offAllNamed(AppRoutes.masterManage),
+          onPressed: () => Account.isLogined
+              ? Get.offAllNamed(AppRoutes.masterManage)
+              : Get.offAllNamed(AppRoutes.auth),
         ),
       ],
     );

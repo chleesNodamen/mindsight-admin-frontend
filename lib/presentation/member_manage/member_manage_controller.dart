@@ -119,7 +119,9 @@ class MemberManageController extends GetxController {
     selectedMembers[index] = !selectedMembers[index];
   }
 
-  Future<void> onStatusChange(int index) async {
+  Future<void> onStatusChange(int index, bool newState) async {
+    memberState![index] = newState;
+
     isLoading.value = true;
 
     BaseModel model = await MemberStatusRepository().put(MemberStatusReqPut(
