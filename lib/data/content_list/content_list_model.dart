@@ -4,6 +4,7 @@ class ContentListModel extends BaseModel {
   List<String>? id;
   List<String>? type;
   List<String>? name;
+  List<String>? master;
   List<int>? seen;
   List<int>? liked;
   List<bool>? status;
@@ -14,6 +15,7 @@ class ContentListModel extends BaseModel {
     this.id,
     this.type,
     this.name,
+    this.master,
     this.seen,
     this.liked,
     this.status,
@@ -33,6 +35,9 @@ class ContentListModel extends BaseModel {
         name: json["name"] == null
             ? []
             : List<String>.from(json["name"]!.map((x) => x)),
+        master: json["master"] == null
+            ? []
+            : List<String>.from(json["master"]!.map((x) => x)),
         seen: json["seen"] == null
             ? []
             : List<int>.from(json["seen"]!.map((x) => x)),

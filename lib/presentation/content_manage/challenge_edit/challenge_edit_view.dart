@@ -56,12 +56,13 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("파일", style: CustomTextStyles.bodyMediumBlack),
+        Text("파일".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        PickFile(
-          labelText: "썸네일 파일",
+        PickFileFormField(
+          labelText: "썸네일 파일".tr,
+          essential: true,
           initialUrl: controller.challengeDetailsModel.thumbnail,
-          hintText: "300 x 300 최대 10메가 (.jpg)",
+          hintText: "(.jpg)",
           fileExtension: FileExtension.jpg.keywordName,
           onFilePicked: (pickedFile) {
             controller.onPickThumbnail(pickedFile);
@@ -76,7 +77,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장',
+          text: '저장'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
           width: 90,
@@ -84,7 +85,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
           onPressed: controller.onSave,
         ),
         CustomElevatedButton(
-          text: '취소',
+          text: '취소'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
@@ -102,7 +103,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Day 세션 등록", style: CustomTextStyles.bodyMediumBlack),
+        Text("Day 세션 등록".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Wrap(
           spacing: 8.0, // Horizontal spacing
@@ -114,7 +115,10 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildInput("제목", true, controller.dayNameController),
+            BuildInput(
+                label: "제목".tr,
+                essential: true,
+                textController: controller.dayNameController),
             const SizedBox(width: 24),
             Column(
               children: List.generate(
@@ -157,9 +161,12 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 정보", style: CustomTextStyles.bodyMediumBlack),
+        Text("기본 정보".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        _buildInput("제목", true, controller.nameController),
+        BuildInput(
+            label: "제목".tr,
+            essential: true,
+            textController: controller.nameController),
         const SizedBox(height: 24),
         Row(
           children: [
@@ -170,8 +177,8 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "목적 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                      text: "목적".tr, style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
                 Container(
@@ -225,8 +232,8 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "기간 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                      text: "기간".tr, style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
                 Container(
@@ -255,8 +262,8 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
         const SizedBox(height: 24),
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "소개 ", style: CustomTextStyles.labelLargeBlack),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: "소개".tr, style: CustomTextStyles.labelLargeBlack),
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
@@ -310,47 +317,12 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
     return widgets;
   }
 
-  Column _buildInput(
-      String text, bool essential, TextEditingController textController,
-      {String? hint}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "$text ",
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(
-              text: essential ? "*" : "", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        CustomTextFormField(
-            controller: textController,
-            width: 353,
-            hintText: hint ?? "Input text",
-            hintStyle: CustomTextStyles.bodyMediumGray,
-            validator: (value) {
-              if (value == null) {
-                return "필수 입력 항목입니다.".tr;
-              }
-              return null;
-            },
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            filled: true),
-      ],
-    );
-  }
-
   Row _buildSubMenu() {
     return Row(
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentChallengeManage),
-          child: Text("Challenge 관리",
+          child: Text("Challenge 관리".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -365,7 +337,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.challengeDetails,
               arguments: {RouteArguments.id: controller.id}),
-          child: Text("Challenge 상세",
+          child: Text("Challenge 상세".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -377,14 +349,14 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Challenge 수정", style: CustomTextStyles.bodyMediumGray)
+        Text("Challenge 수정".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Challenge 수정",
+      name: "Challenge 수정".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",
@@ -399,10 +371,10 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "승인 ",
+              text: "승인".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -416,7 +388,8 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentStatus>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: ContentStatus.fromKeyword(
                 controller.challengeDetailsModel.status!),
@@ -455,10 +428,10 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "노출 ",
+              text: "노출".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -472,7 +445,8 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentExposure>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: ContentExposure.fromKeyword(
                 controller.challengeDetailsModel.exposure!),

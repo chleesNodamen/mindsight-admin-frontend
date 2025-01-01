@@ -3,6 +3,8 @@ import 'package:mindsight_admin_page/presentation/activity_manage/activity_histo
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings/etc_admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings/etc_admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_details/sub_admin_details_bindin.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_details/sub_admin_details_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_edit/sub_admin_edit_binding.dart';
@@ -123,11 +125,14 @@ class AppRoutes {
   static const String revenueShareManage = "/revenue_share_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
+  static const String etcAdminSetting = '/etc_admin_settings';
   static const String subAdminSettings = '/sub_admin_settings';
   static const String subAdminRegister = '/sub_admin_register';
   static const String subAdminDetails = '/sub_admin_details';
   static const String subAdminEdit = '/sub_admin_edit';
   static const String activityHistory = "/activity_history";
+
+  static String initialRoute = auth;
 
   static List<GetPage> pages = [
     // GetPage(
@@ -183,7 +188,7 @@ class AppRoutes {
     ),
     GetPage(
       name: masterRegister,
-      page: () => const MasterRegisterView(),
+      page: () => MasterRegisterView(),
       bindings: [MasterRegisterBinding()],
     ),
     GetPage(
@@ -319,6 +324,11 @@ class AppRoutes {
       name: adminSettings,
       page: () => const AdminSettingsView(),
       bindings: [AdminSettingsBinding()],
+    ),
+    GetPage(
+      name: etcAdminSetting,
+      page: () => const EtcAdminSettingView(),
+      bindings: [EtcAdminSettingBinding()],
     ),
     GetPage(
       name: subAdminSettings,

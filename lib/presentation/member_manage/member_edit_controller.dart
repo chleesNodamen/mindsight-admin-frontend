@@ -30,6 +30,7 @@ class MemberEditController extends GetxController {
   final TextEditingController departmentController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController nicknameController = TextEditingController();
 
   late MemberDetailModel membersDataModel;
   late MemberEditModel membersEditModel;
@@ -41,19 +42,30 @@ class MemberEditController extends GetxController {
     await initData();
   }
 
+  @override
+  void onClose() {
+    yearController.dispose();
+    positionController.dispose();
+    departmentController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    nicknameController.dispose();
+  }
+
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     membersDataModel = await MemberDetailRepository().get(id);
     affiliation.value = membersDataModel.affiliation ?? "";
     gender.value = Gender.fromKeyword(membersDataModel.gender);
     firstNameController.text = membersDataModel.firstName ?? "";
     lastNameController.text = membersDataModel.lastName ?? "";
+    nicknameController.text = membersDataModel.username ?? "";
     departmentController.text = membersDataModel.department ?? "";
     positionController.text = membersDataModel.position ?? "";
     yearController.text = membersDataModel.yearOfBirth?.toString() ?? "";
@@ -65,7 +77,7 @@ class MemberEditController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> onSaveChanges() async {
+  Future<void> onSave() async {
     isLoading.value = true;
     membersEditModel = await MemberEditRepository().put(
         id,
@@ -75,12 +87,15 @@ class MemberEditController extends GetxController {
           position: positionController.text,
           firstName: firstNameController.text,
           lastName: lastNameController.text,
+          username: nicknameController.text,
           gender: gender.value?.keywordName,
           yearOfBirth: int.parse(yearController.text),
         ));
 
     if (membersEditModel.isSuccess) {
-      showSimpleMessage("저장 되었습니다");
+      await showSimpleMessage("저장 되었습니다");
+      Get.offAllNamed(AppRoutes.memberDetails,
+          arguments: {RouteArguments.id: id});
     } else {
       showSimpleMessage(
           "저장에 실패 하였습니다. ${membersEditModel.getErrorMessage().tr}");

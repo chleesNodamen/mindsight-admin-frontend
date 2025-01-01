@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mindsight_admin_page/constants/app_constant.dart';
 import 'package:mindsight_admin_page/utils/logger.dart';
 
 class CustomHttpClient {
+  static CustomHttpClient get to => Get.find<CustomHttpClient>();
   final String baseUrl = AppConstant.apiServer;
   final http.Client client;
+  bool isAccessTokenInited = false;
 
   // Test variables
   String forTest0 = "";
@@ -27,6 +30,8 @@ class CustomHttpClient {
       Logger.log('Api: setBearerAuthorization: $accessToken');
     }
     _headers['Authorization'] = "Bearer $accessToken";
+
+    isAccessTokenInited = true;
   }
 
   final Map<String, String> _headers = {

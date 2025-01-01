@@ -9,7 +9,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     return Obx(
       () => Scaffold(
         extendBodyBehindAppBar: true,
@@ -27,7 +27,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                             Container(
                               margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
                               child: Form(
-                                key: formKey,
+                                key: _formKey,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -56,7 +56,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                                       ),
                                     ),
                                     const SizedBox(height: 32),
-                                    _buildSaveNCancel(formKey)
+                                    _buildSaveNCancel(_formKey)
                                   ],
                                 ),
                               ),
@@ -117,21 +117,35 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("계정 정보", style: CustomTextStyles.bodyMediumBlack),
+        Text("계정 정보".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("이메일 주소 (아이디)", true, controller.emailController),
+            BuildInput(
+              label: "이메일 주소 (아이디)".tr,
+              essential: true,
+              textController: controller.emailController,
+              keyboardType: TextInputType.emailAddress,
+            ),
             const SizedBox(width: 24),
-            _buildInput("닉네임", true, controller.nicknameController),
+            BuildInput(
+                label: "닉네임".tr,
+                essential: true,
+                textController: controller.nicknameController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("비밀번호", true, controller.passwordController),
+            BuildInput(
+                label: "비밀번호".tr,
+                essential: true,
+                textController: controller.passwordController),
             const SizedBox(width: 24),
-            _buildInput("비밀번호 확인", true, controller.passwordCofirmController),
+            BuildInput(
+                label: "비밀번호 확인".tr,
+                essential: true,
+                textController: controller.passwordCofirmController),
           ],
         ),
       ],
@@ -142,36 +156,48 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 정보", style: CustomTextStyles.bodyMediumBlack),
+        Text("기본 정보".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("이름", true, controller.nameController),
+            BuildInput(
+                label: "이름".tr,
+                essential: false,
+                textController: controller.nameController),
             const SizedBox(width: 24),
-            PickFile(
-              labelText: "사진",
-              hintText: "300 x 300 최대 10메가 (.jpg)",
-              fileExtension: FileExtension.jpg.keywordName,
-              initialUrl: controller.photoUrl.value,
-              onFilePicked: (pickedFile) {
-                controller.onPickPhoto(pickedFile);
-              },
+            BuildInput(
+              label: "핸드폰 번호".tr,
+              essential: false,
+              textController: controller.phoneNumberController,
+              keyboardType: TextInputType.number,
             ),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildInput("핸드폰 번호", true, controller.phoneNumberController),
+            PickFileFormField(
+              labelText: "사진".tr,
+              toolTip: "프로필로 사용되는 이미지로 되도록이면 얼굴 사진일수록 회원들에게 신뢰를 줄 수 있습니다".tr,
+              essential: true,
+              hintText: "(.jpg)",
+              fileExtension: FileExtension.jpg.keywordName,
+              initialUrl: controller.photoUrl.value,
+              onFilePicked: (pickedFile) {
+                controller.onPickPhoto(pickedFile);
+              },
+            ),
             const SizedBox(width: 24),
-            PickFile(
-              labelText: "신분증",
-              hintText: "최대 10메가 (.jpg)",
+            PickFileFormField(
+              labelText: "신분증".tr,
+              essential: false,
+              hintText: "(.jpg)",
               fileExtension: FileExtension.jpg.keywordName,
               initialUrl: controller.idPhotoUrl.value,
               onFilePicked: (pickedFile) {
                 controller.onPickIdPhoto(pickedFile);
               },
+              // showError: controller.photoFileError.value,
             ),
           ],
         ),
@@ -180,19 +206,23 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
           children: [
             _buildNation(),
             const SizedBox(width: 24),
-            _buildInput("주소", true, controller.addressController),
+            BuildInput(
+                label: "주소".tr,
+                essential: false,
+                textController: controller.addressController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildLanguage("제1언어", true, controller.selectedPrimaryLanguage),
+            _buildLanguage("제1언어".tr, true, controller.selectedPrimaryLanguage),
             const SizedBox(width: 24),
-            _buildLanguage("제2언어", false, controller.selectedSecondaryLanguage),
+            _buildLanguage(
+                "제2언어".tr, false, controller.selectedSecondaryLanguage),
           ],
         ),
         const SizedBox(height: 24),
-        _buildMultiInput("자기소개"),
+        _buildMultiInput("자기소개".tr),
       ],
     );
   }
@@ -201,11 +231,14 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("회사 정보", style: CustomTextStyles.bodyMediumBlack),
+        Text("회사 정보".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         InkWell(
           onTap: () async {
-            controller.selectedCompany.value = await showCompanySearchDialog();
+            var result = await showCompanySearchDialog();
+            if (result != null) {
+              controller.selectedCompany.value = result;
+            }
           },
           child: Container(
             width: 353,
@@ -241,7 +274,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Row(
       children: [
         Text(
-          "회사 정보 새로 등록하기 ",
+          "회사 정보 새로 등록하기".tr,
           style: CustomTextStyles.labelLargeGray,
           overflow: TextOverflow.ellipsis,
         ),
@@ -256,99 +289,6 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     );
   }
 
-  // Row _buildPhoto() {
-  //   return Row(
-  //     children: [
-  //       Column(
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           RichText(
-  //               text: TextSpan(children: [
-  //             TextSpan(text: "사진 ", style: CustomTextStyles.labelLargeBlack),
-  //             TextSpan(text: "*", style: TextStyle(color: appTheme.red)),
-  //           ])),
-  //           const SizedBox(height: 8),
-  //           Container(
-  //             width: 353,
-  //             decoration: BoxDecoration(
-  //                 borderRadius: BorderRadiusStyle.roundedBorder12,
-  //                 border: Border.all(color: appTheme.grayScale3),
-  //                 color: appTheme.white),
-  //             padding: const EdgeInsets.all(16),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 SizedBox(
-  //                   width: 280,
-  //                   child: Text(
-  //                     controller.photoUrl.value ?? "300 x 300 최대 10메가 (.jpg)",
-  //                     style: CustomTextStyles.bodyMediumGray,
-  //                     overflow: TextOverflow.ellipsis,
-  //                   ),
-  //                 ),
-  //                 CustomImageView(
-  //                   imagePath: IconConstant.upload,
-  //                   onTap: () async {
-  //                     await controller.onPickPhoto();
-  //                   },
-  //                 )
-  //               ],
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  /*
-  Row _buildHandphone() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "핸드폰 번호 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  border: Border.all(color: appTheme.grayScale3),
-                  color: appTheme.white),
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 280,
-                    child: Text(
-                      '인증 하기',
-                      style: CustomTextStyles.bodyMediumGray,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  CustomImageView(
-                    imagePath: IconConstant.aabbcc,
-                    onTap: () {},
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-  */
-
   Widget _buildNation() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -357,10 +297,10 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "국가 ",
+              text: "국가".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -374,7 +314,8 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<Contry>(
-            hint: Text("Select Option", style: CustomTextStyles.bodyMediumGray),
+            hint: Text("Select Option".tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: controller.selectedContry.value,
             underline: Container(),
@@ -432,7 +373,8 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentLanguage>(
-            hint: Text("Select Option", style: CustomTextStyles.bodyMediumGray),
+            hint: Text("Select Option".tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: selectedLanguage.value,
             underline: Container(),
@@ -481,45 +423,15 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
           width: 730,
           textInputType: TextInputType.multiline,
           maxLines: 6,
-          // controller: controller.introController,
-          hintText: hint ?? "Input Text".tr,
+          hintText: hint ?? "입력하세요".tr,
           contentPadding: const EdgeInsets.all(16),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "필수 입력 항목입니다.".tr;
+            }
+            return null;
+          },
         ),
-      ],
-    );
-  }
-
-  Column _buildInput(
-      String text, bool essential, TextEditingController textController,
-      {String? hint}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "$text ",
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(
-              text: essential ? "*" : "", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        CustomTextFormField(
-            controller: textController,
-            width: 353,
-            hintText: hint ?? "Input text",
-            hintStyle: CustomTextStyles.bodyMediumGray,
-            validator: (value) {
-              if (value == null) {
-                return "필수 입력 항목입니다.".tr;
-              }
-              return null;
-            },
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            filled: true),
       ],
     );
   }
@@ -529,7 +441,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '승인 요청',
+          text: '승인 요청'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
           width: 90,
@@ -541,7 +453,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소',
+          text: '취소'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
@@ -560,7 +472,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
       children: [
         InkWell(
             child: Text(
-              "마스터 목록",
+              "마스터 목록".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -568,7 +480,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
               ),
             ),
             onTap: () {
-              if (SideMenuController.to.isActiveSubItem("마스터 목록")) {
+              if (SideMenuController.to.isActiveSubItem("마스터 목록".tr)) {
                 Get.offAllNamed(AppRoutes.masterManage);
               } else {
                 Get.offAllNamed(AppRoutes.inactiveMasterManage);
@@ -577,14 +489,14 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("마스터 신규 등록", style: CustomTextStyles.bodyMediumGray),
+        Text("마스터 신규 등록".tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "마스터 신규 등록",
+      name: "마스터 신규 등록".tr,
       searchShow: false,
       viewCount: false,
     );

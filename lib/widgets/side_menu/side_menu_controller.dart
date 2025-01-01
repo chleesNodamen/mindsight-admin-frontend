@@ -43,9 +43,11 @@ class SideMenuController extends GetxController {
           contentChallengeDisplayName, AppRoutes.contentChallengeManage, () {}),
     ],
     adminSettingsPageDisplayName: [
-      SubMenuItem(myAccountManageDisplayName, AppRoutes.adminSettings, () {}),
       SubMenuItem(
-          subAdminSettingsDisplayName, AppRoutes.subAdminSettings, () {}),
+          myAccountManagePageDisplayName, AppRoutes.masterDetails, () {}),
+      SubMenuItem(
+          myCompanyManagePageDisplayName, AppRoutes.companyManage, () {}),
+      SubMenuItem(etcSettingPageDisplayName, AppRoutes.etcAdminSetting, () {}),
     ],
     settlementManagePageDisplayName: [
       SubMenuItem(settlementManagePageSubMenuDisplayName,
@@ -95,6 +97,10 @@ class SideMenuController extends GetxController {
         return CustomImageView(
             imagePath:
                 '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
+      case companyManagePageDisplayName:
+        return CustomImageView(
+            imagePath:
+                '${IconConstant.company.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
       case contentManagePageDisplayName:
         return CustomImageView(
             imagePath:

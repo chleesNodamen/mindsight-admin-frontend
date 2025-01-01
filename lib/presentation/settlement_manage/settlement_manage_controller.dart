@@ -50,10 +50,10 @@ class SettlementManageController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     await changeMonth(MonthType.thisMonth);
     super.onInit();

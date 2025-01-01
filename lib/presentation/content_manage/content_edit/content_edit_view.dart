@@ -6,7 +6,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     return Obx(() => Scaffold(
         extendBodyBehindAppBar: true,
         body: PageLoadingIndicator(
@@ -17,77 +17,71 @@ class ContentEditView extends GetWidget<ContentEditController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SideMenu(),
-                      Obx(
-                        () => Expanded(
-                          child: ListView(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                                child: Column(
-                                  children: [
-                                    Form(
-                                      key: formKey,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          _buildTitle(),
-                                          const SizedBox(height: 16),
-                                          _buildSubMenu(),
-                                          const SizedBox(height: 32),
-                                          _buildBasicInfo(),
-                                          const SizedBox(height: 32),
-                                          _buildFile(),
-                                          const SizedBox(height: 32),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                              child: Column(
+                                children: [
+                                  Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        CustomElevatedButton(
-                                          text: '저장',
-                                          buttonTextStyle: CustomTextStyles
-                                              .bodyMediumWhiteBold,
-                                          buttonStyle:
-                                              CustomButtonStyles.fillPrimary,
-                                          width: 90,
-                                          height: 44,
-                                          onPressed: () {
-                                            if (formKey.currentState!
-                                                    .validate() &&
-                                                controller.isSaveOk()) {
-                                              controller.onSave();
-                                            }
-                                          },
-                                        ),
-                                        CustomElevatedButton(
-                                          text: '취소',
-                                          buttonTextStyle: CustomTextStyles
-                                              .bodyMediumRedBold,
-                                          buttonStyle: CustomButtonStyles
-                                              .fillRedTransparent,
-                                          margin:
-                                              const EdgeInsets.only(left: 16),
-                                          width: 90,
-                                          height: 44,
-                                          onPressed: () => Get.offAllNamed(
-                                              AppRoutes.contentDetails,
-                                              arguments: {
-                                                RouteArguments.id: controller.id
-                                              }),
-                                        ),
+                                        _buildTitle(),
+                                        const SizedBox(height: 16),
+                                        _buildSubMenu(),
+                                        const SizedBox(height: 32),
+                                        _buildBasicInfo(),
+                                        const SizedBox(height: 32),
+                                        _buildFile(),
+                                        const SizedBox(height: 32),
                                       ],
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      CustomElevatedButton(
+                                        text: '저장',
+                                        buttonTextStyle: CustomTextStyles
+                                            .bodyMediumWhiteBold,
+                                        buttonStyle:
+                                            CustomButtonStyles.fillPrimary,
+                                        width: 90,
+                                        height: 44,
+                                        onPressed: () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            controller.onSave();
+                                          }
+                                        },
+                                      ),
+                                      CustomElevatedButton(
+                                        text: '취소',
+                                        buttonTextStyle:
+                                            CustomTextStyles.bodyMediumRedBold,
+                                        buttonStyle: CustomButtonStyles
+                                            .fillRedTransparent,
+                                        margin: const EdgeInsets.only(left: 16),
+                                        width: 90,
+                                        height: 44,
+                                        onPressed: () => Get.offAllNamed(
+                                            AppRoutes.contentDetails,
+                                            arguments: {
+                                              RouteArguments.id: controller.id
+                                            }),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -102,7 +96,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
       children: [
         InkWell(
             child: Text(
-              "콘텐츠 목록",
+              "콘텐츠 목록".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -117,7 +111,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         ),
         InkWell(
             child: Text(
-              "콘텐츠 상세",
+              "콘텐츠 상세".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -131,14 +125,14 @@ class ContentEditView extends GetWidget<ContentEditController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text('콘텐츠 수정', style: CustomTextStyles.bodyMediumGray),
+        Text('콘텐츠 수정'.tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "콘텐츠 수정",
+      name: "콘텐츠 수정".tr,
       searchShow: false,
       viewCount: false,
     );
@@ -149,29 +143,12 @@ class ContentEditView extends GetWidget<ContentEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('기본 정보', style: CustomTextStyles.bodyMediumBlack),
+        Text('기본 정보'.tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "제목 ",
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        CustomTextFormField(
-            controller: controller.nameController,
-            width: 353,
-            validator: (value) {
-              if (controller.nameController.text == '') {
-                return "필수 입력 항목입니다.".tr;
-              }
-              return null;
-            },
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            filled: true),
+        BuildInput(
+            label: "제목".tr,
+            essential: true,
+            textController: controller.nameController),
         const SizedBox(height: 24),
         _buildCategoryNType(),
         const SizedBox(height: 24),
@@ -202,10 +179,10 @@ class ContentEditView extends GetWidget<ContentEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "카테고리 ",
+                  text: "카테고리".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             Container(
@@ -219,11 +196,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
                 borderRadius: BorderRadiusStyle.roundedBorder12,
               ),
               child: DropdownButton<ContentCategory>(
-                hint: Text('Select Option',
+                hint: Text('Select Option'.tr,
                     style: CustomTextStyles.bodyMediumGray),
                 isExpanded: true,
                 value: ContentCategory.fromKeyword(
-                    controller.contentDetailsModel.value.category!),
+                    controller.contentDetailsModel.category!),
                 underline: Container(),
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, top: 2, bottom: 2),
@@ -231,7 +208,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                 elevation: 16,
                 onChanged: (ContentCategory? newValue) {
                   controller.isLoading.value = true;
-                  controller.contentDetailsModel.value.category =
+                  controller.contentDetailsModel.category =
                       newValue?.keywordName;
                   controller.isLoading.value = false;
                 },
@@ -262,10 +239,10 @@ class ContentEditView extends GetWidget<ContentEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "타입 ",
+                  text: "타입".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             Container(
@@ -280,11 +257,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
               ),
               child: DropdownButton<ContentType>(
                   // enableFeedback: controller.categorySelected.value,
-                  hint: Text('Select Option',
+                  hint: Text('Select Option'.tr,
                       style: CustomTextStyles.bodyMediumGray),
                   isExpanded: true,
                   value: ContentType.fromKeyword(
-                      controller.contentDetailsModel.value.type!),
+                      controller.contentDetailsModel.type!),
                   underline: Container(),
                   padding: const EdgeInsets.only(
                       left: 16, right: 16, top: 2, bottom: 2),
@@ -293,12 +270,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   elevation: 16,
                   onChanged: (ContentType? newValue) {
                     controller.isLoading.value = true;
-                    controller.contentDetailsModel.value.type =
-                        newValue?.keywordName;
+                    controller.contentDetailsModel.type = newValue?.keywordName;
                     controller.isLoading.value = false;
                   },
                   items: controller.types[ContentCategory.fromKeyword(
-                          controller.contentDetailsModel.value.category!)]!
+                          controller.contentDetailsModel.category!)]!
                       .map<DropdownMenuItem<ContentType>>((ContentType value) {
                     return DropdownMenuItem<ContentType>(
                       value: value,
@@ -323,10 +299,10 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "수준 ",
+              text: "수준".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -340,10 +316,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentLevel>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: ContentLevel.fromKeyword(
-                controller.contentDetailsModel.value.level!),
+            value:
+                ContentLevel.fromKeyword(controller.contentDetailsModel.level!),
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -352,8 +329,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             elevation: 16,
             onChanged: (ContentLevel? newValue) {
               controller.isLoading.value = true;
-              controller.contentDetailsModel.value.level =
-                  newValue?.keywordName;
+              controller.contentDetailsModel.level = newValue?.keywordName;
               controller.isLoading.value = false;
             },
             items: [
@@ -384,10 +360,10 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "타겟 언어 ",
+              text: "타겟 언어".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -401,10 +377,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentLanguage>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: ContentLanguage.fromKeyword(
-                controller.contentDetailsModel.value.targetLanguage!),
+                controller.contentDetailsModel.targetLanguage!),
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -413,7 +390,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             elevation: 16,
             onChanged: (ContentLanguage? newValue) {
               controller.isLoading.value = true;
-              controller.contentDetailsModel.value.targetLanguage =
+              controller.contentDetailsModel.targetLanguage =
                   newValue?.keywordName;
               controller.isLoading.value = false;
             },
@@ -436,60 +413,6 @@ class ContentEditView extends GetWidget<ContentEditController> {
     );
   }
 
-  Widget _buildStatus() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "승인 ",
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        Container(
-          width: 353,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: appTheme.grayScale3,
-            ),
-            color: appTheme.white,
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-          ),
-          child: DropdownButton<ContentStatus>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
-            isExpanded: true,
-            value: ContentStatus.fromKeyword(
-                controller.contentDetailsModel.value.status!),
-            underline: Container(),
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-            // icon: const Icon(Icons.),
-            elevation: 16,
-            onChanged: (ContentStatus? newValue) {
-              controller.onChangeStatus(newValue);
-            },
-            items: [ContentStatus.approve, ContentStatus.disapprove]
-                .map<DropdownMenuItem<ContentStatus>>((ContentStatus value) {
-              return DropdownMenuItem<ContentStatus>(
-                value: value,
-                child: Text(
-                  value.displayName,
-                  style: CustomTextStyles.bodyMediumBlack,
-                ),
-              );
-            }).toList(),
-          ),
-        )
-      ],
-    );
-  }
-
   Widget _buildExposured() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -498,10 +421,10 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "노출 ",
+              text: "노출".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -515,10 +438,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentExposure>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: ContentExposure.fromKeyword(
-                controller.contentDetailsModel.value.exposure!),
+                controller.contentDetailsModel.exposure!),
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -554,22 +478,22 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "태그 ",
+              text: "태그".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
-        Text('태그 입력 후 ‘+’ 버튼 또는 Enter로 태그를 등록해주세요.',
+        Text('태그 입력 후 ‘+’ 버튼 또는 Enter로 태그를 등록해주세요.'.tr,
             style: CustomTextStyles.labelLargeGray),
         const SizedBox(height: 8),
-        controller.contentDetailsModel.value.tags!.isEmpty
+        controller.contentDetailsModel.tags!.isEmpty
             ? const SizedBox.shrink()
-            : _buildChips(),
+            : _buildTagChips(),
         CustomTextFormField(
             controller: controller.tagController,
             width: 730,
-            hintText: "Input text",
+            hintText: "Input text".tr,
             hintStyle: CustomTextStyles.bodyMediumGray,
             suffix: CustomImageView(
               imagePath: IconConstant.add,
@@ -584,7 +508,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
               controller.addTag(value);
             },
             validator: (value) {
-              if (controller.contentDetailsModel.value.tags!.isEmpty) {
+              if (controller.contentDetailsModel.tags!.isEmpty) {
                 return "필수 입력 항목입니다.".tr;
               }
               return null;
@@ -598,12 +522,12 @@ class ContentEditView extends GetWidget<ContentEditController> {
     );
   }
 
-  Widget _buildChips() {
+  Widget _buildTagChips() {
     return Column(
       children: [
         Row(
-            children: List.generate(
-                controller.contentDetailsModel.value.tags!.length, (index) {
+            children: List.generate(controller.contentDetailsModel.tags!.length,
+                (index) {
           return Row(
             children: [
               Container(
@@ -616,7 +540,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                       const SizedBox(
                         width: 4,
                       ),
-                      Text(controller.contentDetailsModel.value.tags![index],
+                      Text(controller.contentDetailsModel.tags![index],
                           style: CustomTextStyles.labelLargeWhite),
                       CustomImageView(
                         imagePath: IconConstant.close,
@@ -625,9 +549,13 @@ class ContentEditView extends GetWidget<ContentEditController> {
                         height: 15,
                         margin: const EdgeInsets.only(left: 8),
                         onTap: () {
-                          controller.contentDetailsModel.value.tags!.remove(
-                              controller
-                                  .contentDetailsModel.value.tags![index]);
+                          Logger.info(
+                              controller.contentDetailsModel.tags![index]);
+
+                          controller.isLoading.value = true;
+                          controller.contentDetailsModel.tags!.remove(
+                              controller.contentDetailsModel.tags![index]);
+                          controller.isLoading.value = false;
                         },
                       )
                     ],
@@ -655,10 +583,10 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "소개 ",
+              text: "소개".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(
           height: 8,
@@ -680,6 +608,12 @@ class ContentEditView extends GetWidget<ContentEditController> {
             controller: controller.introController,
             hintText: "Input Text".tr,
             contentPadding: const EdgeInsets.all(16),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "필수 입력 항목입니다.".tr;
+              }
+              return null;
+            },
           ),
         ),
       ],
@@ -691,7 +625,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("파일", style: CustomTextStyles.bodyMediumBlack),
+        Text("파일".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
@@ -716,7 +650,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
       children: [
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "더빙 ", style: CustomTextStyles.bodyMediumBlack),
+          TextSpan(text: "더빙".tr, style: CustomTextStyles.bodyMediumBlack),
         ])),
         const SizedBox(height: 24),
         Container(
@@ -742,10 +676,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
   }
 
   Widget _buildThumnailFile() {
-    return PickFile(
-      labelText: "썸네일 파일",
-      initialUrl: controller.contentDetailsModel.value.thumbnail,
-      hintText: "300 x 300 최대 10메가 (.jpg)",
+    return PickFileFormField(
+      labelText: "썸네일 파일".tr,
+      essential: true,
+      initialUrl: controller.contentDetailsModel.thumbnail,
+      hintText: "(.jpg)",
       fileExtension: FileExtension.jpg.keywordName,
       onFilePicked: (pickedFile) {
         controller.onPickThumbnail(pickedFile);
@@ -754,116 +689,15 @@ class ContentEditView extends GetWidget<ContentEditController> {
   }
 
   Widget _buildMediaFile() {
-    return PickFile(
-      labelText: "미디어 파일",
-      initialUrl: controller.contentDetailsModel.value.video,
-      hintText: "최대 2기가 (.mp4)",
+    return PickFileFormField(
+      labelText: "미디어 파일".tr,
+      essential: true,
+      initialUrl: controller.contentDetailsModel.video,
+      hintText: "(.mp4)",
       fileExtension: FileExtension.mp4.keywordName,
       onFilePicked: (pickedFile) {
         controller.onPickMedia(pickedFile);
       },
     );
-
-    // return Column(
-    //   mainAxisAlignment: MainAxisAlignment.start,
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     Row(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       children: [
-    //         SizedBox(
-    //           height: 20,
-    //           width: 170,
-    //           child: ListTile(
-    //               horizontalTitleGap: 0,
-    //               minLeadingWidth: 0,
-    //               minTileHeight: 0,
-    //               minVerticalPadding: 0,
-    //               contentPadding: EdgeInsets.zero,
-    //               //     const EdgeInsets.only(left: 0.0, right: 0.0),
-    //               title: Row(
-    //                 children: <Widget>[
-    //                   Radio<ActivityType>(
-    //                     value: ActivityType.practice,
-    //                     groupValue: ActivityType.practice,
-    //                     onChanged: (ActivityType? value) {
-    //                       // controller.onChangeType(value);
-    //                     },
-    //                   ),
-    //                   Text("미디어 파일", style: CustomTextStyles.labelLargeBlack),
-    //                 ],
-    //               )),
-    //         ),
-    //         SizedBox(
-    //           height: 20,
-    //           width: 170,
-    //           child: ListTile(
-    //               horizontalTitleGap: 0,
-    //               minLeadingWidth: 0,
-    //               minTileHeight: 0,
-    //               minVerticalPadding: 0,
-    //               contentPadding: EdgeInsets.zero,
-    //               title: Row(
-    //                 children: <Widget>[
-    //                   Radio<ActivityType>(
-    //                     value: ActivityType.challenge,
-    //                     groupValue: ActivityType.practice,
-    //                     onChanged: (ActivityType? value) {
-    //                       // controller.onChangeType(value);
-    //                     },
-    //                   ),
-    //                   Text("사운드 파일", style: CustomTextStyles.labelLargeBlack),
-    //                 ],
-    //               )),
-    //         )
-    //       ],
-    //     ),
-    //     const SizedBox(height: 8),
-    //     Container(
-    //       width: 353,
-    //       decoration: BoxDecoration(
-    //           borderRadius: BorderRadiusStyle.roundedBorder12,
-    //           border: Border.all(
-    //               color: controller.enableThumbnailError.value
-    //                   ? appTheme.alertNegative
-    //                   : appTheme.grayScale3),
-    //           color: controller.enableThumbnailError.value
-    //               ? appTheme.alertNegative.withOpacity(0.1)
-    //               : appTheme.white),
-    //       padding: const EdgeInsets.all(16),
-    //       child: Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           SizedBox(
-    //             width: 280,
-    //             child: Text(
-    //               controller.thumbnailName == "".obs
-    //                   ? '최대 2기가 (.mpeg)'
-    //                   : controller.thumbnailName.value,
-    //               style: controller.thumbnailName == "".obs
-    //                   ? CustomTextStyles.bodyMediumGray
-    //                   : CustomTextStyles.bodyMediumBlack,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //           ),
-    //           CustomImageView(
-    //             imagePath: IconConstant.upload,
-    //             onTap: () {
-    //               controller.pickFile("thumbnail");
-    //             },
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //     controller.enableThumbnailError.value
-    //         ? Column(
-    //             children: [
-    //               const SizedBox(height: 8),
-    //               Text('필수 입력 항목입니다.', style: CustomTextStyles.labelMediumRed),
-    //             ],
-    //           )
-    //         : const SizedBox.shrink(),
-    //   ],
-    // );
   }
 }

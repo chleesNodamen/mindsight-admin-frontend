@@ -15,7 +15,7 @@ class ContentEditController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  late Rx<ContentDetailsModel> contentDetailsModel;
+  late ContentDetailsModel contentDetailsModel;
 
   final Map<ContentCategory, List<ContentType>> types = {
     ContentCategory.body: [
@@ -61,24 +61,27 @@ class ContentEditController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    contentDetailsModel = (await ContentDetailsRepository().get(id)).obs;
+    contentDetailsModel = (await ContentDetailsRepository().get(id));
 
     introController.addListener(formatText);
 
-    nameController.text = contentDetailsModel.value.name!;
-    introController.text = contentDetailsModel.value.intro!;
+    nameController.text = contentDetailsModel.name!;
+    introController.text = contentDetailsModel.intro!;
 
-    // tags.value = contentDetailsModel.value.tags!;
+    // tags.value = contentDetailsModel.tags!;
 
-    mediaController.text = contentDetailsModel.value.video!;
+    mediaController.text = contentDetailsModel.video!;
 
     isLoading.value = false;
     isInited.value = true;
   }
 
   void addTag(String tag) {
-    contentDetailsModel.value.tags!.add(tag);
+    isLoading.value = true;
+    contentDetailsModel.tags!.add(tag);
     tagController.text = "";
+
+    isLoading.value = false;
   }
 
   void formatText() {
@@ -123,21 +126,17 @@ class ContentEditController extends GetxController {
     }
   }
 
-  bool isSaveOk() {
-    return true;
-  }
-
   void onPickThumbnail(File? pickedFile) {
     if (pickedFile != null) {
       thumbnailFile = pickedFile;
-      contentDetailsModel.value.thumbnail = pickedFile.name;
+      contentDetailsModel.thumbnail = pickedFile.name;
     }
   }
 
   void onPickMedia(File? pickedFile) {
     if (pickedFile != null) {
       mediaFile = pickedFile;
-      contentDetailsModel.value.video = pickedFile.name;
+      contentDetailsModel.video = pickedFile.name;
     }
   }
 
@@ -145,12 +144,12 @@ class ContentEditController extends GetxController {
     isLoading.value = true;
 
     if (thumbnailFile != null) {
-      contentDetailsModel.value.thumbnail =
+      contentDetailsModel.thumbnail =
           (await UploadRepository().uploadFile(thumbnailFile!)).url;
     }
 
     if (mediaFile != null) {
-      contentDetailsModel.value.video =
+      contentDetailsModel.video =
           await transcodingUploader.uploadTranscoding(mediaFile!);
     }
 
@@ -158,17 +157,17 @@ class ContentEditController extends GetxController {
       id,
       ContentEditReqPut(
         name: nameController.text,
-        category: contentDetailsModel.value.category,
-        type: contentDetailsModel.value.type,
-        level: contentDetailsModel.value.level,
-        targetLanguage: contentDetailsModel.value.targetLanguage,
-        status: contentDetailsModel.value.status,
-        exposure: contentDetailsModel.value.exposure,
-        tags: contentDetailsModel.value.tags!,
+        category: contentDetailsModel.category,
+        type: contentDetailsModel.type,
+        level: contentDetailsModel.level,
+        targetLanguage: contentDetailsModel.targetLanguage,
+        status: contentDetailsModel.status,
+        exposure: contentDetailsModel.exposure,
+        tags: contentDetailsModel.tags!,
         intro: introController.text,
-        thumbnail: contentDetailsModel.value.thumbnail,
-        video: contentDetailsModel.value.video,
-        cc: contentDetailsModel.value.cc,
+        thumbnail: contentDetailsModel.thumbnail,
+        video: contentDetailsModel.video,
+        cc: contentDetailsModel.cc,
       ),
     );
 
@@ -187,14 +186,14 @@ class ContentEditController extends GetxController {
   void onChangeStatus(ContentStatus? newValue) {
     if (Account.isAdminWithMsg) {
       isLoading.value = true;
-      contentDetailsModel.value.status = newValue?.keywordName;
+      contentDetailsModel.status = newValue?.keywordName;
       isLoading.value = false;
     }
   }
 
   void onExposureChange(ContentExposure? newValue) {
     isLoading.value = true;
-    contentDetailsModel.value.exposure = newValue?.keywordName;
+    contentDetailsModel.exposure = newValue?.keywordName;
     isLoading.value = false;
   }
 }

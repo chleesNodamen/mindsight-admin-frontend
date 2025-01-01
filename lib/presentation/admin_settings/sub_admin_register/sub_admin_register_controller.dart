@@ -21,7 +21,7 @@ class SubAdminRegisterController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController departmentController = TextEditingController();
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   List<Rx<PasswordValidEnum>> isPasswordValid = [
     PasswordValidEnum.waiting.obs,

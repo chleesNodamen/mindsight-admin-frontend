@@ -1,6 +1,7 @@
 // src/widgets/video_player_widget.dart
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mindsight_admin_page/utils/logger.dart';
 import 'package:video_player/video_player.dart';
 
@@ -48,7 +49,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     if (_isError) {
-      return const Center(child: Text('비디오를 로드하는 데 실패했습니다.'));
+      return Center(child: Text('비디오를 로드하는 데 실패했습니다.'.tr));
     }
 
     if (!_isInitialized) {

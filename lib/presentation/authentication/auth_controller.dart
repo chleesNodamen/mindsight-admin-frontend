@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
@@ -11,13 +12,11 @@ class AuthenticationController extends GetxController {
   RxBool isTextNotEmpty = false.obs;
   RxBool isObscured = true.obs;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   RxBool isLoading = false.obs;
   RxBool isInited = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     emailController.addListener(_updateTextStatus);
     isInited.value = true;

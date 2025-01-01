@@ -45,10 +45,10 @@ class CompanyEditController extends GetxController {
   }
 
   Future<void> initData() async {
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     companyDataModel = await CompanyDetailRepository().get(id);
 
@@ -82,7 +82,9 @@ class CompanyEditController extends GetxController {
         ));
 
     if (model.isSuccess) {
-      showSimpleMessage("저장 되었습니다");
+      await showSimpleMessage("저장 되었습니다");
+      Get.offAllNamed(AppRoutes.companyDetails,
+          arguments: {RouteArguments.id: id});
     } else {
       showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }
@@ -90,7 +92,7 @@ class CompanyEditController extends GetxController {
     isLoading.value = false;
   }
 
-  void goCompanyDatail() {
+  void onCompanyDatail() {
     Get.offAllNamed(AppRoutes.companyDetails,
         arguments: {RouteArguments.id: id});
   }

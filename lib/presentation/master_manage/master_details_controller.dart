@@ -6,7 +6,8 @@ import 'package:mindsight_admin_page/data/master_signin/master_signin_repository
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class MasterDetailsController extends GetxController {
-  final id = Get.arguments[RouteArguments.id];
+  // final id = Get.arguments[RouteArguments.id];
+  late String id;
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
@@ -20,16 +21,23 @@ class MasterDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    if (Get.arguments == null) {
+      id = Account.id;
+    } else {
+      id = Get.arguments[RouteArguments.id];
+    }
+
     await initData();
   }
 
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     masterDetailModel = await MasterDetailRepository().get(id);
 

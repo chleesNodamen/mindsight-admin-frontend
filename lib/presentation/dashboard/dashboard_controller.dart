@@ -28,10 +28,10 @@ class DashboardController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     challengeModel = await DashboardChallengeRepository()
         .get(DashboardChallengeReqGet(page: 1));

@@ -60,10 +60,10 @@ class ActivityManageController extends GetxController {
     searchValue = "".obs;
     activePage = 1.obs;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     affiliationModel = await AffiliationRepository().get();
     membershipLabels = affiliationModel.affiliation!;

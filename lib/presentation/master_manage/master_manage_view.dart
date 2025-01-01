@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/constants/enum/account_role.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_manage_controller.dart';
 
 class MasterManageView extends GetWidget<MasterManageController> {
@@ -62,10 +63,10 @@ class MasterManageView extends GetWidget<MasterManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "마스터 목록",
+      name: "마스터 목록".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "이메일 주소, 이름 검색",
+      searchText: "이메일 주소, 이름 검색".tr,
       memberShow: true,
       memberCount: controller.masterListModel.total,
       onSearch: controller.onSearch,
@@ -77,7 +78,7 @@ class MasterManageView extends GetWidget<MasterManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.masterRegister);
       },
-      text: "신규 등록",
+      text: "신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -90,7 +91,7 @@ class MasterManageView extends GetWidget<MasterManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.masterMassRegister);
       },
-      text: "대량 신규 등록",
+      text: "대량 신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -136,20 +137,24 @@ class MasterManageView extends GetWidget<MasterManageController> {
                   //       onChanged: (bool? value) {}),
                   // ),
                   DataColumn(
-                      label:
-                          Text("소속", style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text("이메일 주소",
+                      label: Text("소속".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("사용자 이름",
+                      label: Text("이메일 주소".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("등록일", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("닉네임".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("상태", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("등록일".tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text("등급".tr,
+                          style: CustomTextStyles.labelLargeGray)),
+
+                  DataColumn(
+                      label: Text("상태".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.masterListModel.length, (index) {
                   return DataRow(
@@ -201,6 +206,16 @@ class MasterManageView extends GetWidget<MasterManageController> {
                                   : "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
+                              Account.isAdminCompareEmail(
+                                      controller.masterListModel.email![index])
+                                  ? "관리자".tr
+                                  : "일반".tr,
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+
                         DataCell(StatusDropdown(
                           isEnable: Account.isAdmin,
                           isActive: controller.masterListModel.verified![index],
@@ -262,7 +277,7 @@ class MasterManageView extends GetWidget<MasterManageController> {
                 Visibility(
                   visible: Account.isAdmin,
                   child: CustomElevatedButton(
-                    text: "비활성",
+                    text: "비활성".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     buttonStyle: CustomButtonStyles.fillRedTransparent,
                     // margin: const EdgeInsets.symmetric(

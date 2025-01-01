@@ -6,11 +6,11 @@ Future<void> showSimpleMessage(String message) async {
     context: Get.context!,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('알림'),
+        title: Text("알림".tr),
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: const Text('확인'),
+            child: Text("확인".tr),
             onPressed: () {
               Navigator.of(context).pop();
             },

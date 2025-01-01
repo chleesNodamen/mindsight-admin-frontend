@@ -50,10 +50,10 @@ class InactiveCompanyManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "비활성 회사 관리",
+      name: "비활성 회사 관리".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "회사 이름 검색",
+      searchText: "회사 이름 검색".tr,
       memberShow: true,
       memberCount: controller.companyListModel.total,
       onSearch: controller.onSearch,
@@ -83,20 +83,20 @@ class InactiveCompanyManageView
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text("회사 이름",
+                      label: Text("회사 이름".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("대표자 이름",
+                      label: Text("대표자 이름".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("사업자 번호",
+                      label: Text("사업자 번호".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("전환일", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("전환일".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("상태", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("상태".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.companyListModel.id!.length,
                     (index) {
@@ -166,7 +166,7 @@ class InactiveCompanyManageView
                       Visibility(
                         visible: Account.isAdmin,
                         child: CustomElevatedButton(
-                          text: "활성",
+                          text: "활성".tr,
                           buttonTextStyle:
                               CustomTextStyles.bodyMediumSkyBlueBold,
                           buttonStyle:

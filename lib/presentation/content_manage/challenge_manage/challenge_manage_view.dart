@@ -57,7 +57,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.challengeRegister);
       },
-      text: "신규 등록",
+      text: "신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -67,10 +67,10 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Challenge 관리",
+      name: "Challenge 관리".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "챌린지 제목, 콘텐츠 제목 검색",
+      searchText: "챌린지 제목, 콘텐츠 제목 검색".tr,
       onSearch: controller.onSearch,
     );
   }
@@ -103,26 +103,26 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label:
-                          Text('목적', style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label:
-                          Text('제목', style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text('참여 회원 수',
+                      label: Text('목적'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('완료 회원 수',
+                      label: Text('제목'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('좋아요 수',
+                      label: Text('참여 회원 수'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('완료 회원 수'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('노출', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('좋아요 수'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('상태'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('노출'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.challengesModel.length, (index) {
                   String id = controller.challengesModel.id![index];
@@ -214,28 +214,28 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                     Visibility(
                       visible: Account.isAdmin,
                       child: CustomElevatedButton(
-                        text: '상태 변경',
+                        text: '상태 변경'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                         margin: const EdgeInsets.only(right: 16),
                         width: 107,
                         height: 44,
                         onPressed: () {
-                          showSimpleMessage("서비스 준비 중 입니다");
+                          showSimpleMessage("서비스 준비 중 입니다".tr);
                         },
                       ),
                     ),
                     Visibility(
                       visible: Account.isAdmin,
                       child: CustomElevatedButton(
-                        text: '삭제',
+                        text: '삭제'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                         buttonStyle:
                             CustomButtonStyles.fillRedTransparent.copyWith(),
                         width: 76,
                         height: 44,
                         onPressed: () {
-                          showSimpleMessage("서비스 준비 중 입니다");
+                          showSimpleMessage("서비스 준비 중 입니다".tr);
                         },
                       ),
                     ),
@@ -272,7 +272,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('목적', style: CustomTextStyles.labelMediumGray),
+          Text('목적'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 17),
           SizedBox(
             width: double.infinity,
@@ -299,7 +299,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('기간', style: CustomTextStyles.labelMediumGray),
+                  Text('기간'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
                   Row(
                     children:
@@ -321,19 +321,19 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('상태', style: CustomTextStyles.labelMediumGray),
+                  Text('상태'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
                   Row(
                     children: [
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[0],
-                        label: '활성',
+                        label: '활성'.tr,
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             0, value), // Adjust as needed
                       ),
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[1],
-                        label: '비활성',
+                        label: '비활성'.tr,
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             1, value), // Adjust as needed
                       ),

@@ -1,8 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/content_type.dart';
 import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_model.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_repository.dart';
@@ -64,16 +61,13 @@ class ContentManageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    // await ReloadHandler.handleReload();
     await initData();
   }
 
   Future<void> initData() async {
     isLoading.value = true;
-
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
 
     await loadPage(1);
 

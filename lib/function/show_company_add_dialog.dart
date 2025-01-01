@@ -33,7 +33,7 @@ Future<void> showCompanyAddDialog() async {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "회사 정보 새로 등록하기",
+                  "회사 정보 새로 등록하기".tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
                 CustomImageView(
@@ -48,33 +48,33 @@ Future<void> showCompanyAddDialog() async {
               children: [
                 Row(
                   children: [
-                    _buildInput("회사 이름", true),
+                    _buildInput("회사 이름".tr, true),
                     const SizedBox(width: 24),
-                    _buildInput("대표자", true),
+                    _buildInput("대표자".tr, true),
                   ],
                 ),
                 const SizedBox(height: 24),
                 Row(
                   children: [
-                    _buildInput("사업자 번호", true),
+                    _buildInput("사업자 번호".tr, true),
                     const SizedBox(width: 24),
-                    _buildInput("전화", true),
+                    _buildInput("전화".tr, true),
                   ],
                 ),
                 const SizedBox(height: 24),
                 Row(
                   children: [
-                    _buildInput("담당자 명", true),
+                    _buildInput("담당자 명".tr, true),
                     const SizedBox(width: 24),
-                    _buildInput("담당자 이메일", true),
+                    _buildInput("담당자 이메일".tr, true),
                   ],
                 ),
                 const SizedBox(height: 24),
                 Row(
                   children: [
-                    _buildInput("담당자 전화번호", true),
+                    _buildInput("담당자 전화번호".tr, true),
                     const SizedBox(width: 24),
-                    _buildInput("주소", true),
+                    _buildInput("주소".tr, true),
                   ],
                 ),
                 const SizedBox(
@@ -84,7 +84,7 @@ Future<void> showCompanyAddDialog() async {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomElevatedButton(
-                        text: "승인 요청",
+                        text: "승인 요청".tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                         buttonStyle: CustomButtonStyles.fillPrimary,
                         margin: const EdgeInsets.only(right: 16),
@@ -94,10 +94,11 @@ Future<void> showCompanyAddDialog() async {
                           Get.back();
 
                           showSimpleMessage(
-                              "승인 요청 되었습니다. 최대 2영업일이 소요 됩니다.\n승인이 완료 되면 메일과 푸쉬메세지로 알림 드리겠습니다.");
+                              "승인 요청 되었습니다. 최대 2영업일이 소요 됩니다.\n승인이 완료 되면 메일로 알림 드리겠습니다."
+                                  .tr);
                         }),
                     CustomElevatedButton(
-                        text: '취소',
+                        text: "취소".tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                         buttonStyle: CustomButtonStyles.fillRedTransparent,
                         width: 90,
@@ -134,7 +135,7 @@ Column _buildInput(String text, bool essential, {String? hint}) {
       CustomTextFormField(
           // controller: controller.titleController,
           width: 353,
-          hintText: hint ?? "Input text",
+          hintText: hint ?? "Input text".tr,
           hintStyle: CustomTextStyles.bodyMediumGray,
           validator: (value) {
             if (value == null) {

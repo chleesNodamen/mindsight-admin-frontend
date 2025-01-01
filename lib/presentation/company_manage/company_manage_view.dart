@@ -29,21 +29,14 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                                 children: [
                                   _buildTitle(),
                                   const SizedBox(height: 32),
-                                  Visibility(
-                                    visible: Account.isAdmin,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            _buildRegisterButton(),
-                                            const SizedBox(width: 16),
-                                            _buildMassRegisterButton(),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 32),
-                                      ],
-                                    ),
+                                  Row(
+                                    children: [
+                                      _buildRegisterButton(),
+                                      // const SizedBox(width: 16),
+                                      // _buildMassRegisterButton(),
+                                    ],
                                   ),
+                                  const SizedBox(height: 32),
                                   _buildPage(),
                                 ],
                               ),
@@ -62,10 +55,10 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "회사 목록",
+      name: "회사 목록".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "회사 이름 검색",
+      searchText: "회사 이름 검색".tr,
       memberShow: true,
       memberCount: controller.companyListModel.total,
       onSearch: controller.onSearch,
@@ -77,7 +70,7 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.companyRegister);
       },
-      text: "신규 등록",
+      text: "신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -90,7 +83,7 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.companyMassRegister);
       },
-      text: "대량 신규 등록",
+      text: "대량 신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -121,20 +114,20 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text("회사 이름",
+                      label: Text("회사 이름".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("대표자 이름",
+                      label: Text("대표자 이름".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("사업자 번호",
+                      label: Text("사업자 번호".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("등록일", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("등록일".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("상태", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("상태".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows:
                     List.generate(controller.companyListModel.total!, (index) {
@@ -201,7 +194,7 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                 Visibility(
                   visible: Account.isAdmin,
                   child: CustomElevatedButton(
-                    text: "비활성",
+                    text: "비활성".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     buttonStyle: CustomButtonStyles.fillRedTransparent,
                     // margin: const EdgeInsets.symmetric(

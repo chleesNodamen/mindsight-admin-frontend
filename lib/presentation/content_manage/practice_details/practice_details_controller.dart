@@ -22,10 +22,10 @@ class PracticeDetailsController extends GetxController {
     isLoading.value = true;
     isInited.value = false;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     practiceDetailsModel = await PracticeDetailsRepository().get(id);
 

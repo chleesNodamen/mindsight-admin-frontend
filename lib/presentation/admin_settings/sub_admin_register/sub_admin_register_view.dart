@@ -66,16 +66,16 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "담당자 이메일 주소 ",
+              text: "담당자 이메일 주소".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
             controller: controller.adminEmailController,
             width: 353,
-            hintText: "Input text",
+            hintText: "Input text".tr,
             hintStyle: CustomTextStyles.bodyMediumGray,
             onChange: (value) {},
             contentPadding:
@@ -86,7 +86,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CustomElevatedButton(
-              text: '저장',
+              text: '저장'.tr,
               buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
               buttonStyle: CustomButtonStyles.fillPrimary,
               width: 90,
@@ -94,7 +94,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
               onPressed: controller.onSave,
             ),
             CustomElevatedButton(
-              text: '취소',
+              text: '취소'.tr,
               buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
               buttonStyle: CustomButtonStyles.fillRedTransparent,
               margin: const EdgeInsets.only(left: 16),
@@ -118,16 +118,16 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "담당자 ",
+                  text: "담당자".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.managerController,
                 width: 353,
-                hintText: "Input text",
+                hintText: "Input text".tr,
                 hintStyle: CustomTextStyles.bodyMediumGray,
                 onChange: (value) {},
                 contentPadding:
@@ -143,7 +143,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "연락처 ",
+                  text: "연락처".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
             ])),
@@ -151,7 +151,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             CustomTextFormField(
                 controller: controller.phoneController,
                 width: 353,
-                hintText: "Input text",
+                hintText: "Input text".tr,
                 hintStyle: CustomTextStyles.bodyMediumGray,
                 onChange: (value) {},
                 contentPadding:
@@ -173,10 +173,10 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "권한 ",
+                  text: "권한".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             Container(
@@ -202,8 +202,12 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
                     controller.updateSelectedOrder(newValue);
                   }
                 },
-                items: <String>['Select Option', '운영', '제품 관리', '개발']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: <String>[
+                  'Select Option'.tr,
+                  '운영'.tr,
+                  '제품 관리'.tr,
+                  '개발'.tr
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
@@ -224,16 +228,16 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "담당 부서 ",
+                  text: "담당 부서".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.departmentController,
                 width: 353,
-                hintText: "Input text",
+                hintText: "Input text".tr,
                 hintStyle: CustomTextStyles.bodyMediumGray,
                 onChange: (value) {},
                 contentPadding:
@@ -255,16 +259,16 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "아이디 ",
+                  text: "아이디".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.idController,
                 width: 353,
-                hintText: "Input text",
+                hintText: "Input text".tr,
                 hintStyle: CustomTextStyles.bodyMediumGray,
                 onChange: (value) {},
                 contentPadding:
@@ -280,16 +284,16 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "비밀번호 ",
+                  text: "비밀번호".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.passwordController,
                 width: 353,
-                hintText: "Input text",
+                hintText: "Input text".tr,
                 hintStyle: CustomTextStyles.bodyMediumGray,
                 suffix: InkWell(
                     onTap: () {
@@ -324,7 +328,7 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.subAdminSettings),
-          child: Text("서브 관리자 관리",
+          child: Text("서브 관리자 관리".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -336,14 +340,14 @@ class SubAdminRegisterView extends GetWidget<SubAdminRegisterController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("관리자 신규 등록", style: CustomTextStyles.bodyMediumGray)
+        Text("관리자 신규 등록".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "관리자 신규 등록",
+      name: "관리자 신규 등록".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

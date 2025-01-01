@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_controller.dart';
 import 'package:mindsight_admin_page/theme/custom_button_style.dart';
 import 'package:mindsight_admin_page/theme/custom_text_style.dart';
@@ -26,15 +27,15 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
     List<int> months = List<int>.generate(12, (index) => index + 1);
 
     return AlertDialog(
-      title: const Text("월 선택"),
+      title: Text("월 선택".tr),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           // 연도 선택 Dropdown
           DropdownButtonFormField<int>(
             value: selectedYear,
-            decoration: const InputDecoration(
-              labelText: "연도",
+            decoration: InputDecoration(
+              labelText: "연도".tr,
               // border: OutlineInputBorder(),
             ),
             items: years
@@ -53,8 +54,8 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
           // 월 선택 Dropdown
           DropdownButtonFormField<int>(
             value: selectedMonth,
-            decoration: const InputDecoration(
-              labelText: "월",
+            decoration: InputDecoration(
+              labelText: "월".tr,
               // border: OutlineInputBorder(),
             ),
             items: months
@@ -76,7 +77,7 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomElevatedButton(
-                text: "확인",
+                text: "확인".tr,
                 buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                 buttonStyle: CustomButtonStyles.fillPrimary,
                 margin: const EdgeInsets.only(bottom: 15),
@@ -91,7 +92,7 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
                   Navigator.of(context).pop();
                 }),
             CustomElevatedButton(
-                text: "취소",
+                text: "취소".tr,
                 buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                 buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                 margin: const EdgeInsets.only(left: 10, bottom: 15),

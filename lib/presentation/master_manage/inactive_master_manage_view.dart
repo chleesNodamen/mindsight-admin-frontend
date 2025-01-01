@@ -50,10 +50,10 @@ class InactiveMasterManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "비활성 마스터 관리",
+      name: "비활성 마스터 관리".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "이메일 주소, 이름 검색",
+      searchText: "이메일 주소, 이름 검색".tr,
       memberShow: true,
       memberCount: controller.masterListModel.total,
       onSearch: controller.onSearch,
@@ -83,20 +83,20 @@ class InactiveMasterManageView
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label:
-                          Text('소속', style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text('이메일 주소',
+                      label: Text('소속'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('사용자 이름',
+                      label: Text('이메일 주소'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('전환일', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('닉네임'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('전환일'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('상태'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.masterListModel.length, (index) {
                   return DataRow(
@@ -171,7 +171,7 @@ class InactiveMasterManageView
                       Visibility(
                         visible: Account.isAdmin,
                         child: CustomElevatedButton(
-                          text: '활성',
+                          text: '활성'.tr,
                           buttonTextStyle:
                               CustomTextStyles.bodyMediumSkyBlueBold,
                           buttonStyle:

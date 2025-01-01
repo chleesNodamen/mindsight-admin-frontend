@@ -18,6 +18,20 @@ class ChallengeRegisterDay {
       'contentIds': contentIds,
     };
   }
+
+  bool isValidContentIds() {
+    if (contentIds.length < 2) {
+      return false;
+    }
+
+    for (int i = 0; i < 2; i++) {
+      if (contentIds[i].isEmpty) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
 
 class ChallengeRegisterReqPost {

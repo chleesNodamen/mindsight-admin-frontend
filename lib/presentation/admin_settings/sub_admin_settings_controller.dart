@@ -5,10 +5,6 @@ import 'package:mindsight_admin_page/data/admin_delete/admin_delete_req_delete.d
 import 'package:mindsight_admin_page/data/admin_list/admin_list_model.dart';
 import 'package:mindsight_admin_page/data/admin_list/admin_list_repository.dart';
 import 'package:mindsight_admin_page/data/admin_list/admin_list_req_get.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class SubAdminSettingsController extends GetxController {
   RxBool isLoading = true.obs;
@@ -28,11 +24,6 @@ class SubAdminSettingsController extends GetxController {
 
   Future<void> initData() async {
     isLoading.value = true;
-
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
 
     adminListModel = await AdminListRepository().get(AdminListReqGet(
       page: 1,

@@ -16,7 +16,7 @@ class SideMenuItem extends StatelessWidget {
                 onHover: (value) {
                   value
                       ? SideMenuController.to.onHover(itemName)
-                      : SideMenuController.to.onHover("not hovering");
+                      : SideMenuController.to.onHover("not hovering".tr);
                 },
                 child: Container(
                   color: SideMenuController.to.isHovering(itemName)

@@ -34,10 +34,10 @@ class PracticeManageController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     await loadPage(1);
 
@@ -101,5 +101,12 @@ class PracticeManageController extends GetxController {
     }
 
     isLoading.value = false;
+  }
+
+  Future<void> onSearch(String? search) async {
+    searchOn.value = true;
+    searchValue.value = search!;
+
+    loadPage(1);
   }
 }

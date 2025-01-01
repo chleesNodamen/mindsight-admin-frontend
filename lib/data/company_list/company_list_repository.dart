@@ -9,7 +9,7 @@ import 'package:mindsight_admin_page/data/company_list/company_list_req_get.dart
 class CompanyListRepository extends BaseRepository {
   Future<CompanyListModel> get(CompanyListReqGet dto) async {
     if (!Account.isAdmin) {
-      // dto.masterId = Account.id;
+      dto.masterId = Account.id;
     }
 
     // req

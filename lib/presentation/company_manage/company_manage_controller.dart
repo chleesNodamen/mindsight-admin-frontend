@@ -34,10 +34,10 @@ class CompanyManageController extends GetxController {
     searchValue = "".obs;
     activePage = 1.obs;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     await loadPage(1);
 
@@ -60,7 +60,7 @@ class CompanyManageController extends GetxController {
     companyListModel = await CompanyListRepository().get(CompanyListReqGet(
       page: pageNum,
       search: searchOn.value == true ? searchValue.value : null,
-      verified: true,
+      verified: Account.isAdmin ? true : null,
     ));
     companyVerified =
         (companyListModel.verified!.map((verified) => verified).toList()).obs;

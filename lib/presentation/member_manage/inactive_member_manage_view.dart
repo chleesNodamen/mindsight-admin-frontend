@@ -50,10 +50,10 @@ class InactiveMemberManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "비활성 회원 관리",
+      name: "비활성 회원 관리".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "이메일 주소, 이름 검색",
+      searchText: "이메일 주소, 이름 검색".tr,
       memberShow: true,
       memberCount: controller.membersModel.total,
       onSearch: controller.onSearch,
@@ -73,7 +73,7 @@ class InactiveMemberManageView
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('소속', style: CustomTextStyles.labelMediumGray),
+          Text('소속'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,20 +121,23 @@ class InactiveMemberManageView
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label:
-                          Text('소속', style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text('이메일 주소',
+                      label: Text('소속'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('사용자 이름',
+                      label: Text('이메일 주소'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('전환일', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('닉네임'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('전환일'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('상태'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('수정'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.membersModel.length, (index) {
                   return DataRow(
@@ -191,6 +194,20 @@ class InactiveMemberManageView
                             controller.onStatusChange(index, newState);
                           },
                         )),
+
+                        DataCell(CustomElevatedButton(
+                            text: "수정".tr,
+                            buttonTextStyle:
+                                CustomTextStyles.bodyMediumWhiteBold,
+                            buttonStyle: CustomButtonStyles.fillBlack,
+                            width: 60,
+                            height: 30,
+                            onPressed: () => Get.offAllNamed(
+                                    AppRoutes.memberEdit,
+                                    arguments: {
+                                      RouteArguments.id:
+                                          controller.membersModel.id![index],
+                                    }))),
 
                         // DataCell(DecoratedBox(
                         //   decoration: BoxDecoration(
@@ -250,7 +267,7 @@ class InactiveMemberManageView
                   Row(
                     children: [
                       CustomElevatedButton(
-                        text: '활성',
+                        text: '활성'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                         // margin: const EdgeInsets.symmetric(
@@ -260,7 +277,7 @@ class InactiveMemberManageView
                         onPressed: controller.onActivePressed,
                       ),
                       CustomElevatedButton(
-                        text: '삭제',
+                        text: '삭제'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                         buttonStyle: CustomButtonStyles.fillRedTransparent,
                         margin: const EdgeInsets.symmetric(horizontal: 16),

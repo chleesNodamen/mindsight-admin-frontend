@@ -21,10 +21,10 @@ class CompanyDetailsController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     companyDetailModel = await CompanyDetailRepository().get(id);
 
@@ -37,10 +37,14 @@ class CompanyDetailsController extends GetxController {
   }
 
   void onList() {
-    if (SideMenuController.to.isActiveSubItem("회사 목록")) {
-      Get.offAllNamed(AppRoutes.companyManage);
+    if (Account.isAdmin) {
+      if (SideMenuController.to.isActiveSubItem("회사 목록")) {
+        Get.offAllNamed(AppRoutes.companyManage);
+      } else {
+        Get.offAllNamed(AppRoutes.inactiveCompanyManage);
+      }
     } else {
-      Get.offAllNamed(AppRoutes.inactiveCompanyManage);
+      Get.offAllNamed(AppRoutes.companyManage);
     }
   }
 }

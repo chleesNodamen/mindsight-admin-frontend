@@ -13,7 +13,7 @@ class ImageActionsWidget extends StatelessWidget {
     if (imageUrl.isNotEmpty) {
       html.window.open(imageUrl, '_blank');
     } else {
-      showSimpleMessage("이미지 URL이 유효하지 않습니다");
+      showSimpleMessage("이미지 URL이 유효하지 않습니다".tr);
     }
   }
 
@@ -32,13 +32,13 @@ class ImageActionsWidget extends StatelessWidget {
             ..click();
           html.Url.revokeObjectUrl(url);
         } else {
-          showSimpleMessage('이미지를 다운로드할 수 없습니다');
+          showSimpleMessage('이미지를 다운로드할 수 없습니다'.tr);
         }
       } catch (e) {
-        showSimpleMessage('이미지를 다운로드하는 동안 오류가 발생했습니다');
+        showSimpleMessage('이미지를 다운로드하는 동안 오류가 발생했습니다'.tr);
       }
     } else {
-      showSimpleMessage('이미지 URL이 유효하지 않습니다');
+      showSimpleMessage('이미지 URL이 유효하지 않습니다'.tr);
     }
   }
 
@@ -48,7 +48,7 @@ class ImageActionsWidget extends StatelessWidget {
       children: [
         InkWell(
           child: Text(
-            "이미지 보기",
+            "이미지 보기".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue),

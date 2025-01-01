@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mindsight_admin_page/theme/app_decoration.dart';
 import 'package:mindsight_admin_page/theme/theme_helper.dart';
 
@@ -33,7 +34,7 @@ class StatusDropdown extends StatelessWidget {
           ),
         ),
         child: DropdownButton<String>(
-          value: isActive ? '활성' : '비활성',
+          value: isActive ? '활성'.tr : '비활성'.tr,
           underline: Container(),
           padding: const EdgeInsets.only(left: 12),
           borderRadius: borderRadius,
@@ -41,16 +42,16 @@ class StatusDropdown extends StatelessWidget {
           style: const TextStyle(color: Colors.deepPurple),
           onChanged: (String? newValue) {
             if (newValue != null && onChanged != null) {
-              onChanged!(newValue == '활성');
+              onChanged!(newValue == '활성'.tr);
             }
           },
-          items: <String>['활성', '비활성']
+          items: <String>['활성'.tr, '비활성'.tr]
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(
                 value,
-                style: value == "활성" ? activeTextStyle : inactiveTextStyle,
+                style: value == "활성".tr ? activeTextStyle : inactiveTextStyle,
               ),
             );
           }).toList(),
@@ -58,7 +59,7 @@ class StatusDropdown extends StatelessWidget {
       );
     } else {
       return Text(
-        isActive ? '활성' : '비활성',
+        isActive ? '활성'.tr : '비활성'.tr,
         style: isActive ? activeTextStyle : inactiveTextStyle,
       );
       // Container(

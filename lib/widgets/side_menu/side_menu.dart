@@ -64,38 +64,19 @@ const settlementManagePageSubMenuDisplayName = "스트리밍 정산";
 const revenueShareManagePageRoute = "/revenue_share_manage";
 const revenueShareManagePageDisplayName = "CP 수익율";
 
-const adminSettingsPageDisplayName = "관리자 설정";
-const myAccountManageDisplayName = "내 계정 관리";
-const subAdminSettingsDisplayName = "서브 관리자 관리";
+const adminSettingsPageDisplayName = "설정";
+const myAccountManagePageDisplayName = "내 계정 관리";
+const myCompanyManagePageDisplayName = "내 회사 관리";
+const etcSettingPageDisplayName = "기타 설정";
+// const subAdminSettingsDisplayName = "서브 관리자 관리";
 const adminSettingsPageRoute = "/admin_settings";
 
 const authenticationPageDisplayName = "Log out";
 const authenticationPageRoute = "/auth";
 
-List<MenuItem> sideMenuItemRoutes = Account.isAdmin
-    ? [
-        MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
-        MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {}),
-        MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
-        MenuItem(companyManagePageDisplayName, AppRoutes.companyManage, () {}),
-        MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {}),
-        MenuItem(
-            activityManagePageDisplayName, AppRoutes.activityManage, () {}),
-        MenuItem(
-            settlementManagePageDisplayName, AppRoutes.settlementManage, () {}),
-        MenuItem(adminSettingsPageDisplayName, AppRoutes.adminSettings, () {}),
-      ]
-    : [
-        // MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
-        MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
-        MenuItem(companyManagePageDisplayName, AppRoutes.companyManage, () {}),
-        MenuItem(contentManagePageDisplayName, AppRoutes.contentManage, () {}),
-        MenuItem(
-            settlementManagePageDisplayName, AppRoutes.settlementManage, () {}),
-      ];
+late List<MenuItem> sideMenuItemRoutes;
 
 void setSideMenuItemRoutes() {
-  Logger.info("Account.isAdmin ${Account.isAdmin}");
   sideMenuItemRoutes = Account.isAdmin
       ? [
           MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
@@ -110,17 +91,15 @@ void setSideMenuItemRoutes() {
           MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage,
               () {}),
           MenuItem(
-              adminSettingsPageDisplayName, AppRoutes.adminSettings, () {}),
+              adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
         ]
       : [
-          // MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
-          MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
-          MenuItem(
-              companyManagePageDisplayName, AppRoutes.companyManage, () {}),
           MenuItem(
               contentManagePageDisplayName, AppRoutes.contentManage, () {}),
           MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage,
               () {}),
+          MenuItem(
+              adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
         ];
 }
 
@@ -223,7 +202,7 @@ class _SideMenuState extends State<SideMenu> {
                             imagePath: IconConstant.powerOn,
                           ),
                           Text(
-                            "로그인 정보",
+                            "로그인 정보".tr,
                             style: CustomTextStyles.titleSmallBlack,
                           ),
                         ],
@@ -246,7 +225,7 @@ class _SideMenuState extends State<SideMenu> {
                           _logout();
                         },
                         height: 30,
-                        text: '로그아웃',
+                        text: '로그아웃'.tr,
                         buttonTextStyle: CustomTextStyles.labelLargeBlack,
                         buttonStyle: CustomButtonStyles.fillBackground,
                       )
@@ -261,6 +240,8 @@ class _SideMenuState extends State<SideMenu> {
 
   void _logout() async {
     Account.signOutSuccess();
+    PrefUtils.to.setSigninId("");
+
     await Get.offAllNamed(AppRoutes.auth);
   }
 }

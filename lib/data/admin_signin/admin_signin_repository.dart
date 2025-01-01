@@ -4,7 +4,7 @@ import 'package:mindsight_admin_page/data/admin_signin/admin_signin_model.dart';
 import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_repository.dart';
 import 'package:mindsight_admin_page/utils/logger.dart';
-import 'package:mindsight_admin_page/utils/pref_utils_nouse.dart';
+import 'package:mindsight_admin_page/utils/pref_utils.dart';
 
 class AdminSigninRepository extends BaseRepository {
   Future<AdminSigninModel> post(AdminSigninReqPost dto) async {
@@ -20,11 +20,14 @@ class AdminSigninRepository extends BaseRepository {
     if (model.isSuccess) {
       httpClient.setBearerAuthorization(model.accessToken!);
 
-      // PrefUtils.to.setSigninId(dto.email!);
-      // PrefUtils.to.setSigninTime();
+      PrefUtils.to.setSigninId(dto.email!);
+      PrefUtils.to.setSigninPassword(dto.password!);
 
       Account.signInSuccess(model.id!, dto.email!);
     } else {
+      PrefUtils.to.setSigninId("");
+      PrefUtils.to.setSigninPassword("");
+
       Logger.info("log in unsuccessful ${model.getErrorCode()}");
     }
 

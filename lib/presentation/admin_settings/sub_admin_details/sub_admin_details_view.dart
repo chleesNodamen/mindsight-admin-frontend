@@ -59,12 +59,12 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("관리자 기본 정보",
+              Text("관리자 기본 정보".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               InkWell(
                 onTap: controller.onEdit,
-                child: Text("수정",
+                child: Text("수정".tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue)),
@@ -80,7 +80,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('아이디',
+                  Text('아이디'.tr,
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
@@ -96,7 +96,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('담당 부서',
+                  Text('담당 부서'.tr,
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
@@ -112,7 +112,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('권한',
+                  Text('권한'.tr,
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
@@ -136,7 +136,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('담당자',
+                  Text('담당자'.tr,
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
@@ -152,7 +152,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('연락처',
+                  Text('연락처'.tr,
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
@@ -168,7 +168,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('이메일주소',
+                  Text('이메일주소'.tr,
                       style: CustomTextStyles.labelMediumGray
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 16),
@@ -189,7 +189,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('최근 활동',
+                Text('최근 활동'.tr,
                     style: CustomTextStyles.labelLargeGray
                         .copyWith(fontWeight: FontWeight.w600)),
                 const SizedBox(
@@ -224,7 +224,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
           onTap: () {
             Get.offAllNamed(AppRoutes.subAdminSettings);
           },
-          child: Text("서브 관리자 관리",
+          child: Text("서브 관리자 관리".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -236,14 +236,14 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("관리자 상세", style: CustomTextStyles.bodyMediumGray)
+        Text("관리자 상세".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "관리자 상세",
+      name: "관리자 상세".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

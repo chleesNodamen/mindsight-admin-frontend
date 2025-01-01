@@ -37,10 +37,10 @@ class ActivityHistoryController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     activityDetailsModel = await ActivityDetailsRepository()
         .get(id, ActivityDetailsReqGet(type: type));

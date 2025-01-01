@@ -56,7 +56,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.contentRegister);
       },
-      text: "신규 등록",
+      text: "신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -66,10 +66,10 @@ class ContentManageView extends GetWidget<ContentManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "콘텐츠 목록",
+      name: "콘텐츠 목록".tr,
       searchShow: true,
       viewCount: true,
-      searchText: "제목, 마스터 이름, 태그 검색",
+      searchText: "제목 검색".tr,
       viewNumber: controller.contentListModel.value.total,
       onSearch: controller.onSearch,
     );
@@ -103,29 +103,38 @@ class ContentManageView extends GetWidget<ContentManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label:
-                          Text('타입', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('타입'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('제목', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('제목'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('조회수', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('마스터'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('좋아요 수',
+                      label: Text('조회수'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('좋아요 수'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   // DataColumn(
                   //     label:
                   //         Text('미리보기', style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('상태'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('노출', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('노출'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('수정', style: CustomTextStyles.labelLargeGray)),
+                      label: Account.isAdmin
+                          ? const SizedBox.shrink()
+                          : Text("승인 요청".tr,
+                              style: CustomTextStyles.labelLargeGray)),
+
+                  DataColumn(
+                      label: Text('수정'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.contentListModel.value.length,
                     (index) {
@@ -163,6 +172,13 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
+                              controller.contentListModel.value.master![index]
+                                  .toString(),
+                              style: CustomTextStyles.bodyLargeBlack),
+                        )),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Text(
                               controller.contentListModel.value.seen![index]
                                   .toString(),
                               style: CustomTextStyles.bodyLargeBlack),
@@ -197,8 +213,20 @@ class ContentManageView extends GetWidget<ContentManageController> {
                           },
                         )),
 
+                        DataCell(Account.isAdmin
+                            ? const SizedBox.shrink()
+                            : CustomElevatedButton(
+                                text: "승인요청".tr,
+                                buttonTextStyle:
+                                    CustomTextStyles.bodyMediumWhiteBold,
+                                buttonStyle: CustomButtonStyles.fillBlack,
+                                width: 70,
+                                height: 30,
+                                onPressed: () =>
+                                    showSimpleMessage("서비스 준비 중 입니다".tr))),
+
                         DataCell(CustomElevatedButton(
-                            text: "수정",
+                            text: "수정".tr,
                             buttonTextStyle:
                                 CustomTextStyles.bodyMediumWhiteBold,
                             buttonStyle: CustomButtonStyles.fillBlack,
@@ -225,7 +253,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                     Visibility(
                       visible: Account.isAdmin,
                       child: CustomElevatedButton(
-                        text: '상태 변경',
+                        text: '상태 변경'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                         margin: const EdgeInsets.only(right: 16),
@@ -235,7 +263,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       ),
                     ),
                     CustomElevatedButton(
-                      text: '노출 변경',
+                      text: '노출 변경'.tr,
                       buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                       buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                       margin: const EdgeInsets.only(right: 16),
@@ -276,7 +304,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('타입', style: CustomTextStyles.labelMediumGray),
+          Text('타입'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 17),
           SizedBox(
             width: double.infinity,
@@ -362,7 +390,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   right: 0,
                   child: InkWell(
                     child: Text(
-                      controller.showMore.value ? "간략히 보기" : "전체 보기",
+                      controller.showMore.value ? "간략히 보기".tr : "전체 보기".tr,
                       style: CustomTextStyles.bodySmallSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue,
@@ -381,18 +409,18 @@ class ContentManageView extends GetWidget<ContentManageController> {
             thickness: 1,
             color: appTheme.grayScale2,
           ),
-          Text('상태', style: CustomTextStyles.labelMediumGray),
+          Text('상태'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 15),
           Row(
             children: [
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[0],
-                label: '활성',
+                label: '활성'.tr,
                 onChanged: (value) => controller.toggleServiceValues(0, value),
               ),
               CustomCheckboxWidget(
                 isChecked: controller.serviceValues[1],
-                label: '비활성',
+                label: '비활성'.tr,
                 onChanged: (value) => controller.toggleServiceValues(1, value),
               ),
             ],

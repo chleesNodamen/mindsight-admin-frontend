@@ -1,8 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/file_extension.dart';
 import 'package:mindsight_admin_page/constants/enum/goal.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_register/challenge_register_controller.dart';
-import 'package:mindsight_admin_page/widgets/pick_file.dart';
 import 'package:mindsight_admin_page/widgets/select_content_widget.dart';
 
 class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
@@ -10,6 +8,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     return Obx(
       () => Scaffold(
         extendBodyBehindAppBar: true,
@@ -22,28 +22,31 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                     children: [
                       const SideMenu(),
                       Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                _buildTitle(),
-                                const SizedBox(height: 32),
-                                _buildSubMenu(),
-                                const SizedBox(height: 32),
-                                _buildBasicInfo(),
-                                const SizedBox(height: 32),
-                                _buildDaySessionInfo(),
-                                const SizedBox(height: 32),
-                                _buildFileInfo(),
-                                const SizedBox(height: 32),
-                                _buildSaveNCancel(),
-                              ],
+                        child: ListView(children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  _buildTitle(),
+                                  const SizedBox(height: 32),
+                                  _buildSubMenu(),
+                                  const SizedBox(height: 32),
+                                  _buildBasicInfo(),
+                                  const SizedBox(height: 32),
+                                  _buildDaySessionInfo(),
+                                  const SizedBox(height: 32),
+                                  _buildFileInfo(),
+                                  const SizedBox(height: 32),
+                                  _buildSaveNCancel(_formKey),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
+                        ]),
                       ),
                     ],
                   ),
@@ -54,49 +57,17 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
     );
   }
 
-  Column _buildInput(
-      String text, bool essential, TextEditingController textController,
-      {String? hint}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "$text ",
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(
-              text: essential ? "*" : "", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        CustomTextFormField(
-            controller: textController,
-            width: 353,
-            hintText: hint ?? "Input text",
-            hintStyle: CustomTextStyles.bodyMediumGray,
-            validator: (value) {
-              if (value == null) {
-                return "필수 입력 항목입니다.".tr;
-              }
-              return null;
-            },
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            filled: true),
-      ],
-    );
-  }
-
   Column _buildBasicInfo() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 정보", style: CustomTextStyles.bodyMediumBlack),
+        Text("기본 정보".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        _buildInput("제목", true, controller.nameController),
+        BuildInput(
+            label: "제목".tr,
+            essential: true,
+            textController: controller.nameController),
         const SizedBox(height: 24),
         Row(
           children: [
@@ -107,8 +78,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "목적 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                      text: "목적".tr, style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
                 Container(
@@ -162,8 +133,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "기간 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                      text: "기간".tr, style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
                 Container(
@@ -209,17 +180,23 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
         const SizedBox(height: 24),
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "소개 ", style: CustomTextStyles.labelLargeBlack),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: "소개".tr, style: CustomTextStyles.labelLargeBlack),
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         CustomTextFormField(
-            controller: controller.introController,
-            maxLines: 5,
-            width: 730,
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            filled: true)
+          controller: controller.introController,
+          maxLines: 5,
+          width: 730,
+          contentPadding: const EdgeInsets.only(left: 16, top: 17, bottom: 17),
+          filled: true,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "필수 입력 항목입니다.".tr;
+            }
+            return null;
+          },
+        )
       ],
     );
   }
@@ -229,7 +206,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Day 세션 등록", style: CustomTextStyles.bodyMediumBlack),
+        Text("Day 세션 등록".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Wrap(
           spacing: 8.0, // Horizontal spacing
@@ -241,7 +218,10 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildInput("제목", true, controller.dayNameController),
+            BuildInput(
+                label: "제목".tr,
+                essential: true,
+                textController: controller.dayNameController),
             const SizedBox(width: 24),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,8 +229,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "콘텐츠 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                      text: "콘텐츠".tr, style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
                 SelectContentWidget(
@@ -279,7 +259,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
         ));
       }
 
-      int day = i + 1;
+      int day = i;
 
       widgets.add(
         InkWell(
@@ -296,7 +276,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
             ),
             alignment: Alignment.center,
             child: Text(
-              day.toString(),
+              (day + 1).toString(),
               style: controller.selectedDay.value == day
                   ? CustomTextStyles.labelMediumWhite
                   : CustomTextStyles.labelMediumBlack,
@@ -313,12 +293,13 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("파일", style: CustomTextStyles.bodyMediumBlack),
+        Text("파일".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        PickFile(
-          labelText: "썸네일 파일",
+        PickFileFormField(
+          labelText: "썸네일 파일".tr,
+          essential: true,
           initialUrl: controller.thumbnailFile.value?.name,
-          hintText: "300 x 300 최대 10메가 (.jpg)",
+          hintText: "(.jpg)",
           fileExtension: FileExtension.jpg.keywordName,
           onFilePicked: (pickedFile) {
             controller.onPickThumbnail(pickedFile);
@@ -328,22 +309,24 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
     );
   }
 
-  Row _buildSaveNCancel() {
+  Row _buildSaveNCancel(GlobalKey<FormState> formKey) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        // CustomElevatedButton(
+        //   text: '승인 요청',
+        //   buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+        //   buttonStyle: CustomButtonStyles.fillPrimary,
+        //   width: 90,
+        //   height: 44,
+        //   onPressed: () {
+        //     if (formKey.currentState!.validate()) {
+        //       controller.onSave();
+        //     }
+        //   },
+        // ),
         CustomElevatedButton(
-          text: '승인 요청',
-          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-          buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
-          height: 44,
-          onPressed: () {
-            controller.onSave();
-          },
-        ),
-        CustomElevatedButton(
-          text: '취소',
+          text: '취소'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
@@ -360,7 +343,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentChallengeManage),
-          child: Text("Challenge 관리",
+          child: Text("Challenge 관리".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -372,14 +355,14 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Challenge 신규 등록", style: CustomTextStyles.bodyMediumGray)
+        Text("Challenge 신규 등록".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Challenge 신규 등록",
+      name: "Challenge 신규 등록".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

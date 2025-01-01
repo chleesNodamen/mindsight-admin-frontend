@@ -55,8 +55,8 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "콘텐츠 등록 ", style: CustomTextStyles.labelLargeBlack),
-              TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                  text: "콘텐츠 등록".tr, style: CustomTextStyles.labelLargeBlack),
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ])),
             const SizedBox(height: 8),
             SelectContentWidget(
@@ -71,7 +71,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CustomElevatedButton(
-                  text: '저장',
+                  text: '저장'.tr,
                   buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                   buttonStyle: CustomButtonStyles.fillPrimary,
                   width: 90,
@@ -81,7 +81,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
                   },
                 ),
                 CustomElevatedButton(
-                  text: '취소',
+                  text: '취소'.tr,
                   buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                   buttonStyle: CustomButtonStyles.fillRedTransparent,
                   margin: const EdgeInsets.only(left: 16),
@@ -103,7 +103,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentPracticeManage),
-          child: Text("Practice plan 관리",
+          child: Text("Practice plan 관리".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -115,14 +115,14 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Practice plan 신규 등록", style: CustomTextStyles.bodyMediumGray)
+        Text("Practice plan 신규 등록".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan 신규 등록",
+      name: "Practice plan 신규 등록".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

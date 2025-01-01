@@ -61,7 +61,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("사용자 데이터", style: CustomTextStyles.labelLargeBlack),
+          Text("사용자 데이터".tr, style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +74,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("누적 참여 회원 수", style: CustomTextStyles.labelLargeGray)
+                  Text("누적 참여 회원 수".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               Column(
@@ -84,7 +84,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("참여 회원 수", style: CustomTextStyles.labelLargeGray)
+                  Text("참여 회원 수".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               Column(
@@ -94,7 +94,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("완료 회원 수", style: CustomTextStyles.labelLargeGray)
+                  Text("완료 회원 수".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               // Column(
@@ -113,7 +113,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("별점", style: CustomTextStyles.labelLargeGray)
+                  Text("별점".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               const SizedBox(width: 32),
@@ -140,10 +140,10 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("기본 정보", style: CustomTextStyles.labelLargeBlack),
+              Text("기본 정보".tr, style: CustomTextStyles.labelLargeBlack),
               InkWell(
                 onTap: controller.onEdit,
-                child: Text("수정",
+                child: Text("수정".tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue)),
@@ -157,7 +157,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('제목', style: CustomTextStyles.labelMediumGray),
+                  Text('제목'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.challengeDetailsModel.name!,
                       style: CustomTextStyles.bodyMediumBlack),
@@ -168,7 +168,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('마스터', style: CustomTextStyles.labelMediumGray),
+                  Text('마스터'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text("${controller.challengeDetailsModel.masterNickname}",
                       style: CustomTextStyles.bodyMediumBlack),
@@ -179,7 +179,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('승인 상태', style: CustomTextStyles.labelMediumGray),
+                  Text('승인 상태'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentStatus.fromKeyword(
@@ -193,7 +193,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('노출 상태', style: CustomTextStyles.labelMediumGray),
+                  Text('노출 상태'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentExposure.fromKeyword(
@@ -217,7 +217,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('목적', style: CustomTextStyles.labelMediumGray),
+                  Text('목적'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       Goal.fromKeyword(controller.challengeDetailsModel.goal!)
@@ -230,7 +230,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('기간', style: CustomTextStyles.labelMediumGray),
+                  Text('기간'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       "${controller.challengeDetailsModel.duration!.toString()}일",
@@ -248,7 +248,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('소개', style: CustomTextStyles.labelMediumGray),
+              Text('소개'.tr, style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
               Text(controller.challengeDetailsModel.intro!,
                   style: CustomTextStyles.bodyMediumBlack),
@@ -263,7 +263,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Day 세션', style: CustomTextStyles.labelLargeBlack),
+              Text('Day 세션'.tr, style: CustomTextStyles.labelLargeBlack),
               const SizedBox(height: 16),
               Wrap(
                 spacing: 8.0, // Horizontal spacing
@@ -287,9 +287,9 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("파일", style: CustomTextStyles.labelLargeBlack),
+              Text("파일".tr, style: CustomTextStyles.labelLargeBlack),
               const SizedBox(height: 24),
-              Text('썸네일 파일', style: CustomTextStyles.labelLargeGray),
+              Text('썸네일 파일'.tr, style: CustomTextStyles.labelLargeGray),
               const SizedBox(height: 16),
               ImageActionsWidget(
                   imageUrl: controller.challengeDetailsModel.thumbnail!)
@@ -372,35 +372,33 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('제목',
+        Text('제목'.tr,
             style: CustomTextStyles.labelMediumGray
                 .copyWith(fontWeight: FontWeight.w600)),
         const SizedBox(height: 16),
         Text(selectedDayDetails.name ?? '',
             style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        Text('콘텐츠', style: CustomTextStyles.labelMediumGray),
+        Text('콘텐츠'.tr, style: CustomTextStyles.labelMediumGray),
         const SizedBox(height: 16),
         Column(
           children: selectedDayDetails.contentNames!.map((content) {
-                int index =
-                    selectedDayDetails.contentNames!.indexOf(content) + 1;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Text('$index', style: CustomTextStyles.bodyMediumSkyBlue),
-                      const SizedBox(width: 16),
-                      Text(
-                        content,
-                        style: CustomTextStyles.bodyMediumBlack
-                            .copyWith(fontWeight: FontWeight.w500),
-                      ),
-                    ],
+            int index = selectedDayDetails.contentNames!.indexOf(content) + 1;
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: [
+                  Text('$index', style: CustomTextStyles.bodyMediumSkyBlue),
+                  const SizedBox(width: 16),
+                  Text(
+                    content,
+                    style: CustomTextStyles.bodyMediumBlack
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
-                );
-              }).toList() ??
-              [],
+                ],
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -411,7 +409,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentChallengeManage),
-          child: Text("Challenge 관리",
+          child: Text("Challenge 관리".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -423,14 +421,14 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Challenge 상세", style: CustomTextStyles.bodyMediumGray)
+        Text("Challenge 상세".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Challenge 상세",
+      name: "Challenge 상세".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

@@ -39,10 +39,10 @@ class CompanyRegisterController extends GetxController {
   }
 
   Future<void> initData() async {
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     isInited.value = true;
     isLoading.value = false;
@@ -62,9 +62,14 @@ class CompanyRegisterController extends GetxController {
 
     if (model.isSuccess) {
       // showSimpleMessage("저장 되었습니다");
-      Get.offAllNamed(AppRoutes.inactiveCompanyManage);
-      SideMenuController.to
-          .changeActiveSubItem(inactiveCompanyManagePageDisplayName);
+
+      if (Account.isAdmin) {
+        Get.offAllNamed(AppRoutes.inactiveCompanyManage);
+        SideMenuController.to
+            .changeActiveSubItem(inactiveCompanyManagePageDisplayName);
+      } else {
+        Get.offAllNamed(AppRoutes.companyManage);
+      }
     } else {
       showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }

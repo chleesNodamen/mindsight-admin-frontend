@@ -51,7 +51,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
 
   CustomElevatedButton _buildRegisterButton() {
     return CustomElevatedButton(
-      text: "신규 등록",
+      text: "신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -62,10 +62,11 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan 관리",
+      name: "Practice plan 관리".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "마스터, 콘텐츠 제목 검색",
+      searchText: "제목 검색".tr,
+      onSearch: controller.onSearch,
     );
   }
 
@@ -140,29 +141,29 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label:
-                          Text("마스터", style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text("컨텐츠 명",
+                      label: Text("마스터".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("완료 회원",
+                      label: Text("컨텐츠 명".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("참여 회원",
+                      label: Text("완료 회원".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("완료율", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("참여 회원".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text("좋아요", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("완료율".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('상태', style: CustomTextStyles.labelLargeGray)),
+                      label: Text("좋아요".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('노출', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('상태'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('노출'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.practicesModel.length, (index) {
                   return DataRow(cells: [

@@ -27,10 +27,10 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "수익쉐어",
-                                    searchShow: true,
+                                    name: "수익쉐어".tr,
+                                    searchShow: false,
                                     viewCount: false,
-                                    searchText: "마스터ID, 마스터명, 작품명 검색",
+                                    searchText: "마스터 이름 검색".tr,
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
@@ -79,27 +79,27 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                   // )),
                   DataColumn(
                       label: Text(
-                    "마스터 이름",
+                    "마스터 이름".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label: Text("마스터 ID",
+                      label: Text("마스터 ID".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("이전 수익률",
+                      label: Text("이전 수익률".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "현 수익률",
+                    "현 수익률".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label: Text("월시청 비율",
+                      label: Text("월시청 비율".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("마스터별 상세",
+                      label: Text("마스터별 상세".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(
@@ -152,7 +152,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomElevatedButton(
-                                text: "보기",
+                                text: "보기".tr,
                                 buttonTextStyle:
                                     CustomTextStyles.bodyMediumWhiteBold,
                                 buttonStyle: CustomButtonStyles.fillBlack,
@@ -163,7 +163,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                                 height: 5,
                               ),
                               CustomElevatedButton(
-                                text: "변경",
+                                text: "변경".tr,
                                 buttonTextStyle:
                                     CustomTextStyles.bodyMediumWhiteBold,
                                 buttonStyle: CustomButtonStyles.fillPrimary,
@@ -187,7 +187,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                 alignment: Alignment.centerLeft,
                 children: [
                   CustomElevatedButton(
-                    text: "엑셀 다운로드",
+                    text: "엑셀 다운로드".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                     buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                     width: 135,
@@ -197,7 +197,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                   Positioned(
                     left: 150,
                     child: CustomElevatedButton(
-                      text: "선택 집계",
+                      text: "선택 집계".tr,
                       buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                       buttonStyle: CustomButtonStyles.fillPrimary,
                       width: 107,
@@ -253,7 +253,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                         ),
                       ),
                       Text(
-                        "쉐어율을 변경합니다.",
+                        "쉐어율을 변경합니다.".tr,
                         style: CustomTextStyles.headlineMediumBlack,
                       ),
                     ],
@@ -275,7 +275,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "현재",
+                        "현재".tr,
                         style: CustomTextStyles.labelLargeBlack,
                       ),
                       const SizedBox(
@@ -314,7 +314,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "변경 후",
+                        "변경 후".tr,
                         style: CustomTextStyles.labelLargeBlack,
                       ),
                       const SizedBox(
@@ -351,7 +351,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomElevatedButton(
-                    text: '변경',
+                    text: '변경'.tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                     buttonStyle: CustomButtonStyles.fillPrimary,
                     width: 120,

@@ -21,7 +21,7 @@ class AdminSettingsController extends GetxController {
   final TextEditingController oldPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   RxBool isShowPasswordOne = true.obs;
   RxBool isShowPasswordTwo = true.obs;
@@ -41,10 +41,10 @@ class AdminSettingsController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     adminMyDataModel = await AdminMydataRepository().get();
 
@@ -70,7 +70,7 @@ class AdminSettingsController extends GetxController {
     isLoading.value = false;
 
     if (adminPasswordModel.isSuccess) {
-      showSimpleMessage("성공적으로 저장 되었습니다");
+      showSimpleMessage("저장 되었습니다");
     } else {
       showSimpleMessage(
           "저장에 실패 하였습니다. ${adminPasswordModel.getErrorMessage().tr}");

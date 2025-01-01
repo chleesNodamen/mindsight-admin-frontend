@@ -61,7 +61,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("사용자 데이터", style: CustomTextStyles.labelLargeBlack),
+          Text("사용자 데이터".tr, style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 24),
           Row(
             children: [
@@ -74,7 +74,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("조회수", style: CustomTextStyles.labelLargeGray)
+                  Text("조회수".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               const SizedBox(width: 50),
@@ -87,7 +87,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("좋아요 수", style: CustomTextStyles.labelLargeGray)
+                  Text("좋아요 수".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
             ],
@@ -113,10 +113,10 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("기본 정보", style: CustomTextStyles.labelLargeBlack),
+              Text("기본 정보".tr, style: CustomTextStyles.labelLargeBlack),
               InkWell(
                 onTap: controller.onEdit,
-                child: Text("수정",
+                child: Text("수정".tr,
                     style: CustomTextStyles.labelLargeSkyBlue
                         .copyWith(decoration: TextDecoration.underline)),
               )
@@ -127,7 +127,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('제목', style: CustomTextStyles.labelMediumGray),
+              Text('제목'.tr, style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
               Text(controller.contentDetailsModel.name!,
                   style: CustomTextStyles.bodyMediumBlack),
@@ -146,7 +146,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('카테고리', style: CustomTextStyles.labelMediumGray),
+                  Text('카테고리'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentCategory.fromKeyword(
@@ -160,7 +160,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('타입', style: CustomTextStyles.labelMediumGray),
+                  Text('타입'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       '${ContentType.fromKeyword(controller.contentDetailsModel.type!)?.displayName}',
@@ -172,7 +172,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('마스터', style: CustomTextStyles.labelMediumGray),
+                  Text('마스터'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.contentDetailsModel.master!,
                       style: CustomTextStyles.bodyMediumBlack),
@@ -193,7 +193,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('수준', style: CustomTextStyles.labelMediumGray),
+                  Text('수준'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       '${ContentLevel.fromKeyword(controller.contentDetailsModel.level)?.displayName}',
@@ -205,7 +205,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('타겟 언어', style: CustomTextStyles.labelMediumGray),
+                  Text('타겟 언어'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentLanguage.fromKeyword(
@@ -219,7 +219,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('승인 상태', style: CustomTextStyles.labelMediumGray),
+                  Text('승인 상태'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentStatus.fromKeyword(
@@ -233,7 +233,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('노출 상태', style: CustomTextStyles.labelMediumGray),
+                  Text('노출 상태'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentExposure.fromKeyword(
@@ -253,7 +253,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("태그", style: CustomTextStyles.labelMediumGray),
+              Text("태그".tr, style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
               Text(controller.contentDetailsModel.tags!.join(', '),
                   style: CustomTextStyles.bodyMediumBlack),
@@ -268,7 +268,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('소개', style: CustomTextStyles.labelMediumGray),
+              Text('소개'.tr, style: CustomTextStyles.labelMediumGray),
               const SizedBox(height: 16),
               Text(controller.contentDetailsModel.intro!,
                   style: CustomTextStyles.bodyMediumBlack)
@@ -283,7 +283,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("파일", style: CustomTextStyles.labelLargeBlack),
+              Text("파일".tr, style: CustomTextStyles.labelLargeBlack),
               const SizedBox(height: 24),
               Row(
                 children: [
@@ -291,7 +291,8 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('미디어 파일', style: CustomTextStyles.labelMediumGray),
+                      Text('미디어 파일'.tr,
+                          style: CustomTextStyles.labelMediumGray),
                       const SizedBox(height: 16),
                       VideoActionsWidget(
                           videoUrl: controller.contentDetailsModel.video!)
@@ -302,7 +303,8 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('썸네일 파일', style: CustomTextStyles.labelMediumGray),
+                      Text('썸네일 파일'.tr,
+                          style: CustomTextStyles.labelMediumGray),
                       const SizedBox(height: 16),
                       ImageActionsWidget(
                         imageUrl: controller.contentDetailsModel.thumbnail!,
@@ -326,7 +328,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
           onTap: () {
             Get.offAllNamed(AppRoutes.contentManage);
           },
-          child: Text("콘텐츠 목록",
+          child: Text("콘텐츠 목록".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -338,14 +340,14 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("콘텐츠 상세", style: CustomTextStyles.bodyMediumGray)
+        Text("콘텐츠 상세".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "콘텐츠 상세",
+      name: "콘텐츠 상세".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

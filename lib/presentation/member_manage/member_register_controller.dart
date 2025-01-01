@@ -21,7 +21,7 @@ class MemberRegisterController extends GetxController {
   final TextEditingController positionController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  Rx<Gender?> gender = Rx<Gender?>(null);
+  Rx<Gender?> gender = Rx<Gender?>(Gender.nonbinary);
   final TextEditingController yearController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
@@ -45,13 +45,15 @@ class MemberRegisterController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     affiliationModel = await AffiliationRepository().get();
-    // membershipLabels = affiliationModel.affiliation!;
+    if (affiliationModel.affiliation != null) {
+      affiliation.value = affiliationModel.affiliation![0];
+    }
 
     isInited.value = true;
     isLoading.value = false;
@@ -72,7 +74,10 @@ class MemberRegisterController extends GetxController {
             email: emailController.text));
 
     if (model.isSuccess) {
-      showSimpleMessage("저장 되었습니다");
+      // await showSimpleMessage("저장 되었습니다");
+      Get.offAllNamed(AppRoutes.memberManage);
+      SideMenuController.to
+          .changeActiveSubItem(memberManagePageSubMenuDisplayName);
     } else {
       showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }

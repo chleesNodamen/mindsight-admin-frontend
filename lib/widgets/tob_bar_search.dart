@@ -94,21 +94,22 @@ class TobBarSearch extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                width: 76,
-                height: 45,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: appTheme.black,
-                    borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(12),
-                      topRight: Radius.circular(12),
-                    )),
-                child: InkWell(
-                    onTap: () {
-                      onSearch != null ? onSearch!(textController.text) : null;
-                    },
-                    child: Text("검색", style: CustomTextStyles.bodyMediumWhite)),
+              InkWell(
+                onTap: () {
+                  onSearch != null ? onSearch!(textController.text) : null;
+                },
+                child: Container(
+                  width: 76,
+                  height: 45,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: appTheme.black,
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                      )),
+                  child: Text("검색".tr, style: CustomTextStyles.bodyMediumWhite),
+                ),
               )
             ],
           ),

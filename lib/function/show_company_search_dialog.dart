@@ -13,19 +13,20 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
   CompanyListModel model = await CompanyListRepository().get(CompanyListReqGet(
     page: 1,
     search: searchKeyword.isNotEmpty ? searchKeyword : null,
-    verified: true,
+    // verified: true,
   ));
 
-  if (model.total! > 0) {
-    selectedCompany = 0;
-    result = {
-      "id": model.id![selectedCompany],
-      "name": model.companyName![selectedCompany]
-    };
-  }
+  // if (model.total! > 0) {
+  // selectedCompany = 0;
+  // result = {
+  //   "id": model.id![selectedCompany],
+  //   "name": model.companyName![selectedCompany]
+  // };
+  // }
 
   await Get.dialog(
-    Dialog(
+      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+    return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusStyle.roundedBorder12,
       ),
@@ -45,7 +46,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "회사 선택",
+                  "회사 선택".tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
                 CustomImageView(
@@ -155,21 +156,21 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                           await CompanyListRepository().get(CompanyListReqGet(
                         page: 1,
                         search: searchKeyword.isNotEmpty ? searchKeyword : null,
-                        verified: true,
+                        // verified: true,
                       ));
 
                       if (model.total! > 0) {
                         selectedCompany = 0;
-                        result = {
-                          "id": model.id![selectedCompany],
-                          "name": model.companyName![selectedCompany]
-                        };
+                        // result = {
+                        //   "id": model.id![selectedCompany],
+                        //   "name": model.companyName![selectedCompany]
+                        // };
                       } else {
                         result = null;
                       }
                     },
                     child: Text(
-                      "검색",
+                      "검색".tr,
                       style: CustomTextStyles.bodyMediumWhite,
                     ),
                   ),
@@ -205,15 +206,15 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text("타입",
+                              label: Text("타입".tr,
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text("이름",
+                              label: Text("이름".tr,
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text("상태",
+                              label: Text("상태".tr,
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                           ],
@@ -225,16 +226,25 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                   DataCell(
                                     Radio<int>(
                                       value: index,
-                                      groupValue: 0,
+                                      groupValue: selectedCompany,
                                       onChanged: (int? value) {
                                         if (value != null) {
-                                          selectedCompany = value;
+                                          setState(() {
+                                            selectedCompany = value;
+                                            // result = {
+                                            //   "id": model.id![selectedCompany],
+                                            //   "name": model
+                                            //       .companyName![selectedCompany]
+                                            // };
+                                          });
+
+                                          // Logger.info(selectedCompany);
                                         }
                                       },
                                     ),
                                   ), // Radio button cell
                                   DataCell(
-                                    Text("법인",
+                                    Text("법인".tr,
                                         style: CustomTextStyles.bodyLargeBlack),
                                   ),
                                   DataCell(
@@ -242,7 +252,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                         style: CustomTextStyles.bodyLargeBlack),
                                   ),
                                   DataCell(
-                                    Text("정상",
+                                    Text("정상".tr,
                                         style: CustomTextStyles.bodyLargeBlack),
                                   ),
                                 ],
@@ -256,7 +266,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                         alignment: Alignment.centerLeft,
                         children: [
                           CustomElevatedButton(
-                              text: "선택 완료",
+                              text: "선택 완료".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumWhiteBold,
                               buttonStyle: CustomButtonStyles.fillPrimary,
@@ -264,6 +274,13 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                               width: 107,
                               height: 44,
                               onPressed: () async {
+                                if (model.total! > 0) {
+                                  result = {
+                                    "id": model.id![selectedCompany],
+                                    "name": model.companyName![selectedCompany]
+                                  };
+                                }
+
                                 Get.back();
                               }),
                           Center(
@@ -277,15 +294,15 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                   search: searchKeyword.isNotEmpty
                                       ? searchKeyword
                                       : null,
-                                  verified: true,
+                                  // verified: true,
                                 ));
 
                                 if (model.total! > 0) {
                                   selectedCompany = 0;
-                                  result = {
-                                    "id": model.id![selectedCompany],
-                                    "name": model.companyName![selectedCompany]
-                                  };
+                                  // result = {
+                                  //   "id": model.id![selectedCompany],
+                                  //   "name": model.companyName![selectedCompany]
+                                  // };
                                 } else {
                                   result = null;
                                 }
@@ -302,8 +319,10 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
           ],
         ),
       ),
-    ),
-  );
+    );
+  }));
+
+  // Logger.info("다이얼로그 종료 $result");
 
   return result;
 }

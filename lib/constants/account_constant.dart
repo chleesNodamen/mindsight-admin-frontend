@@ -9,7 +9,6 @@ class Account {
   static bool _isLogined = false;
 
   static bool get isLogined {
-    Logger.info("isLogined $_isLogined");
     return _isLogined;
   }
 
@@ -56,10 +55,18 @@ class Account {
     signinTime = DateTime.now().toString();
     _isLogined = true;
 
-    if (email == AppConstant.adminEmail) {
+    if (isAdminCompareEmail(email)) {
       role = AccountRole.admin;
     } else {
       role = AccountRole.master;
     }
+  }
+
+  static bool isAdminCompareEmail(String compareEmail) {
+    if (compareEmail == "mindsight@nodamen.com" ||
+        compareEmail == "won@nodamen.com") {
+      return true;
+    }
+    return false;
   }
 }

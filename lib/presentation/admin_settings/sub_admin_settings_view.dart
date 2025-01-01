@@ -49,7 +49,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
   CustomElevatedButton _buildRegisterButton() {
     return CustomElevatedButton(
       onPressed: controller.onRegister,
-      text: "신규 등록",
+      text: "신규 등록".tr,
       height: 44,
       width: 107,
       decoration:
@@ -59,7 +59,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "서브 관리자 관리",
+      name: "서브 관리자 관리".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",
@@ -92,17 +92,17 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label:
-                          Text('아이디', style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text('담당 부서',
+                      label: Text('아이디'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('담당자', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('담당 부서'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label:
-                          Text('권한', style: CustomTextStyles.labelLargeGray)),
+                      label: Text('담당자'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('권한'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.adminListModel.length, (index) {
                   String id = controller.adminListModel.id![index];
@@ -159,7 +159,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
               alignment: Alignment.centerLeft,
               children: [
                 CustomElevatedButton(
-                  text: '삭제',
+                  text: '삭제'.tr,
                   buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                   buttonStyle: CustomButtonStyles.fillRedTransparent.copyWith(),
                   width: 76,

@@ -1,5 +1,4 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/account_constant.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_controller.dart';
 import 'package:intl/intl.dart';
 
@@ -51,7 +50,7 @@ class DashboardView extends GetWidget<DashboardController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("마스터 대시보드", style: CustomTextStyles.headlineLargeBlack),
+          Text("마스터 대시보드".tr, style: CustomTextStyles.headlineLargeBlack),
         ],
       ),
     );
@@ -64,7 +63,7 @@ class DashboardView extends GetWidget<DashboardController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("대시보드", style: CustomTextStyles.headlineLargeBlack),
+          Text("대시보드".tr, style: CustomTextStyles.headlineLargeBlack),
           const SizedBox(
             height: 32,
           ),
@@ -122,14 +121,14 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '어제 접속 회원 수',
+                  '어제 접속 회원 수'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 Text(
-                  '2.3천',
+                  '2.3천'.tr,
                   style: CustomTextStyles.headlineLargeBlack,
                 ),
                 const SizedBox(
@@ -141,7 +140,8 @@ class DashboardView extends GetWidget<DashboardController> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadiusStyle.roundedBorder8,
                       color: appTheme.alertNegative.withOpacity(0.1)),
-                  child: Text('-6.5%', style: CustomTextStyles.labelLargeRed),
+                  child:
+                      Text('-6.5%'.tr, style: CustomTextStyles.labelLargeRed),
                 ),
                 const SizedBox(
                   height: 48,
@@ -155,7 +155,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   child: Row(
                 children: [
                   Text(
-                    'Google Analytics',
+                    'Google Analytics'.tr,
                     style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
@@ -186,14 +186,14 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '지난 7일 이벤트 수',
+                  '지난 7일 이벤트 수'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 Text(
-                  '8.6천',
+                  '8.6천'.tr,
                   style: CustomTextStyles.headlineLargeBlack,
                 ),
                 const SizedBox(
@@ -220,7 +220,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   child: Row(
                 children: [
                   Text(
-                    'Google Analytics',
+                    'Google Analytics'.tr,
                     style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
@@ -251,7 +251,7 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '지난 7일 재사용 회원 수',
+                  '지난 7일 재사용 회원 수'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 const SizedBox(
@@ -285,7 +285,7 @@ class DashboardView extends GetWidget<DashboardController> {
                   child: Row(
                 children: [
                   Text(
-                    'Google Analytics',
+                    'Google Analytics'.tr,
                     style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
@@ -315,7 +315,7 @@ class DashboardView extends GetWidget<DashboardController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              '등록 사용자 수',
+              '등록 사용자 수'.tr,
               style: CustomTextStyles.labelLargeGray,
             ),
             const SizedBox(
@@ -342,7 +342,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('미가입자', style: CustomTextStyles.labelMediumGray)
+                Text('미가입자'.tr, style: CustomTextStyles.labelMediumGray)
               ],
             ),
             const SizedBox(
@@ -361,7 +361,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('활성 회원', style: CustomTextStyles.labelMediumGray)
+                Text('활성 회원'.tr, style: CustomTextStyles.labelMediumGray)
               ],
             ),
             const SizedBox(
@@ -380,7 +380,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('비활성 회원', style: CustomTextStyles.labelMediumGray)
+                Text('비활성 회원'.tr, style: CustomTextStyles.labelMediumGray)
               ],
             ),
             Align(
@@ -418,15 +418,15 @@ class DashboardView extends GetWidget<DashboardController> {
   List<MembersData> _getChartData() {
     final List<MembersData> chartData = [
       MembersData(
-          'not registered',
+          'not registered'.tr,
           controller.registeredModel.unverifiedPercentage!,
           appTheme.background),
       MembersData(
-          'inactive',
+          'inactive'.tr,
           controller.registeredModel.disabledMembersPercentage!,
           appTheme.alertNegative),
-      MembersData('registered', controller.registeredModel.verifiedPercentage!,
-          appTheme.skyBlue),
+      MembersData('registered'.tr,
+          controller.registeredModel.verifiedPercentage!, appTheme.skyBlue),
     ];
     return chartData;
   }
@@ -446,13 +446,13 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Practice plan 완료율',
+                  'Practice plan 완료율'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 InkWell(
                   onTap: controller.onPracticeMore,
                   child: Text(
-                    '모두보기',
+                    '모두보기'.tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -477,25 +477,25 @@ class DashboardView extends GetWidget<DashboardController> {
                   ),
                   DataColumn(
                     label: Text(
-                      '회차',
+                      '회차'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      '완료 회원 수',
+                      '완료 회원 수'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      '참여 회원 수',
+                      '참여 회원 수'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      '완료율',
+                      '완료율'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
@@ -510,7 +510,7 @@ class DashboardView extends GetWidget<DashboardController> {
                           controller.onPracticeTap(index);
                         },
                         child: Text(
-                          "${controller.practiceModel.level![index]}회차",
+                          "${controller.practiceModel.level![index]}${"회차".tr}",
                           style: CustomTextStyles.bodyMediumBlack
                               .copyWith(decoration: TextDecoration.underline),
                         ),
@@ -557,13 +557,13 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '인기 Challenge',
+                  '인기 Challenge'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 InkWell(
                   onTap: controller.onChallengeMore,
                   child: Text(
-                    '모두보기',
+                    '모두보기'.tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -575,7 +575,7 @@ class DashboardView extends GetWidget<DashboardController> {
               height: 8,
             ),
             Text(
-                '집계기간  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1)))}',
+                '${"집계기간".tr}  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1)))}',
                 style: CustomTextStyles.labelMediumGray),
             const SizedBox(
               height: 24,
@@ -603,7 +603,7 @@ class DashboardView extends GetWidget<DashboardController> {
                                         const SizedBox(
                                           width: 16,
                                         ),
-                                        Text('집계된 데이터가 없습니다.',
+                                        Text('집계된 데이터가 없습니다.'.tr,
                                             style:
                                                 CustomTextStyles.labelLargeGray)
                                       ])),
@@ -654,7 +654,7 @@ class DashboardView extends GetWidget<DashboardController> {
                                         const SizedBox(
                                           width: 16,
                                         ),
-                                        Text('집계된 데이터가 없습니다.',
+                                        Text('집계된 데이터가 없습니다.'.tr,
                                             style:
                                                 CustomTextStyles.labelLargeGray)
                                       ])),
@@ -730,7 +730,7 @@ class DashboardView extends GetWidget<DashboardController> {
                     Padding(
                       padding: const EdgeInsets.only(right: 6),
                       child: Text(
-                        '${controller.challengeModel.duration![index]} min',
+                        '${controller.challengeModel.duration![index]} ${"min".tr}',
                         style: CustomTextStyles.labelLargeGray,
                       ),
                     ),
@@ -747,7 +747,7 @@ class DashboardView extends GetWidget<DashboardController> {
                     Padding(
                       padding: const EdgeInsets.only(left: 6),
                       child: Text(
-                        '${controller.challengeModel.daysTotal![index]} days',
+                        '${controller.challengeModel.daysTotal![index]} ${"days".tr}',
                         // "${model.daysTotal![index]} days",
                         style: CustomTextStyles.labelLargeGray,
                       ),

@@ -31,33 +31,20 @@
   <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>mindsight admin</title>
+
+  <!-- 캐시 방지를 위한 메타 태그 시작 -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <!-- 캐시 방지를 위한 메타 태그 끝 -->
+
   <link rel="manifest" href="manifest.json">
 
   <!-- 트랜스코딩 라이브러리 -->
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" crossorigin="anonymous" async></script>
 
-  <!-- 비디오재생 라이브러리
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    function initializeHls(videoId, videoUrl) {
-      var video = document.getElementById(videoId);
-      if (Hls.isSupported()) {
-        var hls = new Hls();
-        hls.loadSource(videoUrl);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          video.play();
-        });
-      }
-      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = videoUrl;
-        video.addEventListener('loadedmetadata', function () {
-          video.play();
-        });
-      }
-    }
-  </script>
-   -->
+  <!-- hls 비디오 재생 라이브러리 -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest" type="application/javascript"></script>
 </head>
 
 <body>

@@ -6,7 +6,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     return Obx(
       () => Scaffold(
         extendBodyBehindAppBar: true,
@@ -18,33 +18,29 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SideMenu(),
-                      Obx(
-                        () => Expanded(
-                          child: ListView(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(0, 48, 40, 48),
-                                child: Form(
-                                  key: formKey,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      _buildTitle(),
-                                      const SizedBox(height: 16),
-                                      _buildSubMenu(),
-                                      const SizedBox(height: 24),
-                                      _buildFile(),
-                                      const SizedBox(height: 32),
-                                      _buildSaveNCancel(formKey)
-                                    ],
-                                  ),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 48, 40, 48),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    _buildTitle(),
+                                    const SizedBox(height: 16),
+                                    _buildSubMenu(),
+                                    const SizedBox(height: 24),
+                                    _buildFile(),
+                                    const SizedBox(height: 32),
+                                    _buildSaveNCancel(_formKey)
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -70,8 +66,9 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "등록 파일 ", style: CustomTextStyles.labelLargeBlack),
-                  TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+                      text: "등록 파일".tr,
+                      style: CustomTextStyles.labelLargeBlack),
+                  TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
                 Container(
@@ -88,7 +85,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
                         width: 280,
                         child: Text(
                           controller.fileName == "".obs
-                              ? "최대 10메가 (엑셀 파일)"
+                              ? "(엑셀 파일)".tr
                               : controller.fileName.value,
                           style: controller.fileName == "".obs
                               ? CustomTextStyles.bodyMediumGray
@@ -109,7 +106,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
                     ? Column(
                         children: [
                           const SizedBox(height: 8),
-                          Text('필수 입력 항목입니다.',
+                          Text('필수 입력 항목입니다.'.tr,
                               style: CustomTextStyles.labelMediumRed),
                         ],
                       )
@@ -129,7 +126,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장',
+          text: '저장'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
           width: 90,
@@ -141,7 +138,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소',
+          text: '취소'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
@@ -158,7 +155,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
       children: [
         InkWell(
             child: Text(
-              "마스터 목록",
+              "마스터 목록".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -171,7 +168,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("대량 사전 신규 등록", style: CustomTextStyles.bodyMediumGray),
+        Text("대량 사전 신규 등록".tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
@@ -180,7 +177,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
     return Row(
       children: [
         Text(
-          '서식 엑셀 파일 다운로드',
+          '서식 엑셀 파일 다운로드'.tr,
           style: CustomTextStyles.labelLargeGray,
           overflow: TextOverflow.ellipsis,
         ),
@@ -194,7 +191,7 @@ class MasterMassRegisterView extends GetWidget<MasterMassRegisterController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "대량 사전 신규 등록",
+      name: "대량 사전 신규 등록".tr,
       searchShow: false,
       viewCount: false,
     );

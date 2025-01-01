@@ -1,11 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_model.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_repository.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class ContentSelectController extends GetxController {
   final ContentCategory category;
@@ -23,10 +20,10 @@ class ContentSelectController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
     await fetchContentList(1, textController.text);
   }
 
@@ -38,26 +35,28 @@ class ContentSelectController extends GetxController {
       contentListModel.value =
           await ContentListRepository().get(ContentListReqGet(
         page: pageNumber,
-        type: [
-          ContentType.basicBody.keywordName,
-          ContentType.intermediateBody.keywordName,
-          ContentType.advanceBody.keywordName
-        ],
+        sortBy: SortCondition.registration.keywordName,
+        // type: [
+        //   ContentType.basicBody.keywordName,
+        //   ContentType.intermediateBody.keywordName,
+        //   ContentType.advanceBody.keywordName
+        // ],
         search: searchQuery,
         pageSize: 5,
-        status: true,
+        // status: true,
       ));
     } else {
       contentListModel.value =
           await ContentListRepository().get(ContentListReqGet(
         page: pageNumber,
-        type: [
-          ContentType.natureBreathing.keywordName,
-          ContentType.guidedMeditation.keywordName
-        ],
-        search: textController.text,
+        sortBy: SortCondition.registration.keywordName,
+        // type: [
+        //   ContentType.natureBreathing.keywordName,
+        //   ContentType.guidedMeditation.keywordName
+        // ],
+        search: searchQuery,
         pageSize: 5,
-        status: true,
+        // status: true,
       ));
     }
 
@@ -109,7 +108,7 @@ Future<Map<String, String>?> showContentSelectDialog(
           borderRadius: BorderRadiusStyle.roundedBorder12,
           color: appTheme.background,
         ),
-        width: 784,
+        width: 900,
         padding: const EdgeInsets.all(32.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -118,7 +117,7 @@ Future<Map<String, String>?> showContentSelectDialog(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Practice plan 세션 선택',
+                  "콘텐츠 선택".tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
                 CustomImageView(
@@ -138,7 +137,7 @@ Future<Map<String, String>?> showContentSelectDialog(
                       decoration: InputDecoration(
                         fillColor: appTheme.white,
                         filled: true,
-                        labelText: "콘텐츠 제목, 마스터 이름",
+                        labelText: "콘텐츠 제목".tr,
                         labelStyle: CustomTextStyles.bodyMediumGray,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         border: OutlineInputBorder(
@@ -210,27 +209,24 @@ Future<Map<String, String>?> showContentSelectDialog(
                     ),
                   ),
                 ),
-                Container(
-                  width: 76,
-                  height: 45,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: appTheme.black,
-                    borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(12),
-                      topRight: Radius.circular(12),
+                InkWell(
+                  onTap: () async {
+                    await controller.fetchContentList(
+                        1, controller.textController.text);
+                  },
+                  child: Container(
+                    width: 76,
+                    height: 45,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: appTheme.black,
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                      ),
                     ),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      // isBody == true
-                      //     ? controller
-                      //         .fetchBodyData(controller.textController.text)
-                      //     : controller.fetchBreathData(
-                      //         controller.textController.text);
-                    },
                     child: Text(
-                      "검색",
+                      "검색".tr,
                       style: CustomTextStyles.bodyMediumWhite,
                     ),
                   ),
@@ -272,15 +268,15 @@ Future<Map<String, String>?> showContentSelectDialog(
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text('타입',
+                                label: Text("타입".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text('제목',
+                                label: Text("제목".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text('상태',
+                                label: Text("상태".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                             ],
@@ -336,8 +332,8 @@ Future<Map<String, String>?> showContentSelectDialog(
                                         child: Text(
                                           controller.contentListModel.value
                                                   .status![index]
-                                              ? "정상"
-                                              : "안함",
+                                              ? "정상".tr
+                                              : "안함".tr,
                                           style:
                                               CustomTextStyles.bodyLargeBlack,
                                         ),
@@ -355,7 +351,7 @@ Future<Map<String, String>?> showContentSelectDialog(
                           alignment: Alignment.centerLeft,
                           children: [
                             CustomElevatedButton(
-                              text: '선택 완료',
+                              text: "선택 완료".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumWhiteBold,
                               buttonStyle: CustomButtonStyles.fillPrimary,

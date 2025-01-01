@@ -29,10 +29,10 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "스트리밍 정산",
-                                    searchShow: true,
+                                    name: "스트리밍 정산".tr,
+                                    searchShow: false,
                                     viewCount: false,
-                                    searchText: "마스터ID, 마스터명, 작품명 검색",
+                                    searchText: "마스터 이름 검색".tr,
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
@@ -62,7 +62,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
       children: [
         Row(
           children: [
-            Text("매출 집계기간 ${controller.selectedMonth}월   ",
+            Text("${"매출 집계기간".tr} ${controller.selectedMonth}월   ",
                 style: CustomTextStyles.labelLargeBlack),
             Text("(${controller.dateRange})",
                 style: CustomTextStyles.labelLargeGray),
@@ -78,23 +78,25 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
             InkWell(
                 onTap: _buildTotalSalesDetailModal,
                 child: _buildSummaryCard(
-                    "월 전체 매출액 >",
+                    "${"월 전체 매출액".tr} >",
                     CustomTextStyles.labelLargeGray,
                     controller.settlementSummaryModel.totalSales!)),
-            _buildSummaryCard("월 PG 수수료", CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard("월 스토어 수수료", CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard("월 기타 수수료", CustomTextStyles.labelLargeRed, 0),
+            _buildSummaryCard("월 PG 수수료".tr, CustomTextStyles.labelLargeRed, 0),
+            _buildSummaryCard(
+                "월 스토어 수수료".tr, CustomTextStyles.labelLargeRed, 0),
+            _buildSummaryCard("월 기타 수수료".tr, CustomTextStyles.labelLargeRed, 0),
             InkWell(
               onTap: _buildTotalSalesDetailModal,
               child: _buildSummaryCard(
-                  "월 전체 순 매출액 >",
+                  "${"월 전체 순 매출액".tr} >",
                   CustomTextStyles.labelLargeGray,
                   controller.settlementSummaryModel.netSales!),
             ),
-            _buildSummaryCard("월 총 플레이 횟수", CustomTextStyles.labelLargeGray,
+            _buildSummaryCard("월 총 플레이 횟수".tr, CustomTextStyles.labelLargeGray,
                 controller.settlementSummaryModel.playCount!.toDouble()),
-            _buildSummaryCard("월 전체 지급 금액", CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard("월 영업이익", CustomTextStyles.labelLargeGray,
+            _buildSummaryCard(
+                "월 전체 지급 금액".tr, CustomTextStyles.labelLargeRed, 0),
+            _buildSummaryCard("월 영업이익".tr, CustomTextStyles.labelLargeGray,
                 controller.settlementSummaryModel.finalSales!),
           ],
         ),
@@ -213,7 +215,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             )),
                       ),
                       CustomElevatedButton(
-                        text: "지난 달",
+                        text: "지난 달".tr,
                         buttonTextStyle: controller.selectedMonthType.value ==
                                 MonthType.lastMonth
                             ? CustomTextStyles.bodyMediumWhiteBold
@@ -229,7 +231,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             await controller.changeMonth(MonthType.lastMonth),
                       ),
                       CustomElevatedButton(
-                        text: "이번 달",
+                        text: "이번 달".tr,
                         buttonTextStyle: controller.selectedMonthType.value ==
                                 MonthType.thisMonth
                             ? CustomTextStyles.bodyMediumWhiteBold
@@ -245,7 +247,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             await controller.changeMonth(MonthType.thisMonth),
                       ),
                       CustomElevatedButton(
-                        text: "월 선택   ",
+                        text: "${"월 선택".tr}   ",
                         decoration: AppDecoration.outlineGray,
                         rightIcon: CustomImageView(
                           imagePath: IconConstant.aabbcc,
@@ -310,33 +312,33 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                   //         Text("집계기간", style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "마스터 이름",
+                    "마스터 이름".tr,
                     style: CustomTextStyles.labelLargeGray,
                   )),
                   DataColumn(
-                      label:
-                          Text("수익률", style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text(
-                    "총 플레이\n횟수",
-                    style: CustomTextStyles.labelLargeGray,
-                    textAlign: TextAlign.center,
-                  )),
-                  DataColumn(
-                      label: Text("월 시청률",
+                      label: Text("수익률".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "실정산금액\n(부가세포함)",
+                    "총 플레이\n횟수".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label:
-                          Text("상태", style: CustomTextStyles.labelLargeGray)),
+                      label: Text("월 시청률".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "마스터별\n상세",
+                    "실정산금액\n(부가세포함)".tr,
+                    style: CustomTextStyles.labelLargeGray,
+                    textAlign: TextAlign.center,
+                  )),
+                  DataColumn(
+                      label: Text("상태".tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text(
+                    "마스터별\n상세".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
@@ -381,9 +383,10 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                         DataCell(Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("미발행", style: CustomTextStyles.bodyLargeBlack),
+                            Text("미발행".tr,
+                                style: CustomTextStyles.bodyLargeBlack),
                             CustomElevatedButton(
-                              text: "발행",
+                              text: "발행".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumWhiteBold,
                               buttonStyle: CustomButtonStyles.fillPrimary,
@@ -395,7 +398,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           ],
                         )),
                         DataCell(CustomElevatedButton(
-                          text: "보기",
+                          text: "보기".tr,
                           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                           buttonStyle: CustomButtonStyles.fillBlack,
                           width: 60,
@@ -415,7 +418,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                 alignment: Alignment.centerLeft,
                 children: [
                   CustomElevatedButton(
-                    text: "엑셀 다운로드",
+                    text: "엑셀 다운로드".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                     buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                     width: 135,
@@ -425,7 +428,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                   Positioned(
                     left: 150,
                     child: CustomElevatedButton(
-                      text: "선택 집계",
+                      text: "선택 집계".tr,
                       buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                       buttonStyle: CustomButtonStyles.fillPrimary,
                       width: 107,
@@ -473,7 +476,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "월 구독 전체 매출액 상세",
+                        "월 구독 전체 매출액 상세".tr,
                         style: CustomTextStyles.headlineLargeBlack,
                       ),
                       const SizedBox(
@@ -531,7 +534,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                                                 controller.changeType(value);
                                               },
                                             ),
-                                            Text("전체",
+                                            Text("전체".tr,
                                                 style: CustomTextStyles
                                                     .bodyMediumBlack
                                                     .copyWith(
@@ -578,7 +581,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                                               controller.changeType(value);
                                             },
                                           ),
-                                          Text("앱결제",
+                                          Text("앱결제".tr,
                                               style: CustomTextStyles
                                                   .bodyMediumBlack
                                                   .copyWith(
@@ -601,7 +604,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                                               controller.changeType(value);
                                             },
                                           ),
-                                          Text("기타",
+                                          Text("기타".tr,
                                               style: CustomTextStyles
                                                   .bodyMediumBlack
                                                   .copyWith(
@@ -641,45 +644,45 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           columns: [
                             DataColumn(
                                 label: Text(
-                              "구매자명\n(회원 ID)",
+                              "구매자명\n(회원 ID)".tr,
                               style: CustomTextStyles.labelLargeGray,
                               textAlign: TextAlign.center,
                             )),
                             DataColumn(
                                 label: Text(
-                              "거래일시",
+                              "거래일시".tr,
                               style: CustomTextStyles.labelLargeGray,
                               textAlign: TextAlign.center,
                             )),
                             DataColumn(
-                                label: Text("취소일시",
+                                label: Text("취소일시".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
                                 label: Text(
-                              "멤버쉽명",
+                              "멤버쉽명".tr,
                               style: CustomTextStyles.labelLargeGray,
                               textAlign: TextAlign.center,
                             )),
                             DataColumn(
-                                label: Text("금액",
+                                label: Text("금액".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("승인번호",
+                                label: Text("승인번호".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("결제대행사",
+                                label: Text("결제대행사".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("수수료",
+                                label: Text("수수료".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("순매출액",
+                                label: Text("순매출액".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("기타 수수료\n(저작권료)",
+                                label: Text("기타 수수료\n(저작권료)".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("순매출액",
+                                label: Text("순매출액".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                           ],
                           rows: List.generate(
@@ -762,7 +765,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           alignment: Alignment.centerLeft,
                           children: [
                             CustomElevatedButton(
-                              text: "엑셀 다운로드",
+                              text: "엑셀 다운로드".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumSkyBlueBold,
                               buttonStyle:
@@ -824,7 +827,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             height: 5,
                           ),
                           Text(
-                            "작품별 플레이 횟수에 따른 정산 상세",
+                            "작품별 플레이 횟수에 따른 정산 상세".tr,
                             style: CustomTextStyles.titleLargeBlack,
                           ),
                           const SizedBox(
@@ -879,28 +882,28 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                               columns: [
                                 DataColumn(
                                     label: Text(
-                                  "콘텐츠명",
+                                  "콘텐츠명".tr,
                                   style: CustomTextStyles.labelLargeGray,
                                   textAlign: TextAlign.center,
                                 )),
                                 DataColumn(
                                     label: Text(
-                                  "쉐어율",
+                                  "쉐어율".tr,
                                   style: CustomTextStyles.labelLargeRed,
                                   textAlign: TextAlign.center,
                                 )),
                                 DataColumn(
-                                    label: Text("플레이 횟수",
+                                    label: Text("플레이 횟수".tr,
                                         style:
                                             CustomTextStyles.labelLargeGray)),
                                 DataColumn(
                                     label: Text(
-                                  "콘텐츠 별 시청율",
+                                  "콘텐츠 별 시청율".tr,
                                   style: CustomTextStyles.labelLargeGray,
                                   textAlign: TextAlign.center,
                                 )),
                                 DataColumn(
-                                    label: Text("콘텐츠 별 정산금액",
+                                    label: Text("콘텐츠 별 정산금액".tr,
                                         style:
                                             CustomTextStyles.labelLargeGray)),
                               ],
@@ -985,7 +988,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             alignment: Alignment.centerLeft,
                             children: [
                               CustomElevatedButton(
-                                text: "엑셀 다운로드",
+                                text: "엑셀 다운로드".tr,
                                 buttonTextStyle:
                                     CustomTextStyles.bodyMediumSkyBlueBold,
                                 buttonStyle:

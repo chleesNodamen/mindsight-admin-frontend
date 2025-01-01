@@ -1,8 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/content_language.dart';
 import 'package:mindsight_admin_page/constants/enum/contry.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/master_detail/master_detail_model.dart';
 import 'package:mindsight_admin_page/data/master_detail/master_detail_repository.dart';
@@ -14,19 +11,22 @@ import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 import 'package:universal_html/html.dart';
 
 class MasterEditController extends GetxController {
-  final id = Get.arguments[RouteArguments.id];
+  final String id = Get.arguments[RouteArguments.id];
+  // final bool isSettingPage = Get.arguments[RouteArguments.isSettingPage];
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
   late MasterDetailModel masterDetailModel;
 
-  List<Contry> contryLabels = [Contry.us, Contry.korea, Contry.japan];
-  List<ContentLanguage> languageLabels = [
-    ContentLanguage.english,
-    ContentLanguage.korean,
-    ContentLanguage.japanese
-  ];
+  List<Contry> contryLabels =
+      Contry.values; // [Contry.unitedStates, Contry.korea, Contry.japan];
+  List<ContentLanguage> languageLabels = ContentLanguage.values;
+  // [
+  //   ContentLanguage.english,
+  //   ContentLanguage.korean,
+  //   ContentLanguage.japanese
+  // ];
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nicknameController = TextEditingController();
@@ -71,10 +71,10 @@ class MasterEditController extends GetxController {
   Future<void> initData() async {
     isLoading.value = true;
 
-    if (AppConstant.test) {
-      await MasterSigninRepository().post(MasterSigninReqPost(
-          email: AppConstant.testEmail, password: AppConstant.testPassword));
-    }
+    // if (AppConstant.test) {
+    //   await MasterSigninRepository().post(MasterSigninReqPost(
+    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
+    // }
 
     masterDetailModel = await MasterDetailRepository().get(id);
 
@@ -147,7 +147,9 @@ class MasterEditController extends GetxController {
         ));
 
     if (model.isSuccess) {
-      showSimpleMessage("저장 되었습니다");
+      await showSimpleMessage("저장 되었습니다");
+      Get.offAllNamed(AppRoutes.masterDetails,
+          arguments: {RouteArguments.id: id});
     } else {
       showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
     }

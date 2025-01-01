@@ -54,8 +54,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
       children: [
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "콘텐츠 등록 ", style: CustomTextStyles.labelLargeBlack),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: "콘텐츠 등록".tr, style: CustomTextStyles.labelLargeBlack),
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         InkWell(
@@ -110,7 +110,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장',
+          text: '저장'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
           width: 90,
@@ -120,7 +120,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소',
+          text: '취소'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
@@ -138,7 +138,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentPracticeManage),
-          child: Text("Practice plan 관리",
+          child: Text("Practice plan 관리".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -152,7 +152,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         ),
         InkWell(
           onTap: controller.goPracticeDetails,
-          child: Text("Practice plan 상세",
+          child: Text("Practice plan 상세".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -164,14 +164,14 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Practice plan 수정", style: CustomTextStyles.bodyMediumGray)
+        Text("Practice plan 수정".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan 수정",
+      name: "Practice plan 수정".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",
@@ -186,10 +186,10 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "승인 ",
+              text: "승인".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -203,7 +203,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentStatus>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: ContentStatus.fromKeyword(
                 controller.practiceDetailsModel.status!),
@@ -242,10 +243,10 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "노출 ",
+              text: "노출".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: "*", style: TextStyle(color: appTheme.red))
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -259,7 +260,8 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentExposure>(
-            hint: Text('Select Option', style: CustomTextStyles.bodyMediumGray),
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
             value: ContentExposure.fromKeyword(
                 controller.practiceDetailsModel.exposure!),
