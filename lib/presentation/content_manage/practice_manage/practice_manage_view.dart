@@ -51,9 +51,9 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
 
   CustomElevatedButton _buildRegisterButton() {
     return CustomElevatedButton(
-      text: "신규 등록".tr,
+      text: "New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
       onPressed: controller.onPressedRegister,
@@ -62,10 +62,10 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan 관리".tr,
+      name: "Practice plan management".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "제목 검색".tr,
+      searchText: "Search title".tr,
       onSearch: controller.onSearch,
     );
   }
@@ -104,7 +104,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
             return DropdownMenuItem<SortCondition>(
               value: value,
               child: Text(
-                value.displayName,
+                value.displayName.tr,
                 style: CustomTextStyles.labelLargeBlack,
               ),
             );
@@ -141,28 +141,36 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text("마스터".tr,
+                      label: Text("Master".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("컨텐츠 명".tr,
+                      label: Text("Title".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("완료 회원".tr,
+                      label: Text("Complete member".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("참여 회원".tr,
+                      label: Text("Participating members".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("완료율".tr,
+                      label: Text("Complete rate".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("좋아요".tr,
+                      label: Text("Likes".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('상태'.tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('노출'.tr,
+                      label: Text('Exposure'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Account.isAdmin
+                          ? const SizedBox.shrink()
+                          : Text("Approval request".tr,
+                              style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('Edit'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.practicesModel.length, (index) {
@@ -208,6 +216,28 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                         controller.onExposureChange(index);
                       },
                     )),
+                    DataCell(Account.isAdmin
+                        ? const SizedBox.shrink()
+                        : CustomElevatedButton(
+                            text: "Approval request".tr,
+                            buttonTextStyle:
+                                CustomTextStyles.bodyMediumWhiteBold,
+                            buttonStyle: CustomButtonStyles.fillBlack,
+                            // width: 70,
+                            height: 30,
+                            onPressed: () =>
+                                showSimpleMessage("Service preparing".tr))),
+                    DataCell(CustomElevatedButton(
+                        text: "Edit".tr,
+                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+                        buttonStyle: CustomButtonStyles.fillBlack,
+                        // width: 60,
+                        height: 30,
+                        onPressed: () =>
+                            Get.offAllNamed(AppRoutes.practiceEdit, arguments: {
+                              RouteArguments.id:
+                                  controller.practicesModel.id![index],
+                            }))),
                   ]);
                 }).toList(),
               ),

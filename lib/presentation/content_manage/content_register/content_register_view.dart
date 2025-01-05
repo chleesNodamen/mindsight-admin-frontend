@@ -56,10 +56,10 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           margin: const EdgeInsets.only(right: 16),
           onPressed: () {
@@ -69,7 +69,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           },
         ),
         // CustomElevatedButton(
-        //   text: '승인 요청',
+        //   text: 'Approval request',
         //   buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
         //   buttonStyle: CustomButtonStyles.fillPrimary,
         //   width: 90,
@@ -77,14 +77,14 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         //   margin: const EdgeInsets.only(right: 16),
         //   onPressed: () {
         //     showSimpleMessage(
-        //         "승인 요청 되었습니다. 최대 2영업일이 소요 됩니다.\n승인이 완료 되면 메일로 알림 드리겠습니다.");
+        //         "Approval requested. It may take up to 2 business days.\nYou will be notified by email upon approval.");
         //   },
         // ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Get.offAllNamed(AppRoutes.contentManage),
         ),
@@ -96,10 +96,10 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('기본 정보'.tr, style: CustomTextStyles.bodyMediumBlack),
+        Text('Basic info'.tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         BuildInput(
-          label: "제목".tr,
+          label: "Title".tr,
           essential: true,
           textController: controller.nameController,
         ),
@@ -131,7 +131,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "노출".tr,
+              text: "Exposure".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -168,7 +168,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               return DropdownMenuItem<ContentExposure>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -187,7 +187,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "수준".tr,
+              text: "Level".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -226,7 +226,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               return DropdownMenuItem<ContentLevel>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -245,7 +245,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "타겟 언어".tr,
+              text: "Target Language".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -281,7 +281,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               return DropdownMenuItem<ContentLanguage>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -297,7 +297,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       children: [
         InkWell(
             child: Text(
-              "콘텐츠 목록".tr,
+              "Content list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -308,14 +308,15 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text('콘텐츠 신규 등록'.tr, style: CustomTextStyles.bodyMediumGray),
+        Text('Content New registration'.tr,
+            style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "콘텐츠 신규 등록".tr,
+      name: "Content New registration".tr,
       searchShow: false,
       viewCount: false,
     );
@@ -329,7 +330,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "제목".tr,
+              text: "Title".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -342,7 +343,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             hintStyle: CustomTextStyles.bodyMediumGray,
             validator: (value) {
               if (value == null) {
-                return "필수 입력 항목입니다.".tr;
+                return "This field is required.".tr;
               }
               return null;
             },
@@ -363,7 +364,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "카테고리".tr,
+                  text: "Category".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -408,7 +409,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   return DropdownMenuItem<ContentCategory>(
                     value: value,
                     child: Text(
-                      value.displayName,
+                      value.displayName.tr,
                       style: CustomTextStyles.bodyMediumBlack,
                     ),
                   );
@@ -425,7 +426,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "타입".tr,
+                  text: "Type".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -461,7 +462,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                     return DropdownMenuItem<ContentType>(
                       value: value,
                       child: Text(
-                        value.displayName,
+                        value.displayName.tr,
                         style: CustomTextStyles.bodyMediumBlack,
                       ),
                     );
@@ -481,13 +482,15 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "태그".tr,
+              text: "Tags".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
-        Text('태그 입력 후 ‘+’ 버튼 또는 Enter로 태그를 등록해주세요.'.tr,
+        Text(
+            "After entering tags, please register them by clicking the '+' button or pressing Enter."
+                .tr,
             style: CustomTextStyles.labelLargeGray),
         const SizedBox(height: 8),
         controller.tags == [] ? const SizedBox.shrink() : _buildTagChips(),
@@ -510,7 +513,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             },
             validator: (value) {
               if (controller.tags.isEmpty) {
-                return "필수 입력 항목입니다.".tr;
+                return "This field is required.".tr;
               }
               return null;
             },
@@ -577,7 +580,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "소개".tr,
+              text: "Introduction".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -600,11 +603,11 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             textInputType: TextInputType.multiline,
             maxLines: 6,
             controller: controller.introController,
-            hintText: "Input Text".tr,
+            hintText: "Input text".tr,
             contentPadding: const EdgeInsets.all(16),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return "필수 입력 항목입니다.".tr;
+                return "This field is required.".tr;
               }
               return null;
             },
@@ -619,25 +622,29 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("파일".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("File".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
             PickFileFormField(
-              labelText: "미디어 파일".tr,
+              labelText: "Media File".tr,
               essential: true,
-              hintText: controller.mediaFile?.name ?? "(.mp4)",
-              fileExtension: FileExtension.mp4.keywordName,
+              hintText: controller.mediaFile?.name ?? ".mp4, .mp3, .wav",
+              fileExtension: [
+                FileExtension.mp4.keywordName,
+                FileExtension.mp3.keywordName,
+                FileExtension.wav.keywordName
+              ],
               onFilePicked: (pickedFile) {
                 controller.onPickMedia(pickedFile);
               },
             ),
             const SizedBox(width: 24),
             PickFileFormField(
-              labelText: "썸네일 파일".tr,
+              labelText: "Thumbnail file".tr,
               essential: true,
-              hintText: controller.thumbnailFile?.name ?? "(.jpg)",
-              fileExtension: FileExtension.jpg.keywordName,
+              hintText: controller.thumbnailFile?.name ?? ".jpg",
+              fileExtension: [FileExtension.jpg.keywordName],
               onFilePicked: (pickedFile) {
                 controller.onPickThumbnail(pickedFile);
               },
@@ -645,8 +652,19 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           ],
         ),
         const SizedBox(height: 24),
-        _buildDubbing(),
-        const SizedBox(height: 24),
+        // PickFileFormField(
+        //   labelText: "CC file".tr,
+        //   essential: false,
+        //   hintText: controller.ccFile?.name ?? ".srt",
+        //   fileExtension: [FileExtension.srt.keywordName],
+        //   onFilePicked: (pickedFile) {
+        //     controller.onPickCC(pickedFile);
+        //   },
+        // ),
+        // const SizedBox(height: 24),
+
+        // _buildDubbing(),
+        // const SizedBox(height: 24),
         Text(controller.transcodingUploader.ffmpegStatus.value,
             style: CustomTextStyles.bodyMediumBlack),
       ],
@@ -675,7 +693,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             children: List.generate(3, (index) {
               return CustomCheckboxWidget(
                   isChecked: false,
-                  label: controller.contentLanguage[index].displayName,
+                  label: controller.contentLanguage[index].displayName.tr,
                   onChanged: (value) {});
             }),
           ),
@@ -691,7 +709,9 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       children: [
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "썸네일 파일".tr, style: CustomTextStyles.labelLargeBlack),
+          TextSpan(
+              text: "Thumbnail file".tr,
+              style: CustomTextStyles.labelLargeBlack),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red)),
         ])),
         const SizedBox(height: 8),
@@ -709,7 +729,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                 width: 280,
                 child: Text(
                   controller.thumbnailName == "".obs
-                      ? '(.jpg)'
+                      ? '.jpg'
                       : controller.thumbnailName.value,
                   style: controller.thumbnailName == "".obs
                       ? CustomTextStyles.bodyMediumGray
@@ -757,7 +777,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                           // controller.onChangeType(value);
                         },
                       ),
-                      Text("미디어 파일".tr,
+                      Text("Media File".tr,
                           style: CustomTextStyles.labelLargeBlack),
                     ],
                   )),
@@ -780,7 +800,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                           // controller.onChangeType(value);
                         },
                       ),
-                      Text("사운드 파일".tr,
+                      Text("Sound file".tr,
                           style: CustomTextStyles.labelLargeBlack),
                     ],
                   )),

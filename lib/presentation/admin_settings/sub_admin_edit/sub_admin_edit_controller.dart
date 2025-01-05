@@ -61,9 +61,9 @@ class SubAdminEditController extends GetxController {
     isLoading.value = false;
 
     if (adminEditModel.isSuccess) {
-      showSimpleMessage("저장 되었습니다");
+      showSimpleMessage("Saved successfully");
     } else {
-      showSimpleMessage("저장에 실패 하였습니다. ${adminEditModel.getErrorMessage().tr}");
+      showSimpleMessage("Save failed ${adminEditModel.getErrorMessage().tr}");
     }
   }
 }

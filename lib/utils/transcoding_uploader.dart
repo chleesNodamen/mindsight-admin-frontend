@@ -1,43 +1,64 @@
 // ignore_for_file: unused_import
 
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:mindsight_admin_page/data/upload/upload_model.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 import 'package:mindsight_admin_page/utils/ffmpeg_service.dart';
 import 'package:mindsight_admin_page/utils/logger.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
+
+import 'package:universal_html/html.dart';
 
 class TranscodingUploader {
   final RxString ffmpegStatus = "".obs;
-  late FFmpegService _ffmpegService;
+  FFmpegService? _ffmpegService;
 
   Future<String> uploadTranscoding(html.File filePickerResult) async {
     try {
-      _ffmpegService = FFmpegService(
-        onProgress: (ratio) {
-          ffmpegStatus.value =
-              "트랜스코딩 진행율: ${(ratio * 100).toStringAsFixed(2)}%";
+      List<dynamic>? filename;
+      List<dynamic>? data;
 
-          if (ratio > 0.95) {
-            ffmpegStatus.value = "트랜스코딩 최종 정리 중..기다려 주십시오..";
-          }
-          Logger.info("트랜스코딩 진행율: ${(ratio * 100).toStringAsFixed(2)}%");
-        },
-        onLog: (log) {
-          Logger.info(log);
-        },
-      );
+      bool isMp4 = filePickerResult.name.toLowerCase().endsWith('.mp4');
 
-      await _ffmpegService.loadFFmpeg();
+      if (isMp4) {
+        _ffmpegService = FFmpegService(
+          onProgress: (ratio) {
+            ffmpegStatus.value =
+                "${"Transcoding Progress".tr}: ${(ratio * 100).toStringAsFixed(2)}%";
 
-      Map<String, List<dynamic>> fileInfo =
-          await _ffmpegService.transcodeToM3U8(filePickerResult);
+            Logger.info(
+                "Transcoding Progress: ${(ratio * 100).toStringAsFixed(2)}%");
+          },
+          onLog: (log) {
+            Logger.info(log);
+          },
+        );
 
-      List<dynamic>? filename = fileInfo["filename"];
-      List<dynamic>? data = fileInfo["data"];
+        await _ffmpegService?.loadFFmpeg();
 
-      Logger.info("트랜 코딩 된 파일리스트: $filename");
+        Map<String, List<dynamic>> fileInfo =
+            await _ffmpegService!.transcodeToM3U8(filePickerResult);
+
+        filename = fileInfo["filename"];
+        data = fileInfo["data"];
+
+        _ffmpegService!.dispose();
+      } else {
+        filename = [filePickerResult.name];
+
+        final reader = FileReader();
+        reader.readAsArrayBuffer(filePickerResult);
+        await reader.onLoadEnd.first;
+        Uint8List fileBytes = reader.result as Uint8List;
+
+        data = [fileBytes];
+      }
+
+      Logger.info("트랜 코딩 된 File리스트: $filename");
+      // Logger.info("트랜 코딩 된 File Data: $data");
 
       String folder = '';
       String mediaUrl = '';
@@ -45,30 +66,28 @@ class TranscodingUploader {
       for (int i = 0; i < filename!.length; i++) {
         ffmpegStatus.value = "업로드 진행율: $i/${filename.length}%";
 
-        if (filename[i].contains(".m3u8")) {
-          UploadModel model = await UploadRepository()
-              .uploadFileTrascoding(filename[i], data![i], folder);
+        UploadModel model = await UploadRepository()
+            .uploadFileTrascoding(filename[i], data![i], folder);
 
+        if (filename[i].contains(".m3u8") ||
+            filename[i].contains(".mp3") ||
+            filename[i].contains(".wav")) {
           if (folder.isEmpty) {
             mediaUrl = model.url!;
             folder = model.folder!;
           }
-        } else {
-          await UploadRepository()
-              .uploadFileTrascoding(filename[i], data![i], folder);
         }
       }
 
-      // ffmpegStatus.value = "업로드 진행율: ${filename.length}/${filename.length}%";
+      ffmpegStatus.value = "트랜스코딩 Complete";
 
-      ffmpegStatus.value = "트랜스코딩 완료";
-
-      _ffmpegService.dispose();
       return mediaUrl;
     } catch (e) {
       ffmpegStatus.value = '트랜스코딩 중 에러 발생: $e';
-      _ffmpegService.dispose();
       Logger.info('트랜스코딩 중 에러 발생: $e');
+
+      _ffmpegService?.dispose();
+
       rethrow;
     }
   }

@@ -57,7 +57,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("사용자 데이터".tr, style: CustomTextStyles.labelLargeBlack),
+          Text("User data".tr, style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 24),
           Row(
             children: [
@@ -70,7 +70,8 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("완료 회원 수".tr, style: CustomTextStyles.labelLargeGray)
+                  Text("Completed members".tr,
+                      style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               const SizedBox(width: 70),
@@ -83,7 +84,8 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("참여 회원 수".tr, style: CustomTextStyles.labelLargeGray)
+                  Text("Participating members".tr,
+                      style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               const SizedBox(width: 70),
@@ -96,7 +98,8 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("완료율".tr, style: CustomTextStyles.labelLargeGray)
+                  Text("Complete rate".tr,
+                      style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               const SizedBox(width: 70),
@@ -109,7 +112,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("좋아요 수".tr, style: CustomTextStyles.labelLargeGray)
+                  Text("Like count".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
             ],
@@ -132,11 +135,12 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('콘텐츠 등록'.tr, style: CustomTextStyles.labelLargeGray),
+              Text('Register content'.tr,
+                  style: CustomTextStyles.labelLargeGray),
               InkWell(
                 onTap: controller.onPracticeTap,
                 child: Text(
-                  '수정'.tr,
+                  'Edit'.tr,
                   style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                       decoration: TextDecoration.underline,
                       decorationColor: appTheme.skyBlue),
@@ -153,12 +157,12 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(ContentCategory.body.displayName,
+                  Text(ContentCategory.body.displayName.tr,
                       style: CustomTextStyles.bodyMediumSkyBlue),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(ContentCategory.breath.displayName,
+                  Text(ContentCategory.breath.displayName.tr,
                       style: CustomTextStyles.bodyMediumSkyBlue),
                 ],
               ),
@@ -190,7 +194,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('마스터'.tr, style: CustomTextStyles.labelLargeGray),
+                  Text('Master'.tr, style: CustomTextStyles.labelLargeGray),
                   const SizedBox(height: 16),
                   Text(controller.practiceDetailsModel.masterNickname!,
                       style: CustomTextStyles.bodyMediumBlack),
@@ -201,12 +205,14 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('승인 상태'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Approval status'.tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentStatus.fromKeyword(
                               controller.practiceDetailsModel.status!)
-                          .displayName,
+                          .displayName
+                          .tr,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -215,12 +221,14 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('노출 상태'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Exposure Status'.tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentExposure.fromKeyword(
                               controller.practiceDetailsModel.exposure!)
-                          .displayName,
+                          .displayName
+                          .tr,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -236,7 +244,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
       children: [
         InkWell(
           onTap: controller.goToPractice,
-          child: Text("Practice plan 관리".tr,
+          child: Text("Practice plan management".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -248,14 +256,14 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Practice plan 상세".tr, style: CustomTextStyles.bodyMediumGray)
+        Text("Practice plan Details".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan 상세".tr,
+      name: "Practice plan Details".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

@@ -47,12 +47,12 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       CustomElevatedButton(
-                                        text: '저장',
+                                        text: 'Save'.tr,
                                         buttonTextStyle: CustomTextStyles
                                             .bodyMediumWhiteBold,
                                         buttonStyle:
                                             CustomButtonStyles.fillPrimary,
-                                        width: 90,
+                                        // width: 90,
                                         height: 44,
                                         onPressed: () {
                                           if (_formKey.currentState!
@@ -62,13 +62,13 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                         },
                                       ),
                                       CustomElevatedButton(
-                                        text: '취소',
+                                        text: 'Cancel'.tr,
                                         buttonTextStyle:
                                             CustomTextStyles.bodyMediumRedBold,
                                         buttonStyle: CustomButtonStyles
                                             .fillRedTransparent,
                                         margin: const EdgeInsets.only(left: 16),
-                                        width: 90,
+                                        // width: 90,
                                         height: 44,
                                         onPressed: () => Get.offAllNamed(
                                             AppRoutes.contentDetails,
@@ -96,7 +96,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
       children: [
         InkWell(
             child: Text(
-              "콘텐츠 목록".tr,
+              "Content list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -111,7 +111,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         ),
         InkWell(
             child: Text(
-              "콘텐츠 상세".tr,
+              "Content Details".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -125,14 +125,14 @@ class ContentEditView extends GetWidget<ContentEditController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text('콘텐츠 수정'.tr, style: CustomTextStyles.bodyMediumGray),
+        Text('Content Edit'.tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "콘텐츠 수정".tr,
+      name: "Content Edit".tr,
       searchShow: false,
       viewCount: false,
     );
@@ -143,10 +143,10 @@ class ContentEditView extends GetWidget<ContentEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('기본 정보'.tr, style: CustomTextStyles.bodyMediumBlack),
+        Text('Basic info'.tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         BuildInput(
-            label: "제목".tr,
+            label: "Title".tr,
             essential: true,
             textController: controller.nameController),
         const SizedBox(height: 24),
@@ -179,7 +179,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "카테고리".tr,
+                  text: "Category".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -222,7 +222,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                   return DropdownMenuItem<ContentCategory>(
                     value: value,
                     child: Text(
-                      value.displayName,
+                      value.displayName.tr,
                       style: CustomTextStyles.bodyMediumBlack,
                     ),
                   );
@@ -239,7 +239,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "타입".tr,
+                  text: "Type".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -279,7 +279,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                     return DropdownMenuItem<ContentType>(
                       value: value,
                       child: Text(
-                        value.displayName,
+                        value.displayName.tr,
                         style: CustomTextStyles.bodyMediumBlack,
                       ),
                     );
@@ -299,7 +299,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "수준".tr,
+              text: "Level".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -341,7 +341,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
               return DropdownMenuItem<ContentLevel>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -360,7 +360,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "타겟 언어".tr,
+              text: "Target Language".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -402,7 +402,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
               return DropdownMenuItem<ContentLanguage>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -421,7 +421,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "노출".tr,
+              text: "Exposure".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -459,7 +459,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
               return DropdownMenuItem<ContentExposure>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -478,13 +478,15 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "태그".tr,
+              text: "Tags".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
-        Text('태그 입력 후 ‘+’ 버튼 또는 Enter로 태그를 등록해주세요.'.tr,
+        Text(
+            "After entering tags, please register them by clicking the '+' button or pressing Enter."
+                .tr,
             style: CustomTextStyles.labelLargeGray),
         const SizedBox(height: 8),
         controller.contentDetailsModel.tags!.isEmpty
@@ -509,7 +511,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             },
             validator: (value) {
               if (controller.contentDetailsModel.tags!.isEmpty) {
-                return "필수 입력 항목입니다.".tr;
+                return "This field is required.".tr;
               }
               return null;
             },
@@ -583,7 +585,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "소개".tr,
+              text: "Introduction".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -606,11 +608,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
             textInputType: TextInputType.multiline,
             maxLines: 6,
             controller: controller.introController,
-            hintText: "Input Text".tr,
+            hintText: "Input text".tr,
             contentPadding: const EdgeInsets.all(16),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return "필수 입력 항목입니다.".tr;
+                return "This field is required.".tr;
               }
               return null;
             },
@@ -625,18 +627,50 @@ class ContentEditView extends GetWidget<ContentEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("파일".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("File".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildMediaFile(),
+            PickFileFormField(
+              labelText: "Media File".tr,
+              essential: true,
+              initialUrl: controller.contentDetailsModel.video,
+              hintText: ".mp4, .mp3, .wav",
+              fileExtension: [
+                FileExtension.mp4.keywordName,
+                FileExtension.mp3.keywordName,
+                FileExtension.wav.keywordName
+              ],
+              onFilePicked: (pickedFile) {
+                controller.onPickMedia(pickedFile);
+              },
+            ),
             const SizedBox(width: 24),
-            _buildThumnailFile(),
+            PickFileFormField(
+              labelText: "Thumbnail file".tr,
+              essential: true,
+              initialUrl: controller.contentDetailsModel.thumbnail,
+              hintText: ".jpg",
+              fileExtension: [FileExtension.jpg.keywordName],
+              onFilePicked: (pickedFile) {
+                controller.onPickThumbnail(pickedFile);
+              },
+            )
           ],
         ),
         const SizedBox(height: 24),
-        _buildDubbing(),
-        const SizedBox(height: 24),
+        // PickFileFormField(
+        //   labelText: "CC file".tr,
+        //   essential: false,
+        //   hintText: controller.ccFile?.name ?? ".srt",
+        //   fileExtension: [FileExtension.srt.keywordName],
+        //   onFilePicked: (pickedFile) {
+        //     controller.onPickCC(pickedFile);
+        //   },
+        // ),
+        // const SizedBox(height: 24),
+        // _buildDubbing(),
+        // const SizedBox(height: 24),
         Text(controller.transcodingUploader.ffmpegStatus.value,
             style: CustomTextStyles.bodyMediumBlack),
       ],
@@ -665,7 +699,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             children: List.generate(controller.contentLanguage.length, (index) {
               return CustomCheckboxWidget(
                   isChecked: false,
-                  label: controller.contentLanguage[index].displayName,
+                  label: controller.contentLanguage[index].displayName.tr,
                   // label: "영어",
                   onChanged: (value) {});
             }),
@@ -677,11 +711,11 @@ class ContentEditView extends GetWidget<ContentEditController> {
 
   Widget _buildThumnailFile() {
     return PickFileFormField(
-      labelText: "썸네일 파일".tr,
+      labelText: "Thumbnail file".tr,
       essential: true,
       initialUrl: controller.contentDetailsModel.thumbnail,
-      hintText: "(.jpg)",
-      fileExtension: FileExtension.jpg.keywordName,
+      hintText: ".jpg",
+      fileExtension: [FileExtension.jpg.keywordName],
       onFilePicked: (pickedFile) {
         controller.onPickThumbnail(pickedFile);
       },
@@ -690,11 +724,15 @@ class ContentEditView extends GetWidget<ContentEditController> {
 
   Widget _buildMediaFile() {
     return PickFileFormField(
-      labelText: "미디어 파일".tr,
+      labelText: "Media File".tr,
       essential: true,
       initialUrl: controller.contentDetailsModel.video,
-      hintText: "(.mp4)",
-      fileExtension: FileExtension.mp4.keywordName,
+      hintText: ".mp4, .mp3, .wav",
+      fileExtension: [
+        FileExtension.mp4.keywordName,
+        FileExtension.mp3.keywordName,
+        FileExtension.wav.keywordName
+      ],
       onFilePicked: (pickedFile) {
         controller.onPickMedia(pickedFile);
       },

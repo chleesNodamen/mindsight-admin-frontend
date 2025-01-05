@@ -1,9 +1,9 @@
 enum Goal {
-  improveHealth('건강 향상', 'IMPROVE_HEALTH'),
-  relaxingStretching('편안한 스트레칭', 'RELAXING_STRETCHING'),
-  welnessAtWork('직장에서의 웰빙', 'WELNESS_AT_WORK'),
-  regulateEmotions('감정 조절', 'REGULATE_EMOTIONS'),
-  fallAsleepEasily('쉽게 잠들기', 'FALL_ASLEEP_EASILY');
+  improveHealth('Health Improvement', 'IMPROVE_HEALTH'),
+  relaxingStretching('Comfortable Stretching', 'RELAXING_STRETCHING'),
+  welnessAtWork('Workplace Well-being', 'WELNESS_AT_WORK'),
+  regulateEmotions('Emotion Regulation', 'REGULATE_EMOTIONS'),
+  fallAsleepEasily('Easy to Fall Asleep', 'FALL_ASLEEP_EASILY');
 
   final String _displayName;
   final String _keywordName;

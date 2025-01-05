@@ -103,7 +103,7 @@ class MasterRegisterController extends GetxController {
 
     if (model.isSuccess) {
       await showSimpleMessage(
-          "승인 요청 되었습니다. 최대 2영업일이 소요 됩니다.\n승인이 완료 되면 메일로 알림 드리겠습니다.");
+          "Approval requested. It may take up to 2 business days.\nYou will be notified by email upon approval.");
 
       if (Account.isLogined) {
         Get.offAllNamed(AppRoutes.inactiveMasterManage);
@@ -111,7 +111,7 @@ class MasterRegisterController extends GetxController {
         Get.offAllNamed(AppRoutes.auth);
       }
     } else {
-      showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
+      showSimpleMessage("Save failed ${model.getErrorMessage().tr}");
     }
 
     isLoading.value = false;
@@ -122,7 +122,7 @@ class MasterRegisterController extends GetxController {
       photoFile = pickedFile;
       photoUrl.value = idPhotoFile?.name;
 
-      Logger.info("onPickPhoto 파일 픽 완료");
+      Logger.info("onPickPhoto File 픽 Complete");
     }
   }
 
@@ -131,7 +131,7 @@ class MasterRegisterController extends GetxController {
       idPhotoFile = pickedFile;
       idPhotoUrl.value = idPhotoFile?.name;
 
-      Logger.info("onPickIdPhoto 파일 픽 완료");
+      Logger.info("onPickIdPhoto File 픽 Complete");
     }
   }
 }

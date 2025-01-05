@@ -1,9 +1,9 @@
 enum ContentCategory {
-  unknown('알수없음', 'UNKNOWN'),
-  body('바디', 'BODY'),
-  breath('호흡', 'BREATH'),
-  mindfulness('마음챙김', 'MINDFULNESS'),
-  theory('이론', 'THEORY');
+  unknown('unknown status', 'UNKNOWN'),
+  body('Body', 'BODY'),
+  breath('Breath', 'BREATH'),
+  mindfulness('Mindfulness', 'MINDFULNESS'),
+  theory('Theory', 'THEORY');
 
   final String _displayName;
   final String _keywordName;

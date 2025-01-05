@@ -54,7 +54,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
       children: [
         InkWell(
           child: Text(
-            "회원 목록".tr,
+            "Member list".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.underline,
@@ -68,14 +68,14 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("회원 상세".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Member details".tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "회원 상세".tr,
+      name: "Member details".tr,
       searchShow: false,
       viewCount: false,
     );
@@ -94,11 +94,11 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("회원 정보".tr, style: CustomTextStyles.labelLargeBlack),
+              Text("Member info".tr, style: CustomTextStyles.labelLargeBlack),
               InkWell(
                   onTap: controller.onMemberEdit,
                   child: Text(
-                    "수정".tr,
+                    "Edit".tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -181,7 +181,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("이름 (First name)".tr,
+                  Text("Name (First name)".tr,
                       style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
@@ -222,7 +222,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                     height: 16,
                   ),
                   Text(
-                      "${Gender.fromKeyword(controller.membersDataModel.gender)?.displayName}",
+                      "${Gender.fromKeyword(controller.membersDataModel.gender)?.displayName.tr}",
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -233,7 +233,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("태어난 연도".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("태어난 Year".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -257,7 +257,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("이메일 주소".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Email address".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -276,7 +277,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("닉네임".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Nickname".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -295,7 +296,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("가입일".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Signup date".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -321,7 +323,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("최근 활동".tr, style: CustomTextStyles.labelLargeGray),
+                Text("Recent activity".tr,
+                    style: CustomTextStyles.labelLargeGray),
                 const SizedBox(
                   width: 8,
                 ),
@@ -356,7 +359,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("활동 정보".tr, style: CustomTextStyles.labelLargeBlack),
+              Text("Activity info".tr, style: CustomTextStyles.labelLargeBlack),
               const SizedBox(
                 height: 24,
               ),
@@ -377,7 +380,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text("완료한 세션 수".tr,
+                      Text("Completed sessions".tr,
                           style: CustomTextStyles.labelLargeGray),
                     ],
                   ),
@@ -397,7 +400,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text("누적 명상 시간".tr,
+                      Text("Total meditation time".tr,
                           style: CustomTextStyles.labelLargeGray),
                     ],
                   ),
@@ -417,7 +420,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text("연속 명상 일 수".tr,
+                      Text("Consecutive meditation days".tr,
                           style: CustomTextStyles.labelLargeGray),
                     ],
                   ),
@@ -437,7 +440,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Text("누적 명상 일 수".tr,
+                      Text("Total meditation days".tr,
                           style: CustomTextStyles.labelLargeGray),
                     ],
                   ),

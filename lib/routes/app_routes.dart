@@ -132,7 +132,7 @@ class AppRoutes {
   static const String subAdminEdit = '/sub_admin_edit';
   static const String activityHistory = "/activity_history";
 
-  static String initialRoute = auth;
+  static String? initialRoute = auth;
 
   static List<GetPage> pages = [
     // GetPage(

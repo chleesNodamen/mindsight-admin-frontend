@@ -1,8 +1,8 @@
 enum ContentLevel {
-  all('모두', 'ALL'),
-  upper('상', 'UPPER'),
-  middle('중', 'MIDDLE'),
-  lower('하', 'LOWER');
+  all('All', 'ALL'),
+  upper('Upper', 'UPPER'),
+  middle('Middle', 'MIDDLE'),
+  lower('Lower', 'LOWER');
 
   final String _displayName;
   final String _keywordName;

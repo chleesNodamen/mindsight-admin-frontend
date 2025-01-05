@@ -53,6 +53,7 @@ class ContentEditController extends GetxController {
   late final focusNode = FocusNode();
 
   File? thumbnailFile;
+  File? ccFile;
   File? mediaFile;
 
   final transcodingUploader = TranscodingUploader();
@@ -133,6 +134,13 @@ class ContentEditController extends GetxController {
     }
   }
 
+  void onPickCC(File? pickedFile) {
+    if (pickedFile != null) {
+      ccFile = pickedFile;
+      contentDetailsModel.cc = pickedFile.name;
+    }
+  }
+
   void onPickMedia(File? pickedFile) {
     if (pickedFile != null) {
       mediaFile = pickedFile;
@@ -174,12 +182,12 @@ class ContentEditController extends GetxController {
     isLoading.value = false;
 
     if (contentEditModel.isSuccess) {
-      await showSimpleMessage("수정 되었습니다");
+      await showSimpleMessage("Edit 되었습니다");
 
       Get.offAllNamed(AppRoutes.contentDetails,
           arguments: {RouteArguments.id: id});
     } else {
-      showSimpleMessage("수정에 실패 하였습니다");
+      showSimpleMessage("Edit에 실패 하였습니다");
     }
   }
 

@@ -43,9 +43,8 @@ class TobBarSearch extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomImageView(
-                      imagePath: viewCount!
-                          ? IconConstant.contentFull
-                          : IconConstant.user,
+                      imagePath:
+                          viewCount! ? IconConstant.content : IconConstant.user,
                       color: appTheme.black,
                       width: 20,
                       height: 20,
@@ -108,7 +107,8 @@ class TobBarSearch extends StatelessWidget {
                         bottomRight: Radius.circular(12),
                         topRight: Radius.circular(12),
                       )),
-                  child: Text("검색".tr, style: CustomTextStyles.bodyMediumWhite),
+                  child: Text("Search".tr,
+                      style: CustomTextStyles.bodyMediumWhite),
                 ),
               )
             ],

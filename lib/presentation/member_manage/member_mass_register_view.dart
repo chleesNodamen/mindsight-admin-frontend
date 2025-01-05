@@ -68,7 +68,7 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
                     RichText(
                         text: TextSpan(children: [
                       TextSpan(
-                          text: "등록 파일".tr,
+                          text: "Registered file".tr,
                           style: CustomTextStyles.labelLargeBlack),
                       TextSpan(
                           text: " *", style: TextStyle(color: appTheme.red))
@@ -90,7 +90,7 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
                         width: 280,
                         child: Text(
                           controller.fileName == "".obs
-                              ? '(엑셀 파일)'.tr
+                              ? '(엑셀 File)'.tr
                               : controller.fileName.value,
                           style: controller.fileName == "".obs
                               ? CustomTextStyles.bodyMediumGray
@@ -111,7 +111,7 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
                     ? Column(
                         children: [
                           const SizedBox(height: 8),
-                          Text('필수 입력 항목입니다.'.tr,
+                          Text('This field is required.'.tr,
                               style: CustomTextStyles.labelMediumRed),
                         ],
                       )
@@ -130,7 +130,7 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
     return Row(
       children: [
         Text(
-          '서식 엑셀 파일 다운로드'.tr,
+          'Download Excel template'.tr,
           style: CustomTextStyles.labelLargeGray,
           overflow: TextOverflow.ellipsis,
         ),
@@ -147,10 +147,10 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () {
             if (formKey.currentState!.validate()) {
@@ -159,11 +159,11 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Get.offAllNamed(AppRoutes.memberManage),
         ),
@@ -176,7 +176,7 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
       children: [
         InkWell(
             child: Text(
-              "회원 목록".tr,
+              "Member list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -189,14 +189,15 @@ class MemberMassRegisterView extends GetWidget<MemberMassRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("대량 사전 신규 등록".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Bulk pre-registration".tr,
+            style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "대량 사전 신규 등록".tr,
+      name: "Bulk pre-registration".tr,
       searchShow: false,
       viewCount: false,
     );

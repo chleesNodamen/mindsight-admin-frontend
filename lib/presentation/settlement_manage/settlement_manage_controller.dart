@@ -26,9 +26,9 @@ class SettlementManageController extends GetxController {
       Get.find<SettlementManageController>();
 
   List<String> typeLabels = [
-    "전체",
-    "미발행",
-    "미정산",
+    "All",
+    "Unissued",
+    "Unsettled",
   ];
 
   RxBool isLoading = true.obs;
@@ -84,7 +84,7 @@ class SettlementManageController extends GetxController {
     } else {
       // selectedMonth case
       if (year == null || monthNumber == null) {
-        // year 또는 monthNumber가 null일 경우 기본값 설정 또는 에러 처리
+        // year 또는 monthNumber가 null일 경우 기본값 Settings 또는 에러 처리
         firstDay = DateTime(now.year, now.month, 1);
         lastDay = DateTime(now.year, now.month + 1, 0);
         selectedMonth.value = now.month;

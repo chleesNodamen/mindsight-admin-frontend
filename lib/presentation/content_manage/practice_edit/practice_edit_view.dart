@@ -54,7 +54,9 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
       children: [
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "콘텐츠 등록".tr, style: CustomTextStyles.labelLargeBlack),
+          TextSpan(
+              text: "Register content".tr,
+              style: CustomTextStyles.labelLargeBlack),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
@@ -110,21 +112,21 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () async => {
             await controller.onSave(),
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Get.offAllNamed(AppRoutes.practiceDetails,
               arguments: {RouteArguments.id: controller.id}),
@@ -138,7 +140,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentPracticeManage),
-          child: Text("Practice plan 관리".tr,
+          child: Text("Practice plan management".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -152,7 +154,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         ),
         InkWell(
           onTap: controller.goPracticeDetails,
-          child: Text("Practice plan 상세".tr,
+          child: Text("Practice plan Details".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -164,14 +166,14 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Practice plan 수정".tr, style: CustomTextStyles.bodyMediumGray)
+        Text("Practice plan Edit".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan 수정".tr,
+      name: "Practice plan Edit".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",
@@ -224,7 +226,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
               return DropdownMenuItem<ContentStatus>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -243,7 +245,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "노출".tr,
+              text: "Exposure".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -283,7 +285,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
               return DropdownMenuItem<ContentExposure>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );

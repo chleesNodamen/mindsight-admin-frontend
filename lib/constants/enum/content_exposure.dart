@@ -1,6 +1,6 @@
 enum ContentExposure {
-  exposed('노출', true),
-  nonExposed('비노출', false);
+  exposed('Exposure', true),
+  nonExposed('Non Exposure', false);
 
   final String _displayName;
   final bool _keywordName;

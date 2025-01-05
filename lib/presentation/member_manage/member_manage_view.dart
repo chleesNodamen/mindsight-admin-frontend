@@ -57,10 +57,10 @@ class MemberManageView extends GetWidget<MemberManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "회원 목록".tr,
+      name: "Member list".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "이메일 주소, 이름 검색".tr,
+      searchText: "Email address, Name Search".tr,
       memberShow: true,
       memberCount: controller.membersModel.total,
       onSearch: controller.onSearch,
@@ -72,9 +72,9 @@ class MemberManageView extends GetWidget<MemberManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.memberRegister);
       },
-      text: "신규 등록".tr,
+      text: "New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -85,9 +85,9 @@ class MemberManageView extends GetWidget<MemberManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.memberMassRegister);
       },
-      text: "대량 신규 등록".tr,
+      text: "Mass New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -172,19 +172,19 @@ class MemberManageView extends GetWidget<MemberManageController> {
                       label: Text('소속'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('이메일 주소'.tr,
+                      label: Text('Email address'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('닉네임'.tr,
+                      label: Text('Nickname'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('전환일'.tr,
+                      label: Text('Conversion date'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('상태'.tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('수정'.tr,
+                      label: Text('Edit'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.membersModel.length, (index) {
@@ -255,11 +255,11 @@ class MemberManageView extends GetWidget<MemberManageController> {
                           },
                         )),
                         DataCell(CustomElevatedButton(
-                            text: "수정".tr,
+                            text: "Edit".tr,
                             buttonTextStyle:
                                 CustomTextStyles.bodyMediumWhiteBold,
                             buttonStyle: CustomButtonStyles.fillBlack,
-                            width: 60,
+                            // width: 60,
                             height: 30,
                             onPressed: () => Get.offAllNamed(
                                     AppRoutes.memberEdit,
@@ -278,12 +278,12 @@ class MemberManageView extends GetWidget<MemberManageController> {
               alignment: Alignment.centerLeft,
               children: [
                 CustomElevatedButton(
-                  text: '비활성'.tr,
+                  text: 'Inactive'.tr,
                   buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                   buttonStyle: CustomButtonStyles.fillRedTransparent,
                   // margin: const EdgeInsets.symmetric(
                   //     vertical: 11, horizontal: 24),
-                  width: 90,
+                  // width: 90,
                   height: 44,
                   onPressed: controller.onButtonPressed,
                 ),

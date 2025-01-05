@@ -50,10 +50,10 @@ class InactiveCompanyManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "비활성 회사 관리".tr,
+      name: "Inactive company management".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "회사 이름 검색".tr,
+      searchText: "Search company name".tr,
       memberShow: true,
       memberCount: controller.companyListModel.total,
       onSearch: controller.onSearch,
@@ -83,19 +83,19 @@ class InactiveCompanyManageView
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text("회사 이름".tr,
+                      label: Text("Company name".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("대표자 이름".tr,
+                      label: Text("Representative".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("사업자 번호".tr,
+                      label: Text("Business number".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("전환일".tr,
+                      label: Text("Conversion date".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("상태".tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.companyListModel.id!.length,
@@ -166,12 +166,12 @@ class InactiveCompanyManageView
                       Visibility(
                         visible: Account.isAdmin,
                         child: CustomElevatedButton(
-                          text: "활성".tr,
+                          text: "Active".tr,
                           buttonTextStyle:
                               CustomTextStyles.bodyMediumSkyBlueBold,
                           buttonStyle:
                               CustomButtonStyles.fillPrimaryTransparent,
-                          width: 90,
+                          // width: 90,
                           height: 44,
                           onPressed: controller.onVerifiedButton,
                         ),

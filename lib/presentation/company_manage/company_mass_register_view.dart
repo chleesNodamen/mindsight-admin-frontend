@@ -66,7 +66,7 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "등록 파일".tr,
+                      text: "Registered file".tr,
                       style: CustomTextStyles.labelLargeBlack),
                   TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
@@ -85,7 +85,7 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
                         width: 280,
                         child: Text(
                           controller.fileName == "".obs
-                              ? "최대 10메가 (엑셀 파일)".tr
+                              ? "Excel file".tr
                               : controller.fileName.value,
                           style: controller.fileName == "".obs
                               ? CustomTextStyles.bodyMediumGray
@@ -106,7 +106,7 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
                     ? Column(
                         children: [
                           const SizedBox(height: 8),
-                          Text('필수 입력 항목입니다.'.tr,
+                          Text('This field is required.'.tr,
                               style: CustomTextStyles.labelMediumRed),
                         ],
                       )
@@ -126,10 +126,10 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () {
             if (formKey.currentState!.validate()) {
@@ -138,11 +138,11 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Get.offAllNamed(AppRoutes.companyManage),
         ),
@@ -155,7 +155,7 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
       children: [
         InkWell(
             child: Text(
-              "회사 목록".tr,
+              "Company list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -164,7 +164,7 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
             ),
             onTap: () {
               if (Account.isAdmin) {
-                if (SideMenuController.to.isActiveSubItem("회사 목록".tr)) {
+                if (SideMenuController.to.isActiveSubItem("Company list".tr)) {
                   Get.offAllNamed(AppRoutes.companyManage);
                 } else {
                   Get.offAllNamed(AppRoutes.inactiveCompanyManage);
@@ -176,7 +176,8 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("대량 사전 신규 등록".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Bulk pre-registration".tr,
+            style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
@@ -185,7 +186,7 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
     return Row(
       children: [
         Text(
-          '서식 엑셀 파일 다운로드'.tr,
+          'Download Excel template'.tr,
           style: CustomTextStyles.labelLargeGray,
           overflow: TextOverflow.ellipsis,
         ),
@@ -199,7 +200,7 @@ class CompanyMassRegisterView extends GetWidget<CompanyMassRegisterController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "대량 사전 신규 등록".tr,
+      name: "Bulk pre-registration".tr,
       searchShow: false,
       viewCount: false,
     );

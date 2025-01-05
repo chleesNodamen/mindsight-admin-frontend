@@ -18,27 +18,27 @@ class CorrectWordChecker {
     final validUpperAlphabet = RegExp(r'[A-Z]');
     final validSpecial = RegExp(r'^[a-zA-Z0-9 ]+$');
 
-    //문자가 비었는지 확인
+    //문자가 비었는지 Confirm
     if (value.isEmpty) {
       // 문자가 비었다면 모드 false로 리턴
       return;
     }
 
-    //8자 이상인지 확인
+    //8자 이상인지 Confirm
     if (value.length >= 8) {
       is8Characters = true;
     } else {
       is8Characters = false;
     }
 
-    //특수기호가 있는지 확인
+    //특수기호가 있는지 Confirm
     if (!validSpecial.hasMatch(value)) {
       is1Symbol = true;
     } else {
       is1Symbol = false;
     }
 
-    //문자가 있는지 확인
+    //문자가 있는지 Confirm
     if (!validLowerAlphabet.hasMatch(value) ||
         !validUpperAlphabet.hasMatch(value)) {
       isUpperLowerLetter = false;
@@ -46,7 +46,7 @@ class CorrectWordChecker {
       isUpperLowerLetter = true;
     }
 
-    //숫자가 있는지 확인
+    //숫자가 있는지 Confirm
     if (validNumbers.hasMatch(value)) {
       is1Number = true;
     } else {

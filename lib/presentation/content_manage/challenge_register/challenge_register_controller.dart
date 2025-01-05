@@ -70,7 +70,7 @@ class ChallengeRegisterController extends GetxController {
 
     for (int i = 0; i < challengeDays.length; i++) {
       if (challengeDays[i].name.isEmpty) {
-        showSimpleMessage("설정 되지 않은 콘텐츠 제목이 있습니다.");
+        showSimpleMessage("Settings 되지 않은 Content title이 있습니다.");
         return;
       }
     }
@@ -78,7 +78,7 @@ class ChallengeRegisterController extends GetxController {
       Logger.info(challengeDays[i].contentIds);
 
       if (!challengeDays[i].isValidContentIds()) {
-        showSimpleMessage("설정 되지 않은 콘텐츠가 있습니다.");
+        showSimpleMessage("Settings 되지 않은 Content가 있습니다.");
         return;
       }
     }
@@ -104,10 +104,10 @@ class ChallengeRegisterController extends GetxController {
     isLoading.value = false;
 
     if (model.isSuccess) {
-      await showSimpleMessage("저장 되었습니다");
+      await showSimpleMessage("Saved successfully");
       Get.offAllNamed(AppRoutes.contentChallengeManage);
     } else {
-      showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
+      showSimpleMessage("Save failed ${model.getErrorMessage().tr}");
     }
   }
 

@@ -10,7 +10,7 @@ export 'package:mindsight_admin_page/presentation/authentication/auth_view.dart'
 export 'package:mindsight_admin_page/helpers/responsiveness.dart';
 export 'package:mindsight_admin_page/widgets/custom_text.dart';
 export 'package:mindsight_admin_page/widgets/side_menu/side_menu_item.dart';
-export 'package:mindsight_admin_page/widgets/side_menu/side_menu.dart';
+export 'package:mindsight_admin_page/widgets/side_menu/side_menu_widget.dart';
 export 'package:mindsight_admin_page/widgets/base_button.dart';
 export 'package:mindsight_admin_page/widgets/custom_elevated_button.dart';
 export 'package:mindsight_admin_page/widgets/top_nav.dart';

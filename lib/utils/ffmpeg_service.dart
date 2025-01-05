@@ -5,9 +5,11 @@ import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'dart:html' as html;
 
 class FFmpegService {
-  late FFmpeg _ffmpeg;
+  FFmpeg? _ffmpeg;
   Function(double)? onProgress;
   Function(String)? onLog;
+  int progressCount = 1;
+  double progress = 0;
   // final String outputDir = '/transcoding';
 
   FFmpegService({
@@ -23,15 +25,17 @@ class FFmpegService {
       ),
     );
 
-    _ffmpeg.setProgress(_onProgressHandler);
-    _ffmpeg.setLogger(_onLogHandler);
+    _ffmpeg?.setProgress(_onProgressHandler);
+    _ffmpeg?.setLogger(_onLogHandler);
 
-    await _ffmpeg.load();
+    await _ffmpeg?.load();
   }
 
   void _onProgressHandler(ProgressParam progress) {
     if (onProgress != null) {
-      onProgress!(progress.ratio);
+      this.progress = progress.ratio;
+      double overallProgress = ((progressCount - 1) + this.progress) / 3;
+      onProgress!(overallProgress);
     }
   }
 
@@ -68,9 +72,38 @@ class FFmpegService {
 
     Uint8List fileBytes = reader.result as Uint8List;
 
-    _ffmpeg.writeFile(file.name, fileBytes);
+    _ffmpeg?.writeFile(file.name, fileBytes);
 
-    await _ffmpeg.run([
+    // await _ffmpeg.run([
+    //   '-i',
+    //   file.name,
+    //   // 360p
+    //   '-vf',
+    //   'scale=640:-2',
+    //   '-c:a',
+    //   'copy',
+    //   '-f',
+    //   'hls',
+    //   '360p.m3u8',
+    //   // 720p
+    //   '-vf',
+    //   'scale=1280:-2',
+    //   '-c:a',
+    //   'copy',
+    //   '-f',
+    //   'hls',
+    //   '720p.m3u8',
+    //   // 1080p
+    //   '-vf',
+    //   'scale=1920:-2',
+    //   '-c:a',
+    //   'copy',
+    //   '-f',
+    //   'hls',
+    //   '1080p.m3u8',
+    // ]);
+
+    await _ffmpeg?.run([
       '-i',
       file.name,
       // 360p
@@ -81,6 +114,14 @@ class FFmpegService {
       '-f',
       'hls',
       '360p.m3u8',
+    ]);
+
+    progressCount++;
+    progress = 0;
+
+    await _ffmpeg?.run([
+      '-i',
+      file.name,
       // 720p
       '-vf',
       'scale=1280:-2',
@@ -89,6 +130,14 @@ class FFmpegService {
       '-f',
       'hls',
       '720p.m3u8',
+    ]);
+
+    progressCount++;
+    progress = 0;
+
+    await _ffmpeg?.run([
+      '-i',
+      file.name,
       // 1080p
       '-vf',
       'scale=1920:-2',
@@ -99,25 +148,25 @@ class FFmpegService {
       '1080p.m3u8',
     ]);
 
-    final playlist = _ffmpeg.readDir("/");
+    final playlist = _ffmpeg?.readDir("/");
 
     List<String> files = [];
     List<Uint8List> datas = [];
 
     files.add("1080p.m3u8");
-    Uint8List data = _ffmpeg.readFile("1080p.m3u8");
+    Uint8List data = _ffmpeg!.readFile("1080p.m3u8");
     datas.add(data);
     files.add("720p.m3u8");
-    data = _ffmpeg.readFile("720p.m3u8");
+    data = _ffmpeg!.readFile("720p.m3u8");
     datas.add(data);
     files.add("360p.m3u8");
-    data = _ffmpeg.readFile("360p.m3u8");
+    data = _ffmpeg!.readFile("360p.m3u8");
     datas.add(data);
 
-    for (int i = 0; i < playlist.length; i++) {
+    for (int i = 0; i < playlist!.length; i++) {
       if (playlist[i].contains(".ts")) {
         files.add(playlist[i]);
-        data = _ffmpeg.readFile(playlist[i]);
+        data = _ffmpeg!.readFile(playlist[i]);
         datas.add(data);
       }
     }
@@ -126,6 +175,6 @@ class FFmpegService {
   }
 
   void dispose() {
-    _ffmpeg.exit();
+    _ffmpeg?.exit();
   }
 }

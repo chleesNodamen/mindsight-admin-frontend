@@ -29,10 +29,10 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "스트리밍 정산".tr,
+                                    name: "Streaming settlement".tr,
                                     searchShow: false,
                                     viewCount: false,
-                                    searchText: "마스터 이름 검색".tr,
+                                    searchText: "Search master name".tr,
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
@@ -62,7 +62,8 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
       children: [
         Row(
           children: [
-            Text("${"매출 집계기간".tr} ${controller.selectedMonth}월   ",
+            Text(
+                "${"Sales aggregation".tr} ${controller.selectedMonth} ${"Month".tr}   ",
                 style: CustomTextStyles.labelLargeBlack),
             Text("(${controller.dateRange})",
                 style: CustomTextStyles.labelLargeGray),
@@ -78,25 +79,31 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
             InkWell(
                 onTap: _buildTotalSalesDetailModal,
                 child: _buildSummaryCard(
-                    "${"월 전체 매출액".tr} >",
+                    "${"Total Monthly Sales".tr} >",
                     CustomTextStyles.labelLargeGray,
                     controller.settlementSummaryModel.totalSales!)),
-            _buildSummaryCard("월 PG 수수료".tr, CustomTextStyles.labelLargeRed, 0),
             _buildSummaryCard(
-                "월 스토어 수수료".tr, CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard("월 기타 수수료".tr, CustomTextStyles.labelLargeRed, 0),
+                "Monthly PG fee".tr, CustomTextStyles.labelLargeRed, 0),
+            _buildSummaryCard(
+                "Monthly store fee".tr, CustomTextStyles.labelLargeRed, 0),
+            _buildSummaryCard(
+                "Monthly other fee".tr, CustomTextStyles.labelLargeRed, 0),
             InkWell(
               onTap: _buildTotalSalesDetailModal,
               child: _buildSummaryCard(
-                  "${"월 전체 순 매출액".tr} >",
+                  "${"Total Monthly Net Sales".tr} >",
                   CustomTextStyles.labelLargeGray,
                   controller.settlementSummaryModel.netSales!),
             ),
-            _buildSummaryCard("월 총 플레이 횟수".tr, CustomTextStyles.labelLargeGray,
+            _buildSummaryCard(
+                "Total Monthly Play Count".tr,
+                CustomTextStyles.labelLargeGray,
                 controller.settlementSummaryModel.playCount!.toDouble()),
             _buildSummaryCard(
-                "월 전체 지급 금액".tr, CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard("월 영업이익".tr, CustomTextStyles.labelLargeGray,
+                "Total Monthly Payout".tr, CustomTextStyles.labelLargeRed, 0),
+            _buildSummaryCard(
+                "Monthly Operating Profit".tr,
+                CustomTextStyles.labelLargeGray,
                 controller.settlementSummaryModel.finalSales!),
           ],
         ),
@@ -142,143 +149,285 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          // SizedBox(
+          //   width: double.infinity,
+          //   child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       children: [
+          //         Row(
+          //           children: [
+          //             SizedBox(
+          //               width: 120,
+          //               child: Align(
+          //                 alignment: Alignment.centerLeft,
+          //                 child: ListTile(
+          //                     contentPadding: EdgeInsets.zero,
+          //                     title: Row(
+          //                       children: <Widget>[
+          //                         Radio<Type>(
+          //                           value: Type.all,
+          //                           groupValue: controller.type.value,
+          //                           onChanged: (Type? value) {
+          //                             controller.changeType(value);
+          //                           },
+          //                         ),
+          //                         Text(controller.typeLabels[0].tr,
+          //                             style: CustomTextStyles.bodyMediumBlack
+          //                                 .copyWith(
+          //                                     fontWeight: FontWeight.w500)),
+          //                       ],
+          //                     )),
+          //               ),
+          //             ),
+          //             SizedBox(
+          //               width: 120,
+          //               child: ListTile(
+          //                   contentPadding: EdgeInsets.zero,
+          //                   title: Row(
+          //                     children: <Widget>[
+          //                       Radio<Type>(
+          //                         value: Type.notIssued,
+          //                         groupValue: controller.type.value,
+          //                         onChanged: (Type? value) {
+          //                           controller.changeType(value);
+          //                         },
+          //                       ),
+          //                       Text(controller.typeLabels[1].tr,
+          //                           style: CustomTextStyles.bodyMediumBlack
+          //                               .copyWith(fontWeight: FontWeight.w500)),
+          //                     ],
+          //                   )),
+          //             ),
+          //             SizedBox(
+          //               width: 120,
+          //               child: ListTile(
+          //                   contentPadding: EdgeInsets.zero,
+          //                   title: Row(
+          //                     children: <Widget>[
+          //                       Radio<Type>(
+          //                         value: Type.notSettled,
+          //                         groupValue: controller.type.value,
+          //                         onChanged: (Type? value) {
+          //                           controller.changeType(value);
+          //                         },
+          //                       ),
+          //                       Text(controller.typeLabels[2].tr,
+          //                           style: CustomTextStyles.bodyMediumBlack
+          //                               .copyWith(fontWeight: FontWeight.w500)),
+          //                     ],
+          //                   )),
+          //             ),
+          //             CustomElevatedButton(
+          //               text: "Last month".tr,
+          //               buttonTextStyle: controller.selectedMonthType.value ==
+          //                       MonthType.lastMonth
+          //                   ? CustomTextStyles.bodyMediumWhiteBold
+          //                   : CustomTextStyles.bodyMediumSkyBlueBold,
+          //               buttonStyle: controller.selectedMonthType.value ==
+          //                       MonthType.lastMonth
+          //                   ? CustomButtonStyles.fillPrimary
+          //                   : CustomButtonStyles.fillPrimaryTransparent,
+          //               margin: const EdgeInsets.only(left: 30),
+          //               // width: 94,
+          //               height: 44,
+          //               onPressed: () async =>
+          //                   await controller.changeMonth(MonthType.lastMonth),
+          //             ),
+          //             CustomElevatedButton(
+          //               text: "This month".tr,
+          //               buttonTextStyle: controller.selectedMonthType.value ==
+          //                       MonthType.thisMonth
+          //                   ? CustomTextStyles.bodyMediumWhiteBold
+          //                   : CustomTextStyles.bodyMediumSkyBlueBold,
+          //               buttonStyle: controller.selectedMonthType.value ==
+          //                       MonthType.thisMonth
+          //                   ? CustomButtonStyles.fillPrimary
+          //                   : CustomButtonStyles.fillPrimaryTransparent,
+          //               margin: const EdgeInsets.only(left: 10),
+          //               // width: 94,
+          //               height: 44,
+          //               onPressed: () async =>
+          //                   await controller.changeMonth(MonthType.thisMonth),
+          //             ),
+          //             CustomElevatedButton(
+          //               text: "${"Select month".tr}   ",
+          //               decoration: AppDecoration.outlineGray,
+          //               rightIcon: CustomImageView(
+          //                 imagePath: IconConstant.aabbcc,
+          //                 color: controller.selectedMonthType.value ==
+          //                         MonthType.selectedMonth
+          //                     ? appTheme.white
+          //                     : appTheme.black,
+          //               ),
+          //               buttonTextStyle: controller.selectedMonthType.value ==
+          //                       MonthType.selectedMonth
+          //                   ? CustomTextStyles.bodyMediumWhiteBold
+          //                   : CustomTextStyles.bodyMediumGray,
+          //               buttonStyle: controller.selectedMonthType.value ==
+          //                       MonthType.selectedMonth
+          //                   ? CustomButtonStyles.fillPrimary
+          //                   : CustomButtonStyles.fillTransparent,
+          //               margin: const EdgeInsets.only(left: 10),
+          //               // width: 114,
+          //               height: 44,
+          //               onPressed: () {
+          //                 // 커스텀 Select month 다이얼로그 열기
+          //                 showDialog(
+          //                   context: context,
+          //                   builder: (context) =>
+          //                       const CustomMonthPickerDialog(),
+          //                 );
+          //               },
+          //             ),
+          //           ],
+          //         ),
+          //       ]),
+          // ),
           SizedBox(
             width: double.infinity,
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 85,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: ListTile(
-                              contentPadding:
-                                  const EdgeInsets.only(left: 0.0, right: 0.0),
-                              title: Row(
-                                children: <Widget>[
-                                  Radio<Type>(
-                                    value: Type.all,
-                                    groupValue: controller.type.value,
-                                    onChanged: (Type? value) {
-                                      controller.changeType(value);
-                                    },
-                                  ),
-                                  Text(controller.typeLabels[0],
-                                      style: CustomTextStyles.bodyMediumBlack
-                                          .copyWith(
-                                              fontWeight: FontWeight.w500)),
-                                ],
-                              )),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Row(
+                            children: <Widget>[
+                              Radio<Type>(
+                                value: Type.all,
+                                groupValue: controller.type.value,
+                                onChanged: (Type? value) {
+                                  controller.changeType(value);
+                                },
+                              ),
+                              Text(
+                                controller.typeLabels[0].tr,
+                                style:
+                                    CustomTextStyles.bodyMediumBlack.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        width: 85,
-                        child: ListTile(
-                            contentPadding:
-                                const EdgeInsets.only(left: 0.0, right: 0.0),
-                            title: Row(
-                              children: <Widget>[
-                                Radio<Type>(
-                                  value: Type.notIssued,
-                                  groupValue: controller.type.value,
-                                  onChanged: (Type? value) {
-                                    controller.changeType(value);
-                                  },
-                                ),
-                                Text(controller.typeLabels[1],
-                                    style: CustomTextStyles.bodyMediumBlack
-                                        .copyWith(fontWeight: FontWeight.w500)),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        width: 85,
-                        child: ListTile(
-                            contentPadding:
-                                const EdgeInsets.only(left: 0.0, right: 0.0),
-                            title: Row(
-                              children: <Widget>[
-                                Radio<Type>(
-                                  value: Type.notSettled,
-                                  groupValue: controller.type.value,
-                                  onChanged: (Type? value) {
-                                    controller.changeType(value);
-                                  },
-                                ),
-                                Text(controller.typeLabels[2],
-                                    style: CustomTextStyles.bodyMediumBlack
-                                        .copyWith(fontWeight: FontWeight.w500)),
-                              ],
-                            )),
-                      ),
-                      CustomElevatedButton(
-                        text: "지난 달".tr,
-                        buttonTextStyle: controller.selectedMonthType.value ==
-                                MonthType.lastMonth
-                            ? CustomTextStyles.bodyMediumWhiteBold
-                            : CustomTextStyles.bodyMediumSkyBlueBold,
-                        buttonStyle: controller.selectedMonthType.value ==
-                                MonthType.lastMonth
-                            ? CustomButtonStyles.fillPrimary
-                            : CustomButtonStyles.fillPrimaryTransparent,
-                        margin: const EdgeInsets.only(left: 30),
-                        width: 94,
-                        height: 44,
-                        onPressed: () async =>
-                            await controller.changeMonth(MonthType.lastMonth),
-                      ),
-                      CustomElevatedButton(
-                        text: "이번 달".tr,
-                        buttonTextStyle: controller.selectedMonthType.value ==
-                                MonthType.thisMonth
-                            ? CustomTextStyles.bodyMediumWhiteBold
-                            : CustomTextStyles.bodyMediumSkyBlueBold,
-                        buttonStyle: controller.selectedMonthType.value ==
-                                MonthType.thisMonth
-                            ? CustomButtonStyles.fillPrimary
-                            : CustomButtonStyles.fillPrimaryTransparent,
-                        margin: const EdgeInsets.only(left: 10),
-                        width: 94,
-                        height: 44,
-                        onPressed: () async =>
-                            await controller.changeMonth(MonthType.thisMonth),
-                      ),
-                      CustomElevatedButton(
-                        text: "${"월 선택".tr}   ",
-                        decoration: AppDecoration.outlineGray,
-                        rightIcon: CustomImageView(
-                          imagePath: IconConstant.aabbcc,
-                          color: controller.selectedMonthType.value ==
-                                  MonthType.selectedMonth
-                              ? appTheme.white
-                              : appTheme.black,
+                    ),
+                    SizedBox(width: 20),
+                    SizedBox(
+                      width: 120,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Row(
+                          children: <Widget>[
+                            Radio<Type>(
+                              value: Type.notIssued,
+                              groupValue: controller.type.value,
+                              onChanged: (Type? value) {
+                                controller.changeType(value);
+                              },
+                            ),
+                            Text(
+                              controller.typeLabels[1].tr,
+                              style: CustomTextStyles.bodyMediumBlack.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
-                        buttonTextStyle: controller.selectedMonthType.value ==
-                                MonthType.selectedMonth
-                            ? CustomTextStyles.bodyMediumWhiteBold
-                            : CustomTextStyles.bodyMediumGray,
-                        buttonStyle: controller.selectedMonthType.value ==
-                                MonthType.selectedMonth
-                            ? CustomButtonStyles.fillPrimary
-                            : CustomButtonStyles.fillTransparent,
-                        margin: const EdgeInsets.only(left: 10),
-                        width: 114,
-                        height: 44,
-                        onPressed: () {
-                          // 커스텀 월 선택 다이얼로그 열기
-                          showDialog(
-                            context: context,
-                            builder: (context) =>
-                                const CustomMonthPickerDialog(),
-                          );
-                        },
                       ),
-                    ],
-                  ),
-                ]),
+                    ),
+                    SizedBox(width: 20),
+                    SizedBox(
+                      width: 120,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Row(
+                          children: <Widget>[
+                            Radio<Type>(
+                              value: Type.notSettled,
+                              groupValue: controller.type.value,
+                              onChanged: (Type? value) {
+                                controller.changeType(value);
+                              },
+                            ),
+                            Text(
+                              controller.typeLabels[2].tr,
+                              style: CustomTextStyles.bodyMediumBlack.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    CustomElevatedButton(
+                      text: "Last month".tr,
+                      buttonTextStyle: controller.selectedMonthType.value ==
+                              MonthType.lastMonth
+                          ? CustomTextStyles.bodyMediumWhiteBold
+                          : CustomTextStyles.bodyMediumSkyBlueBold,
+                      buttonStyle: controller.selectedMonthType.value ==
+                              MonthType.lastMonth
+                          ? CustomButtonStyles.fillPrimary
+                          : CustomButtonStyles.fillPrimaryTransparent,
+                      margin: const EdgeInsets.only(left: 30),
+                      height: 44,
+                      onPressed: () async =>
+                          await controller.changeMonth(MonthType.lastMonth),
+                    ),
+                    CustomElevatedButton(
+                      text: "This month".tr,
+                      buttonTextStyle: controller.selectedMonthType.value ==
+                              MonthType.thisMonth
+                          ? CustomTextStyles.bodyMediumWhiteBold
+                          : CustomTextStyles.bodyMediumSkyBlueBold,
+                      buttonStyle: controller.selectedMonthType.value ==
+                              MonthType.thisMonth
+                          ? CustomButtonStyles.fillPrimary
+                          : CustomButtonStyles.fillPrimaryTransparent,
+                      margin: const EdgeInsets.only(left: 10),
+                      height: 44,
+                      onPressed: () async =>
+                          await controller.changeMonth(MonthType.thisMonth),
+                    ),
+                    CustomElevatedButton(
+                      text: "${"Select month".tr}   ",
+                      decoration: AppDecoration.outlineGray,
+                      rightIcon: CustomImageView(
+                        imagePath: IconConstant.aabbcc,
+                        color: controller.selectedMonthType.value ==
+                                MonthType.selectedMonth
+                            ? appTheme.white
+                            : appTheme.black,
+                      ),
+                      buttonTextStyle: controller.selectedMonthType.value ==
+                              MonthType.selectedMonth
+                          ? CustomTextStyles.bodyMediumWhiteBold
+                          : CustomTextStyles.bodyMediumGray,
+                      buttonStyle: controller.selectedMonthType.value ==
+                              MonthType.selectedMonth
+                          ? CustomButtonStyles.fillPrimary
+                          : CustomButtonStyles.fillTransparent,
+                      margin: const EdgeInsets.only(left: 10),
+                      height: 44,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const CustomMonthPickerDialog(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -309,36 +458,36 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                 columns: [
                   // DataColumn(
                   //     label:
-                  //         Text("집계기간", style: CustomTextStyles.labelLargeGray)),
+                  //         Text("집계Period", style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "마스터 이름".tr,
+                    "Master name".tr,
                     style: CustomTextStyles.labelLargeGray,
                   )),
                   DataColumn(
-                      label: Text("수익률".tr,
+                      label: Text("Profit margin".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "총 플레이\n횟수".tr,
-                    style: CustomTextStyles.labelLargeGray,
-                    textAlign: TextAlign.center,
-                  )),
-                  DataColumn(
-                      label: Text("월 시청률".tr,
-                          style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text(
-                    "실정산금액\n(부가세포함)".tr,
+                    "Total play\ncount".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label: Text("상태".tr,
+                      label: Text("Monthly View Rate".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "마스터별\n상세".tr,
+                    "Net Settlement Amount\n(Including VAT)".tr,
+                    style: CustomTextStyles.labelLargeGray,
+                    textAlign: TextAlign.center,
+                  )),
+                  DataColumn(
+                      label: Text("Approval status".tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text(
+                    "Master\nDetails".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
@@ -383,14 +532,14 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                         DataCell(Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("미발행".tr,
+                            Text("Unissued".tr,
                                 style: CustomTextStyles.bodyLargeBlack),
                             CustomElevatedButton(
-                              text: "발행".tr,
+                              text: "Issued".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumWhiteBold,
                               buttonStyle: CustomButtonStyles.fillPrimary,
-                              width: 60,
+                              // width: 60,
                               height: 30,
                               margin: const EdgeInsets.only(top: 10),
                               // onPressed: _buildTotalSalesDetailModal,
@@ -398,10 +547,10 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           ],
                         )),
                         DataCell(CustomElevatedButton(
-                          text: "보기".tr,
+                          text: "View".tr,
                           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                           buttonStyle: CustomButtonStyles.fillBlack,
-                          width: 60,
+                          // width: 60,
                           height: 30,
                           onPressed: () =>
                               _buildMasterContentSettlementListModal(index),
@@ -417,24 +566,26 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
               () => Stack(
                 alignment: Alignment.centerLeft,
                 children: [
-                  CustomElevatedButton(
-                    text: "엑셀 다운로드".tr,
-                    buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                    buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                    width: 135,
-                    height: 44,
-                    // onPressed: controller.onStatusChangeForAll,
-                  ),
-                  Positioned(
-                    left: 150,
-                    child: CustomElevatedButton(
-                      text: "선택 집계".tr,
-                      buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-                      buttonStyle: CustomButtonStyles.fillPrimary,
-                      width: 107,
-                      height: 44,
-                      // onPressed: controller.onStatusChangeForAll,
-                    ),
+                  Row(
+                    children: [
+                      CustomElevatedButton(
+                        text: "Download Excel".tr,
+                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                        // width: 135,
+                        height: 44,
+                        // onPressed: controller.onStatusChangeForAll,
+                      ),
+                      CustomElevatedButton(
+                        text: "Select aggregation".tr,
+                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+                        buttonStyle: CustomButtonStyles.fillPrimary,
+                        // width: 107,
+                        height: 44,
+                        // onPressed: controller.onStatusChangeForAll,
+                        margin: const EdgeInsets.only(left: 16),
+                      ),
+                    ],
                   ),
                   Pages(
                       pages: (controller.masterSettlementListModel.total! / 20)
@@ -476,14 +627,14 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "월 구독 전체 매출액 상세".tr,
+                        "Monthly Subscription Total Sales Detail".tr,
                         style: CustomTextStyles.headlineLargeBlack,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "${controller.selectedMonth}월 (${controller.dateRange})",
+                        "${controller.selectedMonth} ${"Month".tr} (${controller.dateRange})",
                         style: CustomTextStyles.labelLargeGray,
                       ),
                     ],
@@ -497,6 +648,250 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
               const SizedBox(
                 height: 32,
               ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: appTheme.white,
+              //     borderRadius: const BorderRadius.all(Radius.circular(12)),
+              //   ),
+              //   height: 60,
+              //   width: double.infinity,
+              //   padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              //   margin: const EdgeInsets.only(bottom: 10),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: [
+              //       SizedBox(
+              //         width: double.infinity,
+              //         child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisAlignment: MainAxisAlignment.start,
+              //             children: [
+              //               Row(
+              //                 children: [
+              //                   SizedBox(
+              //                     width: 140,
+              //                     child: Align(
+              //                       alignment: Alignment.centerLeft,
+              //                       child: ListTile(
+              //                           contentPadding: const EdgeInsets.only(
+              //                               left: 0.0, right: 0.0),
+              //                           title: Row(
+              //                             children: <Widget>[
+              //                               Radio<Type>(
+              //                                 value: Type.all,
+              //                                 groupValue: controller.type.value,
+              //                                 onChanged: (Type? value) {
+              //                                   controller.changeType(value);
+              //                                 },
+              //                               ),
+              //                               Text("All".tr,
+              //                                   style: CustomTextStyles
+              //                                       .bodyMediumBlack
+              //                                       .copyWith(
+              //                                           fontWeight:
+              //                                               FontWeight.w500)),
+              //                             ],
+              //                           )),
+              //                     ),
+              //                   ),
+              //                   SizedBox(
+              //                     width: 140,
+              //                     child: ListTile(
+              //                         contentPadding: const EdgeInsets.only(
+              //                             left: 0.0, right: 0.0),
+              //                         title: Row(
+              //                           children: <Widget>[
+              //                             Radio<Type>(
+              //                               value: Type.notIssued,
+              //                               groupValue: controller.type.value,
+              //                               onChanged: (Type? value) {
+              //                                 controller.changeType(value);
+              //                               },
+              //                             ),
+              //                             Text("PG",
+              //                                 style: CustomTextStyles
+              //                                     .bodyMediumBlack
+              //                                     .copyWith(
+              //                                         fontWeight:
+              //                                             FontWeight.w500)),
+              //                           ],
+              //                         )),
+              //                   ),
+              //                   SizedBox(
+              //                     width: 140,
+              //                     child: ListTile(
+              //                         contentPadding: const EdgeInsets.only(
+              //                             left: 0.0, right: 0.0),
+              //                         title: Row(
+              //                           children: <Widget>[
+              //                             Radio<Type>(
+              //                               value: Type.notSettled,
+              //                               groupValue: controller.type.value,
+              //                               onChanged: (Type? value) {
+              //                                 controller.changeType(value);
+              //                               },
+              //                             ),
+              //                             Text("App Payment".tr,
+              //                                 style: CustomTextStyles
+              //                                     .bodyMediumBlack
+              //                                     .copyWith(
+              //                                         fontWeight:
+              //                                             FontWeight.w500)),
+              //                           ],
+              //                         )),
+              //                   ),
+              //                   SizedBox(
+              //                     width: 140,
+              //                     child: ListTile(
+              //                         contentPadding: const EdgeInsets.only(
+              //                             left: 0.0, right: 0.0),
+              //                         title: Row(
+              //                           children: <Widget>[
+              //                             Radio<Type>(
+              //                               value: Type.notSettled,
+              //                               groupValue: controller.type.value,
+              //                               onChanged: (Type? value) {
+              //                                 controller.changeType(value);
+              //                               },
+              //                             ),
+              //                             Text("Others".tr,
+              //                                 style: CustomTextStyles
+              //                                     .bodyMediumBlack
+              //                                     .copyWith(
+              //                                         fontWeight:
+              //                                             FontWeight.w500)),
+              //                           ],
+              //                         )),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ]),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: appTheme.white,
+              //     borderRadius: const BorderRadius.all(Radius.circular(12)),
+              //   ),
+              //   height: 60,
+              //   width: double.infinity,
+              //   padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              //   margin: const EdgeInsets.only(bottom: 10),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: [
+              //       SizedBox(
+              //         width: double.infinity,
+              //         child: Row(
+              //           children: [
+              //             Flexible(
+              //               child: ListTile(
+              //                 contentPadding:
+              //                     const EdgeInsets.symmetric(horizontal: 0.0),
+              //                 title: Row(
+              //                   children: <Widget>[
+              //                     Radio<Type>(
+              //                       value: Type.all,
+              //                       groupValue: controller.type.value,
+              //                       onChanged: (Type? value) {
+              //                         controller.changeType(value);
+              //                       },
+              //                     ),
+              //                     Text(
+              //                       "All".tr,
+              //                       style: CustomTextStyles.bodyMediumBlack
+              //                           .copyWith(
+              //                         fontWeight: FontWeight.w500,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //             Flexible(
+              //               child: ListTile(
+              //                 contentPadding:
+              //                     const EdgeInsets.symmetric(horizontal: 0.0),
+              //                 title: Row(
+              //                   children: <Widget>[
+              //                     Radio<Type>(
+              //                       value: Type.notIssued,
+              //                       groupValue: controller.type.value,
+              //                       onChanged: (Type? value) {
+              //                         controller.changeType(value);
+              //                       },
+              //                     ),
+              //                     Text(
+              //                       "PG".tr,
+              //                       style: CustomTextStyles.bodyMediumBlack
+              //                           .copyWith(
+              //                         fontWeight: FontWeight.w500,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //             Flexible(
+              //               child: ListTile(
+              //                 contentPadding:
+              //                     const EdgeInsets.symmetric(horizontal: 0.0),
+              //                 title: Row(
+              //                   children: <Widget>[
+              //                     Radio<Type>(
+              //                       value: Type.notSettled,
+              //                       groupValue: controller.type.value,
+              //                       onChanged: (Type? value) {
+              //                         controller.changeType(value);
+              //                       },
+              //                     ),
+              //                     Text(
+              //                       "App Payment".tr,
+              //                       style: CustomTextStyles.bodyMediumBlack
+              //                           .copyWith(
+              //                         fontWeight: FontWeight.w500,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //             Flexible(
+              //               child: ListTile(
+              //                 contentPadding:
+              //                     const EdgeInsets.symmetric(horizontal: 0.0),
+              //                 title: Row(
+              //                   children: <Widget>[
+              //                     Radio<Type>(
+              //                       value: Type.notSettled, // 수정된 타입 값
+              //                       groupValue: controller.type.value,
+              //                       onChanged: (Type? value) {
+              //                         controller.changeType(value);
+              //                       },
+              //                     ),
+              //                     Text(
+              //                       "Others".tr,
+              //                       style: CustomTextStyles.bodyMediumBlack
+              //                           .copyWith(
+              //                         fontWeight: FontWeight.w500,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
               Container(
                 decoration: BoxDecoration(
                   color: appTheme.white,
@@ -512,110 +907,110 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 85,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: ListTile(
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 0.0, right: 0.0),
-                                        title: Row(
-                                          children: <Widget>[
-                                            Radio<Type>(
-                                              value: Type.all,
-                                              groupValue: controller.type.value,
-                                              onChanged: (Type? value) {
-                                                controller.changeType(value);
-                                              },
-                                            ),
-                                            Text("전체".tr,
-                                                style: CustomTextStyles
-                                                    .bodyMediumBlack
-                                                    .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w500)),
-                                          ],
-                                        )),
+                      child: Row(
+                        children: [
+                          // 첫 번째 ListTile
+                          Expanded(
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              title: Row(
+                                children: <Widget>[
+                                  Radio<Type>(
+                                    value: Type.all,
+                                    groupValue: controller.type.value,
+                                    onChanged: (Type? value) {
+                                      controller.changeType(value);
+                                    },
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 85,
-                                  child: ListTile(
-                                      contentPadding: const EdgeInsets.only(
-                                          left: 0.0, right: 0.0),
-                                      title: Row(
-                                        children: <Widget>[
-                                          Radio<Type>(
-                                            value: Type.notIssued,
-                                            groupValue: controller.type.value,
-                                            onChanged: (Type? value) {
-                                              controller.changeType(value);
-                                            },
-                                          ),
-                                          Text("PG",
-                                              style: CustomTextStyles
-                                                  .bodyMediumBlack
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                        ],
-                                      )),
-                                ),
-                                SizedBox(
-                                  width: 85,
-                                  child: ListTile(
-                                      contentPadding: const EdgeInsets.only(
-                                          left: 0.0, right: 0.0),
-                                      title: Row(
-                                        children: <Widget>[
-                                          Radio<Type>(
-                                            value: Type.notSettled,
-                                            groupValue: controller.type.value,
-                                            onChanged: (Type? value) {
-                                              controller.changeType(value);
-                                            },
-                                          ),
-                                          Text("앱결제".tr,
-                                              style: CustomTextStyles
-                                                  .bodyMediumBlack
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                        ],
-                                      )),
-                                ),
-                                SizedBox(
-                                  width: 200,
-                                  child: ListTile(
-                                      contentPadding: const EdgeInsets.only(
-                                          left: 0.0, right: 0.0),
-                                      title: Row(
-                                        children: <Widget>[
-                                          Radio<Type>(
-                                            value: Type.notSettled,
-                                            groupValue: controller.type.value,
-                                            onChanged: (Type? value) {
-                                              controller.changeType(value);
-                                            },
-                                          ),
-                                          Text("기타".tr,
-                                              style: CustomTextStyles
-                                                  .bodyMediumBlack
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                        ],
-                                      )),
-                                ),
-                              ],
+                                  Text(
+                                    "All".tr,
+                                    style: CustomTextStyles.bodyMediumBlack
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ]),
+                          ),
+                          // 두 번째 ListTile
+                          Expanded(
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              title: Row(
+                                children: <Widget>[
+                                  Radio<Type>(
+                                    value: Type.notIssued,
+                                    groupValue: controller.type.value,
+                                    onChanged: (Type? value) {
+                                      controller.changeType(value);
+                                    },
+                                  ),
+                                  Text(
+                                    "PG".tr,
+                                    style: CustomTextStyles.bodyMediumBlack
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // 세 번째 ListTile
+                          Expanded(
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              title: Row(
+                                children: <Widget>[
+                                  Radio<Type>(
+                                    value: Type.notSettled,
+                                    groupValue: controller.type.value,
+                                    onChanged: (Type? value) {
+                                      controller.changeType(value);
+                                    },
+                                  ),
+                                  Text(
+                                    "App Payment".tr,
+                                    style: CustomTextStyles.bodyMediumBlack
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // 네 번째 ListTile
+                          Expanded(
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              title: Row(
+                                children: <Widget>[
+                                  Radio<Type>(
+                                    value: Type.notSettled, // 수정된 타입 값
+                                    groupValue: controller.type.value,
+                                    onChanged: (Type? value) {
+                                      controller.changeType(value);
+                                    },
+                                  ),
+                                  Text(
+                                    "Others".tr,
+                                    style: CustomTextStyles.bodyMediumBlack
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -644,45 +1039,45 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           columns: [
                             DataColumn(
                                 label: Text(
-                              "구매자명\n(회원 ID)".tr,
+                              "Buyer name\n(Member ID)".tr,
                               style: CustomTextStyles.labelLargeGray,
                               textAlign: TextAlign.center,
                             )),
                             DataColumn(
                                 label: Text(
-                              "거래일시".tr,
+                              "Transaction datetime".tr,
                               style: CustomTextStyles.labelLargeGray,
                               textAlign: TextAlign.center,
                             )),
                             DataColumn(
-                                label: Text("취소일시".tr,
+                                label: Text("Cancellation datetime".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
                                 label: Text(
-                              "멤버쉽명".tr,
+                              "Membership name".tr,
                               style: CustomTextStyles.labelLargeGray,
                               textAlign: TextAlign.center,
                             )),
                             DataColumn(
-                                label: Text("금액".tr,
+                                label: Text("Amount".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("승인번호".tr,
+                                label: Text("Approval number".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("결제대행사".tr,
+                                label: Text("Payment agency".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("수수료".tr,
+                                label: Text("Fee".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("순매출액".tr,
+                                label: Text("Net sales".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("기타 수수료\n(저작권료)".tr,
+                                label: Text("Other fee\n(Copyright)".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                             DataColumn(
-                                label: Text("순매출액".tr,
+                                label: Text("Net sales".tr,
                                     style: CustomTextStyles.labelLargeGray)),
                           ],
                           rows: List.generate(
@@ -765,12 +1160,12 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           alignment: Alignment.centerLeft,
                           children: [
                             CustomElevatedButton(
-                              text: "엑셀 다운로드".tr,
+                              text: "Download Excel".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumSkyBlueBold,
                               buttonStyle:
                                   CustomButtonStyles.fillPrimaryTransparent,
-                              width: 135,
+                              // width: 135,
                               height: 44,
                               // onPressed: controller.onStatusChangeForAll,
                             ),
@@ -818,7 +1213,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${controller.masterSettlementListModel.name![index]} (${controller.masterSettlementListModel.email![index]})님의",
+                            controller.masterSettlementListModel.name![index],
                             style: CustomTextStyles.headlineLargeBlack.copyWith(
                               decoration: TextDecoration.underline,
                             ),
@@ -827,7 +1222,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             height: 5,
                           ),
                           Text(
-                            "작품별 플레이 횟수에 따른 정산 상세".tr,
+                            "Settlement by play count".tr,
                             style: CustomTextStyles.titleLargeBlack,
                           ),
                           const SizedBox(
@@ -836,7 +1231,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           Row(
                             children: [
                               Text(
-                                "${controller.selectedMonth}월",
+                                "${controller.selectedMonth} ${"Month".tr}",
                                 style: CustomTextStyles.labelLargeBlack,
                               ),
                               Text(
@@ -882,28 +1277,28 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                               columns: [
                                 DataColumn(
                                     label: Text(
-                                  "콘텐츠명".tr,
+                                  "Content name".tr,
                                   style: CustomTextStyles.labelLargeGray,
                                   textAlign: TextAlign.center,
                                 )),
                                 DataColumn(
                                     label: Text(
-                                  "쉐어율".tr,
+                                  "Share rate".tr,
                                   style: CustomTextStyles.labelLargeRed,
                                   textAlign: TextAlign.center,
                                 )),
                                 DataColumn(
-                                    label: Text("플레이 횟수".tr,
+                                    label: Text("Play count".tr,
                                         style:
                                             CustomTextStyles.labelLargeGray)),
                                 DataColumn(
                                     label: Text(
-                                  "콘텐츠 별 시청율".tr,
+                                  "View rate per content".tr,
                                   style: CustomTextStyles.labelLargeGray,
                                   textAlign: TextAlign.center,
                                 )),
                                 DataColumn(
-                                    label: Text("콘텐츠 별 정산금액".tr,
+                                    label: Text("Settlement per content".tr,
                                         style:
                                             CustomTextStyles.labelLargeGray)),
                               ],
@@ -988,14 +1383,12 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             alignment: Alignment.centerLeft,
                             children: [
                               CustomElevatedButton(
-                                text: "엑셀 다운로드".tr,
+                                text: "Download Excel".tr,
                                 buttonTextStyle:
                                     CustomTextStyles.bodyMediumSkyBlueBold,
                                 buttonStyle:
                                     CustomButtonStyles.fillPrimaryTransparent,
-                                width: 135,
                                 height: 44,
-                                // onPressed: controller.onStatusChangeForAll,
                               ),
                               Pages(
                                   pages: (controller

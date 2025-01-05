@@ -43,7 +43,7 @@ class AuthenticationController extends GetxController {
         !isValidEmail(value, isRequired: true) ||
         masterSigninModel.isErrorCode(ApiErrorCode.credentialsInvalid) ||
         masterSigninModel.isErrorCode(ApiErrorCode.emailNotVerified)) {
-      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요. ".tr;
+      return "가입된 정보가 없습니다. 다시 Confirm하고 입력해주세요. ".tr;
     }
 
     return null;
@@ -53,7 +53,7 @@ class AuthenticationController extends GetxController {
     if (value == null ||
         !isValidPassword(value, isRequired: true) ||
         masterSigninModel.isErrorCode(ApiErrorCode.credentialsMismatch)) {
-      return "가입된 정보가 없습니다. 다시 확인하고 입력해주세요.".tr;
+      return "가입된 정보가 없습니다. 다시 Confirm하고 입력해주세요.".tr;
     }
     return null;
   }
@@ -79,7 +79,7 @@ class AuthenticationController extends GetxController {
       }
     } else {
       showSimpleMessage(
-          "로그인에 실패 하였습니다. ${masterSigninModel.getErrorMessage().tr}");
+          "Login에 실패 하였습니다. ${masterSigninModel.getErrorMessage().tr}");
     }
 
     return true;

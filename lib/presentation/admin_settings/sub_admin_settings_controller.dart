@@ -67,9 +67,9 @@ class SubAdminSettingsController extends GetxController {
     selectedIds.clear();
 
     if (adminDeleteModel.isSuccess) {
-      showSimpleMessage("삭제 되었습니다");
+      showSimpleMessage("Delete 되었습니다");
     } else {
-      showSimpleMessage("삭제에 실패 하였습니다");
+      showSimpleMessage("Delete에 실패 하였습니다");
     }
 
     await loadPage(activePage.value);

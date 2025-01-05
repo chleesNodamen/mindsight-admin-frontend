@@ -51,7 +51,7 @@ class InactiveMemberManageController extends GetxController {
       affiliation = [];
     }
 
-    // 아무것도 체크 안되었을때는..검색이 안되어야 된다..
+    // 아무것도 체크 안되었을때는..Search이 안되어야 된다..
     if (membershipValues.every((element) => element == false)) {
       affiliation = ['known'];
     }
@@ -162,9 +162,9 @@ class InactiveMemberManageController extends GetxController {
     if (model.isSuccess) {
       await loadPage(1);
 
-      showSimpleMessage("삭제 되었습니다");
+      showSimpleMessage("Delete 되었습니다");
     } else {
-      showSimpleMessage("삭제에 실패 하였습니다. ${model.getErrorMessage()}");
+      showSimpleMessage("Delete에 실패 하였습니다. ${model.getErrorMessage()}");
     }
 
     isLoading.value = false;

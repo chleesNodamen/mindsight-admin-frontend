@@ -27,10 +27,10 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "수익쉐어".tr,
+                                    name: "Revenue share".tr,
                                     searchShow: false,
                                     viewCount: false,
-                                    searchText: "마스터 이름 검색".tr,
+                                    searchText: "Search master name".tr,
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
@@ -74,32 +74,32 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                 columns: [
                   // DataColumn(
                   //     label: Text(
-                  //   "집계기간",
+                  //   "집계Period",
                   //   style: CustomTextStyles.labelLargeGray,
                   // )),
                   DataColumn(
                       label: Text(
-                    "마스터 이름".tr,
+                    "Master name".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label: Text("마스터 ID".tr,
+                      label: Text("Master ID".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("이전 수익률".tr,
+                      label: Text("Previous profit margin".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "현 수익률".tr,
+                    "Current profit margin".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label: Text("월시청 비율".tr,
+                      label: Text("Monthly View Rate".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("마스터별 상세".tr,
+                      label: Text("Master detail".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(
@@ -152,22 +152,22 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomElevatedButton(
-                                text: "보기".tr,
+                                text: "View".tr,
                                 buttonTextStyle:
                                     CustomTextStyles.bodyMediumWhiteBold,
                                 buttonStyle: CustomButtonStyles.fillBlack,
-                                width: 60,
+                                // width: 60,
                                 height: 30,
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
                               CustomElevatedButton(
-                                text: "변경".tr,
+                                text: "Change".tr,
                                 buttonTextStyle:
                                     CustomTextStyles.bodyMediumWhiteBold,
                                 buttonStyle: CustomButtonStyles.fillPrimary,
-                                width: 60,
+                                // width: 60,
                                 height: 30,
                                 onPressed: () =>
                                     _buildProfitRateChangeModal(index),
@@ -186,23 +186,25 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
               () => Stack(
                 alignment: Alignment.centerLeft,
                 children: [
-                  CustomElevatedButton(
-                    text: "엑셀 다운로드".tr,
-                    buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                    buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                    width: 135,
-                    height: 44,
-                    // onPressed: controller.onStatusChangeForAll,
-                  ),
-                  Positioned(
-                    left: 150,
-                    child: CustomElevatedButton(
-                      text: "선택 집계".tr,
-                      buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-                      buttonStyle: CustomButtonStyles.fillPrimary,
-                      width: 107,
-                      height: 44,
-                    ),
+                  Row(
+                    children: [
+                      CustomElevatedButton(
+                        text: "Download Excel".tr,
+                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                        // width: 135,
+                        height: 44,
+                        // onPressed: controller.onStatusChangeForAll,
+                      ),
+                      CustomElevatedButton(
+                        text: "Select aggregation".tr,
+                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+                        buttonStyle: CustomButtonStyles.fillPrimary,
+                        // width: 107,
+                        height: 44,
+                        margin: const EdgeInsets.only(left: 16),
+                      ),
+                    ],
                   ),
                   Pages(
                       pages:
@@ -246,14 +248,14 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${controller.masterProfitRateListModel.value.name![index]} (${controller.masterProfitRateListModel.value.email![index]})님의",
+                        controller.masterProfitRateListModel.value.name![index],
                         style: CustomTextStyles.headlineLargeBlack.copyWith(
                           decoration: TextDecoration.underline,
                           // decorationColor: appTheme.skyBlue
                         ),
                       ),
                       Text(
-                        "쉐어율을 변경합니다.".tr,
+                        "Change share rate.".tr,
                         style: CustomTextStyles.headlineMediumBlack,
                       ),
                     ],
@@ -275,7 +277,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "현재".tr,
+                        "Current".tr,
                         style: CustomTextStyles.labelLargeBlack,
                       ),
                       const SizedBox(
@@ -314,7 +316,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "변경 후".tr,
+                        "After change".tr,
                         style: CustomTextStyles.labelLargeBlack,
                       ),
                       const SizedBox(
@@ -351,10 +353,10 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomElevatedButton(
-                    text: '변경'.tr,
+                    text: 'Change'.tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                     buttonStyle: CustomButtonStyles.fillPrimary,
-                    width: 120,
+                    // width: 120,
                     height: 44,
                     onPressed: () => controller.onProfitChange(index),
                   ),

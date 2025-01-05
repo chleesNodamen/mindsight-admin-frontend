@@ -38,7 +38,7 @@ class CompanyDetailsController extends GetxController {
 
   void onList() {
     if (Account.isAdmin) {
-      if (SideMenuController.to.isActiveSubItem("회사 목록")) {
+      if (SideMenuController.to.isActiveSubItem("Company list")) {
         Get.offAllNamed(AppRoutes.companyManage);
       } else {
         Get.offAllNamed(AppRoutes.inactiveCompanyManage);

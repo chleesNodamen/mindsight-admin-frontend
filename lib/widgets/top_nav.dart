@@ -27,8 +27,8 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
             visible: !ResponsiveWidget.isSmallScreen(context),
             child: Text(
                 Account.isAdmin
-                    ? AccountRole.admin.displayName
-                    : AccountRole.master.displayName,
+                    ? AccountRole.admin.displayName.tr
+                    : AccountRole.master.displayName.tr,
                 style: CustomTextStyles.labelLargeWhite),
           ),
           Expanded(child: Container()),

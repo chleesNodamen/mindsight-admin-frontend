@@ -28,7 +28,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "활동 기록 상세".tr,
+                                    name: "Activity record detail".tr,
                                     searchShow: false,
                                     viewCount: false,
                                   ),
@@ -37,7 +37,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                     children: [
                                       InkWell(
                                         child: Text(
-                                          "활동 기록 관리".tr,
+                                          "Activity record management".tr,
                                           style: CustomTextStyles
                                               .bodyMediumSkyBlue
                                               .copyWith(
@@ -53,7 +53,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                                       CustomImageView(
                                         imagePath: IconConstant.arrowRight,
                                       ),
-                                      Text("활동 기록 상세".tr,
+                                      Text("Activity record detail".tr,
                                           style:
                                               CustomTextStyles.bodyMediumGray),
                                     ],
@@ -94,11 +94,11 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("회원 정보".tr, style: CustomTextStyles.labelLargeBlack),
+              Text("Member info".tr, style: CustomTextStyles.labelLargeBlack),
               InkWell(
                   onTap: controller.onMemberTap,
                   child: Text(
-                    "상세".tr,
+                    "Details".tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -116,7 +116,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("이메일 주소".tr, style: CustomTextStyles.labelLargeGray),
+                  Text("Email address".tr,
+                      style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -131,7 +132,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("닉네임".tr, style: CustomTextStyles.labelLargeGray),
+                  Text("Nickname".tr, style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -146,7 +147,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("가입일".tr, style: CustomTextStyles.labelLargeGray),
+                  Text("Signup date".tr,
+                      style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -176,11 +178,12 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("세션 정보".tr, style: CustomTextStyles.labelLargeBlack),
+                  Text("Session info".tr,
+                      style: CustomTextStyles.labelLargeBlack),
                   InkWell(
                     onTap: controller.onPracticeTap,
                     child: Text(
-                      "상세".tr,
+                      "Details".tr,
                       style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                           decoration: TextDecoration.underline,
                           decorationColor: appTheme.skyBlue),
@@ -191,7 +194,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               const SizedBox(
                 height: 24,
               ),
-              Text("회차".tr, style: CustomTextStyles.labelLargeGray),
+              Text("Session number".tr, style: CustomTextStyles.labelLargeGray),
               const SizedBox(
                 height: 16,
               ),
@@ -202,7 +205,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 thickness: 1,
                 color: appTheme.grayScale2,
               ),
-              Text("콘텐츠 등록".tr, style: CustomTextStyles.labelLargeGray),
+              Text("Register content".tr,
+                  style: CustomTextStyles.labelLargeGray),
               const SizedBox(
                 height: 16,
               ),
@@ -212,12 +216,12 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(ContentCategory.body.displayName,
+                      Text(ContentCategory.body.displayName.tr,
                           style: CustomTextStyles.labelLargeSkyBlue),
                       const SizedBox(
                         height: 16,
                       ),
-                      Text(ContentCategory.breath.displayName,
+                      Text(ContentCategory.breath.displayName.tr,
                           style: CustomTextStyles.labelLargeSkyBlue),
                     ],
                   ),
@@ -254,11 +258,12 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("세션 정보".tr, style: CustomTextStyles.labelLargeBlack),
+                  Text("Session info".tr,
+                      style: CustomTextStyles.labelLargeBlack),
                   InkWell(
                     onTap: controller.onChallengeTap,
                     child: Text(
-                      "상세".tr,
+                      "Details".tr,
                       style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                           decoration: TextDecoration.underline,
                           decorationColor: appTheme.skyBlue),
@@ -269,7 +274,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               const SizedBox(
                 height: 24,
               ),
-              Text("제목".tr, style: CustomTextStyles.labelLargeGray),
+              Text("Title".tr, style: CustomTextStyles.labelLargeGray),
               const SizedBox(
                 height: 16,
               ),
@@ -286,7 +291,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("목적".tr, style: CustomTextStyles.labelLargeGray),
+                      Text("Purpose".tr,
+                          style: CustomTextStyles.labelLargeGray),
                       const SizedBox(
                         height: 16,
                       ),
@@ -297,7 +303,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("기간".tr, style: CustomTextStyles.labelLargeGray),
+                      Text("Period".tr, style: CustomTextStyles.labelLargeGray),
                       const SizedBox(
                         height: 16,
                       ),
@@ -315,7 +321,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("소개".tr, style: CustomTextStyles.labelLargeGray),
+                  Text("Introduction".tr,
+                      style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -340,7 +347,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("기록 정보".tr, style: CustomTextStyles.labelLargeBlack),
+          Text("Record info".tr, style: CustomTextStyles.labelLargeBlack),
           const SizedBox(
             height: 24,
           ),
@@ -352,7 +359,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("유형".tr, style: CustomTextStyles.labelLargeGray),
+                  Text("Category".tr, style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -412,7 +419,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("세션 시작".tr, style: CustomTextStyles.labelLargeGray),
+                  Text("Session start".tr,
+                      style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     width: 8,
                   ),
@@ -430,7 +438,8 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   const SizedBox(
                     width: 32,
                   ),
-                  Text("세션 완료".tr, style: CustomTextStyles.labelLargeGray),
+                  Text("Session complete".tr,
+                      style: CustomTextStyles.labelLargeGray),
                   const SizedBox(
                     width: 8,
                   ),
@@ -452,15 +461,15 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
             thickness: 1,
             color: appTheme.grayScale2,
           ),
-          Text("챗봇 기록".tr, style: CustomTextStyles.labelLargeGray),
+          Text("Chatbot record".tr, style: CustomTextStyles.labelLargeGray),
           const SizedBox(
             height: 16,
           ),
           InkWell(
             child: Text(
               controller.activityDetailsModel.chatbot != null
-                  ? "있음".tr
-                  : "없음".tr,
+                  ? "Exists".tr
+                  : "None status".tr,
               style: controller.activityDetailsModel.chatbot != null
                   ? CustomTextStyles.labelLargeSkyBlue.copyWith(
                       decoration: TextDecoration.underline,
@@ -482,12 +491,13 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("전문가 피드백".tr, style: CustomTextStyles.labelLargeGray),
+              Text("Expert feedback".tr,
+                  style: CustomTextStyles.labelLargeGray),
               controller.activityDetailsModel.expertMessage != null
                   ? const SizedBox.shrink()
                   : InkWell(
                       child: Text(
-                        "작성".tr,
+                        "Write".tr,
                         style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                             decoration: TextDecoration.underline,
                             decorationColor: appTheme.skyBlue),
@@ -525,7 +535,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("등록".tr,
+                            Text("Register".tr,
                                 style: CustomTextStyles.labelLargeGray),
                             const SizedBox(
                               width: 8,
@@ -547,7 +557,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                         )),
                   ],
                 )
-              : Text("없음".tr, style: CustomTextStyles.labelLargeBlack)
+              : Text("None status".tr, style: CustomTextStyles.labelLargeBlack)
         ],
       ),
     );
@@ -572,7 +582,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "전문가 피드백 작성".tr,
+                    "Write expert feedback".tr,
                     style: CustomTextStyles.bodyLargeBlack,
                   ),
                   CustomImageView(
@@ -587,7 +597,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
               CustomTextFormField(
                 width: 730,
                 controller: controller.feedbackController,
-                hintText: "Input Text".tr,
+                hintText: "Input text".tr,
                 contentPadding: const EdgeInsets.all(16),
                 maxLines: 6,
               ),
@@ -598,19 +608,19 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomElevatedButton(
-                    text: "저장".tr,
+                    text: "Save".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                     buttonStyle: CustomButtonStyles.fillPrimary,
-                    width: 90,
+                    // width: 90,
                     height: 44,
                     onPressed: () => controller.onFeedback(),
                   ),
                   CustomElevatedButton(
-                    text: "취소".tr,
+                    text: "Cancel".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     buttonStyle: CustomButtonStyles.fillRedTransparent,
                     margin: const EdgeInsets.only(left: 16),
-                    width: 90,
+                    // width: 90,
                     height: 44,
                     onPressed: () => Get.back(),
                   ),
@@ -642,7 +652,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "챗봇 기록".tr,
+                      "Chatbot record".tr,
                       style: CustomTextStyles.bodyLargeBlack,
                     ),
                     CustomImageView(
@@ -731,7 +741,7 @@ class ActivityHistoryView extends GetWidget<ActivityHistoryController> {
                             ? "불만족".tr
                             : controller.activityChatModel.reaction == "LIKED"
                                 ? "만족".tr
-                                : "없음".tr,
+                                : "None status".tr,
                         style: CustomTextStyles.labelLargeBlack,
                       ),
                     ],

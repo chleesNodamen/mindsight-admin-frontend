@@ -93,12 +93,11 @@ class MemberEditController extends GetxController {
         ));
 
     if (membersEditModel.isSuccess) {
-      await showSimpleMessage("저장 되었습니다");
+      await showSimpleMessage("Saved successfully");
       Get.offAllNamed(AppRoutes.memberDetails,
           arguments: {RouteArguments.id: id});
     } else {
-      showSimpleMessage(
-          "저장에 실패 하였습니다. ${membersEditModel.getErrorMessage().tr}");
+      showSimpleMessage("Save failed ${membersEditModel.getErrorMessage().tr}");
     }
 
     isLoading.value = false;

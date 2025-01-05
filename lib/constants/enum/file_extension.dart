@@ -1,7 +1,9 @@
 enum FileExtension {
   srt('srt', 'SRT'),
   jpg('jpg', 'JPG'),
-  mp4('mp4', 'MP4');
+  mp4('mp4', 'MP4'),
+  mp3('mp3', 'MP3'),
+  wav('wav', 'WAV');
 
   final String _displayName;
   final String _keywordName;

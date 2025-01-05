@@ -49,9 +49,9 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
   CustomElevatedButton _buildRegisterButton() {
     return CustomElevatedButton(
       onPressed: controller.onRegister,
-      text: "신규 등록".tr,
+      text: "New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -59,7 +59,7 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "서브 관리자 관리".tr,
+      name: "Sub admin management".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",
@@ -92,16 +92,16 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text('아이디'.tr,
+                      label: Text('ID'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('담당 부서'.tr,
+                      label: Text('Department'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('담당자'.tr,
+                      label: Text('Manager'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('권한'.tr,
+                      label: Text('Permission'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.adminListModel.length, (index) {
@@ -159,10 +159,10 @@ class SubAdminSettingsView extends GetWidget<SubAdminSettingsController> {
               alignment: Alignment.centerLeft,
               children: [
                 CustomElevatedButton(
-                  text: '삭제'.tr,
+                  text: 'Delete'.tr,
                   buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                   buttonStyle: CustomButtonStyles.fillRedTransparent.copyWith(),
-                  width: 76,
+                  // width: 76,
                   height: 44,
                   onPressed: () async {
                     await controller.onDeleteSelected();

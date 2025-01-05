@@ -117,7 +117,7 @@ Future<Map<String, String>?> showContentSelectDialog(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "콘텐츠 선택".tr,
+                  "Select content".tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
                 CustomImageView(
@@ -137,7 +137,7 @@ Future<Map<String, String>?> showContentSelectDialog(
                       decoration: InputDecoration(
                         fillColor: appTheme.white,
                         filled: true,
-                        labelText: "콘텐츠 제목".tr,
+                        labelText: "Content title".tr,
                         labelStyle: CustomTextStyles.bodyMediumGray,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         border: OutlineInputBorder(
@@ -226,7 +226,7 @@ Future<Map<String, String>?> showContentSelectDialog(
                       ),
                     ),
                     child: Text(
-                      "검색".tr,
+                      "Search".tr,
                       style: CustomTextStyles.bodyMediumWhite,
                     ),
                   ),
@@ -268,15 +268,15 @@ Future<Map<String, String>?> showContentSelectDialog(
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text("타입".tr,
+                                label: Text("Type".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text("제목".tr,
+                                label: Text("Title".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text("상태".tr,
+                                label: Text("Approval status".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                             ],
@@ -306,8 +306,12 @@ Future<Map<String, String>?> showContentSelectDialog(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 24.0),
                                         child: Text(
-                                          controller.contentListModel.value
-                                              .type![index],
+                                          ContentType.fromKeyword(controller
+                                                  .contentListModel
+                                                  .value
+                                                  .type![index])!
+                                              .displayName
+                                              .tr,
                                           style:
                                               CustomTextStyles.bodyLargeBlack,
                                         ),
@@ -330,10 +334,12 @@ Future<Map<String, String>?> showContentSelectDialog(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 24.0),
                                         child: Text(
-                                          controller.contentListModel.value
-                                                  .status![index]
-                                              ? "정상".tr
-                                              : "안함".tr,
+                                          ContentStatus.fromKeyword(controller
+                                                  .contentListModel
+                                                  .value
+                                                  .status![index])
+                                              .displayName
+                                              .tr,
                                           style:
                                               CustomTextStyles.bodyLargeBlack,
                                         ),
@@ -351,12 +357,12 @@ Future<Map<String, String>?> showContentSelectDialog(
                           alignment: Alignment.centerLeft,
                           children: [
                             CustomElevatedButton(
-                              text: "선택 완료".tr,
+                              text: "Selection complete".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumWhiteBold,
                               buttonStyle: CustomButtonStyles.fillPrimary,
                               margin: const EdgeInsets.only(right: 16),
-                              width: 107,
+                              // width: 107,
                               height: 44,
                               onPressed: controller.confirmSelection,
                             ),

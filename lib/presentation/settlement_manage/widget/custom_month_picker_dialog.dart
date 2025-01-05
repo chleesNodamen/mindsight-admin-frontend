@@ -19,7 +19,7 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // 연도 리스트 생성 (예: 현재 연도부터 100년 전까지)
+    // Year 리스트 생성 (예: Current Year부터 100년 전까지)
     List<int> years =
         List<int>.generate(100, (index) => DateTime.now().year - index);
 
@@ -27,15 +27,15 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
     List<int> months = List<int>.generate(12, (index) => index + 1);
 
     return AlertDialog(
-      title: Text("월 선택".tr),
+      title: Text("Select month".tr),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 연도 선택 Dropdown
+          // Year 선택 Dropdown
           DropdownButtonFormField<int>(
             value: selectedYear,
             decoration: InputDecoration(
-              labelText: "연도".tr,
+              labelText: "Year".tr,
               // border: OutlineInputBorder(),
             ),
             items: years
@@ -51,11 +51,11 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
             },
           ),
           const SizedBox(height: 20),
-          // 월 선택 Dropdown
+          // Select month Dropdown
           DropdownButtonFormField<int>(
             value: selectedMonth,
             decoration: InputDecoration(
-              labelText: "월".tr,
+              labelText: "Month".tr,
               // border: OutlineInputBorder(),
             ),
             items: months
@@ -77,11 +77,11 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomElevatedButton(
-                text: "확인".tr,
+                text: "Confirm".tr,
                 buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
                 buttonStyle: CustomButtonStyles.fillPrimary,
                 margin: const EdgeInsets.only(bottom: 15),
-                width: 94,
+                // width: 94,
                 height: 44,
                 onPressed: () async {
                   await SettlementManageController.to.changeMonth(
@@ -92,11 +92,11 @@ class _CustomMonthPickerDialogState extends State<CustomMonthPickerDialog> {
                   Navigator.of(context).pop();
                 }),
             CustomElevatedButton(
-                text: "취소".tr,
+                text: "Cancel".tr,
                 buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                 buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                 margin: const EdgeInsets.only(left: 10, bottom: 15),
-                width: 94,
+                // width: 94,
                 height: 44,
                 onPressed: () {
                   Navigator.of(context).pop();

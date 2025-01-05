@@ -50,10 +50,10 @@ class InactiveMasterManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "비활성 마스터 관리".tr,
+      name: "Inactive Master management".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "이메일 주소, 이름 검색".tr,
+      searchText: "Email address, Name Search".tr,
       memberShow: true,
       memberCount: controller.masterListModel.total,
       onSearch: controller.onSearch,
@@ -86,16 +86,16 @@ class InactiveMasterManageView
                       label: Text('소속'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('이메일 주소'.tr,
+                      label: Text('Email address'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('닉네임'.tr,
+                      label: Text('Nickname'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('전환일'.tr,
+                      label: Text('Conversion date'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('상태'.tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.masterListModel.length, (index) {
@@ -171,20 +171,20 @@ class InactiveMasterManageView
                       Visibility(
                         visible: Account.isAdmin,
                         child: CustomElevatedButton(
-                          text: '활성'.tr,
+                          text: 'Active'.tr,
                           buttonTextStyle:
                               CustomTextStyles.bodyMediumSkyBlueBold,
                           buttonStyle:
                               CustomButtonStyles.fillPrimaryTransparent,
                           // margin: const EdgeInsets.symmetric(
                           //     vertical: 11, horizontal: 24),
-                          width: 90,
+                          // width: 90,
                           height: 44,
                           onPressed: controller.onVerfiedButtonPressed,
                         ),
                       ),
                       // CustomElevatedButton(
-                      //   text: '비활성',
+                      //   text: 'Inactive',
                       // buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                       //   buttonStyle: CustomButtonStyles.fillRedTransparent,
                       //   margin: const EdgeInsets.symmetric(horizontal: 16),

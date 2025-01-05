@@ -23,7 +23,7 @@ class PracticeRegisterController extends GetxController {
 
   Future<void> onSave() async {
     if (selectedBodyId == null || selectedBreathId == null) {
-      showSimpleMessage("콘텐츠를 선택 해 주십시오");
+      showSimpleMessage("Content를 선택 해 주십시오");
       return;
     }
 
@@ -36,10 +36,10 @@ class PracticeRegisterController extends GetxController {
     isLoading.value = false;
 
     if (model.isSuccess) {
-      await showSimpleMessage("저장 되었습니다");
+      await showSimpleMessage("Saved successfully");
       Get.offAllNamed(AppRoutes.contentPracticeManage);
     } else {
-      showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
+      showSimpleMessage("Save failed ${model.getErrorMessage().tr}");
     }
   }
 

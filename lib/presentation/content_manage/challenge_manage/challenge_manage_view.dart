@@ -57,9 +57,9 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.challengeRegister);
       },
-      text: "신규 등록".tr,
+      text: "New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -67,10 +67,10 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Challenge 관리".tr,
+      name: "Challenge management".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "챌린지 제목, 콘텐츠 제목 검색".tr,
+      searchText: "Challenge, Content title".tr,
       onSearch: controller.onSearch,
     );
   }
@@ -103,25 +103,33 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text('목적'.tr,
+                      label: Text('Purpose'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('제목'.tr,
+                      label: Text('Title'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('참여 회원 수'.tr,
+                      label: Text('Participating members'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('완료 회원 수'.tr,
+                      label: Text('Completed members'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('좋아요 수'.tr,
+                      label: Text('Like count'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('상태'.tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('노출'.tr,
+                      label: Text('Exposure'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Account.isAdmin
+                          ? const SizedBox.shrink()
+                          : Text("Approval request".tr,
+                              style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('Edit'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.challengesModel.length, (index) {
@@ -138,7 +146,8 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                             child: Text(
                                 Goal.fromKeyword(
                                         controller.challengesModel.goal![index])
-                                    .displayName,
+                                    .displayName
+                                    .tr,
                                 style: CustomTextStyles.bodyLargeBlack),
                           ),
                         ),
@@ -199,6 +208,30 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                             controller.onExposureChange(index);
                           },
                         )),
+                        DataCell(Account.isAdmin
+                            ? const SizedBox.shrink()
+                            : CustomElevatedButton(
+                                text: "Approval request".tr,
+                                buttonTextStyle:
+                                    CustomTextStyles.bodyMediumWhiteBold,
+                                buttonStyle: CustomButtonStyles.fillBlack,
+                                // width: 70,
+                                height: 30,
+                                onPressed: () =>
+                                    showSimpleMessage("Service preparing".tr))),
+                        DataCell(CustomElevatedButton(
+                            text: "Edit".tr,
+                            buttonTextStyle:
+                                CustomTextStyles.bodyMediumWhiteBold,
+                            buttonStyle: CustomButtonStyles.fillBlack,
+                            // width: 60,
+                            height: 30,
+                            onPressed: () => Get.offAllNamed(
+                                    AppRoutes.challengeEdit,
+                                    arguments: {
+                                      RouteArguments.id:
+                                          controller.challengesModel.id![index],
+                                    }))),
                       ]);
                 }).toList(),
               ),
@@ -214,28 +247,28 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                     Visibility(
                       visible: Account.isAdmin,
                       child: CustomElevatedButton(
-                        text: '상태 변경'.tr,
+                        text: 'Change status'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                         margin: const EdgeInsets.only(right: 16),
-                        width: 107,
+                        // width: 107,
                         height: 44,
                         onPressed: () {
-                          showSimpleMessage("서비스 준비 중 입니다".tr);
+                          showSimpleMessage("Service preparing".tr);
                         },
                       ),
                     ),
                     Visibility(
                       visible: Account.isAdmin,
                       child: CustomElevatedButton(
-                        text: '삭제'.tr,
+                        text: 'Delete'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                         buttonStyle:
                             CustomButtonStyles.fillRedTransparent.copyWith(),
-                        width: 76,
+                        // width: 76,
                         height: 44,
                         onPressed: () {
-                          showSimpleMessage("서비스 준비 중 입니다".tr);
+                          showSimpleMessage("Service preparing".tr);
                         },
                       ),
                     ),
@@ -272,7 +305,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('목적'.tr, style: CustomTextStyles.labelMediumGray),
+          Text('Purpose'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 17),
           SizedBox(
             width: double.infinity,
@@ -281,7 +314,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
               children: List.generate(controller.goalValues.length, (index) {
                 return CustomCheckboxWidget(
                   isChecked: controller.goalValues[index],
-                  label: controller.goalLabels[index].displayName,
+                  label: controller.goalLabels[index].displayName.tr,
                   onChanged: (value) =>
                       controller.toggleGoalCheckbox(index, value),
                 );
@@ -299,14 +332,14 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('기간'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Period'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
                   Row(
                     children:
                         List.generate(controller.periodValues.length, (index) {
                       return CustomCheckboxWidget(
                         isChecked: controller.periodValues[index],
-                        label: '${controller.periodLabels[index]}${'일'.tr}',
+                        label: '${controller.periodLabels[index]} ${'일'.tr}',
                         onChanged: (value) =>
                             controller.togglePeriodCheckbox(index, value),
                       );
@@ -321,19 +354,20 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('상태'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Approval status".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
                   Row(
                     children: [
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[0],
-                        label: '활성'.tr,
+                        label: 'Active'.tr,
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             0, value), // Adjust as needed
                       ),
                       CustomCheckboxWidget(
                         isChecked: controller.statusValues[1],
-                        label: '비활성'.tr,
+                        label: 'Inactive'.tr,
                         onChanged: (value) => controller.toggleStatusCheckbox(
                             1, value), // Adjust as needed
                       ),
@@ -383,7 +417,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
             return DropdownMenuItem<SortCondition>(
               value: value,
               child: Text(
-                value.displayName,
+                value.displayName.tr,
                 style: CustomTextStyles.labelLargeBlack,
               ),
             );

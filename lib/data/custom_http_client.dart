@@ -16,13 +16,13 @@ class CustomHttpClient {
   String forTest2 = "";
 
   CustomHttpClient({http.Client? c}) : client = c ?? http.Client() {
-    Logger.log('Api: baseUrl 설정: $baseUrl');
+    Logger.log('Api: baseUrl Settings: $baseUrl');
   }
 
   // void setBaseUrl(String url) {
   //   // baseUrl은 final이므로 새로운 인스턴스를 생성해야 합니다.
-  //   // 또는 baseUrl을 변경 가능한 변수로 변경할 수 있습니다.
-  //   throw UnimplementedError('Base URL 변경은 지원되지 않습니다.');
+  //   // 또는 baseUrl을 Change 가능한 변수로 Change할 수 있습니다.
+  //   throw UnimplementedError('Base URL Change은 지원되지 않습니다.');
   // }
 
   void setBearerAuthorization(String accessToken) {

@@ -74,12 +74,12 @@ class MemberRegisterController extends GetxController {
             email: emailController.text));
 
     if (model.isSuccess) {
-      // await showSimpleMessage("저장 되었습니다");
+      // await showSimpleMessage("Saved successfully");
       Get.offAllNamed(AppRoutes.memberManage);
       SideMenuController.to
           .changeActiveSubItem(memberManagePageSubMenuDisplayName);
     } else {
-      showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
+      showSimpleMessage("Save failed ${model.getErrorMessage().tr}");
     }
 
     isLoading.value = false;

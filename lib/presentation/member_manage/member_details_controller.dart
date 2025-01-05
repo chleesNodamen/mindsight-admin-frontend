@@ -40,7 +40,7 @@ class MemberDetailsController extends GetxController {
   }
 
   void onMemberList() {
-    if (SideMenuController.to.isActiveSubItem("회원 목록")) {
+    if (SideMenuController.to.isActiveSubItem("Member list")) {
       Get.offAllNamed(AppRoutes.memberManage);
     } else {
       Get.offAllNamed(AppRoutes.inactiveMemberManage);

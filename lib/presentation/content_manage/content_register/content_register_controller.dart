@@ -61,6 +61,7 @@ class ContentRegisterController extends GetxController {
   RxString thumbnailName = "".obs;
   RxString ccName = "".obs;
   File? thumbnailFile;
+  File? ccFile;
   File? mediaFile;
 
   // RxString ffmpegStatus = "".obs;
@@ -85,23 +86,9 @@ class ContentRegisterController extends GetxController {
     categoryContentType = contentType[ContentCategory.body]!;
 
     await initData();
-    // _ffmpegService = FFmpegService(
-    //   onProgress: (ratio) {
-    //     ffmpegStatus.value = "트랜스코딩 진행율: ${(ratio * 100).toStringAsFixed(2)}%";
-    //     Logger.info("트랜스코딩 진행율: ${(ratio * 100).toStringAsFixed(2)}%");
-    //   },
-    //   onLog: (log) {
-    //     Logger.info(log);
-    //   },
-    // );
   }
 
   Future<void> initData() async {
-    // if (AppConstant.test) {
-    //   await MasterSigninRepository().post(MasterSigninReqPost(
-    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
-    // }
-
     introController.addListener(formatText);
 
     isInited.value = true;
@@ -169,7 +156,7 @@ class ContentRegisterController extends GetxController {
 
   //     var hqVideo = await _ffmpegService.transcodeToM3U8(filePickerResult);
 
-  //     ffmpegStatus.value = '트랜스코딩 완료';
+  //     ffmpegStatus.value = '트랜스코딩 Complete';
 
   //     return hqVideo;
   //   } catch (e) {
@@ -193,41 +180,6 @@ class ContentRegisterController extends GetxController {
       mediaUrl = await transcodingUploader.uploadTranscoding(mediaFile!);
     }
 
-    // if (mediaFile != null) {
-    //   await _ffmpegService.loadFFmpeg();
-
-    //   var fileInfo = await _createTranscodingVideo(mediaFile!);
-
-    //   var filename = fileInfo["filename"];
-    //   var data = fileInfo["data"];
-
-    //   Logger.info("트랜스 코딩 된 파일리스트: $filename");
-
-    //   String folder = '';
-
-    //   for (int i = 0; i < filename!.length; i++) {
-    //     ffmpegStatus.value = "업로드 진행율: $i/${filename.length}%";
-
-    //     if (filename[i].contains(".m3u8")) {
-    //       UploadModel model = await UploadRepository()
-    //           .uploadFileTrascoding(filename[i], data![i], folder);
-
-    //       if (folder.isEmpty) {
-    //         mediaUrl = model.url;
-    //         folder = model.folder!;
-    //       }
-
-    //       // Logger.info(mediaUrl);
-    //       // Logger.info(folder);
-    //     } else {
-    //       await UploadRepository()
-    //           .uploadFileTrascoding(filename[i], data![i], folder);
-    //     }
-    //   }
-
-    //   ffmpegStatus.value = "업로드 진행율: ${filename.length}/${filename.length}%";
-    // }
-
     BaseModel contentRegisterModel =
         await ContentRegisterRepository().post(ContentRegisterReqPost(
       name: nameController.text,
@@ -245,12 +197,18 @@ class ContentRegisterController extends GetxController {
     isLoading.value = false;
 
     if (contentRegisterModel.isSuccess) {
-      await showSimpleMessage("저장 되었습니다".tr);
+      await showSimpleMessage("Saved successfully".tr);
 
       Get.offAllNamed(AppRoutes.contentManage);
     } else {
       showSimpleMessage(
-          "${"저장에 실패 하였습니다.".tr} ${contentRegisterModel.getErrorMessage().tr}");
+          "${"Save failed".tr} ${contentRegisterModel.getErrorMessage().tr}");
+    }
+  }
+
+  void onPickCC(File? pickedFile) {
+    if (pickedFile != null) {
+      thumbnailFile = pickedFile;
     }
   }
 

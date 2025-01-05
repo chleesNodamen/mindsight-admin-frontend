@@ -50,7 +50,8 @@ class DashboardView extends GetWidget<DashboardController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("마스터 대시보드".tr, style: CustomTextStyles.headlineLargeBlack),
+          Text("Master Dashboard".tr,
+              style: CustomTextStyles.headlineLargeBlack),
         ],
       ),
     );
@@ -63,7 +64,7 @@ class DashboardView extends GetWidget<DashboardController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("대시보드".tr, style: CustomTextStyles.headlineLargeBlack),
+          Text("Dashboard".tr, style: CustomTextStyles.headlineLargeBlack),
           const SizedBox(
             height: 32,
           ),
@@ -315,7 +316,7 @@ class DashboardView extends GetWidget<DashboardController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              '등록 사용자 수'.tr,
+              'Register 사용자 수'.tr,
               style: CustomTextStyles.labelLargeGray,
             ),
             const SizedBox(
@@ -361,7 +362,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('활성 회원'.tr, style: CustomTextStyles.labelMediumGray)
+                Text('Active 회원'.tr, style: CustomTextStyles.labelMediumGray)
               ],
             ),
             const SizedBox(
@@ -380,7 +381,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('비활성 회원'.tr, style: CustomTextStyles.labelMediumGray)
+                Text('Inactive 회원'.tr, style: CustomTextStyles.labelMediumGray)
               ],
             ),
             Align(
@@ -446,13 +447,13 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Practice plan 완료율'.tr,
+                  'Practice plan Complete rate'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 InkWell(
                   onTap: controller.onPracticeMore,
                   child: Text(
-                    '모두보기'.tr,
+                    'All View'.tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -477,25 +478,25 @@ class DashboardView extends GetWidget<DashboardController> {
                   ),
                   DataColumn(
                     label: Text(
-                      '회차'.tr,
+                      'Session number'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      '완료 회원 수'.tr,
+                      'Completed members'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      '참여 회원 수'.tr,
+                      'Participating members'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      '완료율'.tr,
+                      'Complete rate'.tr,
                       style: CustomTextStyles.labelLargeGray,
                     ),
                   ),
@@ -510,7 +511,7 @@ class DashboardView extends GetWidget<DashboardController> {
                           controller.onPracticeTap(index);
                         },
                         child: Text(
-                          "${controller.practiceModel.level![index]}${"회차".tr}",
+                          "${controller.practiceModel.level![index]}${"Session number".tr}",
                           style: CustomTextStyles.bodyMediumBlack
                               .copyWith(decoration: TextDecoration.underline),
                         ),
@@ -563,7 +564,7 @@ class DashboardView extends GetWidget<DashboardController> {
                 InkWell(
                   onTap: controller.onChallengeMore,
                   child: Text(
-                    '모두보기'.tr,
+                    'All View'.tr,
                     style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: appTheme.skyBlue),
@@ -575,7 +576,7 @@ class DashboardView extends GetWidget<DashboardController> {
               height: 8,
             ),
             Text(
-                '${"집계기간".tr}  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1)))}',
+                '${"집계Period".tr}  |  ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 8)))} ~ ${DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 1)))}',
                 style: CustomTextStyles.labelMediumGray),
             const SizedBox(
               height: 24,
@@ -603,7 +604,7 @@ class DashboardView extends GetWidget<DashboardController> {
                                         const SizedBox(
                                           width: 16,
                                         ),
-                                        Text('집계된 데이터가 없습니다.'.tr,
+                                        Text('No aggregated data.'.tr,
                                             style:
                                                 CustomTextStyles.labelLargeGray)
                                       ])),
@@ -654,7 +655,7 @@ class DashboardView extends GetWidget<DashboardController> {
                                         const SizedBox(
                                           width: 16,
                                         ),
-                                        Text('집계된 데이터가 없습니다.'.tr,
+                                        Text('No aggregated data.'.tr,
                                             style:
                                                 CustomTextStyles.labelLargeGray)
                                       ])),

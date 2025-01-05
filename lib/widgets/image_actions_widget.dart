@@ -8,12 +8,12 @@ class ImageActionsWidget extends StatelessWidget {
 
   const ImageActionsWidget({super.key, required this.imageUrl});
 
-  // 이미지 보기 함수
+  // View image 함수
   void _openImageInNewTab() {
     if (imageUrl.isNotEmpty) {
       html.window.open(imageUrl, '_blank');
     } else {
-      showSimpleMessage("이미지 URL이 유효하지 않습니다".tr);
+      showSimpleMessage("Invalid image URL".tr);
     }
   }
 
@@ -32,13 +32,13 @@ class ImageActionsWidget extends StatelessWidget {
             ..click();
           html.Url.revokeObjectUrl(url);
         } else {
-          showSimpleMessage('이미지를 다운로드할 수 없습니다'.tr);
+          showSimpleMessage('Cannot download image'.tr);
         }
       } catch (e) {
-        showSimpleMessage('이미지를 다운로드하는 동안 오류가 발생했습니다'.tr);
+        showSimpleMessage('Error downloading image'.tr);
       }
     } else {
-      showSimpleMessage('이미지 URL이 유효하지 않습니다'.tr);
+      showSimpleMessage('Invalid image URL'.tr);
     }
   }
 
@@ -48,7 +48,7 @@ class ImageActionsWidget extends StatelessWidget {
       children: [
         InkWell(
           child: Text(
-            "이미지 보기".tr,
+            "View image".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue),

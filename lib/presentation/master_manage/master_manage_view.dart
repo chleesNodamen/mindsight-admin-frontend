@@ -63,10 +63,10 @@ class MasterManageView extends GetWidget<MasterManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "마스터 목록".tr,
+      name: "Master list".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "이메일 주소, 이름 검색".tr,
+      searchText: "Email address, Name Search".tr,
       memberShow: true,
       memberCount: controller.masterListModel.total,
       onSearch: controller.onSearch,
@@ -78,9 +78,9 @@ class MasterManageView extends GetWidget<MasterManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.masterRegister);
       },
-      text: "신규 등록".tr,
+      text: "New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -91,9 +91,9 @@ class MasterManageView extends GetWidget<MasterManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.masterMassRegister);
       },
-      text: "대량 신규 등록".tr,
+      text: "Mass New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -140,20 +140,20 @@ class MasterManageView extends GetWidget<MasterManageController> {
                       label: Text("소속".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("이메일 주소".tr,
+                      label: Text("Email address".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("닉네임".tr,
+                      label: Text("Nickname".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("등록일".tr,
+                      label: Text("Registration date".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text("등급".tr,
                           style: CustomTextStyles.labelLargeGray)),
 
                   DataColumn(
-                      label: Text("상태".tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.masterListModel.length, (index) {
@@ -277,12 +277,12 @@ class MasterManageView extends GetWidget<MasterManageController> {
                 Visibility(
                   visible: Account.isAdmin,
                   child: CustomElevatedButton(
-                    text: "비활성".tr,
+                    text: "Inactive".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     buttonStyle: CustomButtonStyles.fillRedTransparent,
                     // margin: const EdgeInsets.symmetric(
                     //     vertical: 11, horizontal: 24),
-                    width: 90,
+                    // width: 90,
                     height: 44,
                     onPressed: controller.onVerfiedButtonPressed,
                   ),

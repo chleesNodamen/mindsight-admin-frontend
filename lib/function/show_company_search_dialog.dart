@@ -46,7 +46,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "회사 선택".tr,
+                  "Select company".tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
                 CustomImageView(
@@ -66,7 +66,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                       decoration: InputDecoration(
                         fillColor: appTheme.white,
                         filled: true,
-                        labelText: "회사 이름",
+                        labelText: "Company name".tr,
                         labelStyle: CustomTextStyles.bodyMediumGray,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         border: OutlineInputBorder(
@@ -170,7 +170,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                       }
                     },
                     child: Text(
-                      "검색".tr,
+                      "Search".tr,
                       style: CustomTextStyles.bodyMediumWhite,
                     ),
                   ),
@@ -206,15 +206,15 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text("타입".tr,
+                              label: Text("Type".tr,
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text("이름".tr,
+                              label: Text("Name".tr,
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text("상태".tr,
+                              label: Text("Approval status".tr,
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                           ],
@@ -244,7 +244,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                     ),
                                   ), // Radio button cell
                                   DataCell(
-                                    Text("법인".tr,
+                                    Text("Corporate".tr,
                                         style: CustomTextStyles.bodyLargeBlack),
                                   ),
                                   DataCell(
@@ -252,8 +252,17 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                         style: CustomTextStyles.bodyLargeBlack),
                                   ),
                                   DataCell(
-                                    Text("정상".tr,
-                                        style: CustomTextStyles.bodyLargeBlack),
+                                    Text(
+                                        model.verified![index]
+                                            ? "Active".tr
+                                            : "Inactive".tr,
+                                        style: model.verified![index]
+                                            ? const TextStyle(
+                                                color: Colors.green,
+                                                fontSize: 16)
+                                            : const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 16)),
                                   ),
                                 ],
                               );
@@ -266,12 +275,12 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                         alignment: Alignment.centerLeft,
                         children: [
                           CustomElevatedButton(
-                              text: "선택 완료".tr,
+                              text: "Selection complete".tr,
                               buttonTextStyle:
                                   CustomTextStyles.bodyMediumWhiteBold,
                               buttonStyle: CustomButtonStyles.fillPrimary,
                               margin: const EdgeInsets.only(right: 16),
-                              width: 107,
+                              // width: 107,
                               height: 44,
                               onPressed: () async {
                                 if (model.total! > 0) {

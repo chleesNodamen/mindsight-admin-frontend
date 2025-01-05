@@ -1,5 +1,5 @@
 enum AccountRole {
-  master('마스터', 'MASTER'),
+  master('Master', 'MASTER'),
   admin('관리자', 'ADMIN');
 
   final String _displayName;

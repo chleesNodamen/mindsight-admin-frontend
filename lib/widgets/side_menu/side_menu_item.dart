@@ -43,13 +43,13 @@ class SideMenuItem extends StatelessWidget {
                       if (!SideMenuController.to.isActive(itemName))
                         Flexible(
                             child: Text(
-                          itemName,
+                          itemName.tr,
                           style: CustomTextStyles.titleSmallWhite.copyWith(
                               color: appTheme.white.withOpacity(0.75)),
                         ))
                       else
                         Flexible(
-                            child: Text(itemName,
+                            child: Text(itemName.tr,
                                 style: CustomTextStyles.titleSmallWhite))
                     ],
                   ),
@@ -70,7 +70,7 @@ class SideMenuItem extends StatelessWidget {
                                                   .isHovering(item.name)
                                               ? appTheme.white.withOpacity(0.4)
                                               : Colors.transparent,
-                                          child: Text(item.name,
+                                          child: Text(item.name.tr,
                                               style: SideMenuController.to
                                                       .isActiveSubItem(
                                                           item.name)

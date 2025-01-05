@@ -46,7 +46,7 @@ class EtcAdminSettingView extends GetWidget<EtcAdminSettingController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "기타 설정".tr,
+      name: "Other settings".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",
@@ -57,15 +57,14 @@ class EtcAdminSettingView extends GetWidget<EtcAdminSettingController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 설정".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Default settings".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        _buildLanguage("언어".tr, true, ContentLanguage.korean),
+        _buildLanguage(),
       ],
     );
   }
 
-  Widget _buildLanguage(
-      String text, bool essential, ContentLanguage? language) {
+  Widget _buildLanguage() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -73,11 +72,9 @@ class EtcAdminSettingView extends GetWidget<EtcAdminSettingController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "$text ",
+              text: "Language".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(
-              text: essential ? "*" : "", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
         Container(
@@ -94,23 +91,29 @@ class EtcAdminSettingView extends GetWidget<EtcAdminSettingController> {
             hint: Text('Select Option'.tr,
                 style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: language,
+            value: controller.selectedLanguage,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
             borderRadius: BorderRadiusStyle.roundedBorder12,
             // icon: const Icon(Icons.),
             elevation: 16,
-            onChanged: (ContentLanguage? newValue) {},
+            onChanged: (ContentLanguage? newValue) {
+              controller.onLanguage(newValue);
+            },
             items: <ContentLanguage>[
               ContentLanguage.english,
               ContentLanguage.korean,
-              ContentLanguage.japanese
+              ContentLanguage.japanese,
+              ContentLanguage.french,
+              ContentLanguage.spanish,
+              ContentLanguage.german,
+              ContentLanguage.chineseSimplified,
             ].map<DropdownMenuItem<ContentLanguage>>((ContentLanguage value) {
               return DropdownMenuItem<ContentLanguage>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );

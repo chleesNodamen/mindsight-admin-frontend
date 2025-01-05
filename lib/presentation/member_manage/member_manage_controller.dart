@@ -69,7 +69,7 @@ class MemberManageController extends GetxController {
       affiliation = [];
     }
 
-    // 아무것도 체크 안되었을때는..검색이 안되어야 된다..
+    // 아무것도 체크 안되었을때는..Search이 안되어야 된다..
     if (membershipValues.every((element) => element == false)) {
       affiliation = ['known'];
     }

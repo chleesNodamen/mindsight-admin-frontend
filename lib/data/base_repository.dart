@@ -259,7 +259,7 @@ class BaseRepository {
 //   void _showExceptionDialog(int? statusCode, dynamic message) {
 //     // return;
 //     Get.defaultDialog(
-//       title: "[TEST] Exception", // 다이얼로그 제목
+//       title: "[TEST] Exception", // 다이얼로그 Title
 //       titleStyle: CustomTextStyles.titleLargeBlack,
 //       titlePadding: EdgeInsets.only(top: 20.h),
 //       content: Column(
@@ -291,8 +291,8 @@ class BaseRepository {
 //           EdgeInsets.only(top: 10.v, left: 20.h, right: 20.h, bottom: 20.v),
 //       // textConfirm: "Send email",
 //       textCancel: "Ok",
-//       buttonColor: Colors.blue, // 확인 및 취소 버튼 배경색
-//       cancelTextColor: Colors.black, // 취소 버튼 텍스트 색상
+//       buttonColor: Colors.blue, // Confirm 및 Cancel 버튼 배경색
+//       cancelTextColor: Colors.black, // Cancel 버튼 텍스트 색상
 //     );
 //   }
 // }

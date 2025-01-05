@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
+import 'package:mindsight_admin_page/localization/app_localization.dart';
+
 import 'app_export.dart';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
@@ -16,14 +19,16 @@ Future<void> main() async {
   await Future.delayed(const Duration(milliseconds: 500));
   await ReloadHandler.autoSignin();
 
-  // if (PrefUtils.to.getLocaleLanguageCode().isNotEmpty) {
-  //   Get.updateLocale(Locale(PrefUtils.to.getLocaleLanguageCode()));
-  // } else {
-  //   Logger.info("언어값 없어서 디바이스 기본값으로 셋팅: ${Get.deviceLocale!.languageCode}");
-  //   PrefUtils.to.setLocaleLanguageCode(Get.deviceLocale!.languageCode);
-  // }
+  initLocaleLanguage();
 
   runApp(const MyApp());
+}
+
+void initLocaleLanguage() {
+  ContentLanguage lang = PrefUtils.to.getLocaleLanguage();
+  Logger.info("언어설정: $lang");
+  Get.updateLocale(Locale(lang.languageCode));
+  PrefUtils.to.setLocaleLanguage(lang);
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
-        initialRoute: AppRoutes.auth,
+        initialRoute: AppRoutes.initialRoute,
         unknownRoute: GetPage(
             name: '/not-found',
             page: () => const PageNotFound(),
@@ -43,9 +48,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Mindsight 관리자',
         theme: theme,
-        locale: Get.deviceLocale,
+        // locale: Get.deviceLocale,
         fallbackLocale: const Locale('en', 'US'),
-        // initialBinding: InitialBindings(),
+        translations: AppLocalization(),
+        initialBinding: InitialBindings(),
       );
     });
   }

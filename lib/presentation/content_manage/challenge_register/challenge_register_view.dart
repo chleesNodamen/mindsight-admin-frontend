@@ -62,10 +62,10 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Basic info".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         BuildInput(
-            label: "제목".tr,
+            label: "Title".tr,
             essential: true,
             textController: controller.nameController),
         const SizedBox(height: 24),
@@ -78,7 +78,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "목적".tr, style: CustomTextStyles.labelLargeBlack),
+                      text: "Purpose".tr,
+                      style: CustomTextStyles.labelLargeBlack),
                   TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
@@ -116,7 +117,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                       return DropdownMenuItem<Goal>(
                         value: value,
                         child: Text(
-                          value.displayName,
+                          value.displayName.tr,
                           style: CustomTextStyles.bodyMediumBlack,
                         ),
                       );
@@ -133,7 +134,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "기간".tr, style: CustomTextStyles.labelLargeBlack),
+                      text: "Period".tr,
+                      style: CustomTextStyles.labelLargeBlack),
                   TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
@@ -180,7 +182,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
         const SizedBox(height: 24),
         RichText(
             text: TextSpan(children: [
-          TextSpan(text: "소개".tr, style: CustomTextStyles.labelLargeBlack),
+          TextSpan(
+              text: "Introduction".tr, style: CustomTextStyles.labelLargeBlack),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
@@ -192,7 +195,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
           filled: true,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return "필수 입력 항목입니다.".tr;
+              return "This field is required.".tr;
             }
             return null;
           },
@@ -206,7 +209,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Day 세션 등록".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Day session Register".tr,
+            style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Wrap(
           spacing: 8.0, // Horizontal spacing
@@ -219,7 +223,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BuildInput(
-                label: "제목".tr,
+                label: "Title".tr,
                 essential: true,
                 textController: controller.dayNameController),
             const SizedBox(width: 24),
@@ -229,7 +233,8 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
                 RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "콘텐츠".tr, style: CustomTextStyles.labelLargeBlack),
+                      text: "Content".tr,
+                      style: CustomTextStyles.labelLargeBlack),
                   TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ])),
                 const SizedBox(height: 8),
@@ -293,14 +298,14 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("파일".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("File".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         PickFileFormField(
-          labelText: "썸네일 파일".tr,
+          labelText: "Thumbnail file".tr,
           essential: true,
           initialUrl: controller.thumbnailFile.value?.name,
-          hintText: "(.jpg)",
-          fileExtension: FileExtension.jpg.keywordName,
+          hintText: ".jpg",
+          fileExtension: [FileExtension.jpg.keywordName],
           onFilePicked: (pickedFile) {
             controller.onPickThumbnail(pickedFile);
           },
@@ -313,24 +318,24 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        // CustomElevatedButton(
-        //   text: '승인 요청',
-        //   buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-        //   buttonStyle: CustomButtonStyles.fillPrimary,
-        //   width: 90,
-        //   height: 44,
-        //   onPressed: () {
-        //     if (formKey.currentState!.validate()) {
-        //       controller.onSave();
-        //     }
-        //   },
-        // ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Approval request'.tr,
+          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+          buttonStyle: CustomButtonStyles.fillPrimary,
+          // width: 90,
+          height: 44,
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              controller.onSave();
+            }
+          },
+        ),
+        CustomElevatedButton(
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Get.offAllNamed(AppRoutes.masterManage),
         ),
@@ -343,7 +348,7 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentChallengeManage),
-          child: Text("Challenge 관리".tr,
+          child: Text("Challenge management".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -355,14 +360,15 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Challenge 신규 등록".tr, style: CustomTextStyles.bodyMediumGray)
+        Text("Challenge New registration".tr,
+            style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Challenge 신규 등록".tr,
+      name: "Challenge New registration".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

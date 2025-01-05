@@ -30,10 +30,10 @@ class PrefUtils {
     } catch (e) {
       Logger.log("익셉션: clearPreferencesData");
     }
-    Logger.log("완료: clearPreferencesData");
+    Logger.log("Complete: clearPreferencesData");
   }
 
-  // 유져 정보 저장
+  // 유져 정보 Save
   Future<bool> setSigninId(String id) {
     return _sharedPreferences!.setString("SigninId", id);
   }
@@ -89,5 +89,28 @@ class PrefUtils {
 
   Future<bool> setIsLogined(bool value) {
     return _sharedPreferences!.setBool("IsLogined", value);
+  }
+
+  Future<bool> setLocaleLanguage(ContentLanguage lang) {
+    return _sharedPreferences!.setString("LocaleLanguage", lang.keywordName);
+  }
+
+  ContentLanguage getLocaleLanguage() {
+    try {
+      String keywordName =
+          _sharedPreferences!.getString("LocaleLanguage") ?? "";
+
+      Logger.info("언어가져오기: $keywordName");
+      if (keywordName.isNotEmpty) {
+        return ContentLanguage.fromKeyword(keywordName);
+      }
+
+      return ContentLanguage.fromLanguageCode(Get.deviceLocale?.languageCode ??
+          ContentLanguage.english.languageCode);
+    } catch (e) {
+      Logger.log("익셉션: LocaleLanguage");
+      return ContentLanguage.fromLanguageCode(Get.deviceLocale?.languageCode ??
+          ContentLanguage.english.languageCode);
+    }
   }
 }

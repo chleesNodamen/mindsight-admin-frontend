@@ -10,14 +10,14 @@ class PickFileFormField extends FormField<String?> {
       required String labelText,
       required bool essential,
       required String hintText,
-      required String fileExtension,
+      required List<String> fileExtension,
       String? toolTip})
       : super(
           initialValue: initialUrl,
           validator: (file) {
             if (essential) {
               if (file == null) {
-                return "     ${"필수 입력 항목입니다.".tr}";
+                return "     ${"This field is required.".tr}";
               }
             }
             return null;
@@ -59,7 +59,7 @@ class PickFile extends StatefulWidget {
   final String? toolTip;
   final bool essential;
   final String hintText;
-  final String fileExtension;
+  final List<String> fileExtension;
   final String? errorText;
 
   @override
@@ -80,7 +80,7 @@ class _PickFileState extends State<PickFile> {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: [widget.fileExtension],
+        allowedExtensions: widget.fileExtension,
         withData: true,
       );
 
@@ -93,10 +93,10 @@ class _PickFileState extends State<PickFile> {
         setState(() {});
         widget.onFilePicked(pickedFile);
       } else {
-        Logger.info('파일 선택 취소'.tr);
+        Logger.info('File 선택 Cancel'.tr);
       }
     } catch (e) {
-      Logger.error('파일 선택 중 오류 발생: $e');
+      Logger.error('File 선택 중 오류 발생: $e');
     }
   }
 
@@ -115,7 +115,7 @@ class _PickFileState extends State<PickFile> {
                     style: CustomTextStyles.labelLargeBlack,
                   ),
                   TextSpan(
-                    text: widget.essential ? "*" : "",
+                    text: widget.essential ? " *" : "",
                     style: TextStyle(color: appTheme.red),
                   ),
                 ],

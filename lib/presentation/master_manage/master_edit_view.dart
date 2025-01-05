@@ -62,14 +62,14 @@ class MasterEditView extends GetWidget<MasterEditController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("계정 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Account Information".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildEmail("이메일 주소 (아이디)".tr, true),
+            _buildEmail("ID".tr, true),
             const SizedBox(width: 24),
             BuildInput(
-                label: "닉네임".tr,
+                label: "Nickname".tr,
                 essential: true,
                 textController: controller.nicknameController),
           ],
@@ -78,12 +78,12 @@ class MasterEditView extends GetWidget<MasterEditController> {
         Row(
           children: [
             BuildInput(
-                label: "비밀번호 수정".tr,
+                label: "Password Edit".tr,
                 essential: false,
                 textController: controller.passwordController),
             const SizedBox(width: 24),
             BuildInput(
-                label: "비밀번호 수정 확인".tr,
+                label: "Password Edit Confirm".tr,
                 essential: false,
                 textController: controller.passwordCofirmController),
           ],
@@ -96,17 +96,17 @@ class MasterEditView extends GetWidget<MasterEditController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Basic info".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
             BuildInput(
-                label: "이름".tr,
+                label: "Name".tr,
                 essential: false,
                 textController: controller.nameController),
             const SizedBox(width: 24),
             BuildInput(
-                label: "핸드폰 번호".tr,
+                label: "Mobile Number".tr,
                 essential: false,
                 textController: controller.phoneNumberController),
           ],
@@ -115,10 +115,10 @@ class MasterEditView extends GetWidget<MasterEditController> {
         Row(
           children: [
             PickFileFormField(
-              labelText: "사진".tr,
+              labelText: "Photo".tr,
               essential: true,
-              hintText: "(.jpg)",
-              fileExtension: FileExtension.jpg.keywordName,
+              hintText: ".jpg",
+              fileExtension: [FileExtension.jpg.keywordName],
               initialUrl: controller.photoUrl.value,
               onFilePicked: (pickedFile) {
                 controller.onPickPhoto(pickedFile);
@@ -127,10 +127,10 @@ class MasterEditView extends GetWidget<MasterEditController> {
 
             const SizedBox(width: 24),
             PickFileFormField(
-              labelText: "신분증".tr,
+              labelText: "ID Card".tr,
               essential: false,
-              hintText: "(.jpg)",
-              fileExtension: FileExtension.jpg.keywordName,
+              hintText: ".jpg",
+              fileExtension: [FileExtension.jpg.keywordName],
               initialUrl: controller.idPhotoUrl.value,
               onFilePicked: (pickedFile) {
                 controller.onPickIdPhoto(pickedFile);
@@ -146,7 +146,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
             _buildNation(),
             const SizedBox(width: 24),
             BuildInput(
-                label: "주소".tr,
+                label: "Address".tr,
                 essential: false,
                 textController: controller.addressController),
           ],
@@ -154,15 +154,15 @@ class MasterEditView extends GetWidget<MasterEditController> {
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildLanguage(
-                "제1언어".tr, true, controller.selectedPrimaryLanguage.value),
+            _buildLanguage("Primary Language".tr, true,
+                controller.selectedPrimaryLanguage.value),
             const SizedBox(width: 24),
-            _buildLanguage(
-                "제2언어".tr, false, controller.selectedSecondaryLanguage.value),
+            _buildLanguage("Secondary Language".tr, false,
+                controller.selectedSecondaryLanguage.value),
           ],
         ),
         const SizedBox(height: 24),
-        _buildMultiInput("자기소개".tr),
+        _buildMultiInput("Introduction".tr),
       ],
     );
   }
@@ -171,7 +171,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("회사 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Company info".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         InkWell(
           onTap: () async {
@@ -214,7 +214,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
     return Row(
       children: [
         Text(
-          "회사 정보 새로 등록하기".tr,
+          "Register new company info".tr,
           style: CustomTextStyles.labelLargeGray,
           overflow: TextOverflow.ellipsis,
         ),
@@ -242,7 +242,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "국가".tr,
+              text: "Country".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -279,7 +279,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
               return DropdownMenuItem<Contry>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -334,7 +334,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
               return DropdownMenuItem<ContentLanguage>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -365,7 +365,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
           textInputType: TextInputType.multiline,
           maxLines: 6,
           controller: controller.introController,
-          hintText: hint ?? "Input Text".tr,
+          hintText: hint ?? "Input text".tr,
           contentPadding: const EdgeInsets.all(16),
         ),
       ],
@@ -406,10 +406,10 @@ class MasterEditView extends GetWidget<MasterEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () {
             if (formKey.currentState!.validate()) {
@@ -418,11 +418,11 @@ class MasterEditView extends GetWidget<MasterEditController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => controller.onCancel(),
         ),
@@ -436,7 +436,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
         children: [
           InkWell(
               child: Text(
-                "마스터 목록".tr,
+                "Master list".tr,
                 style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                   fontWeight: FontWeight.w500,
                   decoration: TextDecoration.underline,
@@ -444,7 +444,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
                 ),
               ),
               onTap: () {
-                if (SideMenuController.to.isActiveSubItem("마스터 목록".tr)) {
+                if (SideMenuController.to.isActiveSubItem("Master list".tr)) {
                   Get.offAllNamed(AppRoutes.masterManage);
                 } else {
                   Get.offAllNamed(AppRoutes.inactiveMasterManage);
@@ -455,7 +455,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
           ),
           InkWell(
             child: Text(
-              "마스터 상세".tr,
+              "Master Details".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -467,7 +467,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
           CustomImageView(
             imagePath: IconConstant.arrowRight,
           ),
-          Text("마스터 정보 수정".tr, style: CustomTextStyles.bodyMediumGray),
+          Text("Master info edit".tr, style: CustomTextStyles.bodyMediumGray),
         ],
       );
     } else {
@@ -475,7 +475,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
         children: [
           InkWell(
               child: Text(
-                "내 계정 상세".tr,
+                "My account detail".tr,
                 style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                   fontWeight: FontWeight.w500,
                   decoration: TextDecoration.underline,
@@ -488,7 +488,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
           CustomImageView(
             imagePath: IconConstant.arrowRight,
           ),
-          Text("내 계정 수정".tr, style: CustomTextStyles.bodyMediumGray),
+          Text("My Account Edit".tr, style: CustomTextStyles.bodyMediumGray),
         ],
       );
     }
@@ -496,7 +496,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: Account.isAdmin ? "마스터 정보 수정".tr : "내 계정 수정".tr,
+      name: Account.isAdmin ? "Master info edit".tr : "My Account Edit".tr,
       searchShow: false,
       viewCount: false,
     );

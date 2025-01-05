@@ -55,10 +55,10 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "회사 목록".tr,
+      name: "Company list".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "회사 이름 검색".tr,
+      searchText: "Search company name".tr,
       memberShow: true,
       memberCount: controller.companyListModel.total,
       onSearch: controller.onSearch,
@@ -70,9 +70,9 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.companyRegister);
       },
-      text: "신규 등록".tr,
+      text: "New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -83,9 +83,9 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
       onPressed: () {
         Get.offAllNamed(AppRoutes.companyMassRegister);
       },
-      text: "대량 신규 등록".tr,
+      text: "Mass New registration".tr,
       height: 44,
-      width: 107,
+      // width: 107,
       decoration:
           BoxDecoration(borderRadius: BorderRadiusStyle.roundedBorder12),
     );
@@ -114,19 +114,19 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text("회사 이름".tr,
+                      label: Text("Company name".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("대표자 이름".tr,
+                      label: Text("Representative".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("사업자 번호".tr,
+                      label: Text("Business number".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("등록일".tr,
+                      label: Text("Registration date".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("상태".tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows:
@@ -194,12 +194,12 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                 Visibility(
                   visible: Account.isAdmin,
                   child: CustomElevatedButton(
-                    text: "비활성".tr,
+                    text: "Inactive".tr,
                     buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                     buttonStyle: CustomButtonStyles.fillRedTransparent,
                     // margin: const EdgeInsets.symmetric(
                     //     vertical: 11, horizontal: 24),
-                    width: 90,
+                    // width: 90,
                     height: 44,
                     onPressed: controller.onVerifiedButton,
                   ),

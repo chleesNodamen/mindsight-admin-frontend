@@ -1,23 +1,23 @@
 enum ContentType {
   // ContentCategory.body
-  basicBody('기본 몸체', 'BASIC_BODY'),
-  intermediateBody('중간 몸체', 'INTERMEDIATE_BODY'),
-  advanceBody('숙련된 몸체', 'ADVANCE_BODY'),
+  basicBody('Basic Body', 'BASIC_BODY'),
+  intermediateBody('Intermediate Body', 'INTERMEDIATE_BODY'),
+  advanceBody('Advanced Body', 'ADVANCE_BODY'),
 
   // ContentCategory.breath
-  natureBreathing('자연 호흡', 'NATURE_BREATHING'),
-  guidedMeditation('명상 안내', 'GUIDED_MEDITATION'),
+  natureBreathing('Natural Breathing', 'NATURE_BREATHING'),
+  guidedMeditation('Meditation Guide', 'GUIDED_MEDITATION'),
 
   // ContentCategory.mindfulness
-  mindfulArt('마음챙김 예술', 'MINDFUL_ART'),
-  artWithMusic('음악이 있는 예술', 'ART_WITH_MUSIC'),
-  nature('자연', 'NATURE'),
+  mindfulArt('Mindfulness Art', 'MINDFUL_ART'),
+  artWithMusic('Art with Music', 'ART_WITH_MUSIC'),
+  nature('Nature', 'NATURE'),
   kAsmr('K-ASMR', 'K_ASMR'),
 
   // ContentCategory.theory
-  emotionManagement('감정 관리', 'EMOTION_MANAGEMENT'),
-  philosophy('철학', 'PHILOSOPHY'),
-  selfDevelopment('자기개발', 'SELF_DEVELOPMENT');
+  emotionManagement('Emotion Management', 'EMOTION_MANAGEMENT'),
+  philosophy('Philosophy', 'PHILOSOPHY'),
+  selfDevelopment('Self-development', 'SELF_DEVELOPMENT');
 
   final String _displayName;
   final String _keywordName;

@@ -28,19 +28,19 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "활동 기록 관리".tr,
+                                    name: "Activity record management".tr,
                                     searchShow: true,
                                     viewCount: false,
-                                    searchText: "회원, 기록 내용 검색".tr,
+                                    searchText: "Search member records".tr,
                                     onSearch: controller.onSearch,
                                   ),
                                   const SizedBox(height: 32),
                                   CustomElevatedButton(
-                                    onPressed: () =>
-                                        showSimpleMessage("서비스 준비 중 입니다".tr),
-                                    text: "신규 등록".tr,
+                                    onPressed: () => showSimpleMessage(
+                                        "Service preparing".tr),
+                                    text: "New registration".tr,
                                     height: 44,
-                                    width: 107,
+                                    // width: 107,
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadiusStyle.roundedBorder12),
@@ -77,7 +77,7 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("유형".tr, style: CustomTextStyles.labelMediumGray),
+          Text("Category".tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
@@ -152,7 +152,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("회원 소속".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Member affiliation".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
                   Wrap(
                     runSpacing: 18,
@@ -175,7 +176,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("챗봇 기록".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Chatbot record".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
                   Wrap(
                     runSpacing: 18,
@@ -197,7 +199,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("피드백 상태".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Feedback status".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 15),
                   Wrap(
                     runSpacing: 18,
@@ -242,19 +245,19 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text("유형".tr,
+                      label: Text("Category".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("회원 정보".tr,
+                      label: Text("Member info".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("세션 정보".tr,
+                      label: Text("Session info".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text("기록".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("피드백 상태".tr,
+                      label: Text("Feedback status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.activityModel.length, (index) {
@@ -311,8 +314,8 @@ class ActivityManageView extends GetWidget<ActivityManageController> {
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: Text(
                           controller.activityModel.feedback![index]
-                              ? "완료".tr
-                              : "안함".tr,
+                              ? "Complete".tr
+                              : "None".tr,
                           style: controller.activityModel.feedback![index]
                               ? CustomTextStyles.bodyLargeGreen
                               : CustomTextStyles.bodyLargeRed),

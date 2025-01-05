@@ -57,7 +57,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                                     Row(
                                       children: [
                                         BuildInput(
-                                          label: "이름 (First name)".tr,
+                                          label: "Name (First name)".tr,
                                           essential: true,
                                           textController:
                                               controller.firstNameController,
@@ -77,7 +77,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                                         _buildGender(),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "태어난 연도".tr,
+                                          label: "태어난 Year".tr,
                                           essential: true,
                                           textController:
                                               controller.yearController,
@@ -85,13 +85,15 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return "필수 입력 항목입니다.".tr;
+                                              return "This field is required."
+                                                  .tr;
                                             }
                                             // final RegExp regex =
                                             //     RegExp(r'^\d{4}$');
                                             if (!RegExp(r'^\d{4}$')
                                                 .hasMatch(value)) {
-                                              return "4자리 정수를 입력해주세요.".tr;
+                                              return "Please enter a 4-digit number."
+                                                  .tr;
                                             }
                                             return null;
                                           },
@@ -100,7 +102,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                                     ),
                                     const SizedBox(height: 24),
                                     BuildInput(
-                                        label: "이메일 주소".tr,
+                                        label: "Email address".tr,
                                         essential: true,
                                         textController:
                                             controller.emailController,
@@ -129,10 +131,10 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () {
             if (formKey.currentState!.validate()) {
@@ -141,11 +143,11 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Get.offAllNamed(AppRoutes.memberManage),
         ),
@@ -158,7 +160,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
       children: [
         InkWell(
             child: Text(
-              "회원 목록".tr,
+              "Member list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -171,14 +173,14 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("사전 신규 등록".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Pre registration".tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "사전 신규 등록".tr,
+      name: "Pre registration".tr,
       searchShow: false,
       viewCount: false,
     );
@@ -288,7 +290,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
               return DropdownMenuItem<Gender>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );

@@ -18,16 +18,16 @@ class MasterSigninRepository extends BaseRepository {
         fetchJsonData<MasterSigninModel>(response, MasterSigninModel.fromJson);
 
     if (model.isSuccess) {
-      PrefUtils.to.setSigninId(dto.email!);
-      PrefUtils.to.setSigninPassword(dto.password!);
+      await PrefUtils.to.setSigninId(dto.email!);
+      await PrefUtils.to.setSigninPassword(dto.password!);
 
       httpClient.setBearerAuthorization(model.accessToken!);
       Account.signInSuccess(model.id!, dto.email!);
 
-      setSideMenuItemRoutes();
+      SideMenuController.to.setSideMenuItemRoutes();
     } else {
-      PrefUtils.to.setSigninId("");
-      PrefUtils.to.setSigninPassword("");
+      await PrefUtils.to.setSigninId("");
+      await PrefUtils.to.setSigninPassword("");
 
       Logger.info("master log in unsuccessful ${model.getErrorCode()}");
     }

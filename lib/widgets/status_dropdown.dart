@@ -34,7 +34,7 @@ class StatusDropdown extends StatelessWidget {
           ),
         ),
         child: DropdownButton<String>(
-          value: isActive ? '활성'.tr : '비활성'.tr,
+          value: isActive ? 'Active'.tr : 'Inactive'.tr,
           underline: Container(),
           padding: const EdgeInsets.only(left: 12),
           borderRadius: borderRadius,
@@ -42,16 +42,17 @@ class StatusDropdown extends StatelessWidget {
           style: const TextStyle(color: Colors.deepPurple),
           onChanged: (String? newValue) {
             if (newValue != null && onChanged != null) {
-              onChanged!(newValue == '활성'.tr);
+              onChanged!(newValue == 'Active'.tr);
             }
           },
-          items: <String>['활성'.tr, '비활성'.tr]
+          items: <String>['Active'.tr, 'Inactive'.tr]
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(
                 value,
-                style: value == "활성".tr ? activeTextStyle : inactiveTextStyle,
+                style:
+                    value == "Active".tr ? activeTextStyle : inactiveTextStyle,
               ),
             );
           }).toList(),
@@ -59,7 +60,7 @@ class StatusDropdown extends StatelessWidget {
       );
     } else {
       return Text(
-        isActive ? '활성'.tr : '비활성'.tr,
+        isActive ? 'Active'.tr : 'Inactive'.tr,
         style: isActive ? activeTextStyle : inactiveTextStyle,
       );
       // Container(
@@ -69,7 +70,7 @@ class StatusDropdown extends StatelessWidget {
       //     border: Border.all(color: Colors.grey),
       //   ),
       //   child: Text(
-      //     isActive ? '활성' : '비활성',
+      //     isActive ? 'Active' : 'Inactive',
       //     style: isActive ? activeTextStyle : inactiveTextStyle,
       //   ),
       // );

@@ -9,8 +9,9 @@ class SubMenuItem {
 }
 
 class SideMenuController extends GetxController {
-  // static MenuController instance = Get.find();
   static SideMenuController get to => Get.find<SideMenuController>();
+
+  var sideMenuItemRoutes = <MenuItem>[].obs;
 
   var activeItem = dashboardPageDisplayName.obs;
   var hoverItem = "".obs;
@@ -57,6 +58,42 @@ class SideMenuController extends GetxController {
     ],
   };
 
+  @override
+  void onInit() {
+    super.onInit();
+    setSideMenuItemRoutes();
+  }
+
+  // sideMenuItemRoutes 설정 메서드
+  void setSideMenuItemRoutes() {
+    sideMenuItemRoutes.value = Account.isAdmin
+        ? [
+            MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
+            MenuItem(
+                memberManagePageDisplayName, AppRoutes.memberManage, () {}),
+            MenuItem(
+                masterManagePageDisplayName, AppRoutes.masterManage, () {}),
+            MenuItem(
+                companyManagePageDisplayName, AppRoutes.companyManage, () {}),
+            MenuItem(
+                contentManagePageDisplayName, AppRoutes.contentManage, () {}),
+            MenuItem(
+                activityManagePageDisplayName, AppRoutes.activityManage, () {}),
+            MenuItem(settlementManagePageDisplayName,
+                AppRoutes.settlementManage, () {}),
+            MenuItem(
+                adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
+          ]
+        : [
+            MenuItem(
+                contentManagePageDisplayName, AppRoutes.contentManage, () {}),
+            MenuItem(settlementManagePageDisplayName,
+                AppRoutes.settlementManage, () {}),
+            MenuItem(
+                adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
+          ];
+  }
+
   changeActiveItemTo(String itemName) {
     activeItem.value = itemName;
   }
@@ -84,43 +121,48 @@ class SideMenuController extends GetxController {
   isActiveSubItem(String itemName) => activeSubItem.value == itemName;
 
   Widget returnIconFor(String itemName, bool full) {
-    switch (itemName) {
-      case dashboardPageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.dashboard.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case memberManagePageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case masterManagePageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.member.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case companyManagePageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.company.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case contentManagePageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.content.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case activityManagePageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.feedback.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case adminSettingsPageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.settings.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      case settlementManagePageDisplayName:
-        return CustomImageView(
-            imagePath:
-                '${IconConstant.receiptLong.replaceAll('.svg', '')}${full ? '_full' : ''}.svg');
-      // case authenticationPageDisplayName:
-      //   return _customIcon(Icons.exit_to_app, itemName);
-      default:
-        return _customIcon(Icons.exit_to_app, itemName);
+    if (itemName == dashboardPageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.dashboard,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == memberManagePageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.member,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == masterManagePageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.member,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == companyManagePageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.company,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == contentManagePageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.content,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == activityManagePageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.feedback,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == adminSettingsPageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.settings,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == settlementManagePageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.receiptLong,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else {
+      return _customIcon(Icons.exit_to_app, itemName);
     }
   }
 

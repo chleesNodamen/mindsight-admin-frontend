@@ -1,12 +1,14 @@
 enum SortCondition {
-  registration('등록 순', 'REGISTRATION'),
-  views('조회 순', 'VIEWS'),
-  likes('좋아요 순', 'LIKES'),
-  mostParticipants('참여자 많은 순', 'MOST_PARTICIPANTS'),
-  fewestParticipants('참여자 낮은 순', 'FEWEST_PARTICIPANTS'),
-  highestRatings('별점 높은 순', 'HIGHEST_RATINGS'),
-  highestCompletionRate('완료율 높은 순', 'HIGHEST_COMPLETION_RATE'),
-  lowestCompletionRate('완료율 낮은 순', 'LOWEST_COMPLETION_RATE');
+  registration('Order by Registration', 'REGISTRATION'),
+  views('Order by Views', 'VIEWS'),
+  likes('Order by Likes', 'LIKES'),
+  mostParticipants('Order by Most Participants', 'MOST_PARTICIPANTS'),
+  fewestParticipants('Order by Least Participants', 'FEWEST_PARTICIPANTS'),
+  highestRatings('Order by Highest Rating', 'HIGHEST_RATINGS'),
+  highestCompletionRate(
+      'Order by Highest Completion Rate', 'HIGHEST_COMPLETION_RATE'),
+  lowestCompletionRate(
+      'Order by Lowest Completion Rate', 'LOWEST_COMPLETION_RATE');
 
   final String _displayName;
   final String _keywordName;

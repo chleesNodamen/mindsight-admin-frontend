@@ -53,18 +53,18 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("회사 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Company info".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
             BuildInput(
-              label: "회사 이름".tr,
+              label: "Company name".tr,
               essential: true,
               textController: controller.companyNameController,
             ),
             const SizedBox(width: 24),
             BuildInput(
-              label: "대표자".tr,
+              label: "Representative".tr,
               essential: true,
               textController: controller.representativeController,
             ),
@@ -74,24 +74,24 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
         Row(
           children: [
             BuildInput(
-              label: "사업자 번호".tr,
+              label: "Business number".tr,
               essential: true,
               textController: controller.businessNumberController,
               keyboardType: TextInputType.number,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "필수 입력 항목입니다.".tr;
+                  return "This field is required.".tr;
                 }
                 // final regex = RegExp(r"^\d{10,}$");
                 // if (!regex.hasMatch(value)) {
-                //   return "사업자 번호는 최소 10자리의 숫자여야 합니다.";
+                //   return "Business number는 최소 10자리의 숫자여야 합니다.";
                 // }
                 return null;
               },
             ),
             const SizedBox(width: 24),
             BuildInput(
-              label: "전화".tr,
+              label: "Phone".tr,
               essential: true,
               textController: controller.phoneController,
               keyboardType: TextInputType.phone,
@@ -102,24 +102,24 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
         Row(
           children: [
             BuildInput(
-              label: "담당자 명".tr,
+              label: "Contact name".tr,
               essential: true,
               textController: controller.contactNameController,
             ),
             const SizedBox(width: 24),
             BuildInput(
-              label: "담당자 이메일".tr,
+              label: "Contact email".tr,
               essential: true,
               textController: controller.contactEmailController,
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "필수 입력 항목입니다.".tr;
+                  return "This field is required.".tr;
                 }
                 final regex = RegExp(
                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
                 if (!regex.hasMatch(value)) {
-                  return "유효한 이메일을 입력하세요.".tr;
+                  return "Enter a valid email.".tr;
                 }
                 return null;
               },
@@ -130,14 +130,14 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
         Row(
           children: [
             BuildInput(
-              label: "담당자 전화번호".tr,
+              label: "Contact phone".tr,
               essential: true,
               textController: controller.contactPhoneController,
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(width: 24),
             BuildInput(
-              label: "주소".tr,
+              label: "Address".tr,
               essential: true,
               textController: controller.addressController,
             ),
@@ -151,10 +151,10 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
     return Row(
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () {
             if (formKey.currentState!.validate()) {
@@ -163,11 +163,11 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Get.offAllNamed(AppRoutes.companyManage),
         ),
@@ -180,7 +180,7 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
       children: [
         InkWell(
           child: Text(
-            "회사 목록".tr,
+            "Company list".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.underline,
@@ -189,7 +189,7 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
           ),
           onTap: () {
             if (Account.isAdmin) {
-              if (SideMenuController.to.isActiveSubItem("회사 목록".tr)) {
+              if (SideMenuController.to.isActiveSubItem("Company list".tr)) {
                 Get.offAllNamed(AppRoutes.companyManage);
               } else {
                 Get.offAllNamed(AppRoutes.inactiveCompanyManage);
@@ -202,14 +202,15 @@ class CompanyRegisterView extends GetWidget<CompanyRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("회사 신규 등록".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Company New registration".tr,
+            style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "회사 신규 등록".tr,
+      name: "Company New registration".tr,
       searchShow: false,
       viewCount: false,
     );

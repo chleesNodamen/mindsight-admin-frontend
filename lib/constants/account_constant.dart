@@ -20,7 +20,7 @@ class Account {
     bool result = isAdmin;
 
     if (!result) {
-      showSimpleMessage("권한이 없습니다");
+      showSimpleMessage("Permission이 없습니다");
     }
 
     return result;
@@ -31,7 +31,7 @@ class Account {
       return true;
     }
 
-    showSimpleMessage("권한이 없습니다");
+    showSimpleMessage("Permission이 없습니다");
     return false;
   }
 

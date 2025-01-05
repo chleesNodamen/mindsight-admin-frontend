@@ -49,7 +49,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "내 계정 상세".tr,
+      name: "My account detail".tr,
       searchShow: false,
       memberShow: false,
       memberCount: 0,
@@ -72,7 +72,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("관리자 기본 정보".tr, style: CustomTextStyles.labelLargeBlack),
+          Text("Admin basic info".tr, style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -82,7 +82,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("아이디".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("ID".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.adminMyDataModel.email ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
@@ -95,7 +95,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("담당 부서".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Department".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.adminMyDataModel.department ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
@@ -108,7 +109,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('권한'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Permission'.tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.adminMyDataModel.role ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
@@ -129,7 +131,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('담당자'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Manager'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.adminMyDataModel.manager ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
@@ -142,7 +144,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('연락처'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Contact number'.tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.adminMyDataModel.phone ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
@@ -155,7 +158,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('이메일주소'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Email address'.tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.adminMyDataModel.adminEmail ?? "-",
                       style: CustomTextStyles.bodyLargeBlack),
@@ -173,7 +177,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('최근 활동'.tr, style: CustomTextStyles.labelLargeGray),
+                Text('Recent activity'.tr,
+                    style: CustomTextStyles.labelLargeGray),
                 const SizedBox(
                   width: 8,
                 ),
@@ -211,7 +216,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('비밀번호 변경'.tr, style: CustomTextStyles.labelLargeBlack),
+            Text('Change password'.tr, style: CustomTextStyles.labelLargeBlack),
             const SizedBox(height: 24),
             Row(
               children: [
@@ -219,7 +224,8 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('현재 비밀번호'.tr, style: CustomTextStyles.labelLargeBlack),
+                    Text('Current password'.tr,
+                        style: CustomTextStyles.labelLargeBlack),
                     const SizedBox(height: 8),
                     CustomTextFormField(
                         controller: controller.oldPasswordController,
@@ -257,7 +263,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('변경할 비밀번호'.tr,
+                    Text('New password'.tr,
                         style: CustomTextStyles.labelLargeBlack),
                     const SizedBox(height: 8),
                     CustomTextFormField(
@@ -293,10 +299,10 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
             ),
             const SizedBox(height: 24),
             CustomElevatedButton(
-              text: '저장'.tr,
+              text: 'Save'.tr,
               buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
               buttonStyle: CustomButtonStyles.fillPrimary,
-              width: 90,
+              // width: 90,
               height: 44,
               onPressed: controller.onContinue,
             )

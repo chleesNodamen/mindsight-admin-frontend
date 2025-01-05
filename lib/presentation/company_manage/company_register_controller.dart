@@ -61,7 +61,7 @@ class CompanyRegisterController extends GetxController {
             address: addressController.text));
 
     if (model.isSuccess) {
-      // showSimpleMessage("저장 되었습니다");
+      // showSimpleMessage("Saved successfully");
 
       if (Account.isAdmin) {
         Get.offAllNamed(AppRoutes.inactiveCompanyManage);
@@ -71,7 +71,7 @@ class CompanyRegisterController extends GetxController {
         Get.offAllNamed(AppRoutes.companyManage);
       }
     } else {
-      showSimpleMessage("저장에 실패 하였습니다. ${model.getErrorMessage().tr}");
+      showSimpleMessage("Save failed ${model.getErrorMessage().tr}");
     }
   }
 }

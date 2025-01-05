@@ -54,7 +54,7 @@ class Pages extends StatelessWidget {
                 return CustomElevatedButton(
                   text: '${index + 1}',
                   margin: const EdgeInsets.symmetric(horizontal: 8),
-                  width: 31,
+                  // width: 31,
                   height: 30,
                   buttonStyle: (index + 1) == activePage
                       ? CustomButtonStyles.numberFillPrimary
@@ -77,7 +77,7 @@ class Pages extends StatelessWidget {
                           CustomElevatedButton(
                             text: '1',
                             margin: const EdgeInsets.symmetric(horizontal: 8),
-                            width: 31,
+                            // width: 31,
                             height: 30,
                             buttonStyle:
                                 CustomButtonStyles.numberFillPrimaryTransparent,
@@ -105,7 +105,7 @@ class Pages extends StatelessWidget {
                           return CustomElevatedButton(
                             text: '${index + pages - 4}',
                             margin: const EdgeInsets.symmetric(horizontal: 8),
-                            width: 31,
+                            // width: 31,
                             height: 30,
                             buttonStyle: (index + pages - 4) == activePage
                                 ? CustomButtonStyles.numberFillPrimary
@@ -129,7 +129,7 @@ class Pages extends StatelessWidget {
                                 text: '${activePage + index}',
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 8),
-                                width: 31,
+                                // width: 31,
                                 height: 30,
                                 buttonStyle: (activePage + index) == activePage
                                     ? CustomButtonStyles.numberFillPrimary
@@ -159,7 +159,7 @@ class Pages extends StatelessWidget {
                           CustomElevatedButton(
                             text: '$pages',
                             margin: const EdgeInsets.symmetric(horizontal: 8),
-                            width: 31,
+                            // width: 31,
                             height: 30,
                             buttonStyle:
                                 CustomButtonStyles.numberFillPrimaryTransparent,

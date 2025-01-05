@@ -25,13 +25,13 @@ class ActivityManageController extends GetxController {
   ];
 
   List<String> chatbotLabels = [
-    "있음",
-    "없음",
+    "Exists",
+    "None status",
   ];
 
   List<String> feedbackLabels = [
-    "안함",
-    "완료",
+    "None",
+    "Complete",
   ];
 
   RxList<bool> membershipValues = List<bool>.filled(3, true).obs;
@@ -104,7 +104,7 @@ class ActivityManageController extends GetxController {
       affiliation = [];
     }
 
-    // 아무것도 체크 안되었을때는..검색이 안되어야 된다..
+    // 아무것도 체크 안되었을때는..Search이 안되어야 된다..
     if (membershipValues.every((element) => element == false)) {
       affiliation = ['known'];
     }

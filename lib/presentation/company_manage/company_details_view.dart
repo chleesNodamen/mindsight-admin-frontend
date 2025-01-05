@@ -27,7 +27,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "회사 상세".tr,
+                                    name: "Company detail".tr,
                                     searchShow: false,
                                     viewCount: false,
                                   ),
@@ -56,7 +56,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
         children: [
           InkWell(
             child: Text(
-              "회사 목록".tr,
+              "Company list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -70,7 +70,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
           CustomImageView(
             imagePath: IconConstant.arrowRight,
           ),
-          Text("회사 상세".tr, style: CustomTextStyles.bodyMediumGray),
+          Text("Company detail".tr, style: CustomTextStyles.bodyMediumGray),
         ],
       );
     } else {
@@ -78,7 +78,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
         children: [
           InkWell(
             child: Text(
-              "회사 목록".tr,
+              "Company list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -92,7 +92,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
           CustomImageView(
             imagePath: IconConstant.arrowRight,
           ),
-          Text("회사 상세".tr, style: CustomTextStyles.bodyMediumGray),
+          Text("Company detail".tr, style: CustomTextStyles.bodyMediumGray),
         ],
       );
     }
@@ -111,14 +111,14 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("회사 정보".tr, style: CustomTextStyles.labelLargeBlack),
+              Text("Company info".tr, style: CustomTextStyles.labelLargeBlack),
               Visibility(
                 visible: Account.isMaster(
                     controller.companyDetailModel.createMasterEmail!),
                 child: InkWell(
                     onTap: controller.onEdit,
                     child: Text(
-                      "수정".tr,
+                      "Edit".tr,
                       style: CustomTextStyles.labelLargeSkyBlue.copyWith(
                           decoration: TextDecoration.underline,
                           decorationColor: appTheme.skyBlue),
@@ -135,7 +135,8 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("회사 이름".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Company name".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -150,7 +151,8 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("대표자".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Representative".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -163,7 +165,8 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('만든 마스터'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Created by master'.tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(controller.companyDetailModel.createMasterNickname!,
                       style: CustomTextStyles.bodyMediumBlack),
@@ -174,12 +177,14 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('승인 상태'.tr, style: CustomTextStyles.labelMediumGray),
+                  Text('Approval status'.tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentStatus.fromKeyword(
                               controller.companyDetailModel.verified!)
-                          .displayName,
+                          .displayName
+                          .tr,
                       style: CustomTextStyles.bodyMediumBlack),
                 ],
               ),
@@ -196,7 +201,8 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("사업자 번호".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Business number".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -211,7 +217,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("전화".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Phone".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -232,7 +238,8 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("담당자 명".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Contact name".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -247,7 +254,8 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("담당자 이메일".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Contact email".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -262,7 +270,8 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("담당자 전화번호".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Contact phone".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -286,7 +295,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("주소".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Address".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),

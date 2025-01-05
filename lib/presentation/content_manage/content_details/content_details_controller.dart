@@ -46,14 +46,14 @@ class ContentDetailsController extends GetxController {
   Future<void> onViewThumbnail() async {
     final Uri url = Uri.parse(contentDetailsModel.thumbnail ?? "");
 
-    // URL이 유효한지 확인
+    // URL이 유효한지 Confirm
     if (await canLaunchUrl(url)) {
       // 외부 브라우저에서 URL 열기
       await launchUrl(
         url,
       );
     } else {
-      // URL을 열 수 없는 경우 사용자에게 알림
+      // URL을 열 수 없는 경우 사용자에게 Notification
       showSimpleMessage("해당 URL을 열 수 없습니다");
     }
   }

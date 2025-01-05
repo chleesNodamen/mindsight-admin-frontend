@@ -20,14 +20,14 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "마스터 로그인".tr,
+                  "Master login".tr,
                   style: CustomTextStyles.headlineLargeBlack,
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 CustomText(
-                  text: "Mindsight 마스터페이지".tr,
+                  text: "Mindsight master page".tr,
                   color: appTheme.grayScale6,
                 ),
                 const SizedBox(
@@ -45,7 +45,7 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                       return null;
                     },
                     decoration: InputDecoration(
-                      labelText: "이메일 주소".tr,
+                      labelText: "Email address".tr,
                       labelStyle: CustomTextStyles.bodyMediumGray,
                       // floatingLabelStyle: TextStyle(color: appTheme.black),
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -122,7 +122,7 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                       ),
                       // floatingLabelStyle: TextStyle(color: appTheme.black),
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: "비밀번호".tr,
+                      labelText: "Password".tr,
                       labelStyle: CustomTextStyles.bodyMediumGray,
                       // hintText: "123",
                       border: OutlineInputBorder(
@@ -179,7 +179,8 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                 ),
                 CustomElevatedButton(
                   height: 56,
-                  text: "로그인".tr,
+                  text: "Login".tr,
+                  width: double.infinity,
                   onPressed: () {
                     controller.onContinue();
                   },
@@ -187,7 +188,8 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                 CustomElevatedButton(
                   margin: const EdgeInsets.only(top: 16),
                   height: 56,
-                  text: "마스터 회원가입".tr,
+                  width: double.infinity,
+                  text: "Master signup".tr,
                   onPressed: () {
                     controller.onRegister();
                   },
@@ -197,7 +199,7 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                   height: 16,
                 ),
                 Text(
-                  "${"로그인에 문제가 있다면\nmindsight@nodame.com으로 문의 해 주십시오.\nVERSION.".tr} ${AppConstant.version}",
+                  "${"If you have issues logging in,\ncontact mindsight@nodame.com.\nversion.".tr} ${AppConstant.version}",
                   style: CustomTextStyles.labelLargeGray,
                   textAlign: TextAlign.center,
                 ),

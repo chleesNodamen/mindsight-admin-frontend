@@ -47,13 +47,13 @@ class BuildInput extends StatelessWidget {
         CustomTextFormField(
           controller: textController,
           width: 353,
-          hintText: hint ?? "입력하세요".tr,
+          hintText: hint ?? "Input text".tr,
           hintStyle: CustomTextStyles.bodyMediumGray,
           validator: validator ??
               (value) {
                 if (essential) {
                   if (value == null || value.isEmpty) {
-                    return "필수 입력 항목입니다.".tr;
+                    return "This field is required.".tr;
                   }
                 }
                 return null;

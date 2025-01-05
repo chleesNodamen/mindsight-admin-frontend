@@ -50,10 +50,10 @@ class InactiveMemberManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "비활성 회원 관리".tr,
+      name: "Inactive Member management".tr,
       searchShow: true,
       viewCount: false,
-      searchText: "이메일 주소, 이름 검색".tr,
+      searchText: "Email address, Name Search".tr,
       memberShow: true,
       memberCount: controller.membersModel.total,
       onSearch: controller.onSearch,
@@ -124,19 +124,19 @@ class InactiveMemberManageView
                       label: Text('소속'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('이메일 주소'.tr,
+                      label: Text('Email address'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('닉네임'.tr,
+                      label: Text('Nickname'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('전환일'.tr,
+                      label: Text('Conversion date'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('상태'.tr,
+                      label: Text("Approval status".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('수정'.tr,
+                      label: Text('Edit'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.membersModel.length, (index) {
@@ -196,11 +196,11 @@ class InactiveMemberManageView
                         )),
 
                         DataCell(CustomElevatedButton(
-                            text: "수정".tr,
+                            text: "Edit".tr,
                             buttonTextStyle:
                                 CustomTextStyles.bodyMediumWhiteBold,
                             buttonStyle: CustomButtonStyles.fillBlack,
-                            width: 60,
+                            // width: 60,
                             height: 30,
                             onPressed: () => Get.offAllNamed(
                                     AppRoutes.memberEdit,
@@ -223,7 +223,7 @@ class InactiveMemberManageView
                         //         left: 6, right: 0, top: 0, bottom: 0),
                         //     child: DropdownButton<String>(
                         //       value:
-                        //           controller.memberState![index] ? '활성' : '비활성',
+                        //           controller.memberState![index] ? 'Active' : 'Inactive',
                         //       underline: Container(),
                         //       padding: const EdgeInsets.only(left: 6),
                         //       borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -237,14 +237,14 @@ class InactiveMemberManageView
                         //         }
                         //       },
                         //       items: <String>[
-                        //         '활성',
-                        //         '비활성'
+                        //         'Active',
+                        //         'Inactive'
                         //       ].map<DropdownMenuItem<String>>((String value) {
                         //         return DropdownMenuItem<String>(
                         //           value: value,
                         //           child: Text(
                         //             value,
-                        //             style: value == "활성"
+                        //             style: value == "Active"
                         //                 ? CustomTextStyles.labelLargeGreen
                         //                 : CustomTextStyles.labelLargeRed,
                         //           ),
@@ -267,21 +267,21 @@ class InactiveMemberManageView
                   Row(
                     children: [
                       CustomElevatedButton(
-                        text: '활성'.tr,
+                        text: 'Active'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
                         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
                         // margin: const EdgeInsets.symmetric(
                         //     vertical: 11, horizontal: 24),
-                        width: 90,
+                        // width: 90,
                         height: 44,
                         onPressed: controller.onActivePressed,
                       ),
                       CustomElevatedButton(
-                        text: '삭제'.tr,
+                        text: 'Delete'.tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
                         buttonStyle: CustomButtonStyles.fillRedTransparent,
                         margin: const EdgeInsets.symmetric(horizontal: 16),
-                        width: 90,
+                        // width: 90,
                         height: 44,
                         onPressed: controller.onDeletePressed,
                       ),

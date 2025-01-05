@@ -103,7 +103,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
-                          AccountRole.master.displayName,
+                          AccountRole.master.displayName.tr,
                           style: CustomTextStyles.labelLargeWhite,
                         ),
                       ),
@@ -117,19 +117,19 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("계정 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Account Information".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
             BuildInput(
-              label: "이메일 주소 (아이디)".tr,
+              label: "ID".tr,
               essential: true,
               textController: controller.emailController,
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(width: 24),
             BuildInput(
-                label: "닉네임".tr,
+                label: "Nickname".tr,
                 essential: true,
                 textController: controller.nicknameController),
           ],
@@ -138,12 +138,12 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         Row(
           children: [
             BuildInput(
-                label: "비밀번호".tr,
+                label: "Password".tr,
                 essential: true,
                 textController: controller.passwordController),
             const SizedBox(width: 24),
             BuildInput(
-                label: "비밀번호 확인".tr,
+                label: "Password Confirm".tr,
                 essential: true,
                 textController: controller.passwordCofirmController),
           ],
@@ -156,17 +156,17 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("기본 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Basic info".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
           children: [
             BuildInput(
-                label: "이름".tr,
+                label: "Name".tr,
                 essential: false,
                 textController: controller.nameController),
             const SizedBox(width: 24),
             BuildInput(
-              label: "핸드폰 번호".tr,
+              label: "Mobile Number".tr,
               essential: false,
               textController: controller.phoneNumberController,
               keyboardType: TextInputType.number,
@@ -177,11 +177,11 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         Row(
           children: [
             PickFileFormField(
-              labelText: "사진".tr,
-              toolTip: "프로필로 사용되는 이미지로 되도록이면 얼굴 사진일수록 회원들에게 신뢰를 줄 수 있습니다".tr,
+              labelText: "Photo".tr,
+              toolTip: "프로필로 사용되는 이미지로 되도록이면 얼굴 Photo일수록 회원들에게 신뢰를 줄 수 있습니다".tr,
               essential: true,
-              hintText: "(.jpg)",
-              fileExtension: FileExtension.jpg.keywordName,
+              hintText: ".jpg",
+              fileExtension: [FileExtension.jpg.keywordName],
               initialUrl: controller.photoUrl.value,
               onFilePicked: (pickedFile) {
                 controller.onPickPhoto(pickedFile);
@@ -189,10 +189,10 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
             ),
             const SizedBox(width: 24),
             PickFileFormField(
-              labelText: "신분증".tr,
+              labelText: "ID Card".tr,
               essential: false,
-              hintText: "(.jpg)",
-              fileExtension: FileExtension.jpg.keywordName,
+              hintText: ".jpg",
+              fileExtension: [FileExtension.jpg.keywordName],
               initialUrl: controller.idPhotoUrl.value,
               onFilePicked: (pickedFile) {
                 controller.onPickIdPhoto(pickedFile);
@@ -207,7 +207,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
             _buildNation(),
             const SizedBox(width: 24),
             BuildInput(
-                label: "주소".tr,
+                label: "Address".tr,
                 essential: false,
                 textController: controller.addressController),
           ],
@@ -215,14 +215,15 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildLanguage("제1언어".tr, true, controller.selectedPrimaryLanguage),
+            _buildLanguage("Primary Language".tr, true,
+                controller.selectedPrimaryLanguage),
             const SizedBox(width: 24),
-            _buildLanguage(
-                "제2언어".tr, false, controller.selectedSecondaryLanguage),
+            _buildLanguage("Secondary Language".tr, false,
+                controller.selectedSecondaryLanguage),
           ],
         ),
         const SizedBox(height: 24),
-        _buildMultiInput("자기소개".tr),
+        _buildMultiInput("Introduction".tr),
       ],
     );
   }
@@ -231,7 +232,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("회사 정보".tr, style: CustomTextStyles.bodyMediumBlack),
+        Text("Company info".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         InkWell(
           onTap: () async {
@@ -274,7 +275,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
     return Row(
       children: [
         Text(
-          "회사 정보 새로 등록하기".tr,
+          "Register new company info".tr,
           style: CustomTextStyles.labelLargeGray,
           overflow: TextOverflow.ellipsis,
         ),
@@ -297,7 +298,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "국가".tr,
+              text: "Country".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -335,7 +336,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
               return DropdownMenuItem<Contry>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -392,7 +393,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
               return DropdownMenuItem<ContentLanguage>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -423,11 +424,11 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
           width: 730,
           textInputType: TextInputType.multiline,
           maxLines: 6,
-          hintText: hint ?? "입력하세요".tr,
+          hintText: hint ?? "Input text".tr,
           contentPadding: const EdgeInsets.all(16),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return "필수 입력 항목입니다.".tr;
+              return "This field is required.".tr;
             }
             return null;
           },
@@ -441,10 +442,10 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '승인 요청'.tr,
+          text: 'Approval request'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () {
             if (formKey.currentState!.validate()) {
@@ -453,11 +454,11 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => Account.isLogined
               ? Get.offAllNamed(AppRoutes.masterManage)
@@ -472,7 +473,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
       children: [
         InkWell(
             child: Text(
-              "마스터 목록".tr,
+              "Master list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -480,7 +481,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
               ),
             ),
             onTap: () {
-              if (SideMenuController.to.isActiveSubItem("마스터 목록".tr)) {
+              if (SideMenuController.to.isActiveSubItem("Master list".tr)) {
                 Get.offAllNamed(AppRoutes.masterManage);
               } else {
                 Get.offAllNamed(AppRoutes.inactiveMasterManage);
@@ -489,14 +490,15 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("마스터 신규 등록".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Master New registration".tr,
+            style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "마스터 신규 등록".tr,
+      name: "Master New registration".tr,
       searchShow: false,
       viewCount: false,
     );

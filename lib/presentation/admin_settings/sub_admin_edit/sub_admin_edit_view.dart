@@ -66,7 +66,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "담당자 이메일 주소".tr,
+              text: "Contact email Address".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -86,19 +86,19 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CustomElevatedButton(
-              text: '저장'.tr,
+              text: 'Save'.tr,
               buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
               buttonStyle: CustomButtonStyles.fillPrimary,
-              width: 90,
+              // width: 90,
               height: 44,
               onPressed: controller.onSave,
             ),
             CustomElevatedButton(
-              text: '취소'.tr,
+              text: 'Cancel'.tr,
               buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
               buttonStyle: CustomButtonStyles.fillRedTransparent,
               margin: const EdgeInsets.only(left: 16),
-              width: 90,
+              // width: 90,
               height: 44,
               onPressed: () => Get.offAllNamed(AppRoutes.subAdminDetails,
                   arguments: {RouteArguments.id: controller.id}),
@@ -119,7 +119,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "담당자".tr,
+                  text: "Manager".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -144,7 +144,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "연락처".tr,
+                  text: "Contact number".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
             ])),
@@ -174,7 +174,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "권한".tr,
+                  text: "Permission".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -203,8 +203,12 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
                     controller.updateSelectedOrder(newValue);
                   }
                 },
-                items: <String>['role'.tr, '운영'.tr, '제품 관리'.tr, '개발'.tr]
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: <String>[
+                  'role'.tr,
+                  'Operation'.tr,
+                  'Product management'.tr,
+                  'Development'.tr
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
@@ -225,7 +229,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  text: "담당 부서".tr,
+                  text: "Department".tr,
                   style: CustomTextStyles.labelLargeBlack
                       .copyWith(fontWeight: FontWeight.w600)),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -261,7 +265,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                      text: "아이디".tr,
+                      text: "ID".tr,
                       style: CustomTextStyles.labelLargeBlack
                           .copyWith(fontWeight: FontWeight.w600)),
                   TextSpan(text: " *", style: TextStyle(color: appTheme.red))
@@ -290,7 +294,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.subAdminSettings),
-          child: Text("서브 관리자 관리".tr,
+          child: Text("Sub admin management".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -305,7 +309,7 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
         InkWell(
             onTap: () => Get.offAllNamed(AppRoutes.subAdminDetails,
                 arguments: {RouteArguments.id: controller.id}),
-            child: Text("관리자 상세".tr,
+            child: Text("관리자 Details".tr,
                 style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                   decoration: TextDecoration.underline,
                   decorationColor: appTheme.skyBlue,
@@ -316,14 +320,14 @@ class SubAdminEditView extends GetWidget<SubAdminEditController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("관리자 계정 수정".tr, style: CustomTextStyles.bodyMediumGray)
+        Text("Edit admin account".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "관리자 계정 수정".tr,
+      name: "Edit admin account".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

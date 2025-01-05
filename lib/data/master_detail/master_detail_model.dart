@@ -21,7 +21,7 @@ class MasterDetailModel extends BaseModel {
   final String? photoUrl;
   final String? idPhotoUrl;
 
-  // 회사 정보 필드 (클래스 하단으로 이동)
+  // Company info 필드 (클래스 하단으로 이동)
   final String? companyName;
   final String? representative;
   final String? businessNumber;
@@ -46,7 +46,7 @@ class MasterDetailModel extends BaseModel {
     required this.intro,
     required this.currentProfitRate,
     required this.previousProfitRate,
-    // 회사 정보 필드
+    // Company info 필드
     this.companyName,
     this.representative,
     this.businessNumber,
@@ -75,7 +75,7 @@ class MasterDetailModel extends BaseModel {
       intro: json['intro'] as String,
       currentProfitRate: (json['currentProfitRate'] as num).toDouble(),
       previousProfitRate: (json['previousProfitRate'] as num).toDouble(),
-      // 회사 정보 필드
+      // Company info 필드
       companyName: json['companyName'] as String?,
       representative: json['representative'] as String?,
       businessNumber: json['businessNumber'] as String?,

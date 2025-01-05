@@ -1,6 +1,6 @@
 enum ContentStatus {
-  approve('활성', true),
-  disapprove('비활성', false);
+  approve('Active', true),
+  disapprove('Inactive', false);
 
   final String _displayName;
   final bool _keywordName;

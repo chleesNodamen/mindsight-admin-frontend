@@ -17,16 +17,25 @@ class ReloadHandler {
         autoLoginPassword = AppConstant.testPassword;
       }
 
+      // autoLoginId = AppConstant.testEmail;
+      // autoLoginPassword = AppConstant.testPassword;
+
       if (autoLoginId.isNotEmpty && autoLoginPassword.isNotEmpty) {
-        Logger.info("자동로그인 $autoLoginId $autoLoginPassword");
+        Logger.info("자동Login $autoLoginId $autoLoginPassword");
 
         MasterSigninModel masterSigninModel =
             await MasterSigninRepository().post(MasterSigninReqPost(
           email: autoLoginId,
           password: autoLoginPassword,
         ));
-        var path = html.window.location.href
+        String path = html.window.location.href
             .substring(0, html.window.location.href.lastIndexOf('/'));
+
+        String page = html.window.location.href
+            .substring(html.window.location.href.lastIndexOf('/') + 1);
+
+        Logger.info("page $page");
+
         if (masterSigninModel.isSuccess) {
           if (Account.isAdmin) {
             if (!AppConstant.test) {
@@ -34,8 +43,12 @@ class ReloadHandler {
                   .changeActiveItemTo(dashboardPageDisplayName);
               SideMenuController.to.changeActiveSubItem("");
 
-              html.window.location.href = "$path${AppRoutes.auth}";
-              Logger.info("앱 로드: ${html.window.location.href}");
+              if (page.isNotEmpty) {
+                html.window.location.href = "$path${AppRoutes.dashboard}";
+                Logger.info("리로드: ${html.window.location.href}");
+              } else {
+                AppRoutes.initialRoute = AppRoutes.dashboard;
+              }
             }
           } else {
             if (!AppConstant.test) {
@@ -44,13 +57,17 @@ class ReloadHandler {
               SideMenuController.to
                   .changeActiveSubItem(contentManageContentDisplayName);
 
-              html.window.location.href = "$path${AppRoutes.contentManage}";
-              Logger.info("앱 로드: ${html.window.location.href}");
+              if (page.isNotEmpty) {
+                html.window.location.href = "$path${AppRoutes.contentManage}";
+                Logger.info("리로드: ${html.window.location.href}");
+              } else {
+                AppRoutes.initialRoute = AppRoutes.contentManage;
+              }
             }
           }
         }
       } else {
-        Logger.info("자동로그인 없음");
+        Logger.info("자동Login None status");
       }
     }
   }

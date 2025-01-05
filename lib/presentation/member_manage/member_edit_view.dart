@@ -57,7 +57,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                     Row(
                                       children: [
                                         BuildInput(
-                                          label: "이름 (First name)".tr,
+                                          label: "Name (First name)".tr,
                                           essential: true,
                                           textController:
                                               controller.firstNameController,
@@ -77,7 +77,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                         _buildGender(),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "태어난 연도".tr,
+                                          label: "태어난 Year".tr,
                                           essential: true,
                                           textController:
                                               controller.yearController,
@@ -85,13 +85,15 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return "필수 입력 항목입니다.".tr;
+                                              return "This field is required."
+                                                  .tr;
                                             }
                                             // final RegExp regex =
                                             //     RegExp(r'^\d{4}$');
                                             if (!RegExp(r'^\d{4}$')
                                                 .hasMatch(value)) {
-                                              return "4자리 정수를 입력해주세요.".tr;
+                                              return "Please enter a 4-digit number."
+                                                  .tr;
                                             }
                                             return null;
                                           },
@@ -104,7 +106,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                         _buildEmail(),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "닉네임".tr,
+                                          label: "Nickname".tr,
                                           essential: true,
                                           textController:
                                               controller.nicknameController,
@@ -134,10 +136,10 @@ class MemberEditView extends GetWidget<MemberEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: '저장'.tr,
+          text: 'Save'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () {
             if (formKey.currentState!.validate()) {
@@ -146,11 +148,11 @@ class MemberEditView extends GetWidget<MemberEditController> {
           },
         ),
         CustomElevatedButton(
-          text: '취소'.tr,
+          text: 'Cancel'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
           buttonStyle: CustomButtonStyles.fillRedTransparent,
           margin: const EdgeInsets.only(left: 16),
-          width: 90,
+          // width: 90,
           height: 44,
           onPressed: () => controller.goMemberDatailPage(),
         ),
@@ -163,7 +165,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
       children: [
         InkWell(
             child: Text(
-              "회원 목록".tr,
+              "Member list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -178,7 +180,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
         ),
         InkWell(
           child: Text(
-            "회원 상세".tr,
+            "Member details".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.underline,
@@ -190,14 +192,14 @@ class MemberEditView extends GetWidget<MemberEditController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text('회원 정보 수정'.tr, style: CustomTextStyles.bodyMediumGray),
+        Text('Member info Edit'.tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "회원 정보 수정".tr,
+      name: "Member info Edit".tr,
       searchShow: false,
       viewCount: false,
     );
@@ -293,7 +295,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
               return DropdownMenuItem<Gender>(
                 value: value,
                 child: Text(
-                  value.displayName,
+                  value.displayName.tr,
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
               );
@@ -363,7 +365,8 @@ class MemberEditView extends GetWidget<MemberEditController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("이름 (First name)".tr, style: CustomTextStyles.labelLargeBlack),
+            Text("Name (First name)".tr,
+                style: CustomTextStyles.labelLargeBlack),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.firstNameController,
@@ -415,7 +418,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                      text: "이메일 주소".tr,
+                      text: "Email address".tr,
                       style: CustomTextStyles.labelLargeBlack),
                   TextSpan(text: " *", style: TextStyle(color: appTheme.red))
                 ],

@@ -270,7 +270,7 @@ class ContentManageController extends GetxController {
           await ContentDeleteRepository().delete(contentIds[i]);
       if (contentDeleteModel.type != null) {
         Get.snackbar('Error',
-            '${contentDeleteModel.type}으로 사용되는 콘텐츠 입니다. 삭제할 수 없습니다. ${contentDeleteModel.type}: ${contentDeleteModel.id}');
+            '${contentDeleteModel.type}으로 사용되는 Content 입니다. Delete할 수 없습니다. ${contentDeleteModel.type}: ${contentDeleteModel.id}');
         await Future.delayed(const Duration(seconds: 3));
       }
     }

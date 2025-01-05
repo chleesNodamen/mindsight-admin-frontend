@@ -58,7 +58,7 @@ class MasterDetailsController extends GetxController {
   }
 
   void onMasterList() {
-    if (SideMenuController.to.isActiveSubItem("마스터 목록")) {
+    if (SideMenuController.to.isActiveSubItem("Master list")) {
       Get.offAllNamed(AppRoutes.masterManage);
     } else {
       Get.offAllNamed(AppRoutes.inactiveMasterManage);

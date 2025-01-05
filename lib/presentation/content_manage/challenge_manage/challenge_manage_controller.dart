@@ -9,8 +9,6 @@ import 'package:mindsight_admin_page/data/challenges_list/challenges_list_reposi
 import 'package:mindsight_admin_page/data/challenges_list/challenges_list_req_get.dart';
 import 'package:mindsight_admin_page/data/challenges_status/challenges_status_repository.dart';
 import 'package:mindsight_admin_page/data/challenges_status/challenges_status_req_put.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class ChallengeManageController extends GetxController {
   RxBool isInited = false.obs;

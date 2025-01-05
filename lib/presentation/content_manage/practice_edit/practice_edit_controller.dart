@@ -68,12 +68,12 @@ class PracticeEditController extends GetxController {
     isLoading.value = false;
 
     if (practiceEditModel.isSuccess) {
-      await showSimpleMessage("저장 되었습니다");
+      await showSimpleMessage("Saved successfully");
       Get.offAllNamed(AppRoutes.practiceDetails,
           arguments: {RouteArguments.id: id});
     } else {
       showSimpleMessage(
-          "저장에 실패 하였습니다. ${practiceEditModel.getErrorMessage().tr}");
+          "Save failed ${practiceEditModel.getErrorMessage().tr}");
     }
   }
 

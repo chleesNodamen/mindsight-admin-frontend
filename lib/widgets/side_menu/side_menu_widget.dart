@@ -10,103 +10,72 @@ class MenuItem {
 }
 
 const dashboardPageRoute = "/dashboard";
-const dashboardPageDisplayName = "대시보드";
+String dashboardPageDisplayName = "Dashboard";
 
 const memberManagePageRoute = "/member_manage";
-const memberManagePageDisplayName = "회원 관리";
-const memberManagePageSubMenuDisplayName = "회원 목록";
+String memberManagePageDisplayName = "Member management";
+String memberManagePageSubMenuDisplayName = "Member list";
 
 const memberDetailsPageRoute = "/member_details";
-const memberDetailsPageDisplayName = "회원 상세";
+String memberDetailsPageDisplayName = "Member details";
 
 const memberEditPageRoute = "/member_edit";
-const memberEditPageDisplayName = "회원 정보 수정";
+String memberEditPageDisplayName = "Member info Edit";
 
 const inactiveMemberManagePageRoute = "/inactive_member_manage";
-const inactiveMemberManagePageDisplayName = "비활성 회원 관리";
+String inactiveMemberManagePageDisplayName = "Inactive Member management";
 
 const masterManagePageRoute = "/master_manage";
-const masterManagePageDisplayName = "마스터 관리";
-const masterManagePageSubMenuDisplayName = "마스터 목록";
+String masterManagePageDisplayName = "Master management";
+String masterManagePageSubMenuDisplayName = "Master list";
 
 const inactiveMasterManagePageRoute = "/inactive_master_manage";
-const inactiveMasterManagePageDisplayName = "비활성 마스터 관리";
+String inactiveMasterManagePageDisplayName = "Inactive Master management";
 
 const masterDetailsPageRoute = "/master_details";
-const masterDetailsPageDisplayName = "마스터 상세";
+String masterDetailsPageDisplayName = "Master Details";
 
 const masterEditPageRoute = "/master_edit";
-const masterEditPageDisplayName = "마스터 정보 수정";
+String masterEditPageDisplayName = "Master info edit";
 
 const companyManagePageRoute = "/company_manage";
-const companyManagePageDisplayName = "회사 관리";
-const companyManagePageSubMenuDisplayName = "회사 목록";
+String companyManagePageDisplayName = "Company management";
+String companyManagePageSubMenuDisplayName = "Company list";
 
 const inactiveCompanyManagePageRoute = "/inactive_company_manage";
-const inactiveCompanyManagePageDisplayName = "비활성 회사 관리";
+String inactiveCompanyManagePageDisplayName = "Inactive company management";
 
-const contentManagePageDisplayName = "콘텐츠 관리";
 const contentManagePageRoute = "/content_manage";
-const contentManageContentDisplayName = "콘텐츠 목록";
-const contentPracticeDisplayName = "Practice plan 관리";
-const contentChallengeDisplayName = "Challenge 관리";
+String contentManagePageDisplayName = "Content management";
+String contentManageContentDisplayName = "Content list";
+String contentPracticeDisplayName = "Practice plan management";
+String contentChallengeDisplayName = "Challenge management";
 
-const activityManagePageDisplayName = "활동 기록 관리";
 const activityManagePageRoute = "/activity_manage";
+String activityManagePageDisplayName = "Activity record management";
 
-const activityHistoryPageDisplayName = "활동 기록 상세";
 const activityHistoryPageRoute = "/activity_history";
+String activityHistoryPageDisplayName = "Activity record detail";
 
 const settlementManagePageRoute = "/settlement_manage";
-const settlementManagePageDisplayName = "매출 및 정산";
-const settlementManagePageSubMenuDisplayName = "스트리밍 정산";
+String settlementManagePageDisplayName = "Sales and Settlement";
+String settlementManagePageSubMenuDisplayName = "Streaming settlement";
 
 const revenueShareManagePageRoute = "/revenue_share_manage";
-const revenueShareManagePageDisplayName = "CP 수익율";
+String revenueShareManagePageDisplayName = "CP Profit Margin";
 
-const adminSettingsPageDisplayName = "설정";
-const myAccountManagePageDisplayName = "내 계정 관리";
-const myCompanyManagePageDisplayName = "내 회사 관리";
-const etcSettingPageDisplayName = "기타 설정";
-// const subAdminSettingsDisplayName = "서브 관리자 관리";
 const adminSettingsPageRoute = "/admin_settings";
+String adminSettingsPageDisplayName = "Settings";
+String myAccountManagePageDisplayName = "Manage My Account";
+String myCompanyManagePageDisplayName = "Manage My Company";
+String etcSettingPageDisplayName = "Other settings";
+// const subAdminSettingsDisplayName = "Sub admin management";
 
-const authenticationPageDisplayName = "Log out";
 const authenticationPageRoute = "/auth";
-
-late List<MenuItem> sideMenuItemRoutes;
-
-void setSideMenuItemRoutes() {
-  sideMenuItemRoutes = Account.isAdmin
-      ? [
-          MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
-          MenuItem(memberManagePageDisplayName, AppRoutes.memberManage, () {}),
-          MenuItem(masterManagePageDisplayName, AppRoutes.masterManage, () {}),
-          MenuItem(
-              companyManagePageDisplayName, AppRoutes.companyManage, () {}),
-          MenuItem(
-              contentManagePageDisplayName, AppRoutes.contentManage, () {}),
-          MenuItem(
-              activityManagePageDisplayName, AppRoutes.activityManage, () {}),
-          MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage,
-              () {}),
-          MenuItem(
-              adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
-        ]
-      : [
-          MenuItem(
-              contentManagePageDisplayName, AppRoutes.contentManage, () {}),
-          MenuItem(settlementManagePageDisplayName, AppRoutes.settlementManage,
-              () {}),
-          MenuItem(
-              adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
-        ];
-}
+String authenticationPageDisplayName = "Log out";
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
-
-  // List<MenuItem> sideMenuItemRoutes;
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -148,12 +117,12 @@ class _SideMenuState extends State<SideMenu> {
                       padding: const EdgeInsets.only(top: 5),
                       child: Text(
                         Account.isAdmin
-                            ? AccountRole.admin.displayName
-                            : AccountRole.master.displayName,
+                            ? AccountRole.admin.displayName.tr
+                            : AccountRole.master.displayName.tr,
                         style: CustomTextStyles.labelLargeWhite,
                       ),
                     ),
-                    const SizedBox(width: 69),
+                    // const SizedBox(width: 69),
                   ],
                 ),
                 const SizedBox(
@@ -163,15 +132,10 @@ class _SideMenuState extends State<SideMenu> {
             ),
             Column(
               mainAxisSize: MainAxisSize.min,
-              children: sideMenuItemRoutes
+              children: SideMenuController.to.sideMenuItemRoutes
                   .map((item) => SideMenuItem(
                       itemName: item.name,
                       onTap: () {
-                        // if (item.route == authenticationPageRoute) {
-                        //   Get.offAllNamed(authenticationPageRoute);
-                        //   SideMenuController.to
-                        //       .changeActiveItemTo(dashboardPageDisplayName);
-                        // }
                         if (!SideMenuController.to.isActive(item.name)) {
                           item.inited();
                           SideMenuController.to.changeActiveItemTo(item.name);
@@ -179,7 +143,6 @@ class _SideMenuState extends State<SideMenu> {
                             SideMenuController.to.setActiveSubItem(item.name);
                           }
                           Get.offAllNamed(item.route);
-                          // Logger.log("사이드 메뉴에서 offAllNamed ${item.route}");
                         }
                       }))
                   .toList(),
@@ -202,7 +165,7 @@ class _SideMenuState extends State<SideMenu> {
                             imagePath: IconConstant.powerOn,
                           ),
                           Text(
-                            "로그인 정보".tr,
+                            "Login info".tr,
                             style: CustomTextStyles.titleSmallBlack,
                           ),
                         ],
@@ -225,7 +188,7 @@ class _SideMenuState extends State<SideMenu> {
                           _logout();
                         },
                         height: 30,
-                        text: '로그아웃'.tr,
+                        text: 'Logout'.tr,
                         buttonTextStyle: CustomTextStyles.labelLargeBlack,
                         buttonStyle: CustomButtonStyles.fillBackground,
                       )
