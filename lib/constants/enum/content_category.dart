@@ -5,6 +5,8 @@ enum ContentCategory {
   mindfulness('Mindfulness', 'MINDFULNESS'),
   theory('Theory', 'THEORY');
 
+  static int length = 4;
+
   final String _displayName;
   final String _keywordName;
 

@@ -44,7 +44,7 @@ export 'package:mindsight_admin_page/constants/enum/content_exposure.dart';
 export 'package:mindsight_admin_page/constants/enum/content_language.dart';
 export 'package:mindsight_admin_page/constants/enum/content_level.dart';
 export 'package:mindsight_admin_page/constants/enum/content_status.dart';
-export 'package:mindsight_admin_page/constants/enum/content_type.dart';
+export 'package:mindsight_admin_page/constants/enum/content_type_nouse.dart';
 export 'package:mindsight_admin_page/constants/enum/file_extension.dart';
 export 'package:mindsight_admin_page/widgets/pick_file.dart';
 export 'package:mindsight_admin_page/constants/account_constant.dart';

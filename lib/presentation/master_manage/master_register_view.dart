@@ -107,7 +107,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                           style: CustomTextStyles.labelLargeWhite,
                         ),
                       ),
-                      const SizedBox(width: 69),
+                      // const SizedBox(width: 69),
                     ])
               ])
             ])));
@@ -175,10 +175,13 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         ),
         const SizedBox(height: 24),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PickFileFormField(
               labelText: "Photo".tr,
-              toolTip: "프로필로 사용되는 이미지로 되도록이면 얼굴 Photo일수록 회원들에게 신뢰를 줄 수 있습니다".tr,
+              toolTip:
+                  "Using a photo of your face as a profile image whenever possible can provide more trust to members"
+                      .tr,
               essential: true,
               hintText: ".jpg",
               fileExtension: [FileExtension.jpg.keywordName],
@@ -186,6 +189,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
               onFilePicked: (pickedFile) {
                 controller.onPickPhoto(pickedFile);
               },
+              isCircular: true,
             ),
             const SizedBox(width: 24),
             PickFileFormField(

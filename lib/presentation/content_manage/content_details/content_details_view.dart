@@ -157,18 +157,16 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                 ],
               ),
               const SizedBox(width: 70),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Type'.tr, style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(height: 16),
-                  Text(
-                      '${ContentType.fromKeyword(controller.contentDetailsModel.type!)?.displayName.tr}',
-                      style: CustomTextStyles.bodyMediumBlack),
-                ],
-              ),
-              const SizedBox(width: 70),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text('Type'.tr, style: CustomTextStyles.labelMediumGray),
+              //     const SizedBox(height: 16),
+              //     Text('', style: CustomTextStyles.bodyMediumBlack),
+              //   ],
+              // ),
+              // const SizedBox(width: 70),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,6 +291,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
               Text("File".tr, style: CustomTextStyles.labelLargeBlack),
               const SizedBox(height: 24),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -104,17 +104,22 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           textController: controller.nameController,
         ),
         const SizedBox(height: 24),
-        _buildCategoryNType(),
+        Row(
+          children: [
+            _buildCategory(),
+            const SizedBox(width: 24),
+            _buildLevel(),
+          ],
+        ),
+        // _buildCategoryNType(),
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildLevel(),
-            const SizedBox(width: 24),
             _buildTargetLanguage(),
+            const SizedBox(width: 24),
+            _buildExposured(),
           ],
         ),
-        const SizedBox(height: 24),
-        _buildExposured(),
         const SizedBox(height: 24),
         _buildTags(),
         const SizedBox(height: 24),
@@ -322,7 +327,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
-  Widget _buildName() {
+  Column _buildCategory() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,145 +335,56 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "Title".tr,
+              text: "Category".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))
         ])),
         const SizedBox(height: 8),
-        CustomTextFormField(
-            controller: controller.nameController,
-            width: 353,
-            hintText: "Input text".tr,
-            hintStyle: CustomTextStyles.bodyMediumGray,
-            validator: (value) {
-              if (value == null) {
-                return "This field is required.".tr;
-              }
-              return null;
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentCategory>(
+            hint: Text(
+              'Select Option'.tr,
+              style: CustomTextStyles.bodyMediumGray,
+            ),
+            isExpanded: true,
+            value: controller.selectedCategory.value,
+            underline: Container(),
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 2,
+              bottom: 2,
+            ),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            elevation: 16,
+            onChanged: (ContentCategory? newValue) {
+              controller.selectCategory(newValue);
             },
-            contentPadding:
-                const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            filled: true),
-      ],
-    );
-  }
-
-  Row _buildCategoryNType() {
-    return Row(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "Category".tr,
-                  style: CustomTextStyles.labelLargeBlack
-                      .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: appTheme.grayScale3,
+            items: [
+              ContentCategory.body,
+              ContentCategory.breath,
+              ContentCategory.mindfulness,
+              ContentCategory.theory,
+            ].map<DropdownMenuItem<ContentCategory>>((ContentCategory value) {
+              return DropdownMenuItem<ContentCategory>(
+                value: value,
+                child: Text(
+                  value.displayName.tr,
+                  style: CustomTextStyles.bodyMediumBlack,
                 ),
-                color: appTheme.white,
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-              ),
-              child: DropdownButton<ContentCategory>(
-                hint: Text(
-                  'Select Option'.tr,
-                  style: CustomTextStyles.bodyMediumGray,
-                ),
-                isExpanded: true,
-                value: controller.selectedCategory.value,
-                underline: Container(),
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 2,
-                  bottom: 2,
-                ),
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-                elevation: 16,
-                onChanged: (ContentCategory? newValue) {
-                  controller.selectCategory(newValue);
-                },
-                items: [
-                  ContentCategory.body,
-                  ContentCategory.breath,
-                  ContentCategory.mindfulness,
-                  ContentCategory.theory,
-                ].map<DropdownMenuItem<ContentCategory>>(
-                    (ContentCategory value) {
-                  return DropdownMenuItem<ContentCategory>(
-                    value: value,
-                    child: Text(
-                      value.displayName.tr,
-                      style: CustomTextStyles.bodyMediumBlack,
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(width: 24),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "Type".tr,
-                  style: CustomTextStyles.labelLargeBlack
-                      .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: appTheme.grayScale3,
-                ),
-                color: appTheme.white,
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-              ),
-              child: DropdownButton<ContentType>(
-                  // enableFeedback: controller.categorySelected.value,
-                  hint: Text('Select Option'.tr,
-                      style: CustomTextStyles.bodyMediumGray),
-                  isExpanded: true,
-                  value: controller.selectedType.value,
-                  underline: Container(),
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 2, bottom: 2),
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  // icon: const Icon(Icons.),
-                  elevation: 16,
-                  onChanged: (ContentType? newValue) {
-                    controller.selectedType.value = newValue;
-                  },
-                  items: controller.categoryContentType
-                      .map<DropdownMenuItem<ContentType>>((ContentType value) {
-                    return DropdownMenuItem<ContentType>(
-                      value: value,
-                      child: Text(
-                        value.displayName.tr,
-                        style: CustomTextStyles.bodyMediumBlack,
-                      ),
-                    );
-                  }).toList()),
-            ),
-          ],
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
@@ -625,6 +541,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         Text("File".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PickFileFormField(
               labelText: "Media File".tr,
@@ -652,19 +569,20 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           ],
         ),
         const SizedBox(height: 24),
-        // PickFileFormField(
-        //   labelText: "CC file".tr,
-        //   essential: false,
-        //   hintText: controller.ccFile?.name ?? ".srt",
-        //   fileExtension: [FileExtension.srt.keywordName],
-        //   onFilePicked: (pickedFile) {
-        //     controller.onPickCC(pickedFile);
-        //   },
-        // ),
-        // const SizedBox(height: 24),
-
-        // _buildDubbing(),
-        // const SizedBox(height: 24),
+        /* 자막, 더빙
+        PickFileFormField(
+          labelText: "CC file".tr,
+          essential: false,
+          hintText: controller.ccFile?.name ?? ".srt",
+          fileExtension: [FileExtension.srt.keywordName],
+          onFilePicked: (pickedFile) {
+            controller.onPickCC(pickedFile);
+          },
+        ),
+        const SizedBox(height: 24),
+        _buildDubbing(),
+        const SizedBox(height: 24),
+        */
         Text(controller.transcodingUploader.ffmpegStatus.value,
             style: CustomTextStyles.bodyMediumBlack),
       ],
@@ -696,147 +614,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
                   label: controller.contentLanguage[index].displayName.tr,
                   onChanged: (value) {});
             }),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildThumnailFile() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "Thumbnail file".tr,
-              style: CustomTextStyles.labelLargeBlack),
-          TextSpan(text: " *", style: TextStyle(color: appTheme.red)),
-        ])),
-        const SizedBox(height: 8),
-        Container(
-          width: 353,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadiusStyle.roundedBorder12,
-              border: Border.all(color: appTheme.grayScale3),
-              color: appTheme.white),
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 280,
-                child: Text(
-                  controller.thumbnailName == "".obs
-                      ? '.jpg'
-                      : controller.thumbnailName.value,
-                  style: controller.thumbnailName == "".obs
-                      ? CustomTextStyles.bodyMediumGray
-                      : CustomTextStyles.bodyMediumBlack,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              CustomImageView(
-                imagePath: IconConstant.upload,
-                onTap: () {
-                  // controller.pickFile("thumbnail");
-                },
-              )
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildVideoOrSoundFile() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20,
-              width: 170,
-              child: ListTile(
-                  horizontalTitleGap: 0,
-                  minLeadingWidth: 0,
-                  minTileHeight: 0,
-                  minVerticalPadding: 0,
-                  contentPadding: EdgeInsets.zero,
-                  //     const EdgeInsets.only(left: 0.0, right: 0.0),
-                  title: Row(
-                    children: <Widget>[
-                      Radio<ActivityType>(
-                        value: ActivityType.practice,
-                        groupValue: ActivityType.practice,
-                        onChanged: (ActivityType? value) {
-                          // controller.onChangeType(value);
-                        },
-                      ),
-                      Text("Media File".tr,
-                          style: CustomTextStyles.labelLargeBlack),
-                    ],
-                  )),
-            ),
-            SizedBox(
-              height: 20,
-              width: 170,
-              child: ListTile(
-                  horizontalTitleGap: 0,
-                  minLeadingWidth: 0,
-                  minTileHeight: 0,
-                  minVerticalPadding: 0,
-                  contentPadding: EdgeInsets.zero,
-                  title: Row(
-                    children: <Widget>[
-                      Radio<ActivityType>(
-                        value: ActivityType.challenge,
-                        groupValue: ActivityType.practice,
-                        onChanged: (ActivityType? value) {
-                          // controller.onChangeType(value);
-                        },
-                      ),
-                      Text("Sound file".tr,
-                          style: CustomTextStyles.labelLargeBlack),
-                    ],
-                  )),
-            )
-          ],
-        ),
-        const SizedBox(height: 8),
-        Container(
-          width: 353,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadiusStyle.roundedBorder12,
-              border: Border.all(color: appTheme.grayScale3),
-              color: appTheme.white),
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 280,
-                child: Text(
-                  controller.thumbnailName == "".obs
-                      ? '(.mpeg)'
-                      : controller.thumbnailName.value,
-                  style: controller.thumbnailName == "".obs
-                      ? CustomTextStyles.bodyMediumGray
-                      : CustomTextStyles.bodyMediumBlack,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              CustomImageView(
-                imagePath: IconConstant.upload,
-                onTap: () {
-                  // controller.pickFile("thumbnail");
-                },
-              )
-            ],
           ),
         ),
       ],

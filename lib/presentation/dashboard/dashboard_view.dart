@@ -50,7 +50,7 @@ class DashboardView extends GetWidget<DashboardController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("Master Dashboard".tr,
+          Text("Service preparing".tr,
               style: CustomTextStyles.headlineLargeBlack),
         ],
       ),

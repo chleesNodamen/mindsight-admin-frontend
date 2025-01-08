@@ -3,7 +3,7 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 class ContentDetailsModel extends BaseModel {
   String? id;
   String? category;
-  String? type;
+  // String? type;
   String? master;
   List<String>? tags;
   String? intro;
@@ -26,7 +26,7 @@ class ContentDetailsModel extends BaseModel {
       this.level,
       this.targetLanguage,
       this.category,
-      this.type,
+      // this.type,
       this.master,
       this.tags,
       this.intro,
@@ -46,7 +46,7 @@ class ContentDetailsModel extends BaseModel {
         level: json["level"],
         targetLanguage: json["targetLanguage"],
         category: json["category"],
-        type: json["type"],
+        // type: json["type"],
         master: json["master"],
         tags: json["tags"] == null
             ? []

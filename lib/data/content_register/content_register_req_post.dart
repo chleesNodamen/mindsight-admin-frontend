@@ -1,7 +1,7 @@
 class ContentRegisterReqPost {
   String? name;
   String? category;
-  String? type;
+  // String? type;
   String? level;
   String? targetLanguage;
   bool? exposure;
@@ -13,7 +13,7 @@ class ContentRegisterReqPost {
   ContentRegisterReqPost({
     this.name,
     this.category,
-    this.type,
+    // this.type,
     this.level,
     this.targetLanguage,
     this.exposure,
@@ -26,7 +26,7 @@ class ContentRegisterReqPost {
   Map<String, dynamic> toJson() => {
         "name": name,
         "category": category,
-        "type": type,
+        // "type": type,
         "level": level,
         "targetLanguage": targetLanguage,
         "exposure": exposure,

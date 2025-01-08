@@ -11,28 +11,28 @@ class ContentRegisterController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  final Map<ContentCategory, List<ContentType>> contentType = {
-    ContentCategory.body: [
-      ContentType.basicBody,
-      ContentType.intermediateBody,
-      ContentType.advanceBody
-    ],
-    ContentCategory.breath: [
-      ContentType.natureBreathing,
-      ContentType.guidedMeditation,
-    ],
-    ContentCategory.mindfulness: [
-      ContentType.mindfulArt,
-      ContentType.artWithMusic,
-      ContentType.nature,
-      ContentType.kAsmr
-    ],
-    ContentCategory.theory: [
-      ContentType.emotionManagement,
-      ContentType.philosophy,
-      ContentType.selfDevelopment
-    ]
-  };
+  // final Map<ContentCategory, List<ContentType>> contentType = {
+  //   ContentCategory.body: [
+  //     ContentType.basicBody,
+  //     ContentType.intermediateBody,
+  //     ContentType.advanceBody
+  //   ],
+  //   ContentCategory.breath: [
+  //     ContentType.natureBreathing,
+  //     ContentType.guidedMeditation,
+  //   ],
+  //   ContentCategory.mindfulness: [
+  //     ContentType.mindfulArt,
+  //     ContentType.artWithMusic,
+  //     ContentType.nature,
+  //     ContentType.kAsmr
+  //   ],
+  //   ContentCategory.theory: [
+  //     ContentType.emotionManagement,
+  //     ContentType.philosophy,
+  //     ContentType.selfDevelopment
+  //   ]
+  // };
 
   final List<ContentLanguage> contentLanguage = [
     ContentLanguage.english,
@@ -40,7 +40,7 @@ class ContentRegisterController extends GetxController {
     ContentLanguage.japanese
   ];
 
-  List<ContentType> categoryContentType = [];
+  // List<ContentType> categoryContentType = [];
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController tagController = TextEditingController();
@@ -49,11 +49,11 @@ class ContentRegisterController extends GetxController {
 
   Rx<ContentCategory?> selectedCategory =
       Rx<ContentCategory?>(ContentCategory.body);
-  Rx<ContentType?> selectedType = Rx<ContentType?>(ContentType.basicBody);
+  // Rx<ContentType?> selectedType = Rx<ContentType?>(ContentType.basicBody);
 
   Rx<ContentLevel?> selectedLevel = Rx<ContentLevel?>(ContentLevel.all);
   Rx<ContentLanguage?> selectedTargetLanguage =
-      Rx<ContentLanguage?>(ContentLanguage.korean);
+      Rx<ContentLanguage?>(ContentLanguage.english);
   Rx<ContentExposure?> selectedExposure =
       Rx<ContentExposure?>(ContentExposure.nonExposed);
   RxList<String> tags = <String>[].obs;
@@ -83,7 +83,7 @@ class ContentRegisterController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    categoryContentType = contentType[ContentCategory.body]!;
+    // categoryContentType = contentType[ContentCategory.body]!;
 
     await initData();
   }
@@ -98,8 +98,8 @@ class ContentRegisterController extends GetxController {
   void selectCategory(ContentCategory? category) {
     selectedCategory.value = category;
 
-    categoryContentType = contentType[category]!;
-    selectedType.value = categoryContentType[0];
+    // categoryContentType = contentType[category]!;
+    // selectedType.value = categoryContentType[0];
   }
 
   void addTag(String tag) {
@@ -184,7 +184,7 @@ class ContentRegisterController extends GetxController {
         await ContentRegisterRepository().post(ContentRegisterReqPost(
       name: nameController.text,
       category: selectedCategory.value?.keywordName,
-      type: selectedType.value?.keywordName,
+      // type: selectedType.value?.keywordName,
       level: selectedLevel.value?.keywordName,
       targetLanguage: selectedTargetLanguage.value?.keywordName,
       exposure: selectedExposure.value?.keywordName,

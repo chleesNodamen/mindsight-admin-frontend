@@ -103,7 +103,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text('Type'.tr,
+                      label: Text('Category'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Title'.tr,
@@ -147,11 +147,11 @@ class ContentManageView extends GetWidget<ContentManageController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
-                              ContentType.fromKeyword(controller
-                                          .contentListModel.value.type![index])
-                                      ?.displayName
-                                      .tr ??
-                                  "",
+                              ContentCategory.fromKeyword(controller
+                                      .contentListModel.value.category![index])
+                                  .displayName
+                                  .tr,
+                              // "",
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(
@@ -304,7 +304,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('Type'.tr, style: CustomTextStyles.labelMediumGray),
+          Text('Category'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 17),
           SizedBox(
             width: double.infinity,
@@ -316,93 +316,93 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   children: [
                     Wrap(
                       runSpacing: 18,
-                      children: List.generate(3, (index) {
+                      children: List.generate(ContentCategory.length, (index) {
                         return CustomCheckboxWidget(
                           isChecked: controller.bodyValues[index],
                           label: controller.bodyLabels[index].displayName.tr,
                           onChanged: (value) =>
-                              controller.toggleBodyCheckbox(index, value),
+                              controller.toggleCategoryCheckbox(index, value),
                         );
                       }),
                     ),
-                    const SizedBox(height: 10),
-                    Wrap(
-                      runSpacing: 18,
-                      children: List.generate(
-                        controller.breathingValues.length,
-                        (index) {
-                          return CustomCheckboxWidget(
-                            isChecked: controller.breathingValues[index],
-                            label: controller
-                                .breathingLabels[index].displayName.tr,
-                            onChanged: (value) => controller
-                                .toggleBreathingCheckbox(index, value),
-                          );
-                        },
-                      ),
-                    ),
-                    Visibility(
-                      visible: controller.showMore.value,
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              runSpacing: 18,
-                              children: List.generate(
-                                controller.otherValues.length,
-                                (index) {
-                                  return CustomCheckboxWidget(
-                                    isChecked: controller.otherValues[index],
-                                    label: controller
-                                        .otherLabels[index].displayName.tr,
-                                    onChanged: (value) => controller
-                                        .toggleOtherCheckbox(index, value),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Wrap(
-                              runSpacing: 18,
-                              children: List.generate(
-                                controller.theoryValues.length,
-                                (index) {
-                                  return CustomCheckboxWidget(
-                                    isChecked: controller.theoryValues[index],
-                                    label: controller
-                                        .theoryLabels[index].displayName.tr,
-                                    onChanged: (value) => controller
-                                        .toggleTheoryCheckbox(index, value),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // const SizedBox(height: 10),
+                    // Wrap(
+                    //   runSpacing: 18,
+                    //   children: List.generate(
+                    //     controller.breathingValues.length,
+                    //     (index) {
+                    //       return CustomCheckboxWidget(
+                    //         isChecked: controller.breathingValues[index],
+                    //         label: controller
+                    //             .breathingLabels[index].displayName.tr,
+                    //         onChanged: (value) => controller
+                    //             .toggleBreathingCheckbox(index, value),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                    // Visibility(
+                    //   visible: controller.showMore.value,
+                    //   child: Container(
+                    //     padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    //     child: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Wrap(
+                    //           runSpacing: 18,
+                    //           children: List.generate(
+                    //             controller.otherValues.length,
+                    //             (index) {
+                    //               return CustomCheckboxWidget(
+                    //                 isChecked: controller.otherValues[index],
+                    //                 label: controller
+                    //                     .otherLabels[index].displayName.tr,
+                    //                 onChanged: (value) => controller
+                    //                     .toggleOtherCheckbox(index, value),
+                    //               );
+                    //             },
+                    //           ),
+                    //         ),
+                    //         const SizedBox(height: 10),
+                    //         Wrap(
+                    //           runSpacing: 18,
+                    //           children: List.generate(
+                    //             controller.theoryValues.length,
+                    //             (index) {
+                    //               return CustomCheckboxWidget(
+                    //                 isChecked: controller.theoryValues[index],
+                    //                 label: controller
+                    //                     .theoryLabels[index].displayName.tr,
+                    //                 onChanged: (value) => controller
+                    //                     .toggleTheoryCheckbox(index, value),
+                    //               );
+                    //             },
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: InkWell(
-                    child: Text(
-                      controller.showMore.value
-                          ? "Quick View".tr
-                          : "All View".tr,
-                      style: CustomTextStyles.bodySmallSkyBlue.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor: appTheme.skyBlue,
-                      ),
-                    ),
-                    onTap: () {
-                      controller.showMore.value = !controller.showMore.value;
-                    },
-                  ),
-                ),
+                // Positioned(
+                //   bottom: 0,
+                //   right: 0,
+                //   child: InkWell(
+                //     child: Text(
+                //       controller.showMore.value
+                //           ? "Quick View".tr
+                //           : "All View".tr,
+                //       style: CustomTextStyles.bodySmallSkyBlue.copyWith(
+                //         decoration: TextDecoration.underline,
+                //         decorationColor: appTheme.skyBlue,
+                //       ),
+                //     ),
+                //     onTap: () {
+                //       controller.showMore.value = !controller.showMore.value;
+                //     },
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -78,8 +78,10 @@ import 'package:mindsight_admin_page/presentation/member_manage/member_mass_regi
 import 'package:mindsight_admin_page/presentation/member_manage/member_mass_register_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_register_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_register_view.dart';
-import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_binding.dart';
-import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/master_settlement_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/master_settlement_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_binding_nouse.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_view_nouse.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_view.dart';
 
@@ -122,7 +124,8 @@ class AppRoutes {
   static const String challengeRegister = "/challenge_register";
   static const String activityManage = "/activity_manage";
   static const String settlementManage = "/settlement_manage";
-  static const String revenueShareManage = "/revenue_share_manage";
+  // static const String revenueShareManage = "/revenue_share_manage";
+  static const String masterSettlementManage = "/master_settlement_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
   static const String etcAdminSetting = '/etc_admin_settings';
@@ -356,9 +359,9 @@ class AppRoutes {
       bindings: [SettlementManageBinding()],
     ),
     GetPage(
-      name: revenueShareManage,
-      page: () => const RevenueShareManageView(),
-      bindings: [RevenueShareManageBinding()],
+      name: masterSettlementManage,
+      page: () => const MasterSettlementManageView(),
+      bindings: [MasterSettlementManageBinding()],
     ),
   ];
 }

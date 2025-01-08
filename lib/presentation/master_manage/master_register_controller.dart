@@ -33,7 +33,7 @@ class MasterRegisterController extends GetxController {
 
   Rx<Contry?> selectedContry = Rx<Contry?>(Contry.korea);
   Rx<ContentLanguage?> selectedPrimaryLanguage =
-      Rx<ContentLanguage?>(ContentLanguage.korean);
+      Rx<ContentLanguage?>(ContentLanguage.english);
   Rx<ContentLanguage?> selectedSecondaryLanguage = Rx<ContentLanguage?>(null);
   Rx<Map<String, String>?> selectedCompany = Rx<Map<String, String>?>(null);
 

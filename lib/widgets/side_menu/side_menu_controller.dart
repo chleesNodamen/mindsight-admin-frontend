@@ -53,8 +53,14 @@ class SideMenuController extends GetxController {
     settlementManagePageDisplayName: [
       SubMenuItem(settlementManagePageSubMenuDisplayName,
           AppRoutes.settlementManage, () {}),
-      SubMenuItem(revenueShareManagePageDisplayName,
-          AppRoutes.revenueShareManage, () {}),
+      SubMenuItem(masterSettlementManagePageDisplayName,
+          AppRoutes.masterSettlementManage, () {}),
+    ],
+    helpPageDisplayName: [
+      SubMenuItem(noticesPageDisplayName, AppRoutes.dashboard, () {}),
+      SubMenuItem(inquiriesPageDisplayName, AppRoutes.dashboard, () {}),
+      SubMenuItem(faqPageDisplayName, AppRoutes.dashboard, () {}),
+      SubMenuItem(masterFreeBoardPageDisplayName, AppRoutes.dashboard, () {}),
     ],
   };
 
@@ -91,6 +97,7 @@ class SideMenuController extends GetxController {
                 AppRoutes.settlementManage, () {}),
             MenuItem(
                 adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
+            MenuItem(helpPageDisplayName, AppRoutes.dashboard, () {}),
           ];
   }
 
@@ -157,6 +164,11 @@ class SideMenuController extends GetxController {
         color: !full ? appTheme.white.withOpacity(0.8) : null,
       );
     } else if (itemName == settlementManagePageDisplayName) {
+      return CustomImageView(
+        imagePath: IconConstant.receiptLong,
+        color: !full ? appTheme.white.withOpacity(0.8) : null,
+      );
+    } else if (itemName == helpPageDisplayName) {
       return CustomImageView(
         imagePath: IconConstant.receiptLong,
         color: !full ? appTheme.white.withOpacity(0.8) : null,

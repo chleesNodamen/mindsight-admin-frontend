@@ -1,7 +1,7 @@
 class ContentListReqGet {
   int? page;
   String? sortBy;
-  List<String>? type;
+  List<String>? category;
   bool? status;
   String? search;
   int? pageSize;
@@ -10,7 +10,7 @@ class ContentListReqGet {
   ContentListReqGet({
     this.page,
     this.sortBy,
-    this.type,
+    this.category,
     this.status,
     this.search,
     this.pageSize,
@@ -20,7 +20,7 @@ class ContentListReqGet {
   Map<String, dynamic> toJson() => {
         "page": page,
         "sortBy": sortBy,
-        "type": type ?? [],
+        "category": category ?? [],
         "status": status,
         "search": search,
         "pageSize": pageSize,

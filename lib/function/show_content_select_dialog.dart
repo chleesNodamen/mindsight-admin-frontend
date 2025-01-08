@@ -16,14 +16,14 @@ class ContentSelectController extends GetxController {
   Rx<ContentListModel> contentListModel = ContentListModel().obs;
   Map<String, String>? result;
 
+  Rx<SortCondition> selectedOrder = SortCondition.registration.obs;
+
+  RxString masterSearchType = "MY".obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
 
-    // if (AppConstant.test) {
-    //   await MasterSigninRepository().post(MasterSigninReqPost(
-    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
-    // }
     await fetchContentList(1, textController.text);
   }
 
@@ -31,34 +31,14 @@ class ContentSelectController extends GetxController {
     isLoading.value = true;
     selectedIndex.value = -1;
 
-    if (category == ContentCategory.body) {
-      contentListModel.value =
-          await ContentListRepository().get(ContentListReqGet(
-        page: pageNumber,
-        sortBy: SortCondition.registration.keywordName,
-        // type: [
-        //   ContentType.basicBody.keywordName,
-        //   ContentType.intermediateBody.keywordName,
-        //   ContentType.advanceBody.keywordName
-        // ],
-        search: searchQuery,
-        pageSize: 5,
-        // status: true,
-      ));
-    } else {
-      contentListModel.value =
-          await ContentListRepository().get(ContentListReqGet(
-        page: pageNumber,
-        sortBy: SortCondition.registration.keywordName,
-        // type: [
-        //   ContentType.natureBreathing.keywordName,
-        //   ContentType.guidedMeditation.keywordName
-        // ],
-        search: searchQuery,
-        pageSize: 5,
-        // status: true,
-      ));
-    }
+    contentListModel.value = await ContentListRepository().get(
+        ContentListReqGet(
+            page: pageNumber,
+            sortBy: selectedOrder.value.keywordName,
+            category: [category.keywordName],
+            search: searchQuery,
+            pageSize: 5,
+            masterId: masterSearchType.value == "ALL" ? null : Account.id));
 
     activePage.value = pageNumber;
 
@@ -87,6 +67,20 @@ class ContentSelectController extends GetxController {
 
     Get.back();
   }
+
+  void onChangedSelectedOrder(SortCondition newValue) {
+    selectedOrder.value = newValue;
+  }
+
+  Future<void> onMasterSearchType(String? value) async {
+    isLoading.value = true;
+    masterSearchType.value = value!;
+    Logger.info(masterSearchType.value);
+
+    await fetchContentList(1, textController.text);
+
+    isLoading.value = false;
+  }
 }
 
 Future<Map<String, String>?> showContentSelectDialog(
@@ -108,130 +102,231 @@ Future<Map<String, String>?> showContentSelectDialog(
           borderRadius: BorderRadiusStyle.roundedBorder12,
           color: appTheme.background,
         ),
-        width: 900,
+        width: 1200,
         padding: const EdgeInsets.all(32.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Select content".tr,
+                  "${"Select content".tr} : ${category.displayName.tr}",
                   style: CustomTextStyles.bodyMediumBlack,
                 ),
-                CustomImageView(
-                  imagePath: IconConstant.close,
-                  onTap: () => Get.back(),
+                Row(
+                  children: [
+                    Obx(
+                      () => Row(
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                title: Row(
+                                  children: <Widget>[
+                                    Radio<String>(
+                                      value: "ALL",
+                                      groupValue:
+                                          controller.masterSearchType.value,
+                                      onChanged: (String? value) {
+                                        controller.onMasterSearchType(value);
+                                      },
+                                    ),
+                                    Text(
+                                      "All".tr,
+                                      style: CustomTextStyles.bodyMediumBlack
+                                          .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          // const SizedBox(width: 20),
+                          SizedBox(
+                            width: 100,
+                            child: ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Row(
+                                children: <Widget>[
+                                  Radio<String>(
+                                    value: "MY",
+                                    groupValue:
+                                        controller.masterSearchType.value,
+                                    onChanged: (String? value) {
+                                      controller.onMasterSearchType(value);
+                                    },
+                                  ),
+                                  Text(
+                                    "My".tr,
+                                    style: CustomTextStyles.bodyMediumBlack
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 45,
+                      width: 400,
+                      child: TextFormField(
+                        controller: controller.textController,
+                        decoration: InputDecoration(
+                          fillColor: appTheme.white,
+                          filled: true,
+                          labelText: "${"Content title".tr}, ${"Master".tr}",
+                          labelStyle: CustomTextStyles.bodyMediumGray,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          border: OutlineInputBorder(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                            ),
+                            borderSide: BorderSide(
+                              color: appTheme.grayScale3,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                            ),
+                            borderSide: BorderSide(
+                              color: appTheme.grayScale3,
+                              width: 1,
+                            ),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                            ),
+                            borderSide: BorderSide(
+                              color: appTheme.grayScale3,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                            ),
+                            borderSide: BorderSide(
+                              color: appTheme.grayScale3,
+                              width: 2,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                            ),
+                            borderSide: BorderSide(
+                              color: appTheme.red,
+                              width: 2,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                            ),
+                            borderSide: BorderSide(
+                              color: appTheme.red,
+                              width: 2,
+                            ),
+                          ),
+                          errorStyle: TextStyle(
+                            color: appTheme.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await controller.fetchContentList(
+                            1, controller.textController.text);
+                      },
+                      child: Container(
+                        width: 76,
+                        height: 45,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: appTheme.black,
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(12),
+                            topRight: Radius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          "Search".tr,
+                          style: CustomTextStyles.bodyMediumWhite,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 24),
+                    CustomImageView(
+                      imagePath: IconConstant.close,
+                      onTap: () => Get.back(),
+                    ),
+                  ],
                 ),
               ],
             ),
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
-                    child: TextFormField(
-                      controller: controller.textController,
-                      decoration: InputDecoration(
-                        fillColor: appTheme.white,
-                        filled: true,
-                        labelText: "Content title".tr,
-                        labelStyle: CustomTextStyles.bodyMediumGray,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          ),
-                          borderSide: BorderSide(
-                            color: appTheme.grayScale3,
-                            width: 1,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          ),
-                          borderSide: BorderSide(
-                            color: appTheme.grayScale3,
-                            width: 1,
-                          ),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          ),
-                          borderSide: BorderSide(
-                            color: appTheme.grayScale3,
-                            width: 1,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          ),
-                          borderSide: BorderSide(
-                            color: appTheme.grayScale3,
-                            width: 2,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          ),
-                          borderSide: BorderSide(
-                            color: appTheme.red,
-                            width: 2,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          ),
-                          borderSide: BorderSide(
-                            color: appTheme.red,
-                            width: 2,
-                          ),
-                        ),
-                        errorStyle: TextStyle(
-                          color: appTheme.red,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: appTheme.grayScale2,
                 ),
-                InkWell(
-                  onTap: () async {
-                    await controller.fetchContentList(
-                        1, controller.textController.text);
+                color: appTheme.white,
+                borderRadius: BorderRadiusStyle.roundedBorder8,
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(left: 6, right: 0, top: 0, bottom: 0),
+                child: DropdownButton<SortCondition>(
+                  value: controller.selectedOrder.value,
+                  underline: Container(),
+                  padding: const EdgeInsets.only(left: 6),
+                  borderRadius: BorderRadiusStyle.roundedBorder12,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  onChanged: (SortCondition? newValue) {
+                    if (newValue != null) {
+                      controller.onChangedSelectedOrder(newValue);
+                    }
                   },
-                  child: Container(
-                    width: 76,
-                    height: 45,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: appTheme.black,
-                      borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(12),
-                        topRight: Radius.circular(12),
+                  items: <SortCondition>[
+                    SortCondition.registration,
+                    SortCondition.highestCompletionRate,
+                    SortCondition.lowestCompletionRate,
+                    SortCondition.likes
+                  ].map<DropdownMenuItem<SortCondition>>((SortCondition value) {
+                    return DropdownMenuItem<SortCondition>(
+                      value: value,
+                      child: Text(
+                        value.displayName.tr,
+                        style: CustomTextStyles.labelLargeBlack,
                       ),
-                    ),
-                    child: Text(
-                      "Search".tr,
-                      style: CustomTextStyles.bodyMediumWhite,
-                    ),
-                  ),
+                    );
+                  }).toList(),
                 ),
-              ],
+              ),
             ),
 
             // Content and Pagination
@@ -241,7 +336,7 @@ Future<Map<String, String>?> showContentSelectDialog(
               }
               return Column(
                 children: [
-                  const SizedBox(height: 35),
+                  const SizedBox(height: 24),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadiusStyle.roundedBorder12,
@@ -268,11 +363,15 @@ Future<Map<String, String>?> showContentSelectDialog(
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text("Type".tr,
+                                label: Text("Category".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
                                 label: Text("Title".tr,
+                                    style: CustomTextStyles.labelLargeGray),
+                              ),
+                              DataColumn(
+                                label: Text("Master".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
@@ -306,10 +405,10 @@ Future<Map<String, String>?> showContentSelectDialog(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 24.0),
                                         child: Text(
-                                          ContentType.fromKeyword(controller
+                                          ContentCategory.fromKeyword(controller
                                                   .contentListModel
                                                   .value
-                                                  .type![index])!
+                                                  .category![index])
                                               .displayName
                                               .tr,
                                           style:
@@ -324,6 +423,18 @@ Future<Map<String, String>?> showContentSelectDialog(
                                         child: Text(
                                           controller.contentListModel.value
                                               .name![index],
+                                          style:
+                                              CustomTextStyles.bodyLargeBlack,
+                                        ),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 24.0),
+                                        child: Text(
+                                          controller.contentListModel.value
+                                              .master![index],
                                           style:
                                               CustomTextStyles.bodyLargeBlack,
                                         ),

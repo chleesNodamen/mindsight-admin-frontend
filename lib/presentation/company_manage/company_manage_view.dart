@@ -107,6 +107,7 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
             SizedBox(
               width: double.infinity,
               child: DataTable(
+                showCheckboxColumn: Account.isAdmin,
                 columnSpacing: 0,
                 checkboxHorizontalMargin: 0,
                 dataRowMaxHeight: 80,

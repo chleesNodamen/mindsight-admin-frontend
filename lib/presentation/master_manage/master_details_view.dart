@@ -155,6 +155,7 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
             height: 24,
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +181,9 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                     height: 16,
                   ),
                   ImageActionsWidget(
-                      imageUrl: controller.masterDetailModel.photoUrl!)
+                    imageUrl: controller.masterDetailModel.photoUrl!,
+                    isCircular: true,
+                  )
                 ],
               ),
               const SizedBox(

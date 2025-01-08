@@ -150,17 +150,21 @@ class ContentEditView extends GetWidget<ContentEditController> {
             essential: true,
             textController: controller.nameController),
         const SizedBox(height: 24),
-        _buildCategoryNType(),
-        const SizedBox(height: 24),
         Row(
           children: [
-            _buildLevel(),
+            _buildCategory(),
             const SizedBox(width: 24),
-            _buildTargetLanguage()
+            _buildLevel()
           ],
         ),
         const SizedBox(height: 24),
-        _buildExposured(),
+        Row(
+          children: [
+            _buildTargetLanguage(),
+            const SizedBox(width: 24),
+            _buildExposured()
+          ],
+        ),
         const SizedBox(height: 24),
         _buildTags(),
         const SizedBox(height: 24),
@@ -169,123 +173,61 @@ class ContentEditView extends GetWidget<ContentEditController> {
     );
   }
 
-  Row _buildCategoryNType() {
-    return Row(
+  Column _buildCategory() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "Category".tr,
-                  style: CustomTextStyles.labelLargeBlack
-                      .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: appTheme.grayScale3,
-                ),
-                color: appTheme.white,
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-              ),
-              child: DropdownButton<ContentCategory>(
-                hint: Text('Select Option'.tr,
-                    style: CustomTextStyles.bodyMediumGray),
-                isExpanded: true,
-                value: ContentCategory.fromKeyword(
-                    controller.contentDetailsModel.category!),
-                underline: Container(),
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 2, bottom: 2),
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-                elevation: 16,
-                onChanged: (ContentCategory? newValue) {
-                  controller.isLoading.value = true;
-                  controller.contentDetailsModel.category =
-                      newValue?.keywordName;
-                  controller.isLoading.value = false;
-                },
-                items: [
-                  ContentCategory.body,
-                  ContentCategory.breath,
-                  ContentCategory.mindfulness,
-                  ContentCategory.theory,
-                ].map<DropdownMenuItem<ContentCategory>>(
-                    (ContentCategory value) {
-                  return DropdownMenuItem<ContentCategory>(
-                    value: value,
-                    child: Text(
-                      value.displayName.tr,
-                      style: CustomTextStyles.bodyMediumBlack,
-                    ),
-                  );
-                }).toList(),
-              ),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "Category".tr,
+              style: CustomTextStyles.labelLargeBlack
+                  .copyWith(fontWeight: FontWeight.w600)),
+          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
+        ])),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
             ),
-          ],
-        ),
-        const SizedBox(width: 24),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: "Type".tr,
-                  style: CustomTextStyles.labelLargeBlack
-                      .copyWith(fontWeight: FontWeight.w600)),
-              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-            ])),
-            const SizedBox(height: 8),
-            Container(
-              width: 353,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: appTheme.grayScale3,
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentCategory>(
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: ContentCategory.fromKeyword(
+                controller.contentDetailsModel.category!),
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            elevation: 16,
+            onChanged: (ContentCategory? newValue) {
+              controller.isLoading.value = true;
+              controller.contentDetailsModel.category = newValue?.keywordName;
+              controller.isLoading.value = false;
+            },
+            items: [
+              ContentCategory.body,
+              ContentCategory.breath,
+              ContentCategory.mindfulness,
+              ContentCategory.theory,
+            ].map<DropdownMenuItem<ContentCategory>>((ContentCategory value) {
+              return DropdownMenuItem<ContentCategory>(
+                value: value,
+                child: Text(
+                  value.displayName.tr,
+                  style: CustomTextStyles.bodyMediumBlack,
                 ),
-                color: appTheme.white,
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-              ),
-              child: DropdownButton<ContentType>(
-                  // enableFeedback: controller.categorySelected.value,
-                  hint: Text('Select Option'.tr,
-                      style: CustomTextStyles.bodyMediumGray),
-                  isExpanded: true,
-                  value: ContentType.fromKeyword(
-                      controller.contentDetailsModel.type!),
-                  underline: Container(),
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 2, bottom: 2),
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  // icon: const Icon(Icons.),
-                  elevation: 16,
-                  onChanged: (ContentType? newValue) {
-                    controller.isLoading.value = true;
-                    controller.contentDetailsModel.type = newValue?.keywordName;
-                    controller.isLoading.value = false;
-                  },
-                  items: controller.types[ContentCategory.fromKeyword(
-                          controller.contentDetailsModel.category!)]!
-                      .map<DropdownMenuItem<ContentType>>((ContentType value) {
-                    return DropdownMenuItem<ContentType>(
-                      value: value,
-                      child: Text(
-                        value.displayName.tr,
-                        style: CustomTextStyles.bodyMediumBlack,
-                      ),
-                    );
-                  }).toList()),
-            ),
-          ],
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
@@ -630,6 +572,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         Text("File".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PickFileFormField(
               labelText: "Media File".tr,
@@ -718,23 +661,6 @@ class ContentEditView extends GetWidget<ContentEditController> {
       fileExtension: [FileExtension.jpg.keywordName],
       onFilePicked: (pickedFile) {
         controller.onPickThumbnail(pickedFile);
-      },
-    );
-  }
-
-  Widget _buildMediaFile() {
-    return PickFileFormField(
-      labelText: "Media File".tr,
-      essential: true,
-      initialUrl: controller.contentDetailsModel.video,
-      hintText: ".mp4, .mp3, .wav",
-      fileExtension: [
-        FileExtension.mp4.keywordName,
-        FileExtension.mp3.keywordName,
-        FileExtension.wav.keywordName
-      ],
-      onFilePicked: (pickedFile) {
-        controller.onPickMedia(pickedFile);
       },
     );
   }

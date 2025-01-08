@@ -1,8 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_model.dart';
 import 'package:mindsight_admin_page/data/content_details/content_details_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class ContentDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];

@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_controller.dart';
+import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_controller_nouse.dart';
 
 class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
   const RevenueShareManageView({super.key});
@@ -96,7 +96,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label: Text("Monthly View Rate".tr,
+                      label: Text("Total View Rate".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text("Master detail".tr,

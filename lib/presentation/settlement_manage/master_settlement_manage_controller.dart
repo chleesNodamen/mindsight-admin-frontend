@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_model.dart';
-import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_repository.dart';
-import 'package:mindsight_admin_page/data/master_content_settlement_list/master_content_settlement_list_req_get.dart';
+import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_model.dart';
+import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_repository.dart';
+import 'package:mindsight_admin_page/data/master_settlement_list/master_settlement_list_req_get.dart';
 import 'package:mindsight_admin_page/data/purchase_list/purchase_list_model.dart';
 import 'package:mindsight_admin_page/data/purchase_list/purchase_list_repository.dart';
 import 'package:mindsight_admin_page/data/purchase_list/purchase_list_req_get.dart';
@@ -14,24 +14,16 @@ enum Type { all, notIssued, notSettled }
 
 enum MonthType { lastMonth, thisMonth, selectedMonth }
 
-class SettlementManageController extends GetxController {
-  List<String> typeLabels = [
-    "All",
-    "Unissued",
-    "Unsettled",
-  ];
-
+class MasterSettlementManageController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  // late MasterSettlementListModel masterSettlementListModel;
-  late PurchaseListModel purchaseListModel;
+  late MasterSettlementListModel masterSettlementListModel;
   late SettlementSummaryModel settlementSummaryModel;
-  late MasterContentSettlementListModel masterContentSettlementListModel;
 
-  Rx<Type> type = Type.all.obs;
+  // Rx<Type> type = Type.all.obs;
   RxInt activePage = 1.obs;
-  RxInt activePageMasterContentSettlementList = 1.obs;
+  // RxInt activePageMasterContentSettlementList = 1.obs;
   Rx<MonthType> selectedMonthType = MonthType.thisMonth.obs;
   RxString dateRange = ''.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
@@ -104,52 +96,22 @@ class SettlementManageController extends GetxController {
     isInited.value = true;
   }
 
-  Future<void> changeType(Type? newType) async {
-    if (newType == null) {
-      return;
-    }
-    isLoading.value = true;
-
-    type.value = newType;
-
-    activePage.value = 1;
-    isLoading.value = false;
-  }
-
-  Future<void> onSearch(String? search) async {}
-
-  Future<void> reqPurchaseList() async {
-    isLoading.value = true;
-
-    purchaseListModel = await PurchaseListRepository().get(PurchaseListReqGet(
-      page: 1,
-      month: selectedMonth.value,
-      search: '',
-    ));
-
-    isLoading.value = false;
-  }
-
   Future<void> loadPage(int page) async {
     isLoading.value = true;
-
     activePage.value = page;
 
-    masterContentSettlementListModel =
-        await MasterContentSettlementListRepository()
-            .get(MasterContentSettlementListReqGet(
+    masterSettlementListModel =
+        await MasterSettlementListRepository().get(MasterSettlementListReqGet(
       masterId: Account.id,
       page: page,
       month: selectedMonth.value,
     ));
 
-    Logger.info(masterContentSettlementListModel.toJson());
-
     isLoading.value = false;
   }
 
   String getViewRate(int index) {
-    int playCount = masterContentSettlementListModel.playCount![index];
+    int playCount = masterSettlementListModel.playCount![index];
     int totalPlayCount = settlementSummaryModel.playCount!;
 
     if (totalPlayCount == 0) {
@@ -159,10 +121,9 @@ class SettlementManageController extends GetxController {
   }
 
   String getSettlementAmount(int index) {
-    int playCount = masterContentSettlementListModel.playCount![index];
+    int playCount = masterSettlementListModel.playCount![index];
     int totalPlayCount = settlementSummaryModel.playCount!;
-    double profitRate =
-        35; //masterSettlementListModel.currentProfitRate![index];
+    double profitRate = masterSettlementListModel.currentProfitRate![index];
     double finalSales = settlementSummaryModel.finalSales!;
 
     if (totalPlayCount == 0) {

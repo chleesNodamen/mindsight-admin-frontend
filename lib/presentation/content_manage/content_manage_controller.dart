@@ -10,8 +10,6 @@ import 'package:mindsight_admin_page/data/content_list/content_list_repository.d
 import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_repository.dart';
 import 'package:mindsight_admin_page/data/content_status/content_status_req_put.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class ContentManageController extends GetxController {
   RxBool isLoading = true.obs;
@@ -27,12 +25,16 @@ class ContentManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  RxList<ContentType> bodyLabels = [
-    ContentType.basicBody,
-    ContentType.intermediateBody,
-    ContentType.advanceBody,
+  RxList<ContentCategory> bodyLabels = [
+    ContentCategory.body,
+    ContentCategory.breath,
+    ContentCategory.mindfulness,
+    ContentCategory.theory,
   ].obs;
 
+  RxList<bool> bodyValues = List<bool>.filled(ContentCategory.length, true).obs;
+
+  /*
   RxList<ContentType> breathingLabels =
       [ContentType.natureBreathing, ContentType.guidedMeditation].obs;
 
@@ -49,10 +51,10 @@ class ContentManageController extends GetxController {
     ContentType.selfDevelopment
   ];
 
-  RxList<bool> bodyValues = List<bool>.filled(3, true).obs;
   RxList<bool> breathingValues = List<bool>.filled(2, true).obs;
   RxList<bool> otherValues = List<bool>.filled(4, true).obs;
   RxList<bool> theoryValues = List<bool>.filled(3, true).obs;
+  */
   RxList<bool> serviceValues = List<bool>.filled(2, true).obs;
 
   RxInt activePage = 1.obs;
@@ -62,7 +64,6 @@ class ContentManageController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    // await ReloadHandler.handleReload();
     await initData();
   }
 
@@ -75,29 +76,29 @@ class ContentManageController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> toggleBodyCheckbox(int index, bool value) async {
+  Future<void> toggleCategoryCheckbox(int index, bool value) async {
     bodyValues[index] = value;
 
     await loadPage(1);
   }
 
-  Future<void> toggleBreathingCheckbox(int index, bool value) async {
-    breathingValues[index] = value;
+  // Future<void> toggleBreathingCheckbox(int index, bool value) async {
+  //   breathingValues[index] = value;
 
-    await loadPage(1);
-  }
+  //   await loadPage(1);
+  // }
 
-  Future<void> toggleTheoryCheckbox(int index, bool value) async {
-    theoryValues[index] = value;
+  // Future<void> toggleTheoryCheckbox(int index, bool value) async {
+  //   theoryValues[index] = value;
 
-    await loadPage(1);
-  }
+  //   await loadPage(1);
+  // }
 
-  Future<void> toggleOtherCheckbox(int index, bool value) async {
-    otherValues[index] = value;
+  // Future<void> toggleOtherCheckbox(int index, bool value) async {
+  //   otherValues[index] = value;
 
-    await loadPage(1);
-  }
+  //   await loadPage(1);
+  // }
 
   Future<void> toggleServiceValues(int index, bool value) async {
     serviceValues[index] = value;
@@ -116,15 +117,15 @@ class ContentManageController extends GetxController {
 
     isLoading.value = true;
 
-    contentListModel.value =
-        await ContentListRepository().get(ContentListReqGet(
-      type: getChosenType(),
-      page: pageNum,
-      search: searchOn.value == true ? searchValue.value : null,
-      status: (serviceValues.contains(false) ? serviceValues[0] : null),
-      sortBy: selectedSort.value?.keywordName,
-      pageSize: 20,
-    ));
+    contentListModel.value = await ContentListRepository().get(
+        ContentListReqGet(
+            category: getChosenCategory(),
+            page: pageNum,
+            search: searchOn.value == true ? searchValue.value : null,
+            status: (serviceValues.contains(false) ? serviceValues[0] : null),
+            sortBy: selectedSort.value?.keywordName,
+            pageSize: 20,
+            masterId: Account.isAdmin ? null : Account.id));
 
     isLoading.value = false;
 
@@ -236,28 +237,11 @@ class ContentManageController extends GetxController {
     loadPage(1);
   }
 
-  List<String> getChosenType() {
-    if (bodyValues.every((a) => a == false) &&
-        breathingValues.every((a) => a == false) &&
-        theoryValues.every((a) => a == false) &&
-        otherValues.every((a) => a == false)) {
-      return [];
-    }
-    return bodyValues.every((a) => a == true) &&
-            breathingValues.every((a) => a == true) &&
-            theoryValues.every((a) => a == true) &&
-            otherValues.every((a) => a == true)
-        ? []
-        : [
-            for (int i = 0; i < bodyLabels.length; i++)
-              if (bodyValues[i]) bodyLabels[i].keywordName,
-            for (int i = 0; i < otherLabels.length; i++)
-              if (otherValues[i]) otherLabels[i].keywordName,
-            for (int i = 0; i < theoryLabels.length; i++)
-              if (theoryValues[i]) theoryLabels[i].keywordName,
-            for (int i = 0; i < breathingLabels.length; i++)
-              if (breathingValues[i]) breathingLabels[i].keywordName,
-          ];
+  List<String> getChosenCategory() {
+    return [
+      for (int i = 0; i < bodyLabels.length; i++)
+        if (bodyValues[i]) bodyLabels[i].keywordName,
+    ];
   }
 
   Future<void> onDeleteButton() async {

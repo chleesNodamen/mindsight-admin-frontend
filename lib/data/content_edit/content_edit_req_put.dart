@@ -1,6 +1,6 @@
 class ContentEditReqPut {
   String? category;
-  String? type;
+  // String? type;
   List<String>? tags;
   String? intro;
   String? thumbnail;
@@ -14,7 +14,7 @@ class ContentEditReqPut {
 
   ContentEditReqPut({
     this.category,
-    this.type,
+    // this.type,
     this.tags,
     this.intro,
     this.thumbnail,
@@ -29,7 +29,7 @@ class ContentEditReqPut {
 
   Map<String, dynamic> toJson() => {
         "category": category,
-        "type": type,
+        // "type": type,
         "tags": tags ?? [],
         "intro": intro,
         "thumbnail": thumbnail,

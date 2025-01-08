@@ -95,9 +95,9 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
             SizedBox(
               width: double.infinity,
               child: DataTable(
+                showCheckboxColumn: Account.isAdmin,
                 columnSpacing: 0,
                 checkboxHorizontalMargin: 0,
-                // dataRowMinHeight: ,
                 dataRowMaxHeight: 80,
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),

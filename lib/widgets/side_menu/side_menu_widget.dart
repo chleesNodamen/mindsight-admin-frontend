@@ -9,70 +9,40 @@ class MenuItem {
   MenuItem(this.name, this.route, this.inited);
 }
 
-const dashboardPageRoute = "/dashboard";
 String dashboardPageDisplayName = "Dashboard";
-
-const memberManagePageRoute = "/member_manage";
 String memberManagePageDisplayName = "Member management";
 String memberManagePageSubMenuDisplayName = "Member list";
-
-const memberDetailsPageRoute = "/member_details";
 String memberDetailsPageDisplayName = "Member details";
-
-const memberEditPageRoute = "/member_edit";
 String memberEditPageDisplayName = "Member info Edit";
-
-const inactiveMemberManagePageRoute = "/inactive_member_manage";
 String inactiveMemberManagePageDisplayName = "Inactive Member management";
-
-const masterManagePageRoute = "/master_manage";
 String masterManagePageDisplayName = "Master management";
 String masterManagePageSubMenuDisplayName = "Master list";
-
-const inactiveMasterManagePageRoute = "/inactive_master_manage";
 String inactiveMasterManagePageDisplayName = "Inactive Master management";
-
-const masterDetailsPageRoute = "/master_details";
 String masterDetailsPageDisplayName = "Master Details";
-
-const masterEditPageRoute = "/master_edit";
 String masterEditPageDisplayName = "Master info edit";
-
-const companyManagePageRoute = "/company_manage";
 String companyManagePageDisplayName = "Company management";
 String companyManagePageSubMenuDisplayName = "Company list";
-
-const inactiveCompanyManagePageRoute = "/inactive_company_manage";
 String inactiveCompanyManagePageDisplayName = "Inactive company management";
-
-const contentManagePageRoute = "/content_manage";
 String contentManagePageDisplayName = "Content management";
 String contentManageContentDisplayName = "Content list";
 String contentPracticeDisplayName = "Practice plan management";
 String contentChallengeDisplayName = "Challenge management";
-
-const activityManagePageRoute = "/activity_manage";
 String activityManagePageDisplayName = "Activity record management";
-
-const activityHistoryPageRoute = "/activity_history";
 String activityHistoryPageDisplayName = "Activity record detail";
-
-const settlementManagePageRoute = "/settlement_manage";
 String settlementManagePageDisplayName = "Sales and Settlement";
-String settlementManagePageSubMenuDisplayName = "Streaming settlement";
-
-const revenueShareManagePageRoute = "/revenue_share_manage";
-String revenueShareManagePageDisplayName = "CP Profit Margin";
-
-const adminSettingsPageRoute = "/admin_settings";
+String settlementManagePageSubMenuDisplayName = "Streaming Details";
+String masterSettlementManagePageDisplayName = "Master Settlement";
 String adminSettingsPageDisplayName = "Settings";
 String myAccountManagePageDisplayName = "Manage My Account";
 String myCompanyManagePageDisplayName = "Manage My Company";
 String etcSettingPageDisplayName = "Other settings";
 // const subAdminSettingsDisplayName = "Sub admin management";
-
-const authenticationPageRoute = "/auth";
 String authenticationPageDisplayName = "Log out";
+String helpPageDisplayName = "Help";
+String noticesPageDisplayName = "Notice";
+String inquiriesPageDisplayName = "1:1 Inquiries";
+String faqPageDisplayName = "FAQ";
+String masterFreeBoardPageDisplayName = "Master Free Board";
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});

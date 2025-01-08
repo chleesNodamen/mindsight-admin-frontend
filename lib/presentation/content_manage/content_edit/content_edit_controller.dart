@@ -17,28 +17,28 @@ class ContentEditController extends GetxController {
 
   late ContentDetailsModel contentDetailsModel;
 
-  final Map<ContentCategory, List<ContentType>> types = {
-    ContentCategory.body: [
-      ContentType.basicBody,
-      ContentType.intermediateBody,
-      ContentType.advanceBody
-    ],
-    ContentCategory.breath: [
-      ContentType.natureBreathing,
-      ContentType.guidedMeditation,
-    ],
-    ContentCategory.mindfulness: [
-      ContentType.mindfulArt,
-      ContentType.artWithMusic,
-      ContentType.nature,
-      ContentType.kAsmr
-    ],
-    ContentCategory.theory: [
-      ContentType.emotionManagement,
-      ContentType.philosophy,
-      ContentType.selfDevelopment
-    ]
-  };
+  // final Map<ContentCategory, List<ContentType>> types = {
+  //   ContentCategory.body: [
+  //     ContentType.basicBody,
+  //     ContentType.intermediateBody,
+  //     ContentType.advanceBody
+  //   ],
+  //   ContentCategory.breath: [
+  //     ContentType.natureBreathing,
+  //     ContentType.guidedMeditation,
+  //   ],
+  //   ContentCategory.mindfulness: [
+  //     ContentType.mindfulArt,
+  //     ContentType.artWithMusic,
+  //     ContentType.nature,
+  //     ContentType.kAsmr
+  //   ],
+  //   ContentCategory.theory: [
+  //     ContentType.emotionManagement,
+  //     ContentType.philosophy,
+  //     ContentType.selfDevelopment
+  //   ]
+  // };
 
   final List<ContentLanguage> contentLanguage = [
     ContentLanguage.english,
@@ -166,7 +166,7 @@ class ContentEditController extends GetxController {
       ContentEditReqPut(
         name: nameController.text,
         category: contentDetailsModel.category,
-        type: contentDetailsModel.type,
+        // type: contentDetailsModel.type,
         level: contentDetailsModel.level,
         targetLanguage: contentDetailsModel.targetLanguage,
         status: contentDetailsModel.status,
@@ -182,12 +182,12 @@ class ContentEditController extends GetxController {
     isLoading.value = false;
 
     if (contentEditModel.isSuccess) {
-      await showSimpleMessage("Edit 되었습니다");
+      await showSimpleMessage("수정 되었습니다");
 
       Get.offAllNamed(AppRoutes.contentDetails,
           arguments: {RouteArguments.id: id});
     } else {
-      showSimpleMessage("Edit에 실패 하였습니다");
+      showSimpleMessage("수정에 실패 하였습니다");
     }
   }
 

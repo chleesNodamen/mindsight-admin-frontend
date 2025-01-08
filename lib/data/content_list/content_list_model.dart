@@ -2,7 +2,7 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 
 class ContentListModel extends BaseModel {
   List<String>? id;
-  List<String>? type;
+  List<String>? category;
   List<String>? name;
   List<String>? master;
   List<int>? seen;
@@ -13,7 +13,7 @@ class ContentListModel extends BaseModel {
 
   ContentListModel({
     this.id,
-    this.type,
+    this.category,
     this.name,
     this.master,
     this.seen,
@@ -28,10 +28,10 @@ class ContentListModel extends BaseModel {
         id: json["id"] == null
             ? []
             : List<String>.from(json["id"]!.map((x) => x)),
-        type: json["type"] == null
+        category: json["category"] == null
             ? []
             : List<String>.from(
-                json["type"]!.map((x) => x == null || x == "" ? "-" : x)),
+                json["category"]!.map((x) => x == null || x == "" ? "-" : x)),
         name: json["name"] == null
             ? []
             : List<String>.from(json["name"]!.map((x) => x)),

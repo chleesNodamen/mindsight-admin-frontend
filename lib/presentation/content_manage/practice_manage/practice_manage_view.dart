@@ -134,6 +134,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
             SizedBox(
               width: double.infinity,
               child: DataTable(
+                showCheckboxColumn: false,
                 columnSpacing: 0,
                 checkboxHorizontalMargin: 0,
                 dataRowMaxHeight: 80,

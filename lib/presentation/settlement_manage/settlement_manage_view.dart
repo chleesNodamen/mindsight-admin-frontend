@@ -29,7 +29,7 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "Streaming settlement".tr,
+                                    name: "Streaming Details".tr,
                                     searchShow: false,
                                     viewCount: false,
                                     searchText: "Search master name".tr,
@@ -76,35 +76,14 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
           spacing: 15,
           runSpacing: 15,
           children: [
-            InkWell(
-                onTap: _buildTotalSalesDetailModal,
-                child: _buildSummaryCard(
-                    "${"Total Monthly Sales".tr} >",
-                    CustomTextStyles.labelLargeGray,
-                    controller.settlementSummaryModel.totalSales!)),
             _buildSummaryCard(
-                "Monthly PG fee".tr, CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard(
-                "Monthly store fee".tr, CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard(
-                "Monthly other fee".tr, CustomTextStyles.labelLargeRed, 0),
-            InkWell(
-              onTap: _buildTotalSalesDetailModal,
-              child: _buildSummaryCard(
-                  "${"Total Monthly Net Sales".tr} >",
-                  CustomTextStyles.labelLargeGray,
-                  controller.settlementSummaryModel.netSales!),
-            ),
+                "Total Monthly Sales".tr,
+                CustomTextStyles.labelLargeGray,
+                controller.settlementSummaryModel.totalSales!),
             _buildSummaryCard(
                 "Total Monthly Play Count".tr,
                 CustomTextStyles.labelLargeGray,
                 controller.settlementSummaryModel.playCount!.toDouble()),
-            _buildSummaryCard(
-                "Total Monthly Payout".tr, CustomTextStyles.labelLargeRed, 0),
-            _buildSummaryCard(
-                "Monthly Operating Profit".tr,
-                CustomTextStyles.labelLargeGray,
-                controller.settlementSummaryModel.finalSales!),
           ],
         ),
       ],
@@ -149,141 +128,6 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // SizedBox(
-          //   width: double.infinity,
-          //   child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             SizedBox(
-          //               width: 120,
-          //               child: Align(
-          //                 alignment: Alignment.centerLeft,
-          //                 child: ListTile(
-          //                     contentPadding: EdgeInsets.zero,
-          //                     title: Row(
-          //                       children: <Widget>[
-          //                         Radio<Type>(
-          //                           value: Type.all,
-          //                           groupValue: controller.type.value,
-          //                           onChanged: (Type? value) {
-          //                             controller.changeType(value);
-          //                           },
-          //                         ),
-          //                         Text(controller.typeLabels[0].tr,
-          //                             style: CustomTextStyles.bodyMediumBlack
-          //                                 .copyWith(
-          //                                     fontWeight: FontWeight.w500)),
-          //                       ],
-          //                     )),
-          //               ),
-          //             ),
-          //             SizedBox(
-          //               width: 120,
-          //               child: ListTile(
-          //                   contentPadding: EdgeInsets.zero,
-          //                   title: Row(
-          //                     children: <Widget>[
-          //                       Radio<Type>(
-          //                         value: Type.notIssued,
-          //                         groupValue: controller.type.value,
-          //                         onChanged: (Type? value) {
-          //                           controller.changeType(value);
-          //                         },
-          //                       ),
-          //                       Text(controller.typeLabels[1].tr,
-          //                           style: CustomTextStyles.bodyMediumBlack
-          //                               .copyWith(fontWeight: FontWeight.w500)),
-          //                     ],
-          //                   )),
-          //             ),
-          //             SizedBox(
-          //               width: 120,
-          //               child: ListTile(
-          //                   contentPadding: EdgeInsets.zero,
-          //                   title: Row(
-          //                     children: <Widget>[
-          //                       Radio<Type>(
-          //                         value: Type.notSettled,
-          //                         groupValue: controller.type.value,
-          //                         onChanged: (Type? value) {
-          //                           controller.changeType(value);
-          //                         },
-          //                       ),
-          //                       Text(controller.typeLabels[2].tr,
-          //                           style: CustomTextStyles.bodyMediumBlack
-          //                               .copyWith(fontWeight: FontWeight.w500)),
-          //                     ],
-          //                   )),
-          //             ),
-          //             CustomElevatedButton(
-          //               text: "Last month".tr,
-          //               buttonTextStyle: controller.selectedMonthType.value ==
-          //                       MonthType.lastMonth
-          //                   ? CustomTextStyles.bodyMediumWhiteBold
-          //                   : CustomTextStyles.bodyMediumSkyBlueBold,
-          //               buttonStyle: controller.selectedMonthType.value ==
-          //                       MonthType.lastMonth
-          //                   ? CustomButtonStyles.fillPrimary
-          //                   : CustomButtonStyles.fillPrimaryTransparent,
-          //               margin: const EdgeInsets.only(left: 30),
-          //               // width: 94,
-          //               height: 44,
-          //               onPressed: () async =>
-          //                   await controller.changeMonth(MonthType.lastMonth),
-          //             ),
-          //             CustomElevatedButton(
-          //               text: "This month".tr,
-          //               buttonTextStyle: controller.selectedMonthType.value ==
-          //                       MonthType.thisMonth
-          //                   ? CustomTextStyles.bodyMediumWhiteBold
-          //                   : CustomTextStyles.bodyMediumSkyBlueBold,
-          //               buttonStyle: controller.selectedMonthType.value ==
-          //                       MonthType.thisMonth
-          //                   ? CustomButtonStyles.fillPrimary
-          //                   : CustomButtonStyles.fillPrimaryTransparent,
-          //               margin: const EdgeInsets.only(left: 10),
-          //               // width: 94,
-          //               height: 44,
-          //               onPressed: () async =>
-          //                   await controller.changeMonth(MonthType.thisMonth),
-          //             ),
-          //             CustomElevatedButton(
-          //               text: "${"Select month".tr}   ",
-          //               decoration: AppDecoration.outlineGray,
-          //               rightIcon: CustomImageView(
-          //                 imagePath: IconConstant.aabbcc,
-          //                 color: controller.selectedMonthType.value ==
-          //                         MonthType.selectedMonth
-          //                     ? appTheme.white
-          //                     : appTheme.black,
-          //               ),
-          //               buttonTextStyle: controller.selectedMonthType.value ==
-          //                       MonthType.selectedMonth
-          //                   ? CustomTextStyles.bodyMediumWhiteBold
-          //                   : CustomTextStyles.bodyMediumGray,
-          //               buttonStyle: controller.selectedMonthType.value ==
-          //                       MonthType.selectedMonth
-          //                   ? CustomButtonStyles.fillPrimary
-          //                   : CustomButtonStyles.fillTransparent,
-          //               margin: const EdgeInsets.only(left: 10),
-          //               // width: 114,
-          //               height: 44,
-          //               onPressed: () {
-          //                 // 커스텀 Select month 다이얼로그 열기
-          //                 showDialog(
-          //                   context: context,
-          //                   builder: (context) =>
-          //                       const CustomMonthPickerDialog(),
-          //                 );
-          //               },
-          //             ),
-          //           ],
-          //         ),
-          //       ]),
-          // ),
           SizedBox(
             width: double.infinity,
             child: Column(
@@ -292,81 +136,6 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
               children: [
                 Row(
                   children: [
-                    SizedBox(
-                      width: 120,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Row(
-                            children: <Widget>[
-                              Radio<Type>(
-                                value: Type.all,
-                                groupValue: controller.type.value,
-                                onChanged: (Type? value) {
-                                  controller.changeType(value);
-                                },
-                              ),
-                              Text(
-                                controller.typeLabels[0].tr,
-                                style:
-                                    CustomTextStyles.bodyMediumBlack.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    SizedBox(
-                      width: 120,
-                      child: ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Row(
-                          children: <Widget>[
-                            Radio<Type>(
-                              value: Type.notIssued,
-                              groupValue: controller.type.value,
-                              onChanged: (Type? value) {
-                                controller.changeType(value);
-                              },
-                            ),
-                            Text(
-                              controller.typeLabels[1].tr,
-                              style: CustomTextStyles.bodyMediumBlack.copyWith(
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    SizedBox(
-                      width: 120,
-                      child: ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Row(
-                          children: <Widget>[
-                            Radio<Type>(
-                              value: Type.notSettled,
-                              groupValue: controller.type.value,
-                              onChanged: (Type? value) {
-                                controller.changeType(value);
-                              },
-                            ),
-                            Text(
-                              controller.typeLabels[2].tr,
-                              style: CustomTextStyles.bodyMediumBlack.copyWith(
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                     CustomElevatedButton(
                       text: "Last month".tr,
                       buttonTextStyle: controller.selectedMonthType.value ==
@@ -377,7 +146,6 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                               MonthType.lastMonth
                           ? CustomButtonStyles.fillPrimary
                           : CustomButtonStyles.fillPrimaryTransparent,
-                      margin: const EdgeInsets.only(left: 30),
                       height: 44,
                       onPressed: () async =>
                           await controller.changeMonth(MonthType.lastMonth),
@@ -417,11 +185,23 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                           : CustomButtonStyles.fillTransparent,
                       margin: const EdgeInsets.only(left: 10),
                       height: 44,
-                      onPressed: () {
-                        showDialog(
+                      // onPressed: () {
+                      //   showDialog(
+                      //     context: context,
+                      //     builder: (context) => const CustomMonthPickerDialog(),
+                      //   );
+                      // },
+                      onPressed: () async {
+                        final result = await showDialog<Map<String, int>>(
                           context: context,
                           builder: (context) => const CustomMonthPickerDialog(),
                         );
+
+                        if (result != null) {
+                          controller.changeMonth(MonthType.selectedMonth,
+                              year: result['year']!,
+                              monthNumber: result['monthNumber']!);
+                        }
                       },
                     ),
                   ],
@@ -450,111 +230,60 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
             SizedBox(
               width: double.infinity,
               child: DataTable(
-                columnSpacing: 20,
+                columnSpacing: 0,
                 checkboxHorizontalMargin: 0,
-                dataRowMaxHeight: 110,
+                dataRowMaxHeight: 80,
                 border: TableBorder(
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
-                  // DataColumn(
-                  //     label:
-                  //         Text("집계Period", style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "Master name".tr,
+                    "Content name".tr,
                     style: CustomTextStyles.labelLargeGray,
                   )),
                   DataColumn(
-                      label: Text("Profit margin".tr,
+                      label: Text("Share rate".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "Total play\ncount".tr,
+                    "Play count".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                   DataColumn(
-                      label: Text("Monthly View Rate".tr,
+                      label: Text("View rate per content".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text(
-                    "Net Settlement Amount\n(Including VAT)".tr,
-                    style: CustomTextStyles.labelLargeGray,
-                    textAlign: TextAlign.center,
-                  )),
-                  DataColumn(
-                      label: Text("Approval status".tr,
-                          style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text(
-                    "Master\nDetails".tr,
+                    "Settlement per content".tr,
                     style: CustomTextStyles.labelLargeGray,
                     textAlign: TextAlign.center,
                   )),
                 ],
-                rows: List.generate(controller.masterSettlementListModel.length,
+                rows: List.generate(
+                    controller.masterContentSettlementListModel.length,
                     (index) {
                   return DataRow(
                       selected: false,
                       onSelectChanged: (bool? value) {},
                       cells: [
-                        // DataCell(Text(
-                        //     controller.dateRange.replaceAll(" ~ ", "~\n"),
-                        //     style: CustomTextStyles.labelLargeBlack)),
                         DataCell(InkWell(
                           child: Text(
-                              controller.masterSettlementListModel.name![index],
+                              controller.masterContentSettlementListModel
+                                  .name![index],
                               style: CustomTextStyles.bodyLargeBlack.copyWith(
                                   decoration: TextDecoration.underline)),
                           onTap: () {},
                         )),
-                        DataCell(Text(
-                            "${controller.masterSettlementListModel.currentProfitRate![index]}%",
+                        DataCell(Text("35%",
                             style: CustomTextStyles.bodyLargeBlack)),
                         DataCell(Text(
-                            controller
-                                .masterSettlementListModel.playCount![index]
-                                .toString(),
+                            "${controller.masterContentSettlementListModel.playCount![index]}",
                             style: CustomTextStyles.bodyLargeBlack)),
-                        DataCell(Text(
-                            "${controller.getViewRate(controller.masterSettlementListModel.playCount![index], controller.settlementSummaryModel.playCount!)}%",
+                        DataCell(Text("${controller.getViewRate(index)}%",
                             style: CustomTextStyles.bodyLargeBlack)),
-                        DataCell(Text(
-                            // "${(controller.settlementSummaryModel.finalSales! * (((controller.masterSettlementListModel.playCount![index] / controller.settlementSummaryModel.playCount!) * 100) / 100) * (controller.masterSettlementListModel.currentProfitRate![index] / 100))}",
-                            controller.getSettlementAmount(
-                                controller.masterSettlementListModel
-                                    .playCount![index],
-                                controller.settlementSummaryModel.playCount!,
-                                controller.masterSettlementListModel
-                                    .currentProfitRate![index],
-                                controller.settlementSummaryModel.finalSales!),
+                        DataCell(Text(controller.getSettlementAmount(index),
                             style: CustomTextStyles.bodyLargeBlack)),
-                        DataCell(Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Unissued".tr,
-                                style: CustomTextStyles.bodyLargeBlack),
-                            CustomElevatedButton(
-                              text: "Issued".tr,
-                              buttonTextStyle:
-                                  CustomTextStyles.bodyMediumWhiteBold,
-                              buttonStyle: CustomButtonStyles.fillPrimary,
-                              // width: 60,
-                              height: 30,
-                              margin: const EdgeInsets.only(top: 10),
-                              // onPressed: _buildTotalSalesDetailModal,
-                            )
-                          ],
-                        )),
-                        DataCell(CustomElevatedButton(
-                          text: "View".tr,
-                          buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-                          buttonStyle: CustomButtonStyles.fillBlack,
-                          // width: 60,
-                          height: 30,
-                          onPressed: () =>
-                              _buildMasterContentSettlementListModal(index),
-                        )),
                       ]);
                 }).toList(),
               ),
@@ -576,20 +305,13 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                         height: 44,
                         // onPressed: controller.onStatusChangeForAll,
                       ),
-                      CustomElevatedButton(
-                        text: "Select aggregation".tr,
-                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
-                        buttonStyle: CustomButtonStyles.fillPrimary,
-                        // width: 107,
-                        height: 44,
-                        // onPressed: controller.onStatusChangeForAll,
-                        margin: const EdgeInsets.only(left: 16),
-                      ),
                     ],
                   ),
                   Pages(
-                      pages: (controller.masterSettlementListModel.total! / 20)
-                          .ceil(),
+                      pages:
+                          (controller.masterContentSettlementListModel.total! /
+                                  20)
+                              .ceil(),
                       activePage: controller.activePage.value,
                       onTap: (int pageNum) {
                         // controller.loadPage(pageNum);
@@ -648,250 +370,6 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
               const SizedBox(
                 height: 32,
               ),
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: appTheme.white,
-              //     borderRadius: const BorderRadius.all(Radius.circular(12)),
-              //   ),
-              //   height: 60,
-              //   width: double.infinity,
-              //   padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              //   margin: const EdgeInsets.only(bottom: 10),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     children: [
-              //       SizedBox(
-              //         width: double.infinity,
-              //         child: Column(
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             mainAxisAlignment: MainAxisAlignment.start,
-              //             children: [
-              //               Row(
-              //                 children: [
-              //                   SizedBox(
-              //                     width: 140,
-              //                     child: Align(
-              //                       alignment: Alignment.centerLeft,
-              //                       child: ListTile(
-              //                           contentPadding: const EdgeInsets.only(
-              //                               left: 0.0, right: 0.0),
-              //                           title: Row(
-              //                             children: <Widget>[
-              //                               Radio<Type>(
-              //                                 value: Type.all,
-              //                                 groupValue: controller.type.value,
-              //                                 onChanged: (Type? value) {
-              //                                   controller.changeType(value);
-              //                                 },
-              //                               ),
-              //                               Text("All".tr,
-              //                                   style: CustomTextStyles
-              //                                       .bodyMediumBlack
-              //                                       .copyWith(
-              //                                           fontWeight:
-              //                                               FontWeight.w500)),
-              //                             ],
-              //                           )),
-              //                     ),
-              //                   ),
-              //                   SizedBox(
-              //                     width: 140,
-              //                     child: ListTile(
-              //                         contentPadding: const EdgeInsets.only(
-              //                             left: 0.0, right: 0.0),
-              //                         title: Row(
-              //                           children: <Widget>[
-              //                             Radio<Type>(
-              //                               value: Type.notIssued,
-              //                               groupValue: controller.type.value,
-              //                               onChanged: (Type? value) {
-              //                                 controller.changeType(value);
-              //                               },
-              //                             ),
-              //                             Text("PG",
-              //                                 style: CustomTextStyles
-              //                                     .bodyMediumBlack
-              //                                     .copyWith(
-              //                                         fontWeight:
-              //                                             FontWeight.w500)),
-              //                           ],
-              //                         )),
-              //                   ),
-              //                   SizedBox(
-              //                     width: 140,
-              //                     child: ListTile(
-              //                         contentPadding: const EdgeInsets.only(
-              //                             left: 0.0, right: 0.0),
-              //                         title: Row(
-              //                           children: <Widget>[
-              //                             Radio<Type>(
-              //                               value: Type.notSettled,
-              //                               groupValue: controller.type.value,
-              //                               onChanged: (Type? value) {
-              //                                 controller.changeType(value);
-              //                               },
-              //                             ),
-              //                             Text("App Payment".tr,
-              //                                 style: CustomTextStyles
-              //                                     .bodyMediumBlack
-              //                                     .copyWith(
-              //                                         fontWeight:
-              //                                             FontWeight.w500)),
-              //                           ],
-              //                         )),
-              //                   ),
-              //                   SizedBox(
-              //                     width: 140,
-              //                     child: ListTile(
-              //                         contentPadding: const EdgeInsets.only(
-              //                             left: 0.0, right: 0.0),
-              //                         title: Row(
-              //                           children: <Widget>[
-              //                             Radio<Type>(
-              //                               value: Type.notSettled,
-              //                               groupValue: controller.type.value,
-              //                               onChanged: (Type? value) {
-              //                                 controller.changeType(value);
-              //                               },
-              //                             ),
-              //                             Text("Others".tr,
-              //                                 style: CustomTextStyles
-              //                                     .bodyMediumBlack
-              //                                     .copyWith(
-              //                                         fontWeight:
-              //                                             FontWeight.w500)),
-              //                           ],
-              //                         )),
-              //                   ),
-              //                 ],
-              //               ),
-              //             ]),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: appTheme.white,
-              //     borderRadius: const BorderRadius.all(Radius.circular(12)),
-              //   ),
-              //   height: 60,
-              //   width: double.infinity,
-              //   padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              //   margin: const EdgeInsets.only(bottom: 10),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     children: [
-              //       SizedBox(
-              //         width: double.infinity,
-              //         child: Row(
-              //           children: [
-              //             Flexible(
-              //               child: ListTile(
-              //                 contentPadding:
-              //                     const EdgeInsets.symmetric(horizontal: 0.0),
-              //                 title: Row(
-              //                   children: <Widget>[
-              //                     Radio<Type>(
-              //                       value: Type.all,
-              //                       groupValue: controller.type.value,
-              //                       onChanged: (Type? value) {
-              //                         controller.changeType(value);
-              //                       },
-              //                     ),
-              //                     Text(
-              //                       "All".tr,
-              //                       style: CustomTextStyles.bodyMediumBlack
-              //                           .copyWith(
-              //                         fontWeight: FontWeight.w500,
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ),
-              //             ),
-              //             Flexible(
-              //               child: ListTile(
-              //                 contentPadding:
-              //                     const EdgeInsets.symmetric(horizontal: 0.0),
-              //                 title: Row(
-              //                   children: <Widget>[
-              //                     Radio<Type>(
-              //                       value: Type.notIssued,
-              //                       groupValue: controller.type.value,
-              //                       onChanged: (Type? value) {
-              //                         controller.changeType(value);
-              //                       },
-              //                     ),
-              //                     Text(
-              //                       "PG".tr,
-              //                       style: CustomTextStyles.bodyMediumBlack
-              //                           .copyWith(
-              //                         fontWeight: FontWeight.w500,
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ),
-              //             ),
-              //             Flexible(
-              //               child: ListTile(
-              //                 contentPadding:
-              //                     const EdgeInsets.symmetric(horizontal: 0.0),
-              //                 title: Row(
-              //                   children: <Widget>[
-              //                     Radio<Type>(
-              //                       value: Type.notSettled,
-              //                       groupValue: controller.type.value,
-              //                       onChanged: (Type? value) {
-              //                         controller.changeType(value);
-              //                       },
-              //                     ),
-              //                     Text(
-              //                       "App Payment".tr,
-              //                       style: CustomTextStyles.bodyMediumBlack
-              //                           .copyWith(
-              //                         fontWeight: FontWeight.w500,
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ),
-              //             ),
-              //             Flexible(
-              //               child: ListTile(
-              //                 contentPadding:
-              //                     const EdgeInsets.symmetric(horizontal: 0.0),
-              //                 title: Row(
-              //                   children: <Widget>[
-              //                     Radio<Type>(
-              //                       value: Type.notSettled, // 수정된 타입 값
-              //                       groupValue: controller.type.value,
-              //                       onChanged: (Type? value) {
-              //                         controller.changeType(value);
-              //                       },
-              //                     ),
-              //                     Text(
-              //                       "Others".tr,
-              //                       style: CustomTextStyles.bodyMediumBlack
-              //                           .copyWith(
-              //                         fontWeight: FontWeight.w500,
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
               Container(
                 decoration: BoxDecoration(
                   color: appTheme.white,
@@ -1171,12 +649,13 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
                             ),
                             Pages(
                                 pages: (controller
-                                            .masterSettlementListModel.total! /
+                                            .masterContentSettlementListModel
+                                            .total! /
                                         20)
                                     .ceil(),
                                 activePage: controller.activePage.value,
                                 onTap: (int pageNum) {
-                                  // controller.loadPage(pageNum);
+                                  controller.loadPage(pageNum);
                                 }),
                           ],
                         ),
@@ -1190,229 +669,227 @@ class SettlementManageView extends GetWidget<SettlementManageController> {
         ));
   }
 
-  Future<dynamic> _buildMasterContentSettlementListModal(int index) async {
-    await controller.reqMasterContentSettlementList(index, 1);
+  // Future<dynamic> _buildMasterContentSettlementListModal(int index) async {
+  //   await controller.loadPage(1);
 
-    return Get.defaultDialog(
-        title: '',
-        titlePadding: EdgeInsets.zero,
-        backgroundColor: appTheme.background,
-        radius: 12,
-        content: Obx(() => Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadiusStyle.roundedBorder12,
-                  color: appTheme.background),
-              padding: const EdgeInsets.only(left: 32, right: 32, bottom: 15),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            controller.masterSettlementListModel.name![index],
-                            style: CustomTextStyles.headlineLargeBlack.copyWith(
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Settlement by play count".tr,
-                            style: CustomTextStyles.titleLargeBlack,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "${controller.selectedMonth} ${"Month".tr}",
-                                style: CustomTextStyles.labelLargeBlack,
-                              ),
-                              Text(
-                                " (${controller.dateRange})",
-                                style: CustomTextStyles.labelLargeGray,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      CustomImageView(
-                        imagePath: IconConstant.close,
-                        onTap: () => Get.back(),
-                        margin: const EdgeInsets.only(left: 20),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  SingleChildScrollView(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: appTheme.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12)),
-                      ),
-                      // height: 1016,
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(32.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: DataTable(
-                              columnSpacing: 30,
-                              checkboxHorizontalMargin: 0,
-                              dataRowMaxHeight: 80,
-                              border: TableBorder(
-                                  horizontalInside:
-                                      BorderSide(color: appTheme.grayScale2)),
-                              columns: [
-                                DataColumn(
-                                    label: Text(
-                                  "Content name".tr,
-                                  style: CustomTextStyles.labelLargeGray,
-                                  textAlign: TextAlign.center,
-                                )),
-                                DataColumn(
-                                    label: Text(
-                                  "Share rate".tr,
-                                  style: CustomTextStyles.labelLargeRed,
-                                  textAlign: TextAlign.center,
-                                )),
-                                DataColumn(
-                                    label: Text("Play count".tr,
-                                        style:
-                                            CustomTextStyles.labelLargeGray)),
-                                DataColumn(
-                                    label: Text(
-                                  "View rate per content".tr,
-                                  style: CustomTextStyles.labelLargeGray,
-                                  textAlign: TextAlign.center,
-                                )),
-                                DataColumn(
-                                    label: Text("Settlement per content".tr,
-                                        style:
-                                            CustomTextStyles.labelLargeGray)),
-                              ],
-                              rows: List.generate(
-                                  controller.masterContentSettlementListModel
-                                      .value.length, (index2) {
-                                return DataRow(
-                                    selected: false,
-                                    onSelectChanged: (bool? value) {},
-                                    cells: [
-                                      DataCell(Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 24.0),
-                                        child: InkWell(
-                                          child: Text(
-                                              controller
-                                                  .masterContentSettlementListModel
-                                                  .value
-                                                  .name![index2],
-                                              style: CustomTextStyles
-                                                  .bodyLargeBlack),
-                                          onTap: () {},
-                                        ),
-                                      )),
-                                      DataCell(Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 24.0),
-                                        child: Text(
-                                            "${controller.masterSettlementListModel.currentProfitRate![index]}%",
-                                            style: CustomTextStyles
-                                                .bodyLargeBlack),
-                                      )),
-                                      DataCell(Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 24.0),
-                                        child: Text(
-                                            controller
-                                                .masterContentSettlementListModel
-                                                .value
-                                                .playCount![index2]
-                                                .toString(),
-                                            style: CustomTextStyles
-                                                .bodyLargeBlack),
-                                      )),
-                                      DataCell(Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 24.0),
-                                        child: Text(
-                                            "${controller.getViewRate(controller.masterContentSettlementListModel.value.playCount![index2], controller.settlementSummaryModel.playCount!)}%",
-                                            style: CustomTextStyles
-                                                .bodyLargeBlack),
-                                      )),
-                                      DataCell(Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 24.0),
-                                        child: Text(
-                                            controller.getSettlementAmount(
-                                                controller
-                                                    .masterContentSettlementListModel
-                                                    .value
-                                                    .playCount![index2],
-                                                controller
-                                                    .settlementSummaryModel
-                                                    .playCount!,
-                                                controller
-                                                    .masterSettlementListModel
-                                                    .currentProfitRate![index],
-                                                controller
-                                                    .settlementSummaryModel
-                                                    .finalSales!),
-                                            style: CustomTextStyles
-                                                .bodyLargeBlack),
-                                      )),
-                                    ]);
-                              }).toList(),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 32,
-                          ),
-                          Stack(
-                            alignment: Alignment.centerLeft,
-                            children: [
-                              CustomElevatedButton(
-                                text: "Download Excel".tr,
-                                buttonTextStyle:
-                                    CustomTextStyles.bodyMediumSkyBlueBold,
-                                buttonStyle:
-                                    CustomButtonStyles.fillPrimaryTransparent,
-                                height: 44,
-                              ),
-                              Pages(
-                                  pages: (controller
-                                              .masterContentSettlementListModel
-                                              .value
-                                              .total! /
-                                          4)
-                                      .ceil(),
-                                  activePage: controller
-                                      .activePageMasterContentSettlementList
-                                      .value,
-                                  onTap: (int pageNum) async {
-                                    await controller
-                                        .reqMasterContentSettlementList(
-                                            index, pageNum);
-                                  }),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )));
-  }
+  //   return Get.defaultDialog(
+  //       title: '',
+  //       titlePadding: EdgeInsets.zero,
+  //       backgroundColor: appTheme.background,
+  //       radius: 12,
+  //       content: Obx(() => Container(
+  //             decoration: BoxDecoration(
+  //                 borderRadius: BorderRadiusStyle.roundedBorder12,
+  //                 color: appTheme.background),
+  //             padding: const EdgeInsets.only(left: 32, right: 32, bottom: 15),
+  //             child: Column(
+  //               children: [
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         Text(
+  //                           controller.masterSettlementListModel.name![index],
+  //                           style: CustomTextStyles.headlineLargeBlack.copyWith(
+  //                             decoration: TextDecoration.underline,
+  //                           ),
+  //                         ),
+  //                         const SizedBox(
+  //                           height: 5,
+  //                         ),
+  //                         Text(
+  //                           "Settlement by play count".tr,
+  //                           style: CustomTextStyles.titleLargeBlack,
+  //                         ),
+  //                         const SizedBox(
+  //                           height: 10,
+  //                         ),
+  //                         Row(
+  //                           children: [
+  //                             Text(
+  //                               "${controller.selectedMonth} ${"Month".tr}",
+  //                               style: CustomTextStyles.labelLargeBlack,
+  //                             ),
+  //                             Text(
+  //                               " (${controller.dateRange})",
+  //                               style: CustomTextStyles.labelLargeGray,
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ],
+  //                     ),
+  //                     CustomImageView(
+  //                       imagePath: IconConstant.close,
+  //                       onTap: () => Get.back(),
+  //                       margin: const EdgeInsets.only(left: 20),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 32,
+  //                 ),
+  //                 SingleChildScrollView(
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       color: appTheme.white,
+  //                       borderRadius:
+  //                           const BorderRadius.all(Radius.circular(12)),
+  //                     ),
+  //                     // height: 1016,
+  //                     width: double.infinity,
+  //                     padding: const EdgeInsets.all(32.0),
+  //                     child: Column(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         SizedBox(
+  //                           width: double.infinity,
+  //                           child: DataTable(
+  //                             columnSpacing: 30,
+  //                             checkboxHorizontalMargin: 0,
+  //                             dataRowMaxHeight: 80,
+  //                             border: TableBorder(
+  //                                 horizontalInside:
+  //                                     BorderSide(color: appTheme.grayScale2)),
+  //                             columns: [
+  //                               DataColumn(
+  //                                   label: Text(
+  //                                 "Content name".tr,
+  //                                 style: CustomTextStyles.labelLargeGray,
+  //                                 textAlign: TextAlign.center,
+  //                               )),
+  //                               DataColumn(
+  //                                   label: Text(
+  //                                 "Share rate".tr,
+  //                                 style: CustomTextStyles.labelLargeRed,
+  //                                 textAlign: TextAlign.center,
+  //                               )),
+  //                               DataColumn(
+  //                                   label: Text("Play count".tr,
+  //                                       style:
+  //                                           CustomTextStyles.labelLargeGray)),
+  //                               DataColumn(
+  //                                   label: Text(
+  //                                 "View rate per content".tr,
+  //                                 style: CustomTextStyles.labelLargeGray,
+  //                                 textAlign: TextAlign.center,
+  //                               )),
+  //                               DataColumn(
+  //                                   label: Text("Settlement per content".tr,
+  //                                       style:
+  //                                           CustomTextStyles.labelLargeGray)),
+  //                             ],
+  //                             rows: List.generate(
+  //                                 controller.masterContentSettlementListModel
+  //                                     .value.length, (index2) {
+  //                               return DataRow(
+  //                                   selected: false,
+  //                                   onSelectChanged: (bool? value) {},
+  //                                   cells: [
+  //                                     DataCell(Padding(
+  //                                       padding: const EdgeInsets.symmetric(
+  //                                           vertical: 24.0),
+  //                                       child: InkWell(
+  //                                         child: Text(
+  //                                             controller
+  //                                                 .masterContentSettlementListModel
+  //                                                 .value
+  //                                                 .name![index2],
+  //                                             style: CustomTextStyles
+  //                                                 .bodyLargeBlack),
+  //                                         onTap: () {},
+  //                                       ),
+  //                                     )),
+  //                                     DataCell(Padding(
+  //                                       padding: const EdgeInsets.symmetric(
+  //                                           vertical: 24.0),
+  //                                       child: Text(
+  //                                           "${controller.masterSettlementListModel.currentProfitRate![index]}%",
+  //                                           style: CustomTextStyles
+  //                                               .bodyLargeBlack),
+  //                                     )),
+  //                                     DataCell(Padding(
+  //                                       padding: const EdgeInsets.symmetric(
+  //                                           vertical: 24.0),
+  //                                       child: Text(
+  //                                           controller
+  //                                               .masterContentSettlementListModel
+  //                                               .value
+  //                                               .playCount![index2]
+  //                                               .toString(),
+  //                                           style: CustomTextStyles
+  //                                               .bodyLargeBlack),
+  //                                     )),
+  //                                     DataCell(Padding(
+  //                                       padding: const EdgeInsets.symmetric(
+  //                                           vertical: 24.0),
+  //                                       child: Text(
+  //                                           "${controller.getViewRate(controller.masterContentSettlementListModel.value.playCount![index2], controller.settlementSummaryModel.playCount!)}%",
+  //                                           style: CustomTextStyles
+  //                                               .bodyLargeBlack),
+  //                                     )),
+  //                                     DataCell(Padding(
+  //                                       padding: const EdgeInsets.symmetric(
+  //                                           vertical: 24.0),
+  //                                       child: Text(
+  //                                           controller.getSettlementAmount(
+  //                                               controller
+  //                                                   .masterContentSettlementListModel
+  //                                                   .value
+  //                                                   .playCount![index2],
+  //                                               controller
+  //                                                   .settlementSummaryModel
+  //                                                   .playCount!,
+  //                                               controller
+  //                                                   .masterSettlementListModel
+  //                                                   .currentProfitRate![index],
+  //                                               controller
+  //                                                   .settlementSummaryModel
+  //                                                   .finalSales!),
+  //                                           style: CustomTextStyles
+  //                                               .bodyLargeBlack),
+  //                                     )),
+  //                                   ]);
+  //                             }).toList(),
+  //                           ),
+  //                         ),
+  //                         const SizedBox(
+  //                           height: 32,
+  //                         ),
+  //                         Stack(
+  //                           alignment: Alignment.centerLeft,
+  //                           children: [
+  //                             CustomElevatedButton(
+  //                               text: "Download Excel".tr,
+  //                               buttonTextStyle:
+  //                                   CustomTextStyles.bodyMediumSkyBlueBold,
+  //                               buttonStyle:
+  //                                   CustomButtonStyles.fillPrimaryTransparent,
+  //                               height: 44,
+  //                             ),
+  //                             Pages(
+  //                                 pages: (controller
+  //                                             .masterContentSettlementListModel
+  //                                             .value
+  //                                             .total! /
+  //                                         4)
+  //                                     .ceil(),
+  //                                 activePage: controller
+  //                                     .activePageMasterContentSettlementList
+  //                                     .value,
+  //                                 onTap: (int pageNum) async {
+  //                                   await controller.loadPage(pageNum);
+  //                                 }),
+  //                           ],
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 )
+  //               ],
+  //             ),
+  //           )));
+  // }
 }

@@ -123,6 +123,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
               onFilePicked: (pickedFile) {
                 controller.onPickPhoto(pickedFile);
               },
+              isCircular: true,
             ),
 
             const SizedBox(width: 24),
