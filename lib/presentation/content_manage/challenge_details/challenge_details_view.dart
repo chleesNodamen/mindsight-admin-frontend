@@ -106,7 +106,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
               //     const SizedBox(
               //       height: 16,
               //     ),
-              //     Text("Like count", style: CustomTextStyles.labelLargeGray)
+              //     Text("Likes", style: CustomTextStyles.labelLargeGray)
               //   ],
               // ),
               Column(

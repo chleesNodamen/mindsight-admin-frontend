@@ -42,7 +42,7 @@ String helpPageDisplayName = "Help";
 String noticesPageDisplayName = "Notice";
 String inquiriesPageDisplayName = "1:1 Inquiries";
 String faqPageDisplayName = "FAQ";
-String masterFreeBoardPageDisplayName = "Master Free Board";
+String masterFreeBoardPageDisplayName = "Free Board";
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});

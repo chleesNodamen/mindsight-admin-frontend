@@ -57,10 +57,12 @@ class SideMenuController extends GetxController {
           AppRoutes.masterSettlementManage, () {}),
     ],
     helpPageDisplayName: [
-      SubMenuItem(noticesPageDisplayName, AppRoutes.dashboard, () {}),
-      SubMenuItem(inquiriesPageDisplayName, AppRoutes.dashboard, () {}),
-      SubMenuItem(faqPageDisplayName, AppRoutes.dashboard, () {}),
-      SubMenuItem(masterFreeBoardPageDisplayName, AppRoutes.dashboard, () {}),
+      SubMenuItem(noticesPageDisplayName, AppRoutes.noticeBoardManage, () {}),
+      SubMenuItem(
+          inquiriesPageDisplayName, AppRoutes.inquiryBoardManage, () {}),
+      SubMenuItem(
+          masterFreeBoardPageDisplayName, AppRoutes.freeBoardManage, () {}),
+      SubMenuItem(faqPageDisplayName, AppRoutes.faqBoardManage, () {}),
     ],
   };
 
@@ -72,6 +74,64 @@ class SideMenuController extends GetxController {
 
   // sideMenuItemRoutes 설정 메서드
   void setSideMenuItemRoutes() {
+    subMenuItems = {
+      memberManagePageDisplayName: [
+        SubMenuItem(
+            memberManagePageSubMenuDisplayName, AppRoutes.memberManage, () {}),
+        SubMenuItem(inactiveMemberManagePageDisplayName,
+            AppRoutes.inactiveMemberManage, () {}),
+      ],
+      masterManagePageDisplayName: [
+        SubMenuItem(
+            masterManagePageSubMenuDisplayName, AppRoutes.masterManage, () {}),
+        SubMenuItem(inactiveMasterManagePageDisplayName,
+            AppRoutes.inactiveMasterManage, () {}),
+      ],
+      companyManagePageDisplayName: [
+        SubMenuItem(companyManagePageSubMenuDisplayName,
+            AppRoutes.companyManage, () {}),
+        SubMenuItem(inactiveCompanyManagePageDisplayName,
+            AppRoutes.inactiveCompanyManage, () {}),
+      ],
+      contentManagePageDisplayName: [
+        SubMenuItem(
+            contentManageContentDisplayName, AppRoutes.contentManage, () {}),
+        SubMenuItem(
+            contentPracticeDisplayName, AppRoutes.contentPracticeManage, () {}),
+        SubMenuItem(contentChallengeDisplayName,
+            AppRoutes.contentChallengeManage, () {}),
+      ],
+      adminSettingsPageDisplayName: Account.isAdmin
+          ? [
+              SubMenuItem(myAccountManagePageDisplayName,
+                  AppRoutes.masterDetails, () {}),
+              SubMenuItem(
+                  etcSettingPageDisplayName, AppRoutes.etcAdminSetting, () {}),
+            ]
+          : [
+              SubMenuItem(myAccountManagePageDisplayName,
+                  AppRoutes.masterDetails, () {}),
+              SubMenuItem(myCompanyManagePageDisplayName,
+                  AppRoutes.companyManage, () {}),
+              SubMenuItem(
+                  etcSettingPageDisplayName, AppRoutes.etcAdminSetting, () {}),
+            ],
+      settlementManagePageDisplayName: [
+        SubMenuItem(settlementManagePageSubMenuDisplayName,
+            AppRoutes.settlementManage, () {}),
+        SubMenuItem(masterSettlementManagePageDisplayName,
+            AppRoutes.masterSettlementManage, () {}),
+      ],
+      helpPageDisplayName: [
+        SubMenuItem(noticesPageDisplayName, AppRoutes.noticeBoardManage, () {}),
+        SubMenuItem(
+            inquiriesPageDisplayName, AppRoutes.inquiryBoardManage, () {}),
+        SubMenuItem(
+            masterFreeBoardPageDisplayName, AppRoutes.freeBoardManage, () {}),
+        SubMenuItem(faqPageDisplayName, AppRoutes.faqBoardManage, () {}),
+      ],
+    };
+
     sideMenuItemRoutes.value = Account.isAdmin
         ? [
             MenuItem(dashboardPageDisplayName, AppRoutes.dashboard, () {}),
@@ -89,6 +149,7 @@ class SideMenuController extends GetxController {
                 AppRoutes.settlementManage, () {}),
             MenuItem(
                 adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
+            MenuItem(helpPageDisplayName, AppRoutes.noticeBoardManage, () {}),
           ]
         : [
             MenuItem(
@@ -97,7 +158,7 @@ class SideMenuController extends GetxController {
                 AppRoutes.settlementManage, () {}),
             MenuItem(
                 adminSettingsPageDisplayName, AppRoutes.masterDetails, () {}),
-            MenuItem(helpPageDisplayName, AppRoutes.dashboard, () {}),
+            MenuItem(helpPageDisplayName, AppRoutes.noticeBoardManage, () {}),
           ];
   }
 

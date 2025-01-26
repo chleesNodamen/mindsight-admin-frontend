@@ -74,7 +74,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("View count".tr, style: CustomTextStyles.labelLargeGray)
+                  Text("Views".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
               const SizedBox(width: 50),
@@ -87,7 +87,7 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("Like count".tr, style: CustomTextStyles.labelLargeGray)
+                  Text("Likes".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
             ],

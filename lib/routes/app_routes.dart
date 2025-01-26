@@ -16,18 +16,18 @@ import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_setti
 import 'package:mindsight_admin_page/presentation/authentication/auth_binding.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_details_binding.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_details_view.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_edit_binding.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_details/company_details_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_details/company_details_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_edit/company_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_edit/company_edit_view.dart';
 import 'package:mindsight_admin_page/presentation/company_manage/company_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/company_manage/company_manage_view.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_mass_register_binding.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_mass_register_view.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_register_binding.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/company_register_view.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/inactive_company_manage_binding.dart';
-import 'package:mindsight_admin_page/presentation/company_manage/inactive_company_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_mass_register/company_mass_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_mass_register/company_mass_register_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_register/company_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/company_register/company_register_view.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/inactive_company_manage/inactive_company_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/company_manage/inactive_company_manage/inactive_company_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_binding.dart';
@@ -54,6 +54,30 @@ import 'package:mindsight_admin_page/presentation/content_manage/practice_regist
 import 'package:mindsight_admin_page/presentation/content_manage/practice_register/practice_register_view.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_binding.dart';
 import 'package:mindsight_admin_page/presentation/dashboard/dashboard_view.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_detail/faq_detail_binding.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_detail/faq_detail_view.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_edit/faq_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_edit/faq_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_register/faq_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_register/faq_register_view.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_detail/free_board_detail_binding.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_detail/free_board_detail_view.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_edit/free_board_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_edit/free_board_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_register/free_board_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_register/free_board_register_view.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_detail/inquiry_board_detail_binding.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_detail/inquiry_board_detail_view.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_edit/inquiry_board_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_edit/inquiry_board_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_register/inquiry_board_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_register/inquiry_board_register_view.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/inactive_master_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/inactive_master_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_details_binding.dart';
@@ -78,10 +102,16 @@ import 'package:mindsight_admin_page/presentation/member_manage/member_mass_regi
 import 'package:mindsight_admin_page/presentation/member_manage/member_mass_register_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_register_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_register_view.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_detail/notice_detail_binding.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_detail/notice_detail_view.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_edit/notice_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_edit/notice_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_manage_binding.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_register/notice_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_register/notice_register_view.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/master_settlement_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/master_settlement_manage_view.dart';
-import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_binding_nouse.dart';
-import 'package:mindsight_admin_page/presentation/settlement_manage/revenue_share_manage_view_nouse.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_view.dart';
 
@@ -134,6 +164,26 @@ class AppRoutes {
   static const String subAdminDetails = '/sub_admin_details';
   static const String subAdminEdit = '/sub_admin_edit';
   static const String activityHistory = "/activity_history";
+
+  static const String freeBoardManage = "/free_board_manage";
+  static const String freeBoardDetail = "/free_board_detail";
+  static const String freeBoardEdit = "/free_board_edit";
+  static const String freeBoardRegister = "/free_board_register";
+
+  static const String noticeBoardManage = "/notice_board_manage";
+  static const String noticeBoardDetail = "/notice_board_detail";
+  static const String noticeBoardEdit = "/notice_board_edit";
+  static const String noticeBoardRegister = "/notice_board_register";
+
+  static const String faqBoardManage = "/faq_board_manage";
+  static const String faqBoardDetail = "/faq_board_detail";
+  static const String faqBoardEdit = "/faq_board_edit";
+  static const String faqBoardRegister = "/faq_board_register";
+
+  static const String inquiryBoardManage = "/inquiry_board_manage";
+  static const String inquiryBoardDetail = "/inquiry_board_detail";
+  static const String inquiryBoardEdit = "/inquiry_board_edit";
+  static const String inquiryBoardRegister = "/inquiry_board_register";
 
   static String? initialRoute = auth;
 
@@ -362,6 +412,90 @@ class AppRoutes {
       name: masterSettlementManage,
       page: () => const MasterSettlementManageView(),
       bindings: [MasterSettlementManageBinding()],
+    ),
+
+    GetPage(
+      name: freeBoardManage,
+      page: () => const FreeBoardManageView(),
+      bindings: [FreeBoardManageBinding()],
+    ),
+    GetPage(
+      name: freeBoardDetail,
+      page: () => const FreeBoardDetailView(),
+      bindings: [FreeBoardDetailBinding()],
+    ),
+    GetPage(
+      name: freeBoardEdit,
+      page: () => const FreeBoardEditView(),
+      bindings: [FreeBoardEditBinding()],
+    ),
+    GetPage(
+      name: freeBoardRegister,
+      page: () => const FreeBoardRegisterView(),
+      bindings: [FreeBoardRegisterBinding()],
+    ),
+
+    GetPage(
+      name: noticeBoardManage,
+      page: () => const NoticeBoardManageView(),
+      bindings: [NoticeBoardManageBinding()],
+    ),
+    GetPage(
+      name: noticeBoardDetail,
+      page: () => const NoticeBoardDetailView(),
+      bindings: [NoticeBoardDetailBinding()],
+    ),
+    GetPage(
+      name: noticeBoardEdit,
+      page: () => const NoticeBoardEditView(),
+      bindings: [NoticeBoardEditBinding()],
+    ),
+    GetPage(
+      name: noticeBoardRegister,
+      page: () => const NoticeBoardRegisterView(),
+      bindings: [NoticeBoardRegisterBinding()],
+    ),
+
+    GetPage(
+      name: faqBoardManage,
+      page: () => const FAQBoardManageView(),
+      bindings: [FAQBoardManageBinding()],
+    ),
+    GetPage(
+      name: faqBoardDetail,
+      page: () => const FAQBoardDetailView(),
+      bindings: [FAQBoardDetailBinding()],
+    ),
+    GetPage(
+      name: faqBoardEdit,
+      page: () => const FAQBoardEditView(),
+      bindings: [FAQBoardEditBinding()],
+    ),
+    GetPage(
+      name: faqBoardRegister,
+      page: () => const FAQBoardRegisterView(),
+      bindings: [FAQBoardRegisterBinding()],
+    ),
+
+    GetPage(
+      name: inquiryBoardManage,
+      page: () => const InquiryBoardManageView(),
+      bindings: [InquiryBoardManageBinding()],
+    ),
+    GetPage(
+      name: inquiryBoardDetail,
+      page: () => const InquiryBoardDetailView(),
+      bindings: [InquiryBoardDetailBinding()],
+    ),
+    GetPage(
+      name: inquiryBoardEdit,
+      page: () => const InquiryBoardEditView(),
+      bindings: [InquiryBoardEditBinding()],
+    ),
+    GetPage(
+      name: inquiryBoardRegister,
+      page: () => const InquiryBoardRegisterView(),
+      bindings: [InquiryBoardRegisterBinding()],
     ),
   ];
 }

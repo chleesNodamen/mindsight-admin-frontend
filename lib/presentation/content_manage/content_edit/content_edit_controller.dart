@@ -17,29 +17,6 @@ class ContentEditController extends GetxController {
 
   late ContentDetailsModel contentDetailsModel;
 
-  // final Map<ContentCategory, List<ContentType>> types = {
-  //   ContentCategory.body: [
-  //     ContentType.basicBody,
-  //     ContentType.intermediateBody,
-  //     ContentType.advanceBody
-  //   ],
-  //   ContentCategory.breath: [
-  //     ContentType.natureBreathing,
-  //     ContentType.guidedMeditation,
-  //   ],
-  //   ContentCategory.mindfulness: [
-  //     ContentType.mindfulArt,
-  //     ContentType.artWithMusic,
-  //     ContentType.nature,
-  //     ContentType.kAsmr
-  //   ],
-  //   ContentCategory.theory: [
-  //     ContentType.emotionManagement,
-  //     ContentType.philosophy,
-  //     ContentType.selfDevelopment
-  //   ]
-  // };
-
   final List<ContentLanguage> contentLanguage = [
     ContentLanguage.english,
     ContentLanguage.korean,
@@ -57,6 +34,16 @@ class ContentEditController extends GetxController {
   File? mediaFile;
 
   final transcodingUploader = TranscodingUploader();
+
+  @override
+  Future<void> onClose() async {
+    nameController.dispose();
+    tagController.dispose();
+    introController.dispose();
+    mediaController.dispose();
+    await transcodingUploader.dispose();
+    super.onClose();
+  }
 
   @override
   Future<void> onInit() async {
@@ -145,44 +132,58 @@ class ContentEditController extends GetxController {
     if (pickedFile != null) {
       mediaFile = pickedFile;
       contentDetailsModel.video = pickedFile.name;
+
+      transcodingUploader.transcoding(mediaFile!);
     }
   }
 
   Future<void> onSave() async {
+    String folder = BlobNameGenerator.generateFolderName();
+
+    if (mediaFile != null) {
+      if (!transcodingUploader.isTranscodingComplete) {
+        showSimpleMessage(
+            "Transcoding is still in progress. Please wait until it completes before saving."
+                .tr);
+        return;
+      }
+      contentDetailsModel.video = "$folder/1080p.m3u8";
+      contentDetailsModel.durationTime = transcodingUploader.durationTime;
+    }
+
     isLoading.value = true;
 
     if (thumbnailFile != null) {
       contentDetailsModel.thumbnail =
-          (await UploadRepository().uploadFile(thumbnailFile!)).url;
-    }
-
-    if (mediaFile != null) {
-      contentDetailsModel.video =
-          await transcodingUploader.uploadTranscoding(mediaFile!);
+          BlobNameGenerator.generateBlobName(thumbnailFile!);
     }
 
     BaseModel contentEditModel = await ContentEditRepository().put(
       id,
       ContentEditReqPut(
-        name: nameController.text,
-        category: contentDetailsModel.category,
-        // type: contentDetailsModel.type,
-        level: contentDetailsModel.level,
-        targetLanguage: contentDetailsModel.targetLanguage,
-        status: contentDetailsModel.status,
-        exposure: contentDetailsModel.exposure,
-        tags: contentDetailsModel.tags!,
-        intro: introController.text,
-        thumbnail: contentDetailsModel.thumbnail,
-        video: contentDetailsModel.video,
-        cc: contentDetailsModel.cc,
-      ),
+          name: nameController.text,
+          category: contentDetailsModel.category,
+          level: contentDetailsModel.level,
+          targetLanguage: contentDetailsModel.targetLanguage,
+          status: contentDetailsModel.status,
+          exposure: contentDetailsModel.exposure,
+          tags: contentDetailsModel.tags!,
+          intro: introController.text,
+          thumbnail: contentDetailsModel.thumbnail,
+          video: contentDetailsModel.video,
+          cc: contentDetailsModel.cc,
+          durationTime: contentDetailsModel.durationTime),
     );
 
     isLoading.value = false;
 
     if (contentEditModel.isSuccess) {
-      await showSimpleMessage("수정 되었습니다");
+      if (thumbnailFile != null) {
+        await UploadRepository().uploadFile(thumbnailFile!,
+            blobName: contentDetailsModel.thumbnail);
+      }
+
+      await transcodingUploader.upload(folder);
 
       Get.offAllNamed(AppRoutes.contentDetails,
           arguments: {RouteArguments.id: id});

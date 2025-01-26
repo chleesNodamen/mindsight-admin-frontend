@@ -117,8 +117,8 @@ final Map<String, String> koKR = {
   "Search title": "제목 검색",
   "Title": "제목",
   "Master": "마스터",
-  "View count": "조회수",
-  "Like count": "좋아요 수",
+  "Views": "조회수",
+  "Likes": "좋아요 수",
   "Exposure": "노출",
   "Exposure Status": "노출 상태",
   "Change status": "상태 변경",
@@ -297,6 +297,8 @@ final Map<String, String> koKR = {
   "Challenge, Content title": "Challenge, 콘텐츠 제목",
   "Master\nDetails": "마스터\n상세",
   "Transcoding Progress": "트랜스코딩 진행율",
+  "Upload Progress": "업로드 진행율",
+  "Transcoding Complete": "트랜스코딩 완료",
   "Modification successful": "수정 되었습니다",
   "Modification failed": "수정에 실패 하였습니다",
   "Using a photo of your face as a profile image whenever possible can provide more trust to members":
@@ -309,5 +311,9 @@ final Map<String, String> koKR = {
   "Notice": "공지사항",
   "1:1 Inquiries": "1:1 문의",
   "FAQ": "FAQ",
-  "Master Free Board": "마스터 자유게시판",
+  "Free Board": "자유게시판",
+  "Files are automatically optimized through transcoding during upload. You can save them once transcoding is complete.":
+      "파일 업로드 시 자동으로 트랜스코딩을 통해 최적화됩니다. 트랜스코딩이 완료되면 저장할 수 있습니다.",
+  "Transcoding is still in progress. Please wait until it completes before saving.":
+      "트랜스코딩이 아직 진행 중입니다. 완료될 때까지 기다린 후 저장해 주세요.",
 };

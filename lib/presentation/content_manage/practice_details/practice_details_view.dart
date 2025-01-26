@@ -112,7 +112,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("Like count".tr, style: CustomTextStyles.labelLargeGray)
+                  Text("Likes".tr, style: CustomTextStyles.labelLargeGray)
                 ],
               ),
             ],

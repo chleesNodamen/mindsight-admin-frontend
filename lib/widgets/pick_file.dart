@@ -38,12 +38,17 @@ class _PickFileState extends State<PickFile> {
   String? pickedFileUrl;
 
   // Simple extension to MIME type mapping
-  final Map<String, String> _mimeTypes = {
+  final Map<String, String> _imageMimeTypes = {
     'png': 'image/png',
     'jpg': 'image/jpeg',
     'jpeg': 'image/jpeg',
     'gif': 'image/gif',
-    // Add more mappings if needed
+  };
+
+  final Map<String, String> _additionalMimeTypes = {
+    'mp4': 'video/mp4',
+    'mp3': 'audio/mpeg',
+    'wav': 'audio/wav',
   };
 
   @override
@@ -55,7 +60,7 @@ class _PickFileState extends State<PickFile> {
   bool _isImageFile(String? fileName) {
     if (fileName == null) return false;
     final extension = fileName.split('.').last.toLowerCase();
-    return _mimeTypes.containsKey(extension);
+    return _imageMimeTypes.containsKey(extension);
   }
 
   Future<void> onPickFile() async {
@@ -71,7 +76,9 @@ class _PickFileState extends State<PickFile> {
 
         // Determine MIME type based on file extension
         String? extension = file.extension?.toLowerCase();
-        String? mimeType = extension != null ? _mimeTypes[extension] : null;
+        String? mimeType = extension != null
+            ? (_imageMimeTypes[extension] ?? _additionalMimeTypes[extension])
+            : null;
 
         if (mimeType == null) {
           // Handle unsupported file types if necessary
@@ -79,16 +86,20 @@ class _PickFileState extends State<PickFile> {
           return;
         }
 
-        // Create a Blob from the file bytes
-        final blob = html.Blob([file.bytes!], mimeType);
+        if (_imageMimeTypes.containsKey(extension)) {
+          // Handle image files
+          final blob = html.Blob([file.bytes!], mimeType);
+          final url = html.Url.createObjectUrlFromBlob(blob);
 
-        // Generate a URL for the Blob
-        final url = html.Url.createObjectUrlFromBlob(blob);
-
-        // Update state
-        pickedFile = html.File([blob], file.name, {'type': mimeType});
-        pickedFileName = file.name;
-        pickedFileUrl = url;
+          pickedFile = html.File([blob], file.name, {'type': mimeType});
+          pickedFileName = file.name;
+          pickedFileUrl = url;
+        } else {
+          // Handle non-image files
+          pickedFile = html.File([file.bytes!], file.name, {'type': mimeType});
+          pickedFileName = file.name;
+          pickedFileUrl = null;
+        }
 
         setState(() {});
         widget.onFilePicked(pickedFile);

@@ -6,6 +6,7 @@ import 'package:mindsight_admin_page/data/master_register/master_register_req_po
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
+import 'package:mindsight_admin_page/utils/blob_name_generator.dart';
 import 'package:universal_html/html.dart';
 
 class MasterRegisterController extends GetxController {
@@ -77,11 +78,10 @@ class MasterRegisterController extends GetxController {
     isLoading.value = true;
 
     if (photoFile != null) {
-      photoUrl.value = (await UploadRepository().uploadFile(photoFile!)).url;
+      photoUrl.value = BlobNameGenerator.generateBlobName(photoFile!);
     }
     if (idPhotoFile != null) {
-      idPhotoUrl.value =
-          (await UploadRepository().uploadFile(idPhotoFile!)).url;
+      idPhotoUrl.value = BlobNameGenerator.generateBlobName(idPhotoFile!);
     }
 
     BaseModel model =
@@ -102,6 +102,15 @@ class MasterRegisterController extends GetxController {
     ));
 
     if (model.isSuccess) {
+      if (photoFile != null) {
+        await UploadRepository()
+            .uploadFile(photoFile!, blobName: photoUrl.value!);
+      }
+      if (idPhotoFile != null) {
+        await UploadRepository()
+            .uploadFile(idPhotoFile!, blobName: idPhotoUrl.value!);
+      }
+
       await showSimpleMessage(
           "Approval requested. It may take up to 2 business days.\nYou will be notified by email upon approval.");
 

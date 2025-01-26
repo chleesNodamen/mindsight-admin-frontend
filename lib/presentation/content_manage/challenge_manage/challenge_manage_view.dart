@@ -115,7 +115,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                       label: Text('Completed members'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('Like count'.tr,
+                      label: Text('Likes'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text("Approval status".tr,

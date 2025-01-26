@@ -112,10 +112,10 @@ class ContentManageView extends GetWidget<ContentManageController> {
                       label: Text('Master'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('View count'.tr,
+                      label: Text('Views'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('Like count'.tr,
+                      label: Text('Likes'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   // DataColumn(
                   //     label:

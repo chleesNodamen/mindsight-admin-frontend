@@ -72,7 +72,7 @@ class ChallengeEditController extends GetxController {
   Future<void> onSave() async {
     if (thumbnailFile != null) {
       challengeDetailsModel.thumbnail =
-          (await UploadRepository().uploadFile(thumbnailFile!)).url;
+          BlobNameGenerator.generateBlobName(thumbnailFile!);
     }
 
     List<ChallengeEditDay> challengeDays =
@@ -98,6 +98,11 @@ class ChallengeEditController extends GetxController {
         ));
 
     if (model.isSuccess) {
+      if (thumbnailFile != null) {
+        await UploadRepository().uploadFile(thumbnailFile!,
+            blobName: challengeDetailsModel.thumbnail);
+      }
+
       await showSimpleMessage("Saved successfully.");
       Get.offAllNamed(AppRoutes.challengeDetails,
           arguments: {RouteArguments.id: id});

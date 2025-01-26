@@ -5,8 +5,6 @@ import 'package:mindsight_admin_page/data/master_detail/master_detail_model.dart
 import 'package:mindsight_admin_page/data/master_detail/master_detail_repository.dart';
 import 'package:mindsight_admin_page/data/master_edit/master_edit_repository.dart';
 import 'package:mindsight_admin_page/data/master_edit/master_edit_req_put.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 import 'package:universal_html/html.dart';
 
@@ -110,11 +108,10 @@ class MasterEditController extends GetxController {
     isLoading.value = true;
 
     if (photoFile != null) {
-      photoUrl.value = (await UploadRepository().uploadFile(photoFile!)).url;
+      photoUrl.value = BlobNameGenerator.generateBlobName(photoFile!);
     }
     if (idPhotoFile != null) {
-      idPhotoUrl.value =
-          (await UploadRepository().uploadFile(idPhotoFile!)).url;
+      idPhotoUrl.value = BlobNameGenerator.generateBlobName(idPhotoFile!);
     }
 
     String? password;
@@ -147,6 +144,15 @@ class MasterEditController extends GetxController {
         ));
 
     if (model.isSuccess) {
+      if (photoFile != null) {
+        await UploadRepository()
+            .uploadFile(photoFile!, blobName: photoUrl.value);
+      }
+      if (idPhotoFile != null) {
+        await UploadRepository()
+            .uploadFile(idPhotoFile!, blobName: idPhotoUrl.value);
+      }
+
       await showSimpleMessage("Saved successfully");
       Get.offAllNamed(AppRoutes.masterDetails,
           arguments: {RouteArguments.id: id});

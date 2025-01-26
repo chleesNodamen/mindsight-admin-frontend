@@ -587,6 +587,9 @@ class ContentEditView extends GetWidget<ContentEditController> {
               onFilePicked: (pickedFile) {
                 controller.onPickMedia(pickedFile);
               },
+              toolTip:
+                  "Files are automatically optimized through transcoding during upload. You can save them once transcoding is complete."
+                      .tr,
             ),
             const SizedBox(width: 24),
             PickFileFormField(

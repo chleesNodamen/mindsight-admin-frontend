@@ -21,6 +21,8 @@ class CompanyListRepository extends BaseRepository {
     CompanyListModel model =
         fetchJsonData<CompanyListModel>(response, CompanyListModel.fromJson);
 
+    model.length = model.id?.length ?? model.length;
+
     return model;
   }
 }

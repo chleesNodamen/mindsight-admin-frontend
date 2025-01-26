@@ -88,8 +88,7 @@ class ChallengeRegisterController extends GetxController {
     String? thumbUrl;
 
     if (thumbnailFile.value != null) {
-      thumbUrl =
-          (await UploadRepository().uploadFile(thumbnailFile.value!)).url;
+      thumbUrl = BlobNameGenerator.generateBlobName(thumbnailFile.value!);
     }
 
     BaseModel model = await ChallengeRegisterRepository().post(
@@ -104,6 +103,11 @@ class ChallengeRegisterController extends GetxController {
     isLoading.value = false;
 
     if (model.isSuccess) {
+      if (thumbnailFile.value != null) {
+        await UploadRepository()
+            .uploadFile(thumbnailFile.value!, blobName: thumbUrl);
+      }
+
       await showSimpleMessage("Saved successfully");
       Get.offAllNamed(AppRoutes.contentChallengeManage);
     } else {

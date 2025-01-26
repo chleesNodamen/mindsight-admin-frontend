@@ -543,18 +543,29 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PickFileFormField(
-              labelText: "Media File".tr,
-              essential: true,
-              hintText: controller.mediaFile?.name ?? ".mp4, .mp3, .wav",
-              fileExtension: [
-                FileExtension.mp4.keywordName,
-                FileExtension.mp3.keywordName,
-                FileExtension.wav.keywordName
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PickFileFormField(
+                  labelText: "Media File".tr,
+                  essential: true,
+                  hintText: controller.mediaFile?.name ?? ".mp4, .mp3, .wav",
+                  fileExtension: [
+                    FileExtension.mp4.keywordName,
+                    FileExtension.mp3.keywordName,
+                    FileExtension.wav.keywordName
+                  ],
+                  onFilePicked: (pickedFile) {
+                    controller.onPickMedia(pickedFile);
+                  },
+                  toolTip:
+                      "Files are automatically optimized through transcoding during upload. You can save them once transcoding is complete."
+                          .tr,
+                ),
+                const SizedBox(height: 24),
+                Text(controller.transcodingUploader.ffmpegStatus.value,
+                    style: CustomTextStyles.bodyMediumBlack),
               ],
-              onFilePicked: (pickedFile) {
-                controller.onPickMedia(pickedFile);
-              },
             ),
             const SizedBox(width: 24),
             PickFileFormField(
@@ -583,8 +594,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
         _buildDubbing(),
         const SizedBox(height: 24),
         */
-        Text(controller.transcodingUploader.ffmpegStatus.value,
-            style: CustomTextStyles.bodyMediumBlack),
       ],
     );
   }

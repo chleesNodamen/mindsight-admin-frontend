@@ -1,3 +1,4 @@
+import 'dart:async';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
@@ -11,36 +12,11 @@ class ContentRegisterController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
-  // final Map<ContentCategory, List<ContentType>> contentType = {
-  //   ContentCategory.body: [
-  //     ContentType.basicBody,
-  //     ContentType.intermediateBody,
-  //     ContentType.advanceBody
-  //   ],
-  //   ContentCategory.breath: [
-  //     ContentType.natureBreathing,
-  //     ContentType.guidedMeditation,
-  //   ],
-  //   ContentCategory.mindfulness: [
-  //     ContentType.mindfulArt,
-  //     ContentType.artWithMusic,
-  //     ContentType.nature,
-  //     ContentType.kAsmr
-  //   ],
-  //   ContentCategory.theory: [
-  //     ContentType.emotionManagement,
-  //     ContentType.philosophy,
-  //     ContentType.selfDevelopment
-  //   ]
-  // };
-
   final List<ContentLanguage> contentLanguage = [
     ContentLanguage.english,
     ContentLanguage.korean,
     ContentLanguage.japanese
   ];
-
-  // List<ContentType> categoryContentType = [];
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController tagController = TextEditingController();
@@ -49,7 +25,6 @@ class ContentRegisterController extends GetxController {
 
   Rx<ContentCategory?> selectedCategory =
       Rx<ContentCategory?>(ContentCategory.body);
-  // Rx<ContentType?> selectedType = Rx<ContentType?>(ContentType.basicBody);
 
   Rx<ContentLevel?> selectedLevel = Rx<ContentLevel?>(ContentLevel.all);
   Rx<ContentLanguage?> selectedTargetLanguage =
@@ -64,28 +39,24 @@ class ContentRegisterController extends GetxController {
   File? ccFile;
   File? mediaFile;
 
-  // RxString ffmpegStatus = "".obs;
-  // late FFmpegService _ffmpegService;
-
   final transcodingUploader = TranscodingUploader();
 
   @override
   Future<void> onClose() async {
-    super.onClose();
-
     tagController.dispose();
     introController.dispose();
     nameController.dispose();
-    // _ffmpegService.dispose();
+
+    await transcodingUploader.dispose();
+
+    super.onClose();
   }
 
   @override
   Future<void> onInit() async {
-    super.onInit();
-
-    // categoryContentType = contentType[ContentCategory.body]!;
-
     await initData();
+
+    super.onInit();
   }
 
   Future<void> initData() async {
@@ -97,9 +68,6 @@ class ContentRegisterController extends GetxController {
 
   void selectCategory(ContentCategory? category) {
     selectedCategory.value = category;
-
-    // categoryContentType = contentType[category]!;
-    // selectedType.value = categoryContentType[0];
   }
 
   void addTag(String tag) {
@@ -149,54 +117,46 @@ class ContentRegisterController extends GetxController {
     }
   }
 
-  // Future<Map<String, List<dynamic>>> _createTranscodingVideo(
-  //     File filePickerResult) async {
-  //   try {
-  //     ffmpegStatus.value = '트랜스코딩 시작';
-
-  //     var hqVideo = await _ffmpegService.transcodeToM3U8(filePickerResult);
-
-  //     ffmpegStatus.value = '트랜스코딩 Complete';
-
-  //     return hqVideo;
-  //   } catch (e) {
-  //     ffmpegStatus.value = '트랜스코딩 중 에러 발생: $e';
-  //     Logger.info('트랜스코딩 중 에러 발생: $e');
-  //     rethrow;
-  //   }
-  // }
-
   Future<void> onSave() async {
+    if (!transcodingUploader.isTranscodingComplete) {
+      showSimpleMessage(
+          "Transcoding is still in progress. Please wait until it completes before saving."
+              .tr);
+      return;
+    }
     isLoading.value = true;
 
     String? thumbnailUrl;
-    String? mediaUrl;
+    String folder = BlobNameGenerator.generateFolderName();
+    String? mediaUrl = "$folder/1080p.m3u8";
 
     if (thumbnailFile != null) {
-      thumbnailUrl = (await UploadRepository().uploadFile(thumbnailFile!)).url;
+      thumbnailUrl = BlobNameGenerator.generateBlobName(thumbnailFile!);
     }
 
-    if (mediaFile != null) {
-      mediaUrl = await transcodingUploader.uploadTranscoding(mediaFile!);
-    }
-
-    BaseModel contentRegisterModel =
-        await ContentRegisterRepository().post(ContentRegisterReqPost(
-      name: nameController.text,
-      category: selectedCategory.value?.keywordName,
-      // type: selectedType.value?.keywordName,
-      level: selectedLevel.value?.keywordName,
-      targetLanguage: selectedTargetLanguage.value?.keywordName,
-      exposure: selectedExposure.value?.keywordName,
-      tags: tags,
-      intro: introController.text,
-      media: mediaUrl,
-      thumbnail: thumbnailUrl,
-    ));
+    BaseModel contentRegisterModel = await ContentRegisterRepository().post(
+        ContentRegisterReqPost(
+            name: nameController.text,
+            category: selectedCategory.value?.keywordName,
+            level: selectedLevel.value?.keywordName,
+            targetLanguage: selectedTargetLanguage.value?.keywordName,
+            exposure: selectedExposure.value?.keywordName,
+            tags: tags,
+            intro: introController.text,
+            media: mediaUrl,
+            thumbnail: thumbnailUrl,
+            durationTime: transcodingUploader.durationTime));
 
     isLoading.value = false;
 
     if (contentRegisterModel.isSuccess) {
+      if (thumbnailFile != null) {
+        await UploadRepository()
+            .uploadFile(thumbnailFile!, blobName: thumbnailUrl);
+      }
+
+      await transcodingUploader.upload(folder);
+
       await showSimpleMessage("Saved successfully".tr);
 
       Get.offAllNamed(AppRoutes.contentManage);
@@ -218,9 +178,11 @@ class ContentRegisterController extends GetxController {
     }
   }
 
-  void onPickMedia(File? pickedFile) {
+  Future<void> onPickMedia(File? pickedFile) async {
     if (pickedFile != null) {
       mediaFile = pickedFile;
+
+      transcodingUploader.transcoding(mediaFile!);
     }
   }
 }

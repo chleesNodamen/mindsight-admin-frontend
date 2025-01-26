@@ -9,6 +9,7 @@ class ContentRegisterReqPost {
   String? intro;
   String? media;
   String? thumbnail;
+  int? durationTime;
 
   ContentRegisterReqPost({
     this.name,
@@ -21,6 +22,7 @@ class ContentRegisterReqPost {
     this.intro,
     this.media,
     this.thumbnail,
+    this.durationTime,
   });
 
   Map<String, dynamic> toJson() => {
@@ -34,5 +36,6 @@ class ContentRegisterReqPost {
         "intro": intro,
         "media": media,
         "thumbnail": thumbnail,
+        "durationTime": durationTime,
       };
 }

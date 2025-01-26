@@ -11,6 +11,7 @@ class ContentEditReqPut {
   String? targetLanguage;
   bool? status;
   bool? exposure;
+  int? durationTime;
 
   ContentEditReqPut({
     this.category,
@@ -25,6 +26,7 @@ class ContentEditReqPut {
     this.targetLanguage,
     this.status,
     this.exposure,
+    this.durationTime,
   });
 
   Map<String, dynamic> toJson() => {
@@ -40,5 +42,6 @@ class ContentEditReqPut {
         "targetLanguage": targetLanguage,
         "status": status,
         "exposure": exposure,
+        "durationTime": durationTime,
       };
 }

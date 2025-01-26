@@ -116,8 +116,8 @@ final Map<String, String> enUs = {
   "Search title": "Search title",
   "Title": "Title",
   "Master": "Master",
-  "View count": "View count",
-  "Like count": "Like count",
+  "Views": "Views",
+  "Likes": "Likes",
   "Exposure": "Exposure",
   "Exposure Status": "Exposure Status",
   "Change status": "Change status",
@@ -297,6 +297,8 @@ final Map<String, String> enUs = {
   "Challenge, Content title": "Challenge, Content title",
   "Master\nDetails": "Master\nDetails",
   "Transcoding Progress": "Transcoding Progress",
+  "Upload Progress": "Upload Progress",
+  "Transcoding Complete": "Transcoding Complete",
   "Modification successful": "Modification successful",
   "Modification failed": "Modification failed",
   "Using a photo of your face as a profile image whenever possible can provide more trust to members":
@@ -309,5 +311,9 @@ final Map<String, String> enUs = {
   "Notice": "Notice",
   "1:1 Inquiries": "1:1 Inquiries",
   "FAQ": "FAQ",
-  "Master Free Board": "Master Free Board",
+  "Free Board": "Free Board",
+  "Files are automatically optimized through transcoding during upload. You can save them once transcoding is complete.":
+      "Files are automatically optimized through transcoding during upload. You can save them once transcoding is complete.",
+  "Transcoding is still in progress. Please wait until it completes before saving.":
+      "Transcoding is still in progress. Please wait until it completes before saving.",
 };
