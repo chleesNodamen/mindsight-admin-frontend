@@ -63,7 +63,18 @@ class NoticeBoardRegisterView extends GetWidget<NoticeBoardRegisterController> {
           ],
         ),
         const SizedBox(height: 24),
-        _buildContent()
+        _buildContent(),
+        const SizedBox(height: 24),
+        // 첨부파일
+        PickFileFormField(
+          labelText: "Attached File".tr,
+          essential: false,
+          hintText: controller.attachedFile?.name ?? ".jpg",
+          fileExtension: [FileExtension.jpg.keywordName],
+          onFilePicked: (pickedFile) {
+            controller.onPickFile(pickedFile);
+          },
+        )
       ],
     );
   }

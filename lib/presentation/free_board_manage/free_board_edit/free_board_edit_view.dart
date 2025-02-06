@@ -66,7 +66,19 @@ class FreeBoardEditView extends GetWidget<FreeBoardEditController> {
           ],
         ),
         const SizedBox(height: 24),
-        _buildContent()
+        _buildContent(),
+        const SizedBox(height: 24),
+        // 첨부파일
+        PickFileFormField(
+          labelText: "Attached File".tr,
+          essential: false,
+          initialUrl: controller.freeBoardDetailModel.attachedFile,
+          hintText: ".jpg",
+          fileExtension: [FileExtension.jpg.keywordName],
+          onFilePicked: (pickedFile) {
+            controller.onPickFile(pickedFile);
+          },
+        )
       ],
     );
   }

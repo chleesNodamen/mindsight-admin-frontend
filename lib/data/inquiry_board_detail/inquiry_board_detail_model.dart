@@ -11,6 +11,7 @@ class InquiryBoardDetailModel extends BaseModel {
   String? masterEmail;
   String? masterNickname;
   String? response;
+  String? attachedFile;
 
   InquiryBoardDetailModel({
     this.id,
@@ -23,6 +24,7 @@ class InquiryBoardDetailModel extends BaseModel {
     this.masterEmail,
     this.masterNickname,
     this.response,
+    this.attachedFile,
   });
 
   factory InquiryBoardDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -35,6 +37,7 @@ class InquiryBoardDetailModel extends BaseModel {
         masterEmail: json["masterEmail"],
         masterNickname: json["masterNickname"],
         response: json["response"],
+        attachedFile: json["attachedFile"],
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),

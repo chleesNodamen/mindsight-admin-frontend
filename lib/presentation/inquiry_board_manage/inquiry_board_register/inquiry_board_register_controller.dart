@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/inquiry_board_register/inquiry_board_register_repository.dart';
 import 'package:mindsight_admin_page/data/inquiry_board_register/inquiry_board_register_req_post.dart';
+import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 
 class InquiryBoardRegisterController extends GetxController {
   RxBool isLoading = true.obs;
@@ -11,6 +14,8 @@ class InquiryBoardRegisterController extends GetxController {
   final TextEditingController messageController = TextEditingController();
 
   late final focusNode = FocusNode();
+
+  File? attachedFile;
 
   @override
   Future<void> onInit() async {
@@ -38,17 +43,31 @@ class InquiryBoardRegisterController extends GetxController {
   }
 
   Future<void> onSave() async {
-    BaseModel model =
-        await InquiryBoardRegisterRepository().post(InquiryBoardRegisterReqPost(
-      subject: subjectController.text,
-      message: messageController.text,
-    ));
+    String? attachedFileUrl;
+    if (attachedFile != null) {
+      attachedFileUrl = BlobNameGenerator.generateBlobName(attachedFile!);
+    }
+
+    BaseModel model = await InquiryBoardRegisterRepository().post(
+        InquiryBoardRegisterReqPost(
+            subject: subjectController.text,
+            message: messageController.text,
+            attachedFile: attachedFileUrl));
 
     if (model.isSuccess) {
-      // showSimpleMessage("Saved successfully");
+      if (attachedFile != null) {
+        await UploadRepository()
+            .uploadFile(attachedFile!, blobName: attachedFileUrl);
+      }
       Get.offAllNamed(AppRoutes.inquiryBoardManage);
     } else {
       showSimpleMessage("Save failed ${model.getErrorMessage().tr}");
+    }
+  }
+
+  void onPickFile(File? pickedFile) {
+    if (pickedFile != null) {
+      attachedFile = pickedFile;
     }
   }
 

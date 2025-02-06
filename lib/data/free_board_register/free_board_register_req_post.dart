@@ -3,14 +3,17 @@
 class FreeBoardRegisterReqPost {
   String? title;
   String? content;
+  String? attachedFile;
 
   FreeBoardRegisterReqPost({
     this.title,
     this.content,
+    this.attachedFile,
   });
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "content": content,
+        "attachedFile": attachedFile,
       };
 }

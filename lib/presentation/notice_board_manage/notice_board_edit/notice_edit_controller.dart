@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
-import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_model.dart';
-import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_repository.dart';
+import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_detail_model.dart';
+import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_detail_repository.dart';
 import 'package:mindsight_admin_page/data/notice_board_edit/notice_board_edit_repository.dart';
 import 'package:mindsight_admin_page/data/notice_board_edit/notice_board_edit_req_put.dart';
+import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 
 class NoticeBoardEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -17,6 +20,9 @@ class NoticeBoardEditController extends GetxController {
   TextEditingController contentController = TextEditingController();
 
   late final focusNode = FocusNode();
+
+  // 첨부파일
+  File? attachedFile;
 
   @override
   Future<void> onInit() async {
@@ -46,14 +52,27 @@ class NoticeBoardEditController extends GetxController {
   Future<void> onSave() async {
     isLoading.value = true;
 
+    // 첨부파일
+    if (attachedFile != null) {
+      noticeBoardDetailModel.attachedFile =
+          BlobNameGenerator.generateBlobName(attachedFile!);
+    }
+
     BaseModel model = await NoticeBoardEditRepository().put(
         id,
         NoticeBoardEditReqPut(
-          title: titleController.text,
-          content: contentController.text,
-        ));
+            title: titleController.text,
+            content: contentController.text,
+            attachedFile: noticeBoardDetailModel.attachedFile // 첨부파일
+            ));
 
     if (model.isSuccess) {
+      // 첨부파일
+      if (attachedFile != null) {
+        await UploadRepository().uploadFile(attachedFile!,
+            blobName: noticeBoardDetailModel.attachedFile);
+      }
+
       Get.offAllNamed(AppRoutes.noticeBoardDetail,
           arguments: {RouteArguments.id: id});
     } else {
@@ -61,6 +80,13 @@ class NoticeBoardEditController extends GetxController {
     }
 
     isLoading.value = false;
+  }
+
+  // 첨부파일
+  void onPickFile(File? pickedFile) {
+    if (pickedFile != null) {
+      attachedFile = pickedFile;
+    }
   }
 
   void nextList() {

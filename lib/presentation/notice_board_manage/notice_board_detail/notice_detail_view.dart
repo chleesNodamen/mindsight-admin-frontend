@@ -3,6 +3,7 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_details/practice_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_detail/free_board_detail_controller.dart';
 import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_detail/notice_detail_controller.dart';
+import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
 class NoticeBoardDetailView extends GetWidget<NoticeBoardDetailController> {
   const NoticeBoardDetailView({super.key});
@@ -150,6 +151,19 @@ class NoticeBoardDetailView extends GetWidget<NoticeBoardDetailController> {
               ),
             ],
           ),
+          // 첨부파일
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
+          Text('Attached File'.tr, style: CustomTextStyles.labelMediumGray),
+          const SizedBox(height: 16),
+          controller.noticeBoardDetailModel.attachedFile != null
+              ? ImageActionsWidget(
+                  imageUrl: controller.noticeBoardDetailModel.attachedFile!,
+                )
+              : const SizedBox.shrink(),
           Divider(
             height: 49,
             thickness: 1,

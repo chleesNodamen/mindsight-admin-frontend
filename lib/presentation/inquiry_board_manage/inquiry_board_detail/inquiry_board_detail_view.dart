@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_detail/inquiry_board_detail_controller.dart';
+import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
 class InquiryBoardDetailView extends GetWidget<InquiryBoardDetailController> {
   const InquiryBoardDetailView({super.key});
@@ -149,6 +150,18 @@ class InquiryBoardDetailView extends GetWidget<InquiryBoardDetailController> {
               ),
             ],
           ),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
+          Text('Attached File'.tr, style: CustomTextStyles.labelMediumGray),
+          const SizedBox(height: 16),
+          controller.inquiryBoardDetailModel.attachedFile != null
+              ? ImageActionsWidget(
+                  imageUrl: controller.inquiryBoardDetailModel.attachedFile!,
+                )
+              : const SizedBox.shrink(),
           Divider(
             height: 49,
             thickness: 1,

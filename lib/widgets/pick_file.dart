@@ -167,7 +167,8 @@ class _PickFileState extends State<PickFile> {
                 children: [
                   TextSpan(
                     text: widget.labelText,
-                    style: CustomTextStyles.labelLargeBlack,
+                    style: CustomTextStyles.labelLargeBlack
+                        .copyWith(fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
                     text: widget.essential ? " *" : "",

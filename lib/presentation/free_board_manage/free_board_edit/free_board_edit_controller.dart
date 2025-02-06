@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/free_board_detail/free_board_detail_model.dart';
 import 'package:mindsight_admin_page/data/free_board_detail/free_board_detail_repository.dart';
 import 'package:mindsight_admin_page/data/free_board_edit/free_board_edit_repository.dart';
 import 'package:mindsight_admin_page/data/free_board_edit/free_board_edit_req_put.dart';
+import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 
 class FreeBoardEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -17,6 +20,8 @@ class FreeBoardEditController extends GetxController {
   TextEditingController contentController = TextEditingController();
 
   late final focusNode = FocusNode();
+
+  File? attachedFile;
 
   @override
   Future<void> onInit() async {
@@ -46,14 +51,24 @@ class FreeBoardEditController extends GetxController {
   Future<void> onSave() async {
     isLoading.value = true;
 
+    if (attachedFile != null) {
+      freeBoardDetailModel.attachedFile =
+          BlobNameGenerator.generateBlobName(attachedFile!);
+    }
+
     BaseModel model = await FreeBoardEditRepository().put(
         id,
         FreeBoardEditReqPut(
-          title: titleController.text,
-          content: contentController.text,
-        ));
+            title: titleController.text,
+            content: contentController.text,
+            attachedFile: freeBoardDetailModel.attachedFile));
 
     if (model.isSuccess) {
+      if (attachedFile != null) {
+        await UploadRepository().uploadFile(attachedFile!,
+            blobName: freeBoardDetailModel.attachedFile);
+      }
+
       Get.offAllNamed(AppRoutes.freeBoardDetail,
           arguments: {RouteArguments.id: id});
     } else {
@@ -61,6 +76,12 @@ class FreeBoardEditController extends GetxController {
     }
 
     isLoading.value = false;
+  }
+
+  void onPickFile(File? pickedFile) {
+    if (pickedFile != null) {
+      attachedFile = pickedFile;
+    }
   }
 
   void nextList() {

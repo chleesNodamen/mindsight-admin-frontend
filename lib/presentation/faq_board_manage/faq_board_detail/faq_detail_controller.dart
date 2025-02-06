@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/faq_board_delete/faq_board_delete_repository.dart';
@@ -9,6 +11,8 @@ class FAQBoardDetailController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   late FAQBoardDetailModel faqBoardDetailModel;
+
+  File? attachedFile;
 
   @override
   Future<void> onInit() async {

@@ -6,7 +6,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Obx(() => Scaffold(
         extendBodyBehindAppBar: true,
         body: PageLoadingIndicator(
@@ -25,7 +25,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                               child: Column(
                                 children: [
                                   Form(
-                                    key: _formKey,
+                                    key: formKey,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                         // width: 90,
                                         height: 44,
                                         onPressed: () {
-                                          if (_formKey.currentState!
+                                          if (formKey.currentState!
                                               .validate()) {
                                             controller.onSave();
                                           }

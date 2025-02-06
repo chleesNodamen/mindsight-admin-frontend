@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_details/practice_details_controller.dart';
 import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_detail/free_board_detail_controller.dart';
+import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
 class FreeBoardDetailView extends GetWidget<FreeBoardDetailController> {
   const FreeBoardDetailView({super.key});
@@ -150,6 +151,18 @@ class FreeBoardDetailView extends GetWidget<FreeBoardDetailController> {
               ),
             ],
           ),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
+          Text('Attached File'.tr, style: CustomTextStyles.labelMediumGray),
+          const SizedBox(height: 16),
+          controller.freeBoardDetailModel.attachedFile != null
+              ? ImageActionsWidget(
+                  imageUrl: controller.freeBoardDetailModel.attachedFile!,
+                )
+              : const SizedBox.shrink(),
           Divider(
             height: 49,
             thickness: 1,

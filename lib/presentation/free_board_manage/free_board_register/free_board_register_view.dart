@@ -1,6 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/free_board_manage/free_board_register/free_board_register_controller.dart';
-import 'package:mindsight_admin_page/widgets/select_content_widget.dart';
 
 class FreeBoardRegisterView extends GetWidget<FreeBoardRegisterController> {
   const FreeBoardRegisterView({super.key});
@@ -64,7 +63,18 @@ class FreeBoardRegisterView extends GetWidget<FreeBoardRegisterController> {
           ],
         ),
         const SizedBox(height: 24),
-        _buildContent()
+        _buildContent(),
+        const SizedBox(height: 24),
+        // 첨부파일
+        PickFileFormField(
+          labelText: "Attached File".tr,
+          essential: false,
+          hintText: controller.attachedFile?.name ?? ".jpg",
+          fileExtension: [FileExtension.jpg.keywordName],
+          onFilePicked: (pickedFile) {
+            controller.onPickFile(pickedFile);
+          },
+        )
       ],
     );
   }

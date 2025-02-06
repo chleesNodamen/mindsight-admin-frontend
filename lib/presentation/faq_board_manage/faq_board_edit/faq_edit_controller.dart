@@ -1,13 +1,12 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/faq_board_detail/faq_board_model.dart';
 import 'package:mindsight_admin_page/data/faq_board_detail/faq_board_repository.dart';
 import 'package:mindsight_admin_page/data/faq_board_edit/faq_board_edit_repository.dart';
 import 'package:mindsight_admin_page/data/faq_board_edit/faq_board_edit_req_put.dart';
-import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_model.dart';
-import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_repository.dart';
-import 'package:mindsight_admin_page/data/notice_board_edit/notice_board_edit_repository.dart';
-import 'package:mindsight_admin_page/data/notice_board_edit/notice_board_edit_req_put.dart';
+import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 
 class FAQBoardEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -21,6 +20,8 @@ class FAQBoardEditController extends GetxController {
   TextEditingController contentController = TextEditingController();
 
   late final focusNode = FocusNode();
+
+  File? attachedFile;
 
   @override
   Future<void> onInit() async {
@@ -50,14 +51,24 @@ class FAQBoardEditController extends GetxController {
   Future<void> onSave() async {
     isLoading.value = true;
 
+    if (attachedFile != null) {
+      faqBoardDetailModel.attachedFile =
+          BlobNameGenerator.generateBlobName(attachedFile!);
+    }
+
     BaseModel model = await FAQBoardEditRepository().put(
         id,
         FAQBoardEditReqPut(
-          question: titleController.text,
-          answer: contentController.text,
-        ));
+            question: titleController.text,
+            answer: contentController.text,
+            attachedFile: faqBoardDetailModel.attachedFile));
 
     if (model.isSuccess) {
+      if (attachedFile != null) {
+        await UploadRepository().uploadFile(attachedFile!,
+            blobName: faqBoardDetailModel.attachedFile);
+      }
+
       Get.offAllNamed(AppRoutes.faqBoardDetail,
           arguments: {RouteArguments.id: id});
     } else {
@@ -65,6 +76,12 @@ class FAQBoardEditController extends GetxController {
     }
 
     isLoading.value = false;
+  }
+
+  void onPickFile(File? pickedFile) {
+    if (pickedFile != null) {
+      attachedFile = pickedFile;
+    }
   }
 
   void nextList() {

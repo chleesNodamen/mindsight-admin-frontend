@@ -29,14 +29,14 @@ class MemberManageView extends GetWidget<MemberManageController> {
                                 children: [
                                   _buildTitle(),
                                   const SizedBox(height: 32),
-                                  Row(
-                                    children: [
-                                      _buildRegisterButton(),
-                                      const SizedBox(width: 16),
-                                      _buildMassRegisterButton(),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 32),
+                                  // Row(
+                                  //   children: [
+                                  //     _buildRegisterButton(),
+                                  //     const SizedBox(width: 16),
+                                  //     _buildMassRegisterButton(),
+                                  //   ],
+                                  // ),
+                                  // const SizedBox(height: 32),
                                   _buildCheckBox(),
                                   const SizedBox(height: 16),
                                   _buildPage(),

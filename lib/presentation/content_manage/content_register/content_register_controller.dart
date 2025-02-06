@@ -33,8 +33,6 @@ class ContentRegisterController extends GetxController {
       Rx<ContentExposure?>(ContentExposure.nonExposed);
   RxList<String> tags = <String>[].obs;
 
-  RxString thumbnailName = "".obs;
-  RxString ccName = "".obs;
   File? thumbnailFile;
   File? ccFile;
   File? mediaFile;
@@ -163,12 +161,6 @@ class ContentRegisterController extends GetxController {
     } else {
       showSimpleMessage(
           "${"Save failed".tr} ${contentRegisterModel.getErrorMessage().tr}");
-    }
-  }
-
-  void onPickCC(File? pickedFile) {
-    if (pickedFile != null) {
-      thumbnailFile = pickedFile;
     }
   }
 

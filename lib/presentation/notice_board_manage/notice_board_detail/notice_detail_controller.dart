@@ -1,8 +1,8 @@
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/notice_board_delete/notice_board_repository.dart';
-import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_model.dart';
-import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_repository.dart';
+import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_detail_model.dart';
+import 'package:mindsight_admin_page/data/notice_board_detail/notice_board_detail_repository.dart';
 
 class NoticeBoardDetailController extends GetxController {
   final id = Get.arguments[RouteArguments.id];

@@ -4,6 +4,7 @@ class FAQBoardDetailModel extends BaseModel {
   String? id;
   String? question;
   String? answer;
+  String? attachedFile;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -11,6 +12,7 @@ class FAQBoardDetailModel extends BaseModel {
     this.id,
     this.question,
     this.answer,
+    this.attachedFile,
     this.createdAt,
     this.updatedAt,
   });
@@ -20,6 +22,7 @@ class FAQBoardDetailModel extends BaseModel {
         id: json["id"],
         question: json["question"],
         answer: json["answer"],
+        attachedFile: json["attachedFile"],
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),

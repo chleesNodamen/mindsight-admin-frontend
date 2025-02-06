@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/faq_board_manage/faq_board_detail/faq_detail_controller.dart';
+import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
 class FAQBoardDetailView extends GetWidget<FAQBoardDetailController> {
   const FAQBoardDetailView({super.key});
@@ -148,6 +149,18 @@ class FAQBoardDetailView extends GetWidget<FAQBoardDetailController> {
               ),
             ],
           ),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
+          Text('Attached File'.tr, style: CustomTextStyles.labelMediumGray),
+          const SizedBox(height: 16),
+          controller.faqBoardDetailModel.attachedFile != null
+              ? ImageActionsWidget(
+                  imageUrl: controller.faqBoardDetailModel.attachedFile!,
+                )
+              : const SizedBox.shrink(),
           // Divider(
           //   height: 49,
           //   thickness: 1,

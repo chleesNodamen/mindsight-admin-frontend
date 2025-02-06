@@ -37,7 +37,7 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:mindsight_admin_page/constants/enum/content_category.dart';
 export 'package:mindsight_admin_page/widgets/side_menu/side_menu_controller.dart';
 export 'package:mindsight_admin_page/helpers/switch_native_web/switch_native_web.dart';
-export 'package:mindsight_admin_page/presentation/member_manage/member_details_controller.dart';
+export 'package:mindsight_admin_page/presentation/member_manage/member_details/member_details_controller.dart';
 export 'package:mindsight_admin_page/function/show_simple_message.dart';
 export 'package:mindsight_admin_page/constants/enum/activity_type.dart';
 export 'package:mindsight_admin_page/constants/enum/content_exposure.dart';

@@ -4,6 +4,7 @@ class FreeBoardDetailModel extends BaseModel {
   String? id;
   String? title;
   String? content;
+  String? attachedFile;
   DateTime? createdAt;
   DateTime? updatedAt;
   String? masterId;
@@ -15,6 +16,7 @@ class FreeBoardDetailModel extends BaseModel {
     this.id,
     this.title,
     this.content,
+    this.attachedFile,
     this.createdAt,
     this.updatedAt,
     this.masterId,
@@ -28,6 +30,7 @@ class FreeBoardDetailModel extends BaseModel {
         id: json["id"],
         title: json["title"],
         content: json["content"],
+        attachedFile: json["attachedFile"],
         masterId: json["masterId"],
         masterEmail: json["masterEmail"],
         masterNickname: json["masterNickname"],
