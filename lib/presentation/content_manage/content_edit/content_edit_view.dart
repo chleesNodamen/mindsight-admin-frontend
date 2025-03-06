@@ -276,9 +276,9 @@ class ContentEditView extends GetWidget<ContentEditController> {
             },
             items: [
               ContentLevel.all,
-              ContentLevel.upper,
-              ContentLevel.middle,
-              ContentLevel.lower,
+              ContentLevel.advanced,
+              ContentLevel.intermediate,
+              ContentLevel.beginner,
             ].map<DropdownMenuItem<ContentLevel>>((ContentLevel value) {
               return DropdownMenuItem<ContentLevel>(
                 value: value,

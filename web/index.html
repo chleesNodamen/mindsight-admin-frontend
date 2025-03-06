@@ -2,72 +2,66 @@
 <html>
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+    <base href="$FLUTTER_BASE_HREF">
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A new Flutter project.">
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="mindsight_admin">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+    <title>mindsight admin</title>
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="mindsight_admin">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <link rel="manifest" href="manifest.json">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+    <!-- no-cache 설정 시작 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- no-cache 설정 끝 -->
 
-  <title>mindsight admin</title>
+    <!-- 트랜스코딩 라이브러리 -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" crossorigin="anonymous" async></script>
 
-  <link rel="manifest" href="manifest.json">
+    <!-- hls 비디오 재생 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest" type="application/javascript"></script>
 
-  <!-- 트랜스코딩 라이브러리 -->
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" crossorigin="anonymous" async></script>
+    <!-- TensorFlow.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <!-- Universal Sentence Encoder 모델 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
 
-  <!-- hls 비디오 재생 라이브러리 -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest" type="application/javascript"></script>
+    <!-- Universal Sentence Encoder 관련 스크립트 -->
+    <script>
+        // 전역 변수에 모델을 저장
+        window.useModel = null;
+        async function loadUSEModel() {
+            window.useModel = await use.load();
+            console.info("Universal Sentence Encoder 모델 로드 완료");
+        }
+        loadUSEModel();
+
+        // texts: 문자열 배열을 입력받아 임베딩 벡터 배열을 반환합니다.
+        async function computeEmbedding(texts) {
+            if (!window.useModel) {
+                await loadUSEModel();
+            }
+            const embeddings = await window.useModel.embed(texts);
+            // Tensor 객체이므로 array() 메서드를 호출해 배열로 변환
+            return embeddings.array();
+        }
+    </script>
 </head>
 
 <body>
-  <script src="flutter_bootstrap.js" async></script>
-  <!-- 배포 시 추가해야 되는 부분 -->
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyAVn9ihclBnJHQIwHH3P5jeQFg_66KmKQQ",
-      authDomain: "pushnotifications-3fdb9.firebaseapp.com",
-      projectId: "pushnotifications-3fdb9",
-      storageBucket: "pushnotifications-3fdb9.appspot.com",
-      messagingSenderId: "946461524011",
-      appId: "1:946461524011:web:cb42e5f63ac9d65087aa6e",
-      measurementId: "G-EZRC76GCSB"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
-  <!-- 배포 시 추가해야 되는 부분 -->
+    <script src="flutter_bootstrap.js" async></script>
 </body>
 
 </html>

@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
 import 'package:mindsight_admin_page/localization/app_localization.dart';
-
 import 'app_export.dart';
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
 Future<void> main() async {
@@ -26,7 +24,7 @@ Future<void> main() async {
 
 void initLocaleLanguage() {
   ContentLanguage lang = PrefUtils.to.getLocaleLanguage();
-  Logger.info("언어설정: $lang");
+  Logger.log("언어설정:$lang");
   Get.updateLocale(Locale(lang.languageCode));
   PrefUtils.to.setLocaleLanguage(lang);
 }

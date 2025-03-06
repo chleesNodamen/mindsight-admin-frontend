@@ -1,5 +1,3 @@
-// ffmpeg_service.dart
-// ignore_for_file: avoid_web_libraries_in_flutter
 import 'dart:typed_data';
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'dart:html' as html;

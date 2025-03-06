@@ -48,7 +48,7 @@ class SideMenuController extends GetxController {
           myAccountManagePageDisplayName, AppRoutes.masterDetails, () {}),
       SubMenuItem(
           myCompanyManagePageDisplayName, AppRoutes.companyManage, () {}),
-      SubMenuItem(etcSettingPageDisplayName, AppRoutes.etcAdminSetting, () {}),
+      SubMenuItem(etcSettingPageDisplayName, AppRoutes.etcSetting, () {}),
     ],
     settlementManagePageDisplayName: [
       SubMenuItem(settlementManagePageSubMenuDisplayName,
@@ -106,7 +106,7 @@ class SideMenuController extends GetxController {
               SubMenuItem(myAccountManagePageDisplayName,
                   AppRoutes.masterDetails, () {}),
               SubMenuItem(
-                  etcSettingPageDisplayName, AppRoutes.etcAdminSetting, () {}),
+                  etcSettingPageDisplayName, AppRoutes.etcSetting, () {}),
             ]
           : [
               SubMenuItem(myAccountManagePageDisplayName,
@@ -114,7 +114,7 @@ class SideMenuController extends GetxController {
               SubMenuItem(myCompanyManagePageDisplayName,
                   AppRoutes.companyManage, () {}),
               SubMenuItem(
-                  etcSettingPageDisplayName, AppRoutes.etcAdminSetting, () {}),
+                  etcSettingPageDisplayName, AppRoutes.etcSetting, () {}),
             ],
       settlementManagePageDisplayName: [
         SubMenuItem(settlementManagePageSubMenuDisplayName,

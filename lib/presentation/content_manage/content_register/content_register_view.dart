@@ -102,6 +102,7 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
           label: "Title".tr,
           essential: true,
           textController: controller.nameController,
+          toolTip: "It must be written in 100 characters or less".tr,
         ),
         const SizedBox(height: 24),
         Row(
@@ -128,19 +129,132 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
+  Widget _buildTargetLanguage() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Target Language".tr,
+                    style: CustomTextStyles.labelLargeBlack.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " *",
+                    style: TextStyle(color: appTheme.red),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 4),
+            Tooltip(
+              message:
+                  "It will be displayed in the specified language version".tr,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              triggerMode: TooltipTriggerMode.tap,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade800,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Icon(
+                Icons.help_outline,
+                size: 20,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<ContentLanguage>(
+            hint: Text(
+              'Select Option'.tr,
+              style: CustomTextStyles.bodyMediumGray,
+            ),
+            isExpanded: true,
+            value: controller.selectedTargetLanguage.value,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            elevation: 16,
+            onChanged: (ContentLanguage? newValue) {
+              controller.selectedTargetLanguage.value = newValue;
+            },
+            items: controller.contentLanguage
+                .map<DropdownMenuItem<ContentLanguage>>(
+                    (ContentLanguage value) {
+              return DropdownMenuItem<ContentLanguage>(
+                value: value,
+                child: Text(
+                  value.displayName.tr,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildExposured() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "Exposure".tr,
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-        ])),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Exposure".tr,
+                    style: CustomTextStyles.labelLargeBlack.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " *",
+                    style: TextStyle(color: appTheme.red),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 4),
+            Tooltip(
+              message:
+                  "It must be set to “exposed” in order to be shown in the service"
+                      .tr,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              triggerMode: TooltipTriggerMode.tap,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade800,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Icon(
+                Icons.help_outline,
+                size: 20,
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 8),
         Container(
           width: 353,
@@ -153,15 +267,16 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentExposure>(
-            hint: Text('Select Option'.tr,
-                style: CustomTextStyles.bodyMediumGray),
+            hint: Text(
+              'Select Option'.tr,
+              style: CustomTextStyles.bodyMediumGray,
+            ),
             isExpanded: true,
             value: controller.selectedExposure.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
             borderRadius: BorderRadiusStyle.roundedBorder12,
-            // icon: const Icon(Icons.),
             elevation: 16,
             onChanged: (ContentExposure? newValue) {
               controller.selectedExposure.value = newValue;
@@ -179,24 +294,101 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
               );
             }).toList(),
           ),
-        )
+        ),
       ],
     );
   }
+
+  // Widget _buildLevel() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     children: [
+  //       RichText(
+  //           text: TextSpan(children: [
+  //         TextSpan(
+  //             text: "Level".tr,
+  //             style: CustomTextStyles.labelLargeBlack
+  //                 .copyWith(fontWeight: FontWeight.w600)),
+  //         TextSpan(text: " *", style: TextStyle(color: appTheme.red))
+  //       ])),
+  //       const SizedBox(height: 8),
+  //       Container(
+  //         width: 353,
+  //         decoration: BoxDecoration(
+  //           border: Border.all(
+  //             width: 1,
+  //             color: appTheme.grayScale3,
+  //           ),
+  //           color: appTheme.white,
+  //           borderRadius: BorderRadiusStyle.roundedBorder12,
+  //         ),
+  //         child: DropdownButton<ContentLevel>(
+  //           hint: Text('Select Option'.tr,
+  //               style: CustomTextStyles.bodyMediumGray),
+  //           isExpanded: true,
+  //           value: controller.selectedLevel.value,
+  //           underline: Container(),
+  //           padding:
+  //               const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+  //           borderRadius: BorderRadiusStyle.roundedBorder12,
+  //           // icon: const Icon(Icons.),
+  //           elevation: 16,
+  //           onChanged: (ContentLevel? newValue) {
+  //             controller.selectedLevel.value = newValue;
+  //           },
+  //           items: [
+  //             ContentLevel.all,
+  //             ContentLevel.upper,
+  //             ContentLevel.middle,
+  //             ContentLevel.lower,
+  //           ].map<DropdownMenuItem<ContentLevel>>((ContentLevel value) {
+  //             return DropdownMenuItem<ContentLevel>(
+  //               value: value,
+  //               child: Text(
+  //                 value.displayName.tr,
+  //                 style: CustomTextStyles.bodyMediumBlack,
+  //               ),
+  //             );
+  //           }).toList(),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   Widget _buildLevel() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "Level".tr,
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-        ])),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "Level".tr,
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
+            ])),
+            // const SizedBox(width: 4),
+            // Tooltip(
+            //   message: '여기에 툴팁이 표시 됩니다 테스트로 이거 넣어줘',
+            //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            //   triggerMode: TooltipTriggerMode.tap,
+            //   decoration: BoxDecoration(
+            //     color: Colors.grey.shade800,
+            //     borderRadius: const BorderRadius.all(Radius.circular(10)),
+            //   ),
+            //   child: const Icon(
+            //     Icons.help_outline,
+            //     size: 20,
+            //   ),
+            // ),
+          ],
+        ),
         const SizedBox(height: 8),
         Container(
           width: 353,
@@ -209,81 +401,27 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
           ),
           child: DropdownButton<ContentLevel>(
-            hint: Text('Select Option'.tr,
-                style: CustomTextStyles.bodyMediumGray),
+            hint: Text(
+              'Select Option'.tr,
+              style: CustomTextStyles.bodyMediumGray,
+            ),
             isExpanded: true,
             value: controller.selectedLevel.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
             borderRadius: BorderRadiusStyle.roundedBorder12,
-            // icon: const Icon(Icons.),
             elevation: 16,
             onChanged: (ContentLevel? newValue) {
               controller.selectedLevel.value = newValue;
             },
             items: [
               ContentLevel.all,
-              ContentLevel.upper,
-              ContentLevel.middle,
-              ContentLevel.lower,
+              ContentLevel.advanced,
+              ContentLevel.intermediate,
+              ContentLevel.beginner,
             ].map<DropdownMenuItem<ContentLevel>>((ContentLevel value) {
               return DropdownMenuItem<ContentLevel>(
-                value: value,
-                child: Text(
-                  value.displayName.tr,
-                  style: CustomTextStyles.bodyMediumBlack,
-                ),
-              );
-            }).toList(),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _buildTargetLanguage() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "Target Language".tr,
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-        ])),
-        const SizedBox(height: 8),
-        Container(
-          width: 353,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: appTheme.grayScale3,
-            ),
-            color: appTheme.white,
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-          ),
-          child: DropdownButton<ContentLanguage>(
-            hint: Text('Select Option'.tr,
-                style: CustomTextStyles.bodyMediumGray),
-            isExpanded: true,
-            value: controller.selectedTargetLanguage.value,
-            underline: Container(),
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
-            borderRadius: BorderRadiusStyle.roundedBorder12,
-            // icon: const Icon(Icons.),
-            elevation: 16,
-            onChanged: (ContentLanguage? newValue) {
-              controller.selectedTargetLanguage.value = newValue;
-            },
-            items: controller.contentLanguage
-                .map<DropdownMenuItem<ContentLanguage>>(
-                    (ContentLanguage value) {
-              return DropdownMenuItem<ContentLanguage>(
                 value: value,
                 child: Text(
                   value.displayName.tr,
@@ -327,19 +465,110 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
     );
   }
 
+  // Column _buildCategory() {
+  //   return Column(
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       RichText(
+  //           text: TextSpan(children: [
+  //         TextSpan(
+  //             text: "Category".tr,
+  //             style: CustomTextStyles.labelLargeBlack
+  //                 .copyWith(fontWeight: FontWeight.w600)),
+  //         TextSpan(text: " *", style: TextStyle(color: appTheme.red))
+  //       ])),
+  //       const SizedBox(height: 8),
+  //       Container(
+  //         width: 353,
+  //         decoration: BoxDecoration(
+  //           border: Border.all(
+  //             width: 1,
+  //             color: appTheme.grayScale3,
+  //           ),
+  //           color: appTheme.white,
+  //           borderRadius: BorderRadiusStyle.roundedBorder12,
+  //         ),
+  //         child: DropdownButton<ContentCategory>(
+  //           hint: Text(
+  //             'Select Option'.tr,
+  //             style: CustomTextStyles.bodyMediumGray,
+  //           ),
+  //           isExpanded: true,
+  //           value: controller.selectedCategory.value,
+  //           underline: Container(),
+  //           padding: const EdgeInsets.only(
+  //             left: 16,
+  //             right: 16,
+  //             top: 2,
+  //             bottom: 2,
+  //           ),
+  //           borderRadius: BorderRadiusStyle.roundedBorder12,
+  //           elevation: 16,
+  //           onChanged: (ContentCategory? newValue) {
+  //             controller.selectCategory(newValue);
+  //           },
+  //           items: [
+  //             ContentCategory.body,
+  //             ContentCategory.breath,
+  //             ContentCategory.mindfulness,
+  //             ContentCategory.theory,
+  //           ].map<DropdownMenuItem<ContentCategory>>((ContentCategory value) {
+  //             return DropdownMenuItem<ContentCategory>(
+  //               value: value,
+  //               child: Text(
+  //                 value.displayName.tr,
+  //                 style: CustomTextStyles.bodyMediumBlack,
+  //               ),
+  //             );
+  //           }).toList(),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
   Column _buildCategory() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "Category".tr,
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-        ])),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Category".tr,
+                    style: CustomTextStyles.labelLargeBlack
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  TextSpan(
+                    text: " *",
+                    style: TextStyle(color: appTheme.red),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 4),
+            Tooltip(
+              message:
+                  "The categories are divided into main groups: Body, Breathing, Mindfulness, and Theory"
+                      .tr,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              triggerMode: TooltipTriggerMode.tap,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade800,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Icon(
+                Icons.help_outline,
+                size: 20,
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 8),
         Container(
           width: 353,
@@ -395,14 +624,33 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "Tags".tr,
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-        ])),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "Tags".tr,
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
+            ])),
+            // const SizedBox(width: 4),
+            // Tooltip(
+            //   message: '여기에 툴팁이 표시 됩니다 테스트로 이거 넣어줘',
+            //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            //   triggerMode: TooltipTriggerMode.tap,
+            //   decoration: BoxDecoration(
+            //     color: Colors.grey.shade800,
+            //     borderRadius: const BorderRadius.all(Radius.circular(10)),
+            //   ),
+            //   child: const Icon(
+            //     Icons.help_outline,
+            //     size: 20,
+            //   ),
+            // ),
+          ],
+        ),
         const SizedBox(height: 8),
         Text(
             "After entering tags, please register them by clicking the '+' button or pressing Enter."
@@ -435,8 +683,6 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
             },
             contentPadding:
                 const EdgeInsets.only(left: 16, top: 17, bottom: 17),
-            // focusedBorderDecoration:
-            //     TextFormFieldStyleHelper.outlineSkyBlue,
             filled: true),
       ],
     );
@@ -493,14 +739,35 @@ class ContentRegisterView extends GetWidget<ContentRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-            text: TextSpan(children: [
-          TextSpan(
-              text: "Introduction".tr,
-              style: CustomTextStyles.labelLargeBlack
-                  .copyWith(fontWeight: FontWeight.w600)),
-          TextSpan(text: " *", style: TextStyle(color: appTheme.red))
-        ])),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "Introduction".tr,
+                  style: CustomTextStyles.labelLargeBlack
+                      .copyWith(fontWeight: FontWeight.w600)),
+              TextSpan(text: " *", style: TextStyle(color: appTheme.red))
+            ])),
+            const SizedBox(width: 4),
+            Tooltip(
+              message:
+                  "It must be written with detailed descriptions so that it can be more accurately recommended by AI"
+                      .tr,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              triggerMode: TooltipTriggerMode.tap,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade800,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: const Icon(
+                Icons.help_outline,
+                size: 20,
+              ),
+            ),
+          ],
+        ),
         const SizedBox(
           height: 8,
         ),

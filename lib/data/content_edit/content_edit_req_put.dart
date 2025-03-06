@@ -1,6 +1,5 @@
 class ContentEditReqPut {
   String? category;
-  // String? type;
   List<String>? tags;
   String? intro;
   String? thumbnail;
@@ -12,10 +11,10 @@ class ContentEditReqPut {
   bool? status;
   bool? exposure;
   int? durationTime;
+  // List<double>? embedding; // embedding 필드 추가
 
   ContentEditReqPut({
     this.category,
-    // this.type,
     this.tags,
     this.intro,
     this.thumbnail,
@@ -27,11 +26,11 @@ class ContentEditReqPut {
     this.status,
     this.exposure,
     this.durationTime,
+    // this.embedding,
   });
 
   Map<String, dynamic> toJson() => {
         "category": category,
-        // "type": type,
         "tags": tags ?? [],
         "intro": intro,
         "thumbnail": thumbnail,
@@ -43,5 +42,6 @@ class ContentEditReqPut {
         "status": status,
         "exposure": exposure,
         "durationTime": durationTime,
+        // "embedding": embedding,
       };
 }

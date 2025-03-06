@@ -4,7 +4,6 @@ class BaseModel {
   bool _isOk = false;
   String _errorCode = "";
   String _errorMessage = "";
-  // dynamic data;
   int length = 0;
 
   BaseModel();
@@ -13,12 +12,6 @@ class BaseModel {
     _isOk = isOk ?? false;
     _errorCode = errorCode ?? "";
     _errorMessage = errorMessage ?? "";
-    // this.data = data;
-
-    // if (AppConstant.showHttpLog) {
-    //   Logger.log('Api response isOk: $_isOk');
-    //   Logger.log('Api response errorCode: $_errorCode');
-    // }
   }
 
   bool get isEmpty {

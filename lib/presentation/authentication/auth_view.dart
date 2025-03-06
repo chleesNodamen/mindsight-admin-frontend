@@ -194,9 +194,22 @@ class AuthenticationView extends GetWidget<AuthenticationController> {
                     controller.onRegister();
                   },
                 ),
+                const SizedBox(
+                  height: 25,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.offAllNamed(AppRoutes.changePassword0);
+                  },
+                  child: Text(
+                    "Forgot password?".tr,
+                    style: CustomTextStyles.bodyMediumSkyBlue
+                        .copyWith(decoration: TextDecoration.underline),
+                  ),
+                ),
 
                 const SizedBox(
-                  height: 16,
+                  height: 25,
                 ),
                 Text(
                   "${"If you have issues logging in,\ncontact mindsight@nodame.com.\nversion.".tr} ${AppConstant.version}",

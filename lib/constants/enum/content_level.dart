@@ -1,8 +1,12 @@
 enum ContentLevel {
   all('All', 'ALL'),
-  upper('Upper', 'UPPER'),
-  middle('Middle', 'MIDDLE'),
-  lower('Lower', 'LOWER');
+  // upper('Beginner', 'UPPER'),
+  // middle('Intermediate', 'MIDDLE'),
+  // lower('Advanced', 'LOWER');
+
+  beginner('Beginner', 'BEGINNER'),
+  intermediate('Intermediate', 'INTERMEDIATE'),
+  advanced('Advanced', 'ADVANCED');
 
   final String _displayName;
   final String _keywordName;

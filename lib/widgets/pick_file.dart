@@ -1,4 +1,3 @@
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'package:file_picker/file_picker.dart';
 import 'package:mindsight_admin_page/app_export.dart';

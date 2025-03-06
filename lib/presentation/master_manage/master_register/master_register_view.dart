@@ -20,7 +20,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                   largeScreen: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Account.isLogined ? const SideMenu() : _buildLogo(),
+                      const SideMenu(),
                       Expanded(
                         child: ListView(
                           children: [
@@ -71,46 +71,6 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         ),
       ),
     );
-  }
-
-  Widget _buildLogo() {
-    return Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadiusStyle.roundedBorder16,
-              color: appTheme.skyBlue,
-            ),
-            width: 297,
-            // height: 912,
-            child: ListView(children: [
-              Column(mainAxisSize: MainAxisSize.min, children: [
-                const SizedBox(
-                  height: 58,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8, left: 24),
-                        child: CustomImageView(
-                          imagePath: "assets/logo.png",
-                          width: 154,
-                          height: 24,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Text(
-                          AccountRole.master.displayName.tr,
-                          style: CustomTextStyles.labelLargeWhite,
-                        ),
-                      ),
-                      // const SizedBox(width: 69),
-                    ])
-              ])
-            ])));
   }
 
   Widget _buildAccountInfo() {

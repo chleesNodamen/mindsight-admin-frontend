@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_web_libraries_in_flutter
-
 import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as path;
 import 'dart:html' as html;

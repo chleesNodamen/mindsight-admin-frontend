@@ -1,16 +1,11 @@
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/constants/enum/goal.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_model.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_repository.dart';
 import 'package:mindsight_admin_page/data/challenge_edit/challenge_edit_repository.dart';
 import 'package:mindsight_admin_page/data/challenge_edit/challenge_edit_req_put.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
-import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
 
 class ChallengeEditController extends GetxController {

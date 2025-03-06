@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_model.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_repository.dart';
 import 'package:mindsight_admin_page/data/dashboard_challenge/dashboard_challenge_req_get.dart';

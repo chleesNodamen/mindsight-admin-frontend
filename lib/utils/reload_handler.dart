@@ -3,7 +3,6 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
 class ReloadHandler {
@@ -21,7 +20,7 @@ class ReloadHandler {
       // autoLoginPassword = AppConstant.testPassword;
 
       if (autoLoginId.isNotEmpty && autoLoginPassword.isNotEmpty) {
-        Logger.info("자동Login $autoLoginId $autoLoginPassword");
+        Logger.log("자동로그인:$autoLoginId $autoLoginPassword");
 
         MasterSigninModel masterSigninModel =
             await MasterSigninRepository().post(MasterSigninReqPost(
@@ -34,7 +33,7 @@ class ReloadHandler {
         String page = html.window.location.href
             .substring(html.window.location.href.lastIndexOf('/') + 1);
 
-        Logger.info("page $page");
+        // Logger.log("자동로그인 페이지:$page");
 
         if (masterSigninModel.isSuccess) {
           if (Account.isAdmin) {
@@ -45,7 +44,7 @@ class ReloadHandler {
 
               if (page.isNotEmpty) {
                 html.window.location.href = "$path${AppRoutes.dashboard}";
-                Logger.info("리로드: ${html.window.location.href}");
+                Logger.log("자동로그인 페이지:${html.window.location.href}");
               } else {
                 AppRoutes.initialRoute = AppRoutes.dashboard;
               }
@@ -67,7 +66,7 @@ class ReloadHandler {
           }
         }
       } else {
-        Logger.info("자동Login None status");
+        Logger.log("자동로그인 없음");
       }
     }
   }

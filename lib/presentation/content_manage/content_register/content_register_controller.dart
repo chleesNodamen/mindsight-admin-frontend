@@ -1,5 +1,4 @@
 import 'dart:async';
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
@@ -115,6 +114,26 @@ class ContentRegisterController extends GetxController {
     }
   }
 
+  /// TensorFlow.js를 통해 임베딩 계산 후 결과를 콘솔에 출력하는 함수
+  // Future<List<List<double>>> computeAndLogEmbedding() async {
+  //   final embeddingHelper = TextEmbedding();
+
+  //   final weightedTexts = [
+  //     {"text": nameController.text, "weight": 1}, // 제목에 가중치 1
+  //     {"text": introController.text, "weight": 1}, // 설명에 가중치 1
+  //     {
+  //       "text": selectedCategory.value?.keywordName ?? '',
+  //       "weight": 1
+  //     }, // 카테고리에 가중치 1
+  //   ];
+
+  //   final embedding =
+  //       await embeddingHelper.computeWeightedEmbeddingAverage(weightedTexts);
+  //   Logger.log("가중 평균 적용 후 임베딩 벡터: $embedding");
+
+  //   return embedding;
+  // }
+
   Future<void> onSave() async {
     if (!transcodingUploader.isTranscodingComplete) {
       showSimpleMessage(
@@ -132,18 +151,19 @@ class ContentRegisterController extends GetxController {
       thumbnailUrl = BlobNameGenerator.generateBlobName(thumbnailFile!);
     }
 
-    BaseModel contentRegisterModel = await ContentRegisterRepository().post(
-        ContentRegisterReqPost(
-            name: nameController.text,
-            category: selectedCategory.value?.keywordName,
-            level: selectedLevel.value?.keywordName,
-            targetLanguage: selectedTargetLanguage.value?.keywordName,
-            exposure: selectedExposure.value?.keywordName,
-            tags: tags,
-            intro: introController.text,
-            media: mediaUrl,
-            thumbnail: thumbnailUrl,
-            durationTime: transcodingUploader.durationTime));
+    BaseModel contentRegisterModel =
+        await ContentRegisterRepository().post(ContentRegisterReqPost(
+      name: nameController.text,
+      category: selectedCategory.value?.keywordName,
+      level: selectedLevel.value?.keywordName,
+      targetLanguage: selectedTargetLanguage.value?.keywordName,
+      exposure: selectedExposure.value?.keywordName,
+      tags: tags,
+      intro: introController.text,
+      media: mediaUrl,
+      thumbnail: thumbnailUrl,
+      durationTime: transcodingUploader.durationTime,
+    ));
 
     isLoading.value = false;
 

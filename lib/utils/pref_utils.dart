@@ -8,7 +8,7 @@ class PrefUtils {
   PrefUtils() {
     SharedPreferences.getInstance().then((value) {
       _sharedPreferences = value;
-      Logger.info('PrefUtils: SharedPreference Initialized');
+      Logger.log('PrefUtils: SharedPreference Initialized');
 
       if (AppConstant.testClearPref) {
         clearPreferencesData();
@@ -100,7 +100,7 @@ class PrefUtils {
       String keywordName =
           _sharedPreferences!.getString("LocaleLanguage") ?? "";
 
-      Logger.info("언어가져오기: $keywordName");
+      Logger.log("언어가져오기: $keywordName");
       if (keywordName.isNotEmpty) {
         return ContentLanguage.fromKeyword(keywordName);
       }

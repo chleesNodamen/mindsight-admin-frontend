@@ -78,8 +78,14 @@ class AuthenticationController extends GetxController {
             .changeActiveSubItem(contentManageContentDisplayName);
       }
     } else {
-      showSimpleMessage(
-          "Login에 실패 하였습니다. ${masterSigninModel.getErrorMessage().tr}");
+      if (masterSigninModel
+          .getErrorMessage()
+          .contains("Version is incorrect")) {
+        showSimpleMessage("버젼이 맞지 않습니다. 웹브라우져를 완전히 종료 후 다시 시작 해 주십시오.");
+      } else {
+        showSimpleMessage(
+            "Login에 실패 하였습니다. ${masterSigninModel.getErrorMessage().tr}");
+      }
     }
 
     return true;

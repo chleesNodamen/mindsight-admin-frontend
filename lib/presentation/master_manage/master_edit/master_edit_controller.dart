@@ -119,7 +119,7 @@ class MasterEditController extends GetxController {
     if (passwordController.text.isNotEmpty) {
       if (passwordController.text != passwordCofirmController.text) {
         isLoading.value = false;
-        showSimpleMessage("Password가 일치 하지 않습니다");
+        showSimpleMessage("The password does not match.".tr);
         return;
       } else {
         password = passwordController.text;

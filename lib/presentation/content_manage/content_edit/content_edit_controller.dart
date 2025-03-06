@@ -1,4 +1,3 @@
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
@@ -137,6 +136,22 @@ class ContentEditController extends GetxController {
     }
   }
 
+  // Future<List<List<double>>> computeAndLogEmbedding() async {
+  //   final embeddingHelper = TextEmbedding();
+
+  //   final weightedTexts = [
+  //     {"text": nameController.text, "weight": 1}, // 제목에 가중치 1
+  //     {"text": introController.text, "weight": 1}, // 설명에 가중치 1
+  //     {"text": contentDetailsModel.category ?? '', "weight": 1}, // 카테고리에 가중치 1
+  //   ];
+
+  //   final embedding =
+  //       await embeddingHelper.computeWeightedEmbeddingAverage(weightedTexts);
+  //   Logger.log("가중 평균 적용 후 임베딩 벡터: $embedding");
+
+  //   return embedding;
+  // }
+
   Future<void> onSave() async {
     String folder = BlobNameGenerator.generateFolderName();
 
@@ -159,21 +174,20 @@ class ContentEditController extends GetxController {
     }
 
     BaseModel contentEditModel = await ContentEditRepository().put(
-      id,
-      ContentEditReqPut(
-          name: nameController.text,
-          category: contentDetailsModel.category,
-          level: contentDetailsModel.level,
-          targetLanguage: contentDetailsModel.targetLanguage,
-          status: contentDetailsModel.status,
-          exposure: contentDetailsModel.exposure,
-          tags: contentDetailsModel.tags!,
-          intro: introController.text,
-          thumbnail: contentDetailsModel.thumbnail,
-          video: contentDetailsModel.video,
-          cc: contentDetailsModel.cc,
-          durationTime: contentDetailsModel.durationTime),
-    );
+        id,
+        ContentEditReqPut(
+            name: nameController.text,
+            category: contentDetailsModel.category,
+            level: contentDetailsModel.level,
+            targetLanguage: contentDetailsModel.targetLanguage,
+            status: contentDetailsModel.status,
+            exposure: contentDetailsModel.exposure,
+            tags: contentDetailsModel.tags!,
+            intro: introController.text,
+            thumbnail: contentDetailsModel.thumbnail,
+            video: contentDetailsModel.video,
+            cc: contentDetailsModel.cc,
+            durationTime: contentDetailsModel.durationTime ?? 100));
 
     isLoading.value = false;
 

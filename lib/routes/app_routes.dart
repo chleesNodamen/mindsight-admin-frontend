@@ -2,20 +2,26 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history/activity_history_binding.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_binding.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_binding.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/etc_admin_settings/etc_admin_settings_binding.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/etc_admin_settings/etc_admin_settings_view.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_details/sub_admin_details_bindin.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_details/sub_admin_details_view.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_edit/sub_admin_edit_binding.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_edit/sub_admin_edit_view.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_register/sub_admin_register_binding.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_register/sub_admin_register_view.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_settings/sub_admin_settings_binding.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/sub_admin_settings/sub_admin_settings_view.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/setting/etc_setting_binding.dart';
+import 'package:mindsight_admin_page/presentation/setting/etc_setting_view.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_details/sub_admin_details_bindin.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_details/sub_admin_details_view.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_edit/sub_admin_edit_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_edit/sub_admin_edit_view.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_register/sub_admin_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_register/sub_admin_register_view.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_settings/sub_admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_settings/sub_admin_settings_view.dart';
 import 'package:mindsight_admin_page/presentation/authentication/auth_binding.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_view.dart';
-import 'package:mindsight_admin_page/presentation/admin_settings/admin_settings_view.dart';
+import 'package:mindsight_admin_page/presentation/admin_settings_nouse/admin_settings_view.dart';
+import 'package:mindsight_admin_page/presentation/change_password/change_password0_binding.dart';
+import 'package:mindsight_admin_page/presentation/change_password/change_password0_view.dart';
+import 'package:mindsight_admin_page/presentation/change_password/change_password1_binding.dart';
+import 'package:mindsight_admin_page/presentation/change_password/change_password1_view.dart';
+import 'package:mindsight_admin_page/presentation/change_password/change_password2_binding.dart';
+import 'package:mindsight_admin_page/presentation/change_password/change_password2_view.dart';
 import 'package:mindsight_admin_page/presentation/company_manage/company_details/company_details_binding.dart';
 import 'package:mindsight_admin_page/presentation/company_manage/company_details/company_details_view.dart';
 import 'package:mindsight_admin_page/presentation/company_manage/company_edit/company_edit_binding.dart';
@@ -158,7 +164,7 @@ class AppRoutes {
   static const String masterSettlementManage = "/master_settlement_manage";
   static const String termsManage = "/terms_manage";
   static const String adminSettings = "/admin_settings";
-  static const String etcAdminSetting = '/etc_admin_settings';
+  static const String etcSetting = '/etc_setting';
   static const String subAdminSettings = '/sub_admin_settings';
   static const String subAdminRegister = '/sub_admin_register';
   static const String subAdminDetails = '/sub_admin_details';
@@ -184,6 +190,10 @@ class AppRoutes {
   static const String inquiryBoardDetail = "/inquiry_board_detail";
   static const String inquiryBoardEdit = "/inquiry_board_edit";
   static const String inquiryBoardRegister = "/inquiry_board_register";
+
+  static const String changePassword0 = "/change_password0";
+  static const String changePassword1 = "/change_password1";
+  static const String changePassword2 = "/change_password2";
 
   static String? initialRoute = auth;
 
@@ -241,7 +251,7 @@ class AppRoutes {
     ),
     GetPage(
       name: masterRegister,
-      page: () => MasterRegisterView(),
+      page: () => const MasterRegisterView(),
       bindings: [MasterRegisterBinding()],
     ),
     GetPage(
@@ -379,9 +389,9 @@ class AppRoutes {
       bindings: [AdminSettingsBinding()],
     ),
     GetPage(
-      name: etcAdminSetting,
-      page: () => const EtcAdminSettingView(),
-      bindings: [EtcAdminSettingBinding()],
+      name: etcSetting,
+      page: () => const EtcSettingView(),
+      bindings: [EtcSettingBinding()],
     ),
     GetPage(
       name: subAdminSettings,
@@ -496,6 +506,22 @@ class AppRoutes {
       name: inquiryBoardRegister,
       page: () => const InquiryBoardRegisterView(),
       bindings: [InquiryBoardRegisterBinding()],
+    ),
+
+    GetPage(
+      name: changePassword0,
+      page: () => const ChangePassword0View(),
+      bindings: [ChangePassword0Binding()],
+    ),
+    GetPage(
+      name: changePassword1,
+      page: () => const ChangePassword1View(),
+      bindings: [ChangePassword1Binding()],
+    ),
+    GetPage(
+      name: changePassword2,
+      page: () => const ChangePassword2View(),
+      bindings: [ChangePassword2Binding()],
     ),
   ];
 }
