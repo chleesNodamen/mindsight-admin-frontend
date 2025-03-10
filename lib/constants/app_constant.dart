@@ -1,5 +1,5 @@
 class AppConstant {
-  static int version = 24;
+  static int version = 25;
   static bool testClearPref = false;
   static String testEmail = "hundrill@naver.com";
   static String testPassword = "1111";
