@@ -1,11 +1,12 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/contry.dart';
+import 'package:mindsight_admin_page/enum/contry.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/master_detail/master_detail_model.dart';
 import 'package:mindsight_admin_page/data/master_detail/master_detail_repository.dart';
 import 'package:mindsight_admin_page/data/master_edit/master_edit_repository.dart';
 import 'package:mindsight_admin_page/data/master_edit/master_edit_req_put.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
+import 'package:mindsight_admin_page/enum/gender.dart';
 import 'package:universal_html/html.dart';
 
 class MasterEditController extends GetxController {
@@ -35,6 +36,7 @@ class MasterEditController extends GetxController {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController introController = TextEditingController();
+  final TextEditingController yearOfBirthController = TextEditingController();
 
   Rx<Contry?> selectedContry = Rx<Contry?>(null);
   Rx<ContentLanguage?> selectedPrimaryLanguage = Rx<ContentLanguage?>(null);
@@ -47,6 +49,8 @@ class MasterEditController extends GetxController {
   File? idPhotoFile;
   Rx<Map<String, String>?> selectedCompany = Rx<Map<String, String>?>(null);
 
+  Rx<Gender?> gender = Rx<Gender?>(null);
+
   @override
   void onClose() {
     super.onClose();
@@ -58,6 +62,7 @@ class MasterEditController extends GetxController {
     phoneNumberController.dispose();
     addressController.dispose();
     introController.dispose();
+    yearOfBirthController.dispose();
   }
 
   @override
@@ -76,16 +81,16 @@ class MasterEditController extends GetxController {
 
     masterDetailModel = await MasterDetailRepository().get(id);
 
-    emailController.text = masterDetailModel.email;
-    nicknameController.text = masterDetailModel.nickname;
-    nameController.text = masterDetailModel.name;
-    phoneNumberController.text = masterDetailModel.phoneNumber;
-    addressController.text = masterDetailModel.address;
-    introController.text = masterDetailModel.intro;
+    emailController.text = masterDetailModel.email!;
+    nicknameController.text = masterDetailModel.nickname!;
+    nameController.text = masterDetailModel.name!;
+    phoneNumberController.text = masterDetailModel.phoneNumber ?? "-";
+    addressController.text = masterDetailModel.address ?? "-";
+    introController.text = masterDetailModel.intro!;
 
-    selectedContry.value = Contry.fromKeyword(masterDetailModel.country);
+    selectedContry.value = Contry.fromKeyword(masterDetailModel.country!);
     selectedPrimaryLanguage.value =
-        ContentLanguage.fromKeyword(masterDetailModel.primaryLanguage);
+        ContentLanguage.fromKeyword(masterDetailModel.primaryLanguage!);
     if (masterDetailModel.secondaryLanguage != null) {
       selectedSecondaryLanguage.value =
           ContentLanguage.fromKeyword(masterDetailModel.secondaryLanguage!);

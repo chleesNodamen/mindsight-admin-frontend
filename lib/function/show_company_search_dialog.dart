@@ -214,7 +214,7 @@ Future<Map<String, String>?> showCompanySearchDialog() async {
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                             DataColumn(
-                              label: Text("Approval status".tr,
+                              label: Text("Approval".tr,
                                   style: CustomTextStyles.labelLargeGray),
                             ),
                           ],

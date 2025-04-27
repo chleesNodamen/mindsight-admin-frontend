@@ -38,6 +38,8 @@ class FreeBoardDetailView extends GetWidget<FreeBoardDetailController> {
                                   _buildSubMenu(),
                                   const SizedBox(height: 32),
                                   _buildInfo(),
+                                  const SizedBox(height: 32),
+                                  _buildComment(),
                                 ],
                               ),
                             ),
@@ -141,7 +143,7 @@ class FreeBoardDetailView extends GetWidget<FreeBoardDetailController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Content".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Body".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -216,12 +218,21 @@ class FreeBoardDetailView extends GetWidget<FreeBoardDetailController> {
               ),
             ],
           ),
-          Divider(
-            height: 49,
-            thickness: 1,
-            color: appTheme.grayScale2,
-          ),
-          Text("Comment".tr, style: CustomTextStyles.labelMediumGray),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComment() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadiusStyle.roundedBorder12,
+          color: appTheme.white),
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Comment List".tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(
             height: 16,
           ),
@@ -254,61 +265,50 @@ class FreeBoardDetailView extends GetWidget<FreeBoardDetailController> {
       itemCount: comments.length,
       itemBuilder: (context, index) {
         final comment = comments[index];
-        return Container(
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
-          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: appTheme.grayScale1,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Comment Author and Date
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(comment.masterNickname ?? "Unknown",
-                          style: CustomTextStyles.labelMediumGray),
-                      const SizedBox(
-                        width: 24,
-                      ),
-                      Text(
-                        comment.content ?? "",
-                        style: CustomTextStyles.bodyMediumBlack,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          DateFormat('yyyy-MM-dd HH:mm')
-                              .format(comment.createdAt!),
-                          style: CustomTextStyles.labelMediumGray),
-                      Visibility(
-                        visible: Account.isMaster(comment.masterEmail!),
-                        child: InkWell(
-                            onTap: () =>
-                                controller.onTapDeleteComment(comment.id!),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Delete".tr,
-                                style: CustomTextStyles.labelLargeSkyBlue
-                                    .copyWith(
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: appTheme.skyBlue),
-                              ),
-                            )),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Comment Author and Date
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(comment.masterNickname ?? "Unknown",
+                        style: CustomTextStyles.bodyMediumBlack),
+                    Text(
+                        DateFormat(' ᛫ yyyy-MM-dd HH:mm')
+                            .format(comment.createdAt!),
+                        style: CustomTextStyles.bodyMediumGray),
+                  ],
+                ),
+                Visibility(
+                  visible: Account.isMaster(comment.masterEmail!),
+                  child: InkWell(
+                      onTap: () => controller.onTapDeleteComment(comment.id!),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          "Delete".tr,
+                          style: CustomTextStyles.labelLargeSkyBlue.copyWith(
+                              decoration: TextDecoration.underline,
+                              decorationColor: appTheme.skyBlue),
+                        ),
+                      )),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Text(
+              comment.content ?? "",
+              style: CustomTextStyles.bodyMediumBlack,
+            ),
+            Divider(
+              height: 49,
+              thickness: 1,
+              color: appTheme.grayScale2,
+            ),
+          ],
         );
       },
     );
@@ -319,6 +319,10 @@ class FreeBoardDetailView extends GetWidget<FreeBoardDetailController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text("Write a Comment".tr, style: CustomTextStyles.labelMediumGray),
+        const SizedBox(
+          height: 16,
+        ),
         Row(
           children: [
             KeyboardListener(

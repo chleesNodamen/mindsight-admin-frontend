@@ -447,7 +447,7 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Practice plan Complete rate'.tr,
+                  'Daily plan Complete rate'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 InkWell(

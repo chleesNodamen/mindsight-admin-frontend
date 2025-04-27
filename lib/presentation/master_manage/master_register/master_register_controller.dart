@@ -1,15 +1,24 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/contry.dart';
+import 'package:mindsight_admin_page/enum/contry.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/master_register/master_register_repository.dart';
 import 'package:mindsight_admin_page/data/master_register/master_register_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
+import 'package:mindsight_admin_page/enum/gender.dart';
 import 'package:mindsight_admin_page/utils/blob_name_generator.dart';
 import 'package:universal_html/html.dart';
 
+class MasterRegisterArgs {
+  final String email;
+
+  MasterRegisterArgs({required this.email});
+}
+
 class MasterRegisterController extends GetxController {
+  late MasterRegisterArgs args;
+
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
 
@@ -27,12 +36,14 @@ class MasterRegisterController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordCofirmController =
       TextEditingController();
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController introController = TextEditingController();
+  final TextEditingController yearOfBirthController = TextEditingController();
 
-  Rx<Contry?> selectedContry = Rx<Contry?>(Contry.korea);
+  Rx<Contry?> selectedContry = Rx<Contry?>(Contry.unitedStates);
   Rx<ContentLanguage?> selectedPrimaryLanguage =
       Rx<ContentLanguage?>(ContentLanguage.english);
   Rx<ContentLanguage?> selectedSecondaryLanguage = Rx<ContentLanguage?>(null);
@@ -45,6 +56,8 @@ class MasterRegisterController extends GetxController {
   RxBool photoFileError = false.obs;
   RxBool idPhotoFileError = false.obs;
 
+  Rx<Gender?> gender = Rx<Gender?>(null);
+
   @override
   void onClose() {
     super.onClose();
@@ -52,10 +65,12 @@ class MasterRegisterController extends GetxController {
     nicknameController.dispose();
     passwordController.dispose();
     passwordCofirmController.dispose();
-    nameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     phoneNumberController.dispose();
     addressController.dispose();
     introController.dispose();
+    yearOfBirthController.dispose();
   }
 
   @override
@@ -65,10 +80,10 @@ class MasterRegisterController extends GetxController {
   }
 
   Future<void> initData() async {
-    // if (AppConstant.test) {
-    //   await MasterSigninRepository().post(MasterSigninReqPost(
-    //       email: AppConstant.testEmail, password: AppConstant.testPassword));
-    // }
+    // args = Get.arguments;
+    // emailController.text = args.email;
+
+    emailController.text = "chlee@nodamen.com";
 
     isInited.value = true;
     isLoading.value = false;
@@ -89,16 +104,16 @@ class MasterRegisterController extends GetxController {
       email: emailController.text,
       nickname: nicknameController.text,
       password: passwordController.text,
-      name: nameController.text,
-      phoneNumber: phoneNumberController.text,
+      name: "${firstNameController.text} ${lastNameController.text}",
+      // phoneNumber: phoneNumberController.text,
       country: selectedContry.value?.keywordName,
       address: addressController.text,
       primaryLanguage: selectedPrimaryLanguage.value?.keywordName,
       secondaryLanguage: selectedSecondaryLanguage.value?.keywordName,
       intro: introController.text,
-      companyId: selectedCompany.value?["id"],
+      // companyId: selectedCompany.value?["id"],
       photoUrl: photoUrl.value,
-      idPhotoUrl: idPhotoUrl.value,
+      // idPhotoUrl: idPhotoUrl.value,
     ));
 
     if (model.isSuccess) {

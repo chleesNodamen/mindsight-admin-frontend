@@ -141,7 +141,7 @@ class NoticeBoardDetailView extends GetWidget<NoticeBoardDetailController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Content".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Body".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),

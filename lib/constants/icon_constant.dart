@@ -28,4 +28,6 @@ class IconConstant {
   static String close = '$iconPath/icon_close.svg';
   static String receiptLong = '$iconPath/icon_receipt_long.svg';
   static String company = '$iconPath/icon_company.svg';
+  static String google = '$iconPath/icon_google.svg';
+  static String send = '$iconPath/icon_send.svg';
 }

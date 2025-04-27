@@ -11,7 +11,7 @@ import 'package:mindsight_admin_page/data/free_board_detail/free_board_detail_mo
 import 'package:mindsight_admin_page/data/free_board_detail/free_board_detail_repository.dart';
 
 class FreeBoardDetailController extends GetxController {
-  final id = Get.arguments[RouteArguments.id];
+  late String id;
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   late FreeBoardDetailModel freeBoardDetailModel;
@@ -21,6 +21,12 @@ class FreeBoardDetailController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    if (Get.arguments != null) {
+      id = Get.arguments[RouteArguments.id];
+    } else {
+      id = "D%2Fu4uEmnvaNYr6uJ%2FR%2Fazw%3D%3D";
+    }
+
     await initData();
 
     super.onInit();
@@ -38,6 +44,8 @@ class FreeBoardDetailController extends GetxController {
     isInited.value = false;
 
     commentController.text = '';
+
+    Logger.log(id);
 
     freeBoardDetailModel = await FreeBoardDetailRepository().get(id);
 

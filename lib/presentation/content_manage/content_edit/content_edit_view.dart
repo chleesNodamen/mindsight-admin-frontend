@@ -213,12 +213,25 @@ class ContentEditView extends GetWidget<ContentEditController> {
               controller.contentDetailsModel.category = newValue?.keywordName;
               controller.isLoading.value = false;
             },
-            items: [
-              ContentCategory.body,
-              ContentCategory.breath,
-              ContentCategory.mindfulness,
-              ContentCategory.theory,
-            ].map<DropdownMenuItem<ContentCategory>>((ContentCategory value) {
+            // items: [
+            //   ContentCategory.body,
+            //   ContentCategory.breath,
+            //   ContentCategory.mindfulness,
+            //   ContentCategory.theory,
+            // ].map<DropdownMenuItem<ContentCategory>>((ContentCategory value) {
+            //   return DropdownMenuItem<ContentCategory>(
+            //     value: value,
+            //     child: Text(
+            //       value.displayName.tr,
+            //       style: CustomTextStyles.bodyMediumBlack,
+            //     ),
+            //   );
+            // }).toList(),
+
+            items: ContentCategory.values
+                .where((e) => e != ContentCategory.body)
+                .map<DropdownMenuItem<ContentCategory>>(
+                    (ContentCategory value) {
               return DropdownMenuItem<ContentCategory>(
                 value: value,
                 child: Text(
@@ -338,8 +351,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
             },
             items: [
               ContentLanguage.english,
-              ContentLanguage.korean,
-              ContentLanguage.japanese
+              ContentLanguage.korean
             ].map<DropdownMenuItem<ContentLanguage>>((ContentLanguage value) {
               return DropdownMenuItem<ContentLanguage>(
                 value: value,
@@ -574,7 +586,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PickFileFormField(
+            PickFile(
               labelText: "Media File".tr,
               essential: true,
               initialUrl: controller.contentDetailsModel.video,
@@ -584,6 +596,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
                 FileExtension.mp3.keywordName,
                 FileExtension.wav.keywordName
               ],
+              isCircular: false,
               onFilePicked: (pickedFile) {
                 controller.onPickMedia(pickedFile);
               },
@@ -592,12 +605,13 @@ class ContentEditView extends GetWidget<ContentEditController> {
                       .tr,
             ),
             const SizedBox(width: 24),
-            PickFileFormField(
+            PickFile(
               labelText: "Thumbnail file".tr,
               essential: true,
               initialUrl: controller.contentDetailsModel.thumbnail,
               hintText: ".jpg",
               fileExtension: [FileExtension.jpg.keywordName],
+              isCircular: false,
               onFilePicked: (pickedFile) {
                 controller.onPickThumbnail(pickedFile);
               },
@@ -605,7 +619,7 @@ class ContentEditView extends GetWidget<ContentEditController> {
           ],
         ),
         const SizedBox(height: 24),
-        // PickFileFormField(
+        // PickFile(
         //   labelText: "CC file".tr,
         //   essential: false,
         //   hintText: controller.ccFile?.name ?? ".srt",
@@ -617,8 +631,8 @@ class ContentEditView extends GetWidget<ContentEditController> {
         // const SizedBox(height: 24),
         // _buildDubbing(),
         // const SizedBox(height: 24),
-        Text(controller.transcodingUploader.ffmpegStatus.value,
-            style: CustomTextStyles.bodyMediumBlack),
+        // Text(controller.transcodingUploader.ffmpegStatus.value,
+        //     style: CustomTextStyles.bodyMediumBlack),
       ],
     );
   }
@@ -656,12 +670,13 @@ class ContentEditView extends GetWidget<ContentEditController> {
   }
 
   Widget _buildThumnailFile() {
-    return PickFileFormField(
+    return PickFile(
       labelText: "Thumbnail file".tr,
       essential: true,
       initialUrl: controller.contentDetailsModel.thumbnail,
       hintText: ".jpg",
       fileExtension: [FileExtension.jpg.keywordName],
+      isCircular: false,
       onFilePicked: (pickedFile) {
         controller.onPickThumbnail(pickedFile);
       },

@@ -70,12 +70,13 @@ class NoticeBoardEditView extends GetWidget<NoticeBoardEditController> {
         _buildContent(),
         const SizedBox(height: 24),
         // 첨부파일
-        PickFileFormField(
+        PickFile(
           labelText: "Attached File".tr,
           essential: false,
           initialUrl: controller.noticeBoardDetailModel.attachedFile,
           hintText: ".jpg",
           fileExtension: [FileExtension.jpg.keywordName],
+          isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);
           },
@@ -92,7 +93,7 @@ class NoticeBoardEditView extends GetWidget<NoticeBoardEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "Content".tr,
+              text: "Body".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))

@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/inquiry_board_manage/inquiry_board_manage_controller.dart';
 
 class InquiryBoardManageView extends GetWidget<InquiryBoardManageController> {

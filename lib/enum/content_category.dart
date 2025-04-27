@@ -1,11 +1,10 @@
 enum ContentCategory {
-  unknown('unknown status', 'UNKNOWN'),
   body('Body', 'BODY'),
   breath('Breath', 'BREATH'),
-  mindfulness('Mindfulness', 'MINDFULNESS'),
-  theory('Theory', 'THEORY');
-
-  static int length = 4;
+  theory('Theory', 'THEORY'),
+  mindfulArt('Mindful Art', 'MINDFUL_ART'),
+  asmr('ASMR', 'ASMR'),
+  artAndMusic('Art & Music', 'ART_AND_MUSIC');
 
   final String _displayName;
   final String _keywordName;
@@ -18,7 +17,7 @@ enum ContentCategory {
   static ContentCategory fromKeyword(String value) {
     return ContentCategory.values.firstWhere(
       (category) => category.keywordName == value,
-      orElse: () => ContentCategory.unknown,
+      orElse: () => ContentCategory.body,
     );
   }
 }

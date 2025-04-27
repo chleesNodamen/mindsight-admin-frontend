@@ -104,7 +104,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentPracticeManage),
-          child: Text("Practice plan management".tr,
+          child: Text("Daily plan management".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -116,7 +116,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Practice plan New registration".tr,
+        Text("Daily plan New registration".tr,
             style: CustomTextStyles.bodyMediumGray)
       ],
     );
@@ -124,7 +124,7 @@ class PracticeRegisterView extends GetWidget<PracticeRegisterController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan New registration".tr,
+      name: "Daily plan New registration".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

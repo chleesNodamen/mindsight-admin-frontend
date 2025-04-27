@@ -205,8 +205,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Approval status'.tr,
-                      style: CustomTextStyles.labelMediumGray),
+                  Text('Approval'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentStatus.fromKeyword(
@@ -244,7 +243,7 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
       children: [
         InkWell(
           onTap: controller.goToPractice,
-          child: Text("Practice plan management".tr,
+          child: Text("Daily plan management".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -256,14 +255,14 @@ class PracticeDetailsView extends GetWidget<PracticeDetailsController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Practice plan Details".tr, style: CustomTextStyles.bodyMediumGray)
+        Text("Daily plan Details".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan Details".tr,
+      name: "Daily plan Details".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

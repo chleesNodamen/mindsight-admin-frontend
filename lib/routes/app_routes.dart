@@ -3,6 +3,8 @@ import 'package:mindsight_admin_page/presentation/activity_manage/activity_histo
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_history/activity_history_view.dart';
 import 'package:mindsight_admin_page/presentation/activity_manage/activity_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings_nouse/admin_settings_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_register/master_register_binding.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_register/master_register_view.dart';
 import 'package:mindsight_admin_page/presentation/setting/etc_setting_binding.dart';
 import 'package:mindsight_admin_page/presentation/setting/etc_setting_view.dart';
 import 'package:mindsight_admin_page/presentation/admin_settings_nouse/sub_admin_details/sub_admin_details_bindin.dart';
@@ -94,8 +96,6 @@ import 'package:mindsight_admin_page/presentation/master_manage/master_manage_bi
 import 'package:mindsight_admin_page/presentation/master_manage/master_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_mass_register/master_mass_register_binding.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_mass_register/master_mass_register_view.dart';
-import 'package:mindsight_admin_page/presentation/master_manage/master_register/master_register_binding.dart';
-import 'package:mindsight_admin_page/presentation/master_manage/master_register/master_register_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage/inactive_member_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/inactive_member_manage/inactive_member_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/member_manage/member_details/member_details_binding.dart';
@@ -120,6 +120,12 @@ import 'package:mindsight_admin_page/presentation/settlement_manage/master_settl
 import 'package:mindsight_admin_page/presentation/settlement_manage/master_settlement_manage_view.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_binding.dart';
 import 'package:mindsight_admin_page/presentation/settlement_manage/settlement_manage_view.dart';
+import 'package:mindsight_admin_page/presentation/verify_email/verify_email0_binding.dart';
+import 'package:mindsight_admin_page/presentation/verify_email/verify_email0_view.dart';
+import 'package:mindsight_admin_page/presentation/verify_email/verify_email1_binding.dart';
+import 'package:mindsight_admin_page/presentation/verify_email/verify_email1_view.dart';
+import 'package:mindsight_admin_page/presentation/verify_email/verify_email2_binding.dart';
+import 'package:mindsight_admin_page/presentation/verify_email/verify_email2_view.dart';
 
 class AppRoutes {
   // static const String rootRoute = "/";
@@ -194,6 +200,10 @@ class AppRoutes {
   static const String changePassword0 = "/change_password0";
   static const String changePassword1 = "/change_password1";
   static const String changePassword2 = "/change_password2";
+
+  static const String verifyEmail0 = "/verify_email0";
+  static const String verifyEmail1 = "/verify_email1";
+  static const String verifyEmail2 = "/verify_email2";
 
   static String? initialRoute = auth;
 
@@ -522,6 +532,22 @@ class AppRoutes {
       name: changePassword2,
       page: () => const ChangePassword2View(),
       bindings: [ChangePassword2Binding()],
+    ),
+
+    GetPage(
+      name: verifyEmail0,
+      page: () => const VerifyEmail0View(),
+      bindings: [VerifyEmail0Binding()],
+    ),
+    GetPage(
+      name: verifyEmail1,
+      page: () => const VerifyEmail1View(),
+      bindings: [VerifyEmail1Binding()],
+    ),
+    GetPage(
+      name: verifyEmail2,
+      page: () => const VerifyEmail2View(),
+      bindings: [VerifyEmail2Binding()],
     ),
   ];
 }

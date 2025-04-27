@@ -177,8 +177,7 @@ class CompanyDetailsView extends GetWidget<CompanyDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Approval status'.tr,
-                      style: CustomTextStyles.labelMediumGray),
+                  Text('Approval'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentStatus.fromKeyword(

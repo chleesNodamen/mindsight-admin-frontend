@@ -3,6 +3,7 @@ import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
+// ignore: deprecated_member_use
 import 'dart:html' as html;
 
 class ReloadHandler {

@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_repository.dart';
 import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';

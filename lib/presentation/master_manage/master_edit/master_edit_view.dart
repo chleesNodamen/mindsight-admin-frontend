@@ -1,5 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/contry.dart';
+import 'package:mindsight_admin_page/enum/contry.dart';
+import 'package:mindsight_admin_page/enum/gender.dart';
 import 'package:mindsight_admin_page/function/show_company_search_dialog.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_edit/master_edit_controller.dart';
 
@@ -66,12 +67,20 @@ class MasterEditView extends GetWidget<MasterEditController> {
         const SizedBox(height: 24),
         Row(
           children: [
-            _buildEmail("ID".tr, true),
+            BuildInput(
+              label: "ID".tr,
+              essential: true,
+              textController: controller.emailController,
+              keyboardType: TextInputType.emailAddress,
+              enabled: false,
+              textStyle: CustomTextStyles.bodyMediumGray,
+            ),
             const SizedBox(width: 24),
             BuildInput(
                 label: "Nickname".tr,
                 essential: true,
-                textController: controller.nicknameController),
+                textController: controller.nicknameController,
+                toolTip: "Please enter your display name".tr),
           ],
         ),
         const SizedBox(height: 24),
@@ -101,21 +110,36 @@ class MasterEditView extends GetWidget<MasterEditController> {
         Row(
           children: [
             BuildInput(
-                label: "Name".tr,
-                essential: false,
+                label: "First name".tr,
+                essential: true,
                 textController: controller.nameController),
             const SizedBox(width: 24),
             BuildInput(
-                label: "Mobile Number".tr,
-                essential: false,
-                textController: controller.phoneNumberController),
+                label: "Last name".tr,
+                essential: true,
+                textController: controller.nameController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           children: [
-            PickFileFormField(
+            _buildGender(),
+            const SizedBox(width: 24),
+            BuildInput(
+                label: "Year of birth".tr,
+                hint: "0000",
+                essential: false,
+                textController: controller.yearOfBirthController),
+          ],
+        ),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            PickFile(
               labelText: "Photo".tr,
+              toolTip:
+                  "Using a photo of your face as a profile image whenever possible can provide more trust to members"
+                      .tr,
               essential: true,
               hintText: ".jpg",
               fileExtension: [FileExtension.jpg.keywordName],
@@ -123,22 +147,21 @@ class MasterEditView extends GetWidget<MasterEditController> {
               onFilePicked: (pickedFile) {
                 controller.onPickPhoto(pickedFile);
               },
-              isCircular: true,
+              isCircular: false,
+              aspectRatio: 16 / 9,
             ),
-
             const SizedBox(width: 24),
-            PickFileFormField(
+            PickFile(
               labelText: "ID Card".tr,
               essential: false,
               hintText: ".jpg",
               fileExtension: [FileExtension.jpg.keywordName],
+              isCircular: false,
               initialUrl: controller.idPhotoUrl.value,
               onFilePicked: (pickedFile) {
                 controller.onPickIdPhoto(pickedFile);
               },
             ),
-
-            // _buildIDCard(),
           ],
         ),
         const SizedBox(height: 24),
@@ -167,6 +190,166 @@ class MasterEditView extends GetWidget<MasterEditController> {
       ],
     );
   }
+
+  Widget _buildGender() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("성별".tr, style: CustomTextStyles.labelLargeBlack),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<Gender>(
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: controller.gender.value,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (Gender? newValue) {
+              if (newValue != null) {
+                controller.gender.value = newValue;
+              }
+            },
+            items: <Gender>[Gender.male, Gender.female, Gender.nonbinary]
+                .map<DropdownMenuItem<Gender>>((Gender value) {
+              return DropdownMenuItem<Gender>(
+                value: value,
+                child: Text(
+                  value.displayName.tr,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Widget _buildAccountInfo() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text("Account Information".tr, style: CustomTextStyles.bodyMediumBlack),
+  //       const SizedBox(height: 24),
+  //       Row(
+  //         children: [
+  //           _buildEmail("ID".tr, true),
+  //           const SizedBox(width: 24),
+  //           BuildInput(
+  //               label: "Nickname".tr,
+  //               essential: true,
+  //               textController: controller.nicknameController),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 24),
+  //       Row(
+  //         children: [
+  //           BuildInput(
+  //               label: "Password Edit".tr,
+  //               essential: false,
+  //               textController: controller.passwordController),
+  //           const SizedBox(width: 24),
+  //           BuildInput(
+  //               label: "Password Edit Confirm".tr,
+  //               essential: false,
+  //               textController: controller.passwordCofirmController),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  // Widget _buildBasicInfo() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text("Basic info".tr, style: CustomTextStyles.bodyMediumBlack),
+  //       const SizedBox(height: 24),
+  //       Row(
+  //         children: [
+  //           BuildInput(
+  //               label: "Name".tr,
+  //               essential: false,
+  //               textController: controller.nameController),
+  //           const SizedBox(width: 24),
+  //           BuildInput(
+  //               label: "Mobile Number".tr,
+  //               essential: false,
+  //               textController: controller.phoneNumberController),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 24),
+  //       Row(
+  //         children: [
+  //           PickFile(
+  //             labelText: "Photo".tr,
+  //             essential: true,
+  //             hintText: ".jpg",
+  //             fileExtension: [FileExtension.jpg.keywordName],
+  //             initialUrl: controller.photoUrl.value,
+  //             onFilePicked: (pickedFile) {
+  //               controller.onPickPhoto(pickedFile);
+  //             },
+  //             isCircular: true,
+  //           ),
+
+  //           const SizedBox(width: 24),
+  //           PickFile(
+  //             labelText: "ID Card".tr,
+  //             essential: false,
+  //             hintText: ".jpg",
+  //             fileExtension: [FileExtension.jpg.keywordName],
+  //             isCircular: false,
+  //             initialUrl: controller.idPhotoUrl.value,
+  //             onFilePicked: (pickedFile) {
+  //               controller.onPickIdPhoto(pickedFile);
+  //             },
+  //           ),
+
+  //           // _buildIDCard(),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 24),
+  //       Row(
+  //         children: [
+  //           _buildNation(),
+  //           const SizedBox(width: 24),
+  //           BuildInput(
+  //               label: "Address".tr,
+  //               essential: false,
+  //               textController: controller.addressController),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 24),
+  //       Row(
+  //         children: [
+  //           _buildLanguage("Primary Language".tr, true,
+  //               controller.selectedPrimaryLanguage.value),
+  //           const SizedBox(width: 24),
+  //           _buildLanguage("Secondary Language".tr, false,
+  //               controller.selectedSecondaryLanguage.value),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 24),
+  //       _buildMultiInput("Introduction".tr),
+  //     ],
+  //   );
+  // }
 
   Widget _buildCompanyInfo() {
     return Column(
@@ -272,7 +455,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
             elevation: 16,
             onChanged: (Contry? newValue) {
               if (newValue != null) {
-                // controller.selectedMaster.value = newValue;
+                controller.selectedContry.value = newValue;
               }
             },
             items: controller.contryLabels
@@ -328,7 +511,9 @@ class MasterEditView extends GetWidget<MasterEditController> {
             borderRadius: BorderRadiusStyle.roundedBorder12,
             // icon: const Icon(Icons.),
             elevation: 16,
-            onChanged: (ContentLanguage? newValue) {},
+            onChanged: (ContentLanguage? newValue) {
+              language = newValue;
+            },
             items: controller.languageLabels
                 .map<DropdownMenuItem<ContentLanguage>>(
                     (ContentLanguage value) {
@@ -395,7 +580,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
               border: Border.all(color: appTheme.grayScale3),
               color: appTheme.grayScale2),
           padding: const EdgeInsets.all(16),
-          child: Text(controller.masterDetailModel.email,
+          child: Text(controller.masterDetailModel.email!,
               style: CustomTextStyles.bodyMediumGray),
         ),
       ],

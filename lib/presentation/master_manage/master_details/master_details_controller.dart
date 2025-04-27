@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/contry.dart';
+import 'package:mindsight_admin_page/enum/contry.dart';
 import 'package:mindsight_admin_page/data/master_detail/master_detail_model.dart';
 import 'package:mindsight_admin_page/data/master_detail/master_detail_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
@@ -41,9 +41,9 @@ class MasterDetailsController extends GetxController {
 
     masterDetailModel = await MasterDetailRepository().get(id);
 
-    contry = Contry.fromKeyword(masterDetailModel.country);
+    contry = Contry.fromKeyword(masterDetailModel.country!);
     primaryLanguage =
-        ContentLanguage.fromKeyword(masterDetailModel.primaryLanguage);
+        ContentLanguage.fromKeyword(masterDetailModel.primaryLanguage!);
     if (masterDetailModel.secondaryLanguage != null) {
       secondaryLanguage =
           ContentLanguage.fromKeyword(masterDetailModel.secondaryLanguage!);

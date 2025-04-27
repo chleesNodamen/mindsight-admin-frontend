@@ -95,7 +95,7 @@ class InactiveCompanyManageView
                       label: Text("Conversion date".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Approval status".tr,
+                      label: Text("Approval".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.companyListModel.id!.length,

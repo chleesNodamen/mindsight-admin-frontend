@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/content_manage_controller.dart';
 
 class ContentManageView extends GetWidget<ContentManageController> {
@@ -108,31 +108,26 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   DataColumn(
                       label: Text('Title'.tr,
                           style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Text('Master'.tr,
-                          style: CustomTextStyles.labelLargeGray)),
+                  // DataColumn(
+                  //     label: Text(Account.isAdmin ? 'Master'.tr : "",
+                  //         style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Views'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Likes'.tr,
                           style: CustomTextStyles.labelLargeGray)),
-                  // DataColumn(
-                  //     label:
-                  //         Text('미리View', style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Approval status".tr,
+                      label: Text("Approval".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('Exposure'.tr,
+                      label: Text("Exposure".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Account.isAdmin
-                          ? const SizedBox.shrink()
-                          : Text("Approval request".tr,
-                              style: CustomTextStyles.labelLargeGray)),
+                      label: Text("Edit".tr,
+                          style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text('Edit'.tr,
+                      label: Text("Note".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.contentListModel.value.length,
@@ -160,22 +155,31 @@ class ContentManageView extends GetWidget<ContentManageController> {
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 24.0),
-                              child: Text(
-                                controller.contentListModel.value.name![index],
-                                style: CustomTextStyles.bodyLargeBlack.copyWith(
-                                  decoration: TextDecoration.underline,
+                              child: SizedBox(
+                                width: 240,
+                                child: Text(
+                                  controller
+                                      .contentListModel.value.name![index],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      CustomTextStyles.bodyLargeBlack.copyWith(
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        DataCell(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Text(
-                              controller.contentListModel.value.master![index]
-                                  .toString(),
-                              style: CustomTextStyles.bodyLargeBlack),
-                        )),
+                        // DataCell(Padding(
+                        //   padding: const EdgeInsets.symmetric(vertical: 24.0),
+                        //   child: Text(
+                        //       Account.isAdmin
+                        //           ? controller
+                        //               .contentListModel.value.master![index]
+                        //           : "".toString(),
+                        //       style: CustomTextStyles.bodyLargeBlack),
+                        // )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
@@ -190,11 +194,6 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                   .toString(),
                               style: CustomTextStyles.bodyLargeBlack),
                         )),
-                        // DataCell(Padding(
-                        //   padding: const EdgeInsets.symmetric(vertical: 24.0),
-                        //   child: Text('재생',
-                        //       style: CustomTextStyles.bodyLargeBlack),
-                        // )),
                         DataCell(StatusDropdown(
                           isEnable: Account.isAdmin,
                           isActive:
@@ -203,7 +202,6 @@ class ContentManageView extends GetWidget<ContentManageController> {
                             controller.onStatusChange(index);
                           },
                         )),
-
                         DataCell(StatusDropdown(
                           isEnable: true,
                           isActive: controller
@@ -212,25 +210,11 @@ class ContentManageView extends GetWidget<ContentManageController> {
                             controller.onExposureChange(index);
                           },
                         )),
-
-                        DataCell(Account.isAdmin
-                            ? const SizedBox.shrink()
-                            : CustomElevatedButton(
-                                text: "Approval request".tr,
-                                buttonTextStyle:
-                                    CustomTextStyles.bodyMediumWhiteBold,
-                                buttonStyle: CustomButtonStyles.fillBlack,
-                                // width: 70,
-                                height: 30,
-                                onPressed: () =>
-                                    showSimpleMessage("Service preparing".tr))),
-
                         DataCell(CustomElevatedButton(
                             text: "Edit".tr,
-                            buttonTextStyle:
-                                CustomTextStyles.bodyMediumWhiteBold,
-                            buttonStyle: CustomButtonStyles.fillBlack,
-                            // width: 60,
+                            buttonTextStyle: CustomTextStyles.bodyMediumSkyBlue,
+                            buttonStyle:
+                                CustomButtonStyles.fillPrimaryTransparent,
                             height: 30,
                             onPressed: () => Get.offAllNamed(
                                     AppRoutes.contentEdit,
@@ -238,6 +222,11 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                       RouteArguments.id: controller
                                           .contentListModel.value.id![index],
                                     }))),
+                        DataCell(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child:
+                              Text('-', style: CustomTextStyles.bodyLargeBlack),
+                        )),
                       ]);
                 }).toList(),
               ),
@@ -250,18 +239,18 @@ class ContentManageView extends GetWidget<ContentManageController> {
               children: [
                 Row(
                   children: [
-                    Visibility(
-                      visible: Account.isAdmin,
-                      child: CustomElevatedButton(
-                        text: 'Change status'.tr,
-                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                        margin: const EdgeInsets.only(right: 16),
-                        // width: 107,
-                        height: 44,
-                        onPressed: () => controller.onStatusChangeForAll(),
-                      ),
-                    ),
+                    // Visibility(
+                    //   visible: Account.isAdmin,
+                    //   child: CustomElevatedButton(
+                    //     text: 'Change status'.tr,
+                    //     buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                    //     buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                    //     margin: const EdgeInsets.only(right: 16),
+                    //     // width: 107,
+                    //     height: 44,
+                    //     onPressed: () => controller.onStatusChangeForAll(),
+                    //   ),
+                    // ),
                     CustomElevatedButton(
                       text: 'Change exposure'.tr,
                       buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
@@ -316,10 +305,11 @@ class ContentManageView extends GetWidget<ContentManageController> {
                   children: [
                     Wrap(
                       runSpacing: 18,
-                      children: List.generate(ContentCategory.length, (index) {
+                      children:
+                          List.generate(ContentCategory.values.length, (index) {
                         return CustomCheckboxWidget(
-                          isChecked: controller.bodyValues[index],
-                          label: controller.bodyLabels[index].displayName.tr,
+                          isChecked: controller.categorySelected[index],
+                          label: ContentCategory.values[index].displayName.tr,
                           onChanged: (value) =>
                               controller.toggleCategoryCheckbox(index, value),
                         );
@@ -411,7 +401,7 @@ class ContentManageView extends GetWidget<ContentManageController> {
             thickness: 1,
             color: appTheme.grayScale2,
           ),
-          Text("Approval status".tr, style: CustomTextStyles.labelMediumGray),
+          Text("Approval".tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 15),
           Row(
             children: [

@@ -15,6 +15,8 @@ class AuthenticationController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isInited = false.obs;
 
+  RxBool isLoginMode = true.obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -92,6 +94,8 @@ class AuthenticationController extends GetxController {
   }
 
   void onRegister() {
-    Get.offAllNamed(AppRoutes.masterRegister);
+    Get.offAllNamed(AppRoutes.verifyEmail0);
   }
+
+  void onGoogleLogin() {}
 }

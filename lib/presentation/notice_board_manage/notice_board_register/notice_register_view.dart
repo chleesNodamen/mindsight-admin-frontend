@@ -66,11 +66,12 @@ class NoticeBoardRegisterView extends GetWidget<NoticeBoardRegisterController> {
         _buildContent(),
         const SizedBox(height: 24),
         // 첨부파일
-        PickFileFormField(
+        PickFile(
           labelText: "Attached File".tr,
           essential: false,
           hintText: controller.attachedFile?.name ?? ".jpg",
           fileExtension: [FileExtension.jpg.keywordName],
+          isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);
           },
@@ -87,7 +88,7 @@ class NoticeBoardRegisterView extends GetWidget<NoticeBoardRegisterController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "Content".tr,
+              text: "Body".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))

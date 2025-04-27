@@ -1,3 +1,4 @@
+// ignore: deprecated_member_use
 import 'dart:html' as html;
 import 'package:http/http.dart' as http;
 import 'package:mindsight_admin_page/app_export.dart';
@@ -140,15 +141,23 @@ class ImageActionsWidget extends StatelessWidget {
       children: [
         Row(
           children: [
+            imageWidget,
+            const SizedBox(width: 10),
             InkWell(
-              child: Text(
-                "View image".tr,
-                style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
-                  decoration: TextDecoration.underline,
-                  decorationColor: appTheme.skyBlue,
+              onTap: () => _openImageDialog(context),
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  border: Border.all(color: appTheme.skyBlue),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  "View image".tr,
+                  style: CustomTextStyles.bodyMediumSkyBlue,
                 ),
               ),
-              onTap: () => _openImageDialog(context),
             ),
             const SizedBox(width: 4),
             CustomImageView(
@@ -158,7 +167,6 @@ class ImageActionsWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        imageWidget,
       ],
     );
   }

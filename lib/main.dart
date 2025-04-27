@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
 import 'package:mindsight_admin_page/localization/app_localization.dart';
 import 'app_export.dart';
+// ignore: deprecated_member_use
 import 'dart:html' as html;
 
 Future<void> main() async {
@@ -13,8 +14,13 @@ Future<void> main() async {
   Get.put(CustomHttpClient());
   Get.put(SideMenuController());
 
-  // PrefUtils 초기화 되는 시간으로 500 밀리 딜레이를 주었음
-  await Future.delayed(const Duration(milliseconds: 500));
+  while (true) {
+    await Future.delayed(const Duration(milliseconds: 100));
+    if (PrefUtils.to.isInited()) {
+      break;
+    }
+  }
+
   await ReloadHandler.autoSignin();
 
   initLocaleLanguage();

@@ -1,7 +1,7 @@
 import 'dart:html';
 
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/goal.dart';
+import 'package:mindsight_admin_page/enum/goal.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/challenge_register/challenge_register_repository.dart';
 import 'package:mindsight_admin_page/data/challenge_register/challenge_register_req_put.dart';

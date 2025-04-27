@@ -133,7 +133,7 @@ class InactiveMemberManageView
                       label: Text('Conversion date'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Approval status".tr,
+                      label: Text("Approval".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Edit'.tr,

@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/goal.dart';
+import 'package:mindsight_admin_page/enum/goal.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_register/challenge_register_controller.dart';
 import 'package:mindsight_admin_page/widgets/select_content_widget.dart';
 
@@ -300,12 +300,13 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
       children: [
         Text("File".tr, style: CustomTextStyles.bodyMediumBlack),
         const SizedBox(height: 24),
-        PickFileFormField(
+        PickFile(
           labelText: "Thumbnail file".tr,
           essential: true,
           initialUrl: controller.thumbnailFile.value?.name,
           hintText: ".jpg",
           fileExtension: [FileExtension.jpg.keywordName],
+          isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickThumbnail(pickedFile);
           },

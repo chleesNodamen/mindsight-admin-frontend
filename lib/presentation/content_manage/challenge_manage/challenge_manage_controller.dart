@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/goal.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/goal.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/challenges_exposure/challenges_exposure_repository.dart';
 import 'package:mindsight_admin_page/data/challenges_exposure/challenges_exposure_req_put.dart';

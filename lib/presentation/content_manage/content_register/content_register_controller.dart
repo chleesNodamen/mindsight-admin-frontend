@@ -5,7 +5,8 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/content_register/content_register_repository.dart';
 import 'package:mindsight_admin_page/data/content_register/content_register_req_post.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
-import 'package:mindsight_admin_page/utils/transcoding_uploader.dart';
+import 'package:path/path.dart' as p;
+import 'package:video_player/video_player.dart';
 
 class ContentRegisterController extends GetxController {
   RxBool isLoading = true.obs;
@@ -13,8 +14,7 @@ class ContentRegisterController extends GetxController {
 
   final List<ContentLanguage> contentLanguage = [
     ContentLanguage.english,
-    ContentLanguage.korean,
-    ContentLanguage.japanese
+    ContentLanguage.korean
   ];
 
   final TextEditingController nameController = TextEditingController();
@@ -22,21 +22,17 @@ class ContentRegisterController extends GetxController {
   final TextEditingController introController = TextEditingController();
   late final focusNode = FocusNode();
 
-  Rx<ContentCategory?> selectedCategory =
-      Rx<ContentCategory?>(ContentCategory.body);
+  final Rx<ContentCategory?> selectedCategory = Rx<ContentCategory?>(null);
 
   Rx<ContentLevel?> selectedLevel = Rx<ContentLevel?>(ContentLevel.all);
   Rx<ContentLanguage?> selectedTargetLanguage =
       Rx<ContentLanguage?>(ContentLanguage.english);
   Rx<ContentExposure?> selectedExposure =
-      Rx<ContentExposure?>(ContentExposure.nonExposed);
+      Rx<ContentExposure?>(ContentExposure.exposed);
   RxList<String> tags = <String>[].obs;
 
-  File? thumbnailFile;
-  File? ccFile;
-  File? mediaFile;
-
-  final transcodingUploader = TranscodingUploader();
+  Rx<File?> mediaFile = Rx<File?>(null);
+  Rx<File?> thumbnailFile = Rx<File?>(null);
 
   @override
   Future<void> onClose() async {
@@ -44,7 +40,7 @@ class ContentRegisterController extends GetxController {
     introController.dispose();
     nameController.dispose();
 
-    await transcodingUploader.dispose();
+    // await transcodingUploader.dispose();
 
     super.onClose();
   }
@@ -114,42 +110,54 @@ class ContentRegisterController extends GetxController {
     }
   }
 
-  /// TensorFlow.js를 통해 임베딩 계산 후 결과를 콘솔에 출력하는 함수
-  // Future<List<List<double>>> computeAndLogEmbedding() async {
-  //   final embeddingHelper = TextEmbedding();
-
-  //   final weightedTexts = [
-  //     {"text": nameController.text, "weight": 1}, // 제목에 가중치 1
-  //     {"text": introController.text, "weight": 1}, // 설명에 가중치 1
-  //     {
-  //       "text": selectedCategory.value?.keywordName ?? '',
-  //       "weight": 1
-  //     }, // 카테고리에 가중치 1
-  //   ];
-
-  //   final embedding =
-  //       await embeddingHelper.computeWeightedEmbeddingAverage(weightedTexts);
-  //   Logger.log("가중 평균 적용 후 임베딩 벡터: $embedding");
-
-  //   return embedding;
-  // }
-
   Future<void> onSave() async {
-    if (!transcodingUploader.isTranscodingComplete) {
-      showSimpleMessage(
-          "Transcoding is still in progress. Please wait until it completes before saving."
-              .tr);
+    if (mediaFile.value == null) {
+      showSimpleMessage("No media file selected.".tr); // ✅ No media file
       return;
     }
-    isLoading.value = true;
 
-    String? thumbnailUrl;
-    String folder = BlobNameGenerator.generateFolderName();
-    String? mediaUrl = "$folder/1080p.m3u8";
-
-    if (thumbnailFile != null) {
-      thumbnailUrl = BlobNameGenerator.generateBlobName(thumbnailFile!);
+    if (thumbnailFile.value == null) {
+      showSimpleMessage(
+          "No thumbnail file selected.".tr); // ✅ No thumbnail file
+      return;
     }
+    // ✅ mediaFile에서 확장자 추출
+    String? extension = mediaFile.value != null
+        ? p.extension(mediaFile.value!.name).toLowerCase()
+        : null;
+    if (extension == null || extension.isEmpty) {
+      showSimpleMessage("error file extension".tr);
+      return;
+    }
+
+    // ✅ 오디오/비디오 확장자 목록
+    const videoExtensions = ['.mp4', '.mov', '.mkv', '.avi', '.webm'];
+    const audioExtensions = ['.mp3', '.aac', '.wav', '.flac', '.ogg', '.m4a'];
+
+    // ✅ 어떤 타입인지 확인
+    bool isVideo = videoExtensions.contains(extension);
+    bool isAudio = audioExtensions.contains(extension);
+
+    if (!isVideo && !isAudio) {
+      showSimpleMessage("unsupported file type".tr);
+      return;
+    }
+
+    // isLoading.value = true;
+
+    String thumbnailUrl =
+        BlobNameGenerator.generateBlobName(thumbnailFile.value!);
+
+    String videoFolder = BlobNameGenerator.generateBlobFolderName();
+    String mediaUrl = "$videoFolder/master.m3u8";
+    String mediaBlobName = "$videoFolder$extension";
+
+    if (isAudio) {
+      mediaBlobName =
+          mediaUrl = BlobNameGenerator.generateBlobName(mediaFile.value!);
+    }
+
+    int? durationTime = await getDurationTime(mediaFile.value!);
 
     BaseModel contentRegisterModel =
         await ContentRegisterRepository().post(ContentRegisterReqPost(
@@ -162,18 +170,23 @@ class ContentRegisterController extends GetxController {
       intro: introController.text,
       media: mediaUrl,
       thumbnail: thumbnailUrl,
-      durationTime: transcodingUploader.durationTime,
+      durationTime: durationTime,
     ));
 
     isLoading.value = false;
 
     if (contentRegisterModel.isSuccess) {
-      if (thumbnailFile != null) {
-        await UploadRepository()
-            .uploadFile(thumbnailFile!, blobName: thumbnailUrl);
-      }
+      isLoading.value = true;
 
-      await transcodingUploader.upload(folder);
+      await UploadRepository()
+          .uploadFile(thumbnailFile.value!, blobName: thumbnailUrl);
+
+      await UploadRepository().uploadVideoFile(
+        mediaFile.value!,
+        blobName: mediaBlobName,
+      );
+
+      isLoading.value = false;
 
       await showSimpleMessage("Saved successfully".tr);
 
@@ -184,17 +197,64 @@ class ContentRegisterController extends GetxController {
     }
   }
 
-  void onPickThumbnail(File? pickedFile) {
-    if (pickedFile != null) {
-      thumbnailFile = pickedFile;
+  // Future<int?> getDurationTime(File file) async {
+  //   // 여기에 실제 미디어 duration 읽어오는 로직 추가해야 함
+  //   // 예: video_player 패키지나, 미디어 분석 패키지로
+  //   return 60; // 일단 null 반환
+  // }
+
+  Future<int?> getDurationTime(File file) async {
+    final extension = p.extension(file.name).toLowerCase();
+
+    // ✅ 파일 자체를 URL로 만든다
+    final url = Url.createObjectUrl(file);
+
+    if (['.mp4', '.mov', '.mkv', '.avi', '.webm'].contains(extension)) {
+      // ✅ 비디오 파일 처리
+      final controller = VideoPlayerController.network(url);
+
+      try {
+        await controller.initialize();
+        final duration = controller.value.duration.inSeconds;
+        controller.dispose();
+        Url.revokeObjectUrl(url); // URL 해제
+        return duration;
+      } catch (e) {
+        controller.dispose();
+        Url.revokeObjectUrl(url);
+        return null;
+      }
+    } else if (['.mp3', '.aac', '.wav', '.flac', '.ogg', '.m4a']
+        .contains(extension)) {
+      // ✅ 오디오 파일 처리
+      final audio = AudioElement()
+        ..src = url
+        ..preload = 'metadata';
+
+      try {
+        await audio.onLoadedMetadata.first;
+        final duration = audio.duration?.round();
+        Url.revokeObjectUrl(url); // URL 해제
+        return duration;
+      } catch (e) {
+        Url.revokeObjectUrl(url);
+        return null;
+      }
+    } else {
+      Url.revokeObjectUrl(url);
+      return null;
     }
   }
 
-  Future<void> onPickMedia(File? pickedFile) async {
+  void onPickThumbnail(File? pickedFile) {
     if (pickedFile != null) {
-      mediaFile = pickedFile;
+      thumbnailFile.value = pickedFile;
+    }
+  }
 
-      transcodingUploader.transcoding(mediaFile!);
+  Future<void> onPickVideo(File? pickedFile) async {
+    if (pickedFile != null) {
+      mediaFile.value = pickedFile;
     }
   }
 }

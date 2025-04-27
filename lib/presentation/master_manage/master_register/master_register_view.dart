@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/account_role.dart';
-import 'package:mindsight_admin_page/constants/enum/contry.dart';
+import 'package:mindsight_admin_page/enum/contry.dart';
+import 'package:mindsight_admin_page/enum/gender.dart';
 import 'package:mindsight_admin_page/function/show_company_search_dialog.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_register/master_register_controller.dart';
 
@@ -86,12 +86,15 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
               essential: true,
               textController: controller.emailController,
               keyboardType: TextInputType.emailAddress,
+              enabled: false,
+              textStyle: CustomTextStyles.bodyMediumGray,
             ),
             const SizedBox(width: 24),
             BuildInput(
                 label: "Nickname".tr,
                 essential: true,
-                textController: controller.nicknameController),
+                textController: controller.nicknameController,
+                toolTip: "Please enter your display name".tr),
           ],
         ),
         const SizedBox(height: 24),
@@ -121,49 +124,43 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         Row(
           children: [
             BuildInput(
-                label: "Name".tr,
-                essential: false,
-                textController: controller.nameController),
+                label: "First name".tr,
+                essential: true,
+                textController: controller.firstNameController),
             const SizedBox(width: 24),
             BuildInput(
-              label: "Mobile Number".tr,
-              essential: false,
-              textController: controller.phoneNumberController,
-              keyboardType: TextInputType.number,
-            ),
+                label: "Last name".tr,
+                essential: true,
+                textController: controller.lastNameController),
           ],
         ),
         const SizedBox(height: 24),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PickFileFormField(
-              labelText: "Photo".tr,
-              toolTip:
-                  "Using a photo of your face as a profile image whenever possible can provide more trust to members"
-                      .tr,
-              essential: true,
-              hintText: ".jpg",
-              fileExtension: [FileExtension.jpg.keywordName],
-              initialUrl: controller.photoUrl.value,
-              onFilePicked: (pickedFile) {
-                controller.onPickPhoto(pickedFile);
-              },
-              isCircular: true,
-            ),
+            _buildGender(),
             const SizedBox(width: 24),
-            PickFileFormField(
-              labelText: "ID Card".tr,
-              essential: false,
-              hintText: ".jpg",
-              fileExtension: [FileExtension.jpg.keywordName],
-              initialUrl: controller.idPhotoUrl.value,
-              onFilePicked: (pickedFile) {
-                controller.onPickIdPhoto(pickedFile);
-              },
-              // showError: controller.photoFileError.value,
-            ),
+            BuildInput(
+                label: "Year of birth".tr,
+                hint: "0000",
+                essential: false,
+                textController: controller.yearOfBirthController),
           ],
+        ),
+        const SizedBox(height: 24),
+        PickFile(
+          labelText: "Photo".tr,
+          toolTip:
+              "Using a photo of your face as a profile image whenever possible can provide more trust to members"
+                  .tr,
+          essential: true,
+          hintText: ".jpg",
+          fileExtension: [FileExtension.jpg.keywordName],
+          initialUrl: controller.photoUrl.value,
+          onFilePicked: (pickedFile) {
+            controller.onPickPhoto(pickedFile);
+          },
+          isCircular: false,
+          aspectRatio: 16 / 9,
         ),
         const SizedBox(height: 24),
         Row(
@@ -188,6 +185,55 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
         ),
         const SizedBox(height: 24),
         _buildMultiInput("Introduction".tr),
+      ],
+    );
+  }
+
+  Widget _buildGender() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("성별".tr, style: CustomTextStyles.labelLargeBlack),
+        const SizedBox(height: 8),
+        Container(
+          width: 353,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale3,
+            ),
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+          ),
+          child: DropdownButton<Gender>(
+            hint: Text('Select Option'.tr,
+                style: CustomTextStyles.bodyMediumGray),
+            isExpanded: true,
+            value: controller.gender.value,
+            underline: Container(),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
+            borderRadius: BorderRadiusStyle.roundedBorder12,
+            // icon: const Icon(Icons.),
+            elevation: 16,
+            onChanged: (Gender? newValue) {
+              if (newValue != null) {
+                controller.gender.value = newValue;
+              }
+            },
+            items: <Gender>[Gender.male, Gender.female, Gender.nonbinary]
+                .map<DropdownMenuItem<Gender>>((Gender value) {
+              return DropdownMenuItem<Gender>(
+                value: value,
+                child: Text(
+                  value.displayName.tr,
+                  style: CustomTextStyles.bodyMediumBlack,
+                ),
+              );
+            }).toList(),
+          ),
+        ),
       ],
     );
   }
@@ -406,7 +452,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CustomElevatedButton(
-          text: 'Approval request'.tr,
+          text: 'Sign-up compelete'.tr,
           buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
           buttonStyle: CustomButtonStyles.fillPrimary,
           // width: 90,

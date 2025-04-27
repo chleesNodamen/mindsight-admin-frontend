@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/gender.dart';
+import 'package:mindsight_admin_page/enum/gender.dart';
 
 class MemberDetailsView extends GetWidget<MemberDetailsController> {
   const MemberDetailsView({super.key});

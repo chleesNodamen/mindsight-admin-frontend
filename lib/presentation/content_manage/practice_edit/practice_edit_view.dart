@@ -140,7 +140,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
       children: [
         InkWell(
           onTap: () => Get.offAllNamed(AppRoutes.contentPracticeManage),
-          child: Text("Practice plan management".tr,
+          child: Text("Daily plan management".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -154,7 +154,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         ),
         InkWell(
           onTap: controller.goPracticeDetails,
-          child: Text("Practice plan Details".tr,
+          child: Text("Daily plan Details".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: appTheme.skyBlue,
@@ -166,14 +166,14 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Practice plan Edit".tr, style: CustomTextStyles.bodyMediumGray)
+        Text("Daily plan Edit".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan Edit".tr,
+      name: "Daily plan Edit".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

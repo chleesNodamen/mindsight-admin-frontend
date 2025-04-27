@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'dart:html' as html;
 import 'dart:typed_data';
@@ -122,8 +123,8 @@ class TranscodingUploader {
     for (int i = 0; i < filename!.length; i++) {
       ffmpegStatus.value = "${"Upload Progress".tr}: $i/${filename!.length}%";
 
-      await UploadRepository()
-          .uploadFileBytes(filename![i], data![i], folder: folder);
+      // await UploadRepository()
+      //     .uploadFileBytes(filename![i], data![i], folder: folder);
     }
   }
 
@@ -140,3 +141,4 @@ class TranscodingUploader {
     Logger.info("트랜스코딩 해제");
   }
 }
+*/

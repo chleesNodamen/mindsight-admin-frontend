@@ -1,6 +1,6 @@
 import 'dart:html';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/goal.dart';
+import 'package:mindsight_admin_page/enum/goal.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_model.dart';
 import 'package:mindsight_admin_page/data/challenge_details/challenge_details_repository.dart';

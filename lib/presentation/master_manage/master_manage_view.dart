@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/account_role.dart';
+import 'package:mindsight_admin_page/enum/account_role.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_manage_controller.dart';
 
 class MasterManageView extends GetWidget<MasterManageController> {
@@ -153,7 +153,7 @@ class MasterManageView extends GetWidget<MasterManageController> {
                           style: CustomTextStyles.labelLargeGray)),
 
                   DataColumn(
-                      label: Text("Approval status".tr,
+                      label: Text("Approval".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.masterListModel.length, (index) {

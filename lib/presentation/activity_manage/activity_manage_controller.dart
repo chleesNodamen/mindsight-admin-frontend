@@ -14,7 +14,7 @@ class ActivityManageController extends GetxController {
   late AffiliationModel affiliationModel;
 
   List<String> typeLabels = [
-    "Practice plan",
+    "Daily plan",
     "Challenge",
   ];
 

@@ -71,12 +71,13 @@ class FAQBoardEditView extends GetWidget<FAQBoardEditController> {
         _buildContent(),
         const SizedBox(height: 24),
         // 첨부파일
-        PickFileFormField(
+        PickFile(
           labelText: "Attached File".tr,
           essential: false,
           initialUrl: controller.faqBoardDetailModel.attachedFile,
           hintText: ".jpg",
           fileExtension: [FileExtension.jpg.keywordName],
+          isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);
           },

@@ -204,31 +204,73 @@ class CustomElevatedButton extends BaseButton {
                     width == null ? Size.zero : Size(width!, height ?? 56),
               ),
           onPressed: isDisabled ?? false ? null : onPressed ?? () {},
-          child: Row(
-            mainAxisSize: width == null ? MainAxisSize.min : MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (leftIcon != null) ...[
-                const SizedBox(width: 10),
-                leftIcon!,
-                const SizedBox(width: 8),
-              ],
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  text,
-                  style:
-                      buttonTextStyle ?? CustomTextStyles.bodyMediumWhiteBold,
+          child: width == null
+              ? Row(
+                  mainAxisSize:
+                      width == null ? MainAxisSize.min : MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (leftIcon != null) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: leftIcon!,
+                      ),
+                    ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        text,
+                        style: buttonTextStyle ??
+                            CustomTextStyles.bodyMediumWhiteBold,
+                      ),
+                    ),
+                    if (rightIcon != null) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: rightIcon!,
+                      ),
+                    ],
+                  ],
+                )
+              : Stack(
+                  children: [
+                    if (leftIcon != null) ...[
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: leftIcon!,
+                          )),
+                    ],
+                    Center(
+                      child: Row(
+                        mainAxisSize:
+                            width == null ? MainAxisSize.min : MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              text,
+                              style: buttonTextStyle ??
+                                  CustomTextStyles.bodyMediumWhiteBold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (rightIcon != null) ...[
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: rightIcon!,
+                          )),
+                    ],
+                  ],
                 ),
-              ),
-              if (rightIcon != null) ...[
-                const SizedBox(width: 8),
-                rightIcon!,
-                const SizedBox(width: 10),
-              ],
-            ],
-          ),
         ),
       );
 }

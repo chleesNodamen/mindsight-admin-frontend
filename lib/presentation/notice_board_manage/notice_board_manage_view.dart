@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/notice_board_manage/notice_board_manage_controller.dart';
 
 class NoticeBoardManageView extends GetWidget<NoticeBoardManageController> {

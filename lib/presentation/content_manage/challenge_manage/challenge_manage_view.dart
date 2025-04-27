@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/goal.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/goal.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_manage/challenge_manage_controller.dart';
 
 class ChallengeManageView extends GetWidget<ChallengeManageController> {
@@ -95,7 +95,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
             SizedBox(
               width: double.infinity,
               child: DataTable(
-                showCheckboxColumn: Account.isAdmin,
+                showCheckboxColumn: false,
                 columnSpacing: 0,
                 checkboxHorizontalMargin: 0,
                 dataRowMaxHeight: 80,
@@ -118,18 +118,16 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                       label: Text('Likes'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Approval status".tr,
+                      label: Text("Approval".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Exposure'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Account.isAdmin
-                          ? const SizedBox.shrink()
-                          : Text("Approval request".tr,
-                              style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
                       label: Text('Edit'.tr,
+                          style: CustomTextStyles.labelLargeGray)),
+                  DataColumn(
+                      label: Text('Note'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.challengesModel.length, (index) {
@@ -156,12 +154,17 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                             padding: const EdgeInsets.symmetric(vertical: 24.0),
                             child: InkWell(
                               onTap: () => controller.onDetail(index),
-                              child: Text(
-                                controller.challengesModel.name![index],
-                                style:
-                                    CustomTextStyles.bodyMediumBlack.copyWith(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.w500,
+                              child: SizedBox(
+                                width: 200,
+                                child: Text(
+                                  controller.challengesModel.name![index],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      CustomTextStyles.bodyMediumBlack.copyWith(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
@@ -208,23 +211,11 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                             controller.onExposureChange(index);
                           },
                         )),
-                        DataCell(Account.isAdmin
-                            ? const SizedBox.shrink()
-                            : CustomElevatedButton(
-                                text: "Approval request".tr,
-                                buttonTextStyle:
-                                    CustomTextStyles.bodyMediumWhiteBold,
-                                buttonStyle: CustomButtonStyles.fillBlack,
-                                // width: 70,
-                                height: 30,
-                                onPressed: () =>
-                                    showSimpleMessage("Service preparing".tr))),
                         DataCell(CustomElevatedButton(
                             text: "Edit".tr,
-                            buttonTextStyle:
-                                CustomTextStyles.bodyMediumWhiteBold,
-                            buttonStyle: CustomButtonStyles.fillBlack,
-                            // width: 60,
+                            buttonTextStyle: CustomTextStyles.bodyMediumSkyBlue,
+                            buttonStyle:
+                                CustomButtonStyles.fillPrimaryTransparent,
                             height: 30,
                             onPressed: () => Get.offAllNamed(
                                     AppRoutes.challengeEdit,
@@ -232,6 +223,13 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                                       RouteArguments.id:
                                           controller.challengesModel.id![index],
                                     }))),
+                        DataCell(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            child: Text("-",
+                                style: CustomTextStyles.bodyLargeBlack),
+                          ),
+                        ),
                       ]);
                 }).toList(),
               ),
@@ -242,38 +240,38 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
             Stack(
               alignment: Alignment.centerLeft,
               children: [
-                Row(
-                  children: [
-                    Visibility(
-                      visible: Account.isAdmin,
-                      child: CustomElevatedButton(
-                        text: 'Change status'.tr,
-                        buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
-                        buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
-                        margin: const EdgeInsets.only(right: 16),
-                        // width: 107,
-                        height: 44,
-                        onPressed: () {
-                          showSimpleMessage("Service preparing".tr);
-                        },
-                      ),
-                    ),
-                    Visibility(
-                      visible: Account.isAdmin,
-                      child: CustomElevatedButton(
-                        text: 'Delete'.tr,
-                        buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
-                        buttonStyle:
-                            CustomButtonStyles.fillRedTransparent.copyWith(),
-                        // width: 76,
-                        height: 44,
-                        onPressed: () {
-                          showSimpleMessage("Service preparing".tr);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Visibility(
+                //       visible: Account.isAdmin,
+                //       child: CustomElevatedButton(
+                //         text: 'Change status'.tr,
+                //         buttonTextStyle: CustomTextStyles.bodyMediumSkyBlueBold,
+                //         buttonStyle: CustomButtonStyles.fillPrimaryTransparent,
+                //         margin: const EdgeInsets.only(right: 16),
+                //         // width: 107,
+                //         height: 44,
+                //         onPressed: () {
+                //           showSimpleMessage("Service preparing".tr);
+                //         },
+                //       ),
+                //     ),
+                //     Visibility(
+                //       visible: Account.isAdmin,
+                //       child: CustomElevatedButton(
+                //         text: 'Delete'.tr,
+                //         buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+                //         buttonStyle:
+                //             CustomButtonStyles.fillRedTransparent.copyWith(),
+                //         // width: 76,
+                //         height: 44,
+                //         onPressed: () {
+                //           showSimpleMessage("Service preparing".tr);
+                //         },
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Pages(
                     pages: (controller.challengesModel.total! / 20).ceil(),
                     activePage: controller.activePage.value,
@@ -298,7 +296,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
           color: appTheme.grayScale2,
         ),
       ),
-      height: 238,
+      // height: 238,
       width: double.infinity,
       padding: const EdgeInsets.all(32.0),
       child: Column(
@@ -326,52 +324,49 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
             thickness: 1,
             color: appTheme.grayScale2,
           ),
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Text('Period'.tr, style: CustomTextStyles.labelMediumGray),
+              const SizedBox(height: 15),
+              Row(
+                children:
+                    List.generate(controller.periodValues.length, (index) {
+                  return CustomCheckboxWidget(
+                    isChecked: controller.periodValues[index],
+                    label: '${controller.periodLabels[index]} ${'일'.tr}',
+                    onChanged: (value) =>
+                        controller.togglePeriodCheckbox(index, value),
+                  );
+                }),
+              ),
+            ],
+          ),
+          Divider(
+            height: 49,
+            thickness: 1,
+            color: appTheme.grayScale2,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Approval".tr, style: CustomTextStyles.labelMediumGray),
+              const SizedBox(height: 15),
+              Row(
                 children: [
-                  Text('Period'.tr, style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(height: 15),
-                  Row(
-                    children:
-                        List.generate(controller.periodValues.length, (index) {
-                      return CustomCheckboxWidget(
-                        isChecked: controller.periodValues[index],
-                        label: '${controller.periodLabels[index]} ${'일'.tr}',
-                        onChanged: (value) =>
-                            controller.togglePeriodCheckbox(index, value),
-                      );
-                    }),
+                  CustomCheckboxWidget(
+                    isChecked: controller.statusValues[0],
+                    label: 'Active'.tr,
+                    onChanged: (value) => controller.toggleStatusCheckbox(
+                        0, value), // Adjust as needed
                   ),
-                ],
-              ),
-              const SizedBox(
-                width: 25,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Approval status".tr,
-                      style: CustomTextStyles.labelMediumGray),
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      CustomCheckboxWidget(
-                        isChecked: controller.statusValues[0],
-                        label: 'Active'.tr,
-                        onChanged: (value) => controller.toggleStatusCheckbox(
-                            0, value), // Adjust as needed
-                      ),
-                      CustomCheckboxWidget(
-                        isChecked: controller.statusValues[1],
-                        label: 'Inactive'.tr,
-                        onChanged: (value) => controller.toggleStatusCheckbox(
-                            1, value), // Adjust as needed
-                      ),
-                    ],
+                  CustomCheckboxWidget(
+                    isChecked: controller.statusValues[1],
+                    label: 'Inactive'.tr,
+                    onChanged: (value) => controller.toggleStatusCheckbox(
+                        1, value), // Adjust as needed
                   ),
                 ],
               ),

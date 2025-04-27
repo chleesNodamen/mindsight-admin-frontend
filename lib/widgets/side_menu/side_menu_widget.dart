@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/account_role.dart';
+import 'package:mindsight_admin_page/enum/account_role.dart';
 
 class MenuItem {
   final String name;
@@ -25,7 +25,7 @@ String companyManagePageSubMenuDisplayName = "Company list";
 String inactiveCompanyManagePageDisplayName = "Inactive company management";
 String contentManagePageDisplayName = "Content management";
 String contentManageContentDisplayName = "Content list";
-String contentPracticeDisplayName = "Practice plan management";
+String contentPracticeDisplayName = "Daily plan management";
 String contentChallengeDisplayName = "Challenge management";
 String activityManagePageDisplayName = "Activity record management";
 String activityHistoryPageDisplayName = "Activity record detail";

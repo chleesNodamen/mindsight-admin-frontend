@@ -127,7 +127,7 @@ class CompanyManageView extends GetWidget<CompanyManageController> {
                       label: Text("Registration date".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Approval status".tr,
+                      label: Text("Approval".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows:

@@ -27,37 +27,9 @@
     <meta http-equiv="Expires" content="0">
     <!-- no-cache 설정 끝 -->
 
-    <!-- 트랜스코딩 라이브러리 -->
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js" crossorigin="anonymous" async></script>
-
     <!-- hls 비디오 재생 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest" type="application/javascript"></script>
 
-    <!-- TensorFlow.js 라이브러리 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <!-- Universal Sentence Encoder 모델 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
-
-    <!-- Universal Sentence Encoder 관련 스크립트 -->
-    <script>
-        // 전역 변수에 모델을 저장
-        window.useModel = null;
-        async function loadUSEModel() {
-            window.useModel = await use.load();
-            console.info("Universal Sentence Encoder 모델 로드 완료");
-        }
-        loadUSEModel();
-
-        // texts: 문자열 배열을 입력받아 임베딩 벡터 배열을 반환합니다.
-        async function computeEmbedding(texts) {
-            if (!window.useModel) {
-                await loadUSEModel();
-            }
-            const embeddings = await window.useModel.embed(texts);
-            // Tensor 객체이므로 array() 메서드를 호출해 배열로 변환
-            return embeddings.array();
-        }
-    </script>
 </head>
 
 <body>

@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/practice_manage/practice_manage_controller.dart';
 
 class PracticeManageView extends GetWidget<PracticeManageController> {
@@ -62,7 +62,7 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Practice plan management".tr,
+      name: "Daily plan management".tr,
       searchShow: true,
       viewCount: false,
       searchText: "Search title".tr,
@@ -142,13 +142,10 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text("Master".tr,
-                          style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
                       label: Text("Title".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Complete member".tr,
+                      label: Text("Completed members".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text("Participating members".tr,
@@ -160,37 +157,38 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                       label: Text("Likes".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Approval status".tr,
+                      label: Text("Approval".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Exposure'.tr,
                           style: CustomTextStyles.labelLargeGray)),
-                  DataColumn(
-                      label: Account.isAdmin
-                          ? const SizedBox.shrink()
-                          : Text("Approval request".tr,
-                              style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Edit'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(controller.practicesModel.length, (index) {
                   return DataRow(cells: [
-                    DataCell(SizedBox(
-                      width: 150,
-                      child: Text(
-                        controller.practicesModel.masterName![index],
-                        style: CustomTextStyles.bodyLargeBlack,
-                      ),
-                    )),
                     DataCell(InkWell(
                         onTap: () => controller.onTapDetail(index),
                         child: SizedBox(
-                          width: 300,
+                          width: 240,
                           child: Text(controller.practicesModel.name![index],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: CustomTextStyles.bodyLargeBlack.copyWith(
                                   decoration: TextDecoration.underline)),
                         ))),
+                    // DataCell(SizedBox(
+                    //   width: 150,
+                    //   child: Text(
+                    //     maxLines: 1,
+                    //     overflow: TextOverflow.ellipsis,
+                    //     Account.isAdmin
+                    //         ? controller.practicesModel.masterName![index]
+                    //         : "",
+                    //     style: CustomTextStyles.bodyLargeBlack,
+                    //   ),
+                    // )),
                     DataCell(Text(
                         controller.practicesModel.finished![index].toString(),
                         style: CustomTextStyles.bodyLargeBlack)),
@@ -217,17 +215,6 @@ class PracticeManageView extends GetWidget<PracticeManageController> {
                         controller.onExposureChange(index);
                       },
                     )),
-                    DataCell(Account.isAdmin
-                        ? const SizedBox.shrink()
-                        : CustomElevatedButton(
-                            text: "Approval request".tr,
-                            buttonTextStyle:
-                                CustomTextStyles.bodyMediumWhiteBold,
-                            buttonStyle: CustomButtonStyles.fillBlack,
-                            // width: 70,
-                            height: 30,
-                            onPressed: () =>
-                                showSimpleMessage("Service preparing".tr))),
                     DataCell(CustomElevatedButton(
                         text: "Edit".tr,
                         buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,

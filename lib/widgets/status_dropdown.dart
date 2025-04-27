@@ -24,38 +24,42 @@ class StatusDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isEnable) {
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          color: appTheme.white,
-          borderRadius: BorderRadiusStyle.roundedBorder8,
-          border: Border.all(
-            width: 1,
-            color: appTheme.grayScale2,
+      return SizedBox(
+        height: 32,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: appTheme.white,
+            borderRadius: BorderRadiusStyle.roundedBorder8,
+            border: Border.all(
+              width: 1,
+              color: appTheme.grayScale2,
+            ),
           ),
-        ),
-        child: DropdownButton<String>(
-          value: isActive ? 'Active'.tr : 'Inactive'.tr,
-          underline: Container(),
-          padding: const EdgeInsets.only(left: 12),
-          borderRadius: borderRadius,
-          elevation: 16,
-          style: const TextStyle(color: Colors.deepPurple),
-          onChanged: (String? newValue) {
-            if (newValue != null && onChanged != null) {
-              onChanged!(newValue == 'Active'.tr);
-            }
-          },
-          items: <String>['Active'.tr, 'Inactive'.tr]
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-                style:
-                    value == "Active".tr ? activeTextStyle : inactiveTextStyle,
-              ),
-            );
-          }).toList(),
+          child: DropdownButton<String>(
+            value: isActive ? 'Active'.tr : 'Inactive'.tr,
+            underline: Container(),
+            padding: const EdgeInsets.only(left: 12),
+            borderRadius: borderRadius,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            onChanged: (String? newValue) {
+              if (newValue != null && onChanged != null) {
+                onChanged!(newValue == 'Active'.tr);
+              }
+            },
+            items: <String>['Active'.tr, 'Inactive'.tr]
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: value == "Active".tr
+                      ? activeTextStyle
+                      : inactiveTextStyle,
+                ),
+              );
+            }).toList(),
+          ),
         ),
       );
     } else {

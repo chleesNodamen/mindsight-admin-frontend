@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_model.dart';
 import 'package:mindsight_admin_page/data/content_delete/content_delete_repository.dart';
@@ -25,14 +25,8 @@ class ContentManageController extends GetxController {
   RxBool searchOn = false.obs;
   RxString searchValue = "".obs;
 
-  RxList<ContentCategory> bodyLabels = [
-    ContentCategory.body,
-    ContentCategory.breath,
-    ContentCategory.mindfulness,
-    ContentCategory.theory,
-  ].obs;
-
-  RxList<bool> bodyValues = List<bool>.filled(ContentCategory.length, true).obs;
+  RxList<bool> categorySelected =
+      List<bool>.filled(ContentCategory.values.length, true).obs;
 
   /*
   RxList<ContentType> breathingLabels =
@@ -77,7 +71,7 @@ class ContentManageController extends GetxController {
   }
 
   Future<void> toggleCategoryCheckbox(int index, bool value) async {
-    bodyValues[index] = value;
+    categorySelected[index] = value;
 
     await loadPage(1);
   }
@@ -239,8 +233,8 @@ class ContentManageController extends GetxController {
 
   List<String> getChosenCategory() {
     return [
-      for (int i = 0; i < bodyLabels.length; i++)
-        if (bodyValues[i]) bodyLabels[i].keywordName,
+      for (int i = 0; i < ContentCategory.values.length; i++)
+        if (categorySelected[i]) ContentCategory.values[i].keywordName,
     ];
   }
 

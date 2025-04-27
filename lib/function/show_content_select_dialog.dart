@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/sort_condition.dart';
+import 'package:mindsight_admin_page/enum/sort_condition.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_model.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_repository.dart';
 import 'package:mindsight_admin_page/data/content_list/content_list_req_get.dart';
@@ -375,7 +375,7 @@ Future<Map<String, String>?> showContentSelectDialog(
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                               DataColumn(
-                                label: Text("Approval status".tr,
+                                label: Text("Approval".tr,
                                     style: CustomTextStyles.labelLargeGray),
                               ),
                             ],

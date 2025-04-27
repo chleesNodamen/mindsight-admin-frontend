@@ -4,24 +4,24 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 
 class MasterDetailModel extends BaseModel {
   // 개인 정보 필드
-  final String id;
-  final String email;
-  final String name;
-  final String nickname;
-  final DateTime createdAt;
-  final bool verified;
-  final String phoneNumber;
-  final String country;
-  final String address;
-  final String primaryLanguage;
+  final String? id;
+  final String? email;
+  final String? name;
+  final String? nickname;
+  final DateTime? createdAt;
+  final bool? verified;
+  final String? phoneNumber;
+  final String? country;
+  final String? address;
+  final String? primaryLanguage;
   final String? secondaryLanguage;
-  final String intro;
-  final double currentProfitRate;
-  final double previousProfitRate;
+  final String? intro;
+  final double? currentProfitRate;
+  final double? previousProfitRate;
   final String? photoUrl;
   final String? idPhotoUrl;
 
-  // Company info 필드 (클래스 하단으로 이동)
+  // Company info 필드
   final String? companyName;
   final String? representative;
   final String? businessNumber;
@@ -32,20 +32,20 @@ class MasterDetailModel extends BaseModel {
   final String? contactAddress;
 
   MasterDetailModel({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.nickname,
-    required this.createdAt,
-    required this.verified,
-    required this.phoneNumber,
-    required this.country,
-    required this.address,
-    required this.primaryLanguage,
+    this.id,
+    this.email,
+    this.name,
+    this.nickname,
+    this.createdAt,
+    this.verified,
+    this.phoneNumber,
+    this.country,
+    this.address,
+    this.primaryLanguage,
     this.secondaryLanguage,
-    required this.intro,
-    required this.currentProfitRate,
-    required this.previousProfitRate,
+    this.intro,
+    this.currentProfitRate,
+    this.previousProfitRate,
     // Company info 필드
     this.companyName,
     this.representative,
@@ -61,20 +61,25 @@ class MasterDetailModel extends BaseModel {
 
   factory MasterDetailModel.fromJson(Map<String, dynamic> json) {
     return MasterDetailModel(
-      id: json['id'] as String,
-      email: json['email'] as String,
-      name: json['name'] as String,
-      nickname: json['nickname'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      verified: json['verified'] as bool,
-      phoneNumber: json['phoneNumber'] as String,
-      country: json['country'] as String,
-      address: json['address'] as String,
-      primaryLanguage: json['primaryLanguage'] as String,
+      id: json['id'] as String?,
+      email: json['email'] as String?,
+      name: json['name'] as String?,
+      nickname: json['nickname'] as String?,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      verified: json['verified'] as bool?,
+      phoneNumber: json['phoneNumber'] as String?,
+      country: json['country'] as String?,
+      address: json['address'] as String?,
+      primaryLanguage: json['primaryLanguage'] as String?,
       secondaryLanguage: json['secondaryLanguage'] as String?,
-      intro: json['intro'] as String,
-      currentProfitRate: (json['currentProfitRate'] as num).toDouble(),
-      previousProfitRate: (json['previousProfitRate'] as num).toDouble(),
+      intro: json['intro'] as String?,
+      currentProfitRate: json['currentProfitRate'] != null
+          ? (json['currentProfitRate'] as num).toDouble()
+          : null,
+      previousProfitRate: json['previousProfitRate'] != null
+          ? (json['previousProfitRate'] as num).toDouble()
+          : null,
       // Company info 필드
       companyName: json['companyName'] as String?,
       representative: json['representative'] as String?,

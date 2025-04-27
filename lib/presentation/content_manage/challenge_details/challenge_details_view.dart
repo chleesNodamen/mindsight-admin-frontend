@@ -1,5 +1,5 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/constants/enum/goal.dart';
+import 'package:mindsight_admin_page/enum/goal.dart';
 import 'package:mindsight_admin_page/presentation/content_manage/challenge_details/challenge_details_controller.dart';
 import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
 
@@ -182,8 +182,7 @@ class ChallengeDetailsView extends GetWidget<ChallengeDetailsController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Approval status'.tr,
-                      style: CustomTextStyles.labelMediumGray),
+                  Text('Approval'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
                   Text(
                       ContentStatus.fromKeyword(

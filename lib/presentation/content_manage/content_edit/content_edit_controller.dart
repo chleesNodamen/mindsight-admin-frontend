@@ -6,7 +6,7 @@ import 'package:mindsight_admin_page/data/content_details/content_details_reposi
 import 'package:mindsight_admin_page/data/content_edit/content_edit_repository.dart';
 import 'package:mindsight_admin_page/data/content_edit/content_edit_req_put.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
-import 'package:mindsight_admin_page/utils/transcoding_uploader.dart';
+import 'package:mindsight_admin_page/utils/transcoding_uploader_nouse.dart';
 
 class ContentEditController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
@@ -18,8 +18,7 @@ class ContentEditController extends GetxController {
 
   final List<ContentLanguage> contentLanguage = [
     ContentLanguage.english,
-    ContentLanguage.korean,
-    ContentLanguage.japanese
+    ContentLanguage.korean
   ];
 
   final TextEditingController nameController = TextEditingController();
@@ -32,7 +31,7 @@ class ContentEditController extends GetxController {
   File? ccFile;
   File? mediaFile;
 
-  final transcodingUploader = TranscodingUploader();
+  // final transcodingUploader = TranscodingUploader();
 
   @override
   Future<void> onClose() async {
@@ -40,7 +39,7 @@ class ContentEditController extends GetxController {
     tagController.dispose();
     introController.dispose();
     mediaController.dispose();
-    await transcodingUploader.dispose();
+    // await transcodingUploader.dispose();
     super.onClose();
   }
 
@@ -132,7 +131,7 @@ class ContentEditController extends GetxController {
       mediaFile = pickedFile;
       contentDetailsModel.video = pickedFile.name;
 
-      transcodingUploader.transcoding(mediaFile!);
+      // transcodingUploader.transcoding(mediaFile!);
     }
   }
 
@@ -153,7 +152,8 @@ class ContentEditController extends GetxController {
   // }
 
   Future<void> onSave() async {
-    String folder = BlobNameGenerator.generateFolderName();
+    /*
+    String folder = BlobNameGenerator.generateBlobFolderName();
 
     if (mediaFile != null) {
       if (!transcodingUploader.isTranscodingComplete) {
@@ -204,6 +204,7 @@ class ContentEditController extends GetxController {
     } else {
       showSimpleMessage("수정에 실패 하였습니다");
     }
+    */
   }
 
   void onChangeStatus(ContentStatus? newValue) {

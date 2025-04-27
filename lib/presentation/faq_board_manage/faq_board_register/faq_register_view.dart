@@ -67,11 +67,12 @@ class FAQBoardRegisterView extends GetWidget<FAQBoardRegisterController> {
         _buildContent(),
         const SizedBox(height: 24),
         // 첨부파일
-        PickFileFormField(
+        PickFile(
           labelText: "Attached File".tr,
           essential: false,
           hintText: controller.attachedFile?.name ?? ".jpg",
           fileExtension: [FileExtension.jpg.keywordName],
+          isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);
           },
