@@ -69,14 +69,14 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
           },
         ),
         CustomImageView(imagePath: IconConstant.arrowRight),
-        Text("Master Details".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Master details".tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: Account.isAdmin ? "Master Details".tr : "My account detail".tr,
+      name: Account.isAdmin ? "Master details".tr : "My account detail".tr,
       searchShow: false,
       viewCount: false,
     );

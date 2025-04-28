@@ -273,4 +273,7 @@ final Map<String, String> enUs = {
       "It will be displayed in the specified language version.",
   "It must be set to “exposed” in order to be shown in the service.":
       "It must be set to “exposed” in order to be shown in the service.",
+  "Processing": "Processing",
+  "Inactive master management": "Inactive master management",
+  "Inactive member management": "Inactive member management",
 };

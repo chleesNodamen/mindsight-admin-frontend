@@ -649,7 +649,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
           ),
           InkWell(
             child: Text(
-              "Master Details".tr,
+              "Master details".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,

@@ -50,7 +50,7 @@ class InactiveMasterManageView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Inactive Master management".tr,
+      name: "Inactive master management".tr,
       searchShow: true,
       viewCount: false,
       searchText: "Email address, Name Search".tr,

@@ -1,12 +1,73 @@
+/*
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/widgets/circular_custom_image_view.dart';
 
-// ignore: deprecated_member_use
-import 'dart:html' as html;
+class ImageDialogContent extends StatelessWidget {
+  final String url;
+  final bool isCircular;
+
+  const ImageDialogContent({
+    super.key,
+    required this.url,
+    this.isCircular = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Widget imageWidget;
+    if (isCircular) {
+      imageWidget = CircularCustomImageView(
+        imagePath: url,
+        size: 300,
+      );
+    } else {
+      imageWidget = Image.network(
+        url,
+        fit: BoxFit.contain,
+        width: 300,
+        height: 300,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return const SizedBox(
+            width: 300,
+            height: 300,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        },
+        errorBuilder: (context, error, stackTrace) {
+          return SizedBox(
+            width: 300,
+            height: 300,
+            child: Center(child: Text("Failed to load image".tr)),
+          );
+        },
+      );
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        InteractiveViewer(
+          child: imageWidget,
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Close'.tr),
+          ),
+        ),
+      ],
+    );
+  }
+}
+*/
+
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/widgets/circular_custom_image_view.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
 
 class ImageDialogContent extends StatelessWidget {
   final String url;
@@ -51,8 +112,19 @@ class ImageDialogContent extends StatelessWidget {
           final double originalWidth = imageInfo.image.width.toDouble();
           final double originalHeight = imageInfo.image.height.toDouble();
 
-          final double targetWidth = originalWidth * 2;
-          final double targetHeight = originalHeight * 2;
+          const double maxWidth = 600;
+          const double maxHeight = 600;
+
+          double scale = 1.0;
+          if (originalWidth > maxWidth || originalHeight > maxHeight) {
+            scale = (maxWidth / originalWidth).clamp(0, 1);
+            scale = scale > (maxHeight / originalHeight).clamp(0, 1)
+                ? (maxHeight / originalHeight).clamp(0, 1)
+                : scale;
+          }
+
+          final double targetWidth = originalWidth * scale;
+          final double targetHeight = originalHeight * scale;
 
           Widget imageWidget;
           if (isCircular) {

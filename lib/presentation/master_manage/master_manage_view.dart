@@ -38,7 +38,7 @@ class MasterManageView extends GetWidget<MasterManageController> {
                                           children: [
                                             _buildRegisterButton(),
                                             const SizedBox(width: 16),
-                                            _buildMassRegisterButton(),
+                                            // _buildMassRegisterButton(),
                                           ],
                                         ),
                                         const SizedBox(height: 32),

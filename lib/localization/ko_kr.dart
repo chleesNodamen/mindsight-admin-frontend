@@ -269,6 +269,9 @@ final Map<String, String> koKR = {
       "지정된 언어 버전으로 표시됩니다.",
   "It must be set to “exposed” in order to be shown in the service.":
       "서비스에 노출되려면 '노출' 상태로 설정해야 합니다.",
+  "Processing": "처리 중",
+  "Inactive master management": "비활성 마스터 관리",
+  "Inactive member management": "비활성 회원 관리",
 
 // 기존것 그냥 붙여넣기 했음
   "Company New registration": "회사 신규 등록",
@@ -322,7 +325,7 @@ final Map<String, String> koKR = {
   "Streaming Details": "스트리밍 상세",
   "Search master name": "마스터 이름 검색",
   "Profit margin": "수익률",
-  "Master detail": "마스터별 상세",
+  "Master details": "마스터별 상세",
   "View": "보기",
   "Download Excel": "엑셀 다운로드",
   "Select aggregation": "선택 집계",

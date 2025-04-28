@@ -99,7 +99,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                       label: Text("Total View Rate".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
-                      label: Text("Master detail".tr,
+                      label: Text("Master details".tr,
                           style: CustomTextStyles.labelLargeGray)),
                 ],
                 rows: List.generate(
