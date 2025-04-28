@@ -73,34 +73,34 @@ class CompanyListModel extends BaseModel {
         companyName: json["company"] == null
             ? []
             : List<String>.from(
-                json["company"]!.map((x) => x["companyName"] ?? "-")),
+                json["company"]!.map((x) => x["companyName"] ?? "")),
         representative: json["company"] == null
             ? []
             : List<String>.from(
-                json["company"]!.map((x) => x["representative"] ?? "-")),
+                json["company"]!.map((x) => x["representative"] ?? "")),
         businessNumber: json["company"] == null
             ? []
             : List<String>.from(
-                json["company"]!.map((x) => x["businessNumber"] ?? "-")),
+                json["company"]!.map((x) => x["businessNumber"] ?? "")),
         phone: json["company"] == null
             ? []
-            : List<String>.from(json["company"]!.map((x) => x["phone"] ?? "-")),
+            : List<String>.from(json["company"]!.map((x) => x["phone"] ?? "")),
         contactName: json["company"] == null
             ? []
             : List<String>.from(
-                json["company"]!.map((x) => x["contactName"] ?? "-")),
+                json["company"]!.map((x) => x["contactName"] ?? "")),
         contactEmail: json["company"] == null
             ? []
             : List<String>.from(
-                json["company"]!.map((x) => x["contactEmail"] ?? "-")),
+                json["company"]!.map((x) => x["contactEmail"] ?? "")),
         contactPhone: json["company"] == null
             ? []
             : List<String>.from(
-                json["company"]!.map((x) => x["contactPhone"] ?? "-")),
+                json["company"]!.map((x) => x["contactPhone"] ?? "")),
         address: json["company"] == null
             ? []
             : List<String>.from(
-                json["company"]!.map((x) => x["address"] ?? "-")),
+                json["company"]!.map((x) => x["address"] ?? "")),
         verified: json["company"] == null
             ? []
             : List<bool>.from(json["company"]!.map((x) => x["verified"])),
@@ -124,14 +124,14 @@ class CompanyListModel extends BaseModel {
                 int idx = entry.key;
                 return {
                   "id": entry.value,
-                  "companyName": companyName?[idx] ?? "-",
-                  "representative": representative?[idx] ?? "-",
-                  "businessNumber": businessNumber?[idx] ?? "-",
-                  "phone": phone?[idx] ?? "-",
-                  "contactName": contactName?[idx] ?? "-",
-                  "contactEmail": contactEmail?[idx] ?? "-",
-                  "contactPhone": contactPhone?[idx] ?? "-",
-                  "address": address?[idx] ?? "-",
+                  "companyName": companyName?[idx] ?? "",
+                  "representative": representative?[idx] ?? "",
+                  "businessNumber": businessNumber?[idx] ?? "",
+                  "phone": phone?[idx] ?? "",
+                  "contactName": contactName?[idx] ?? "",
+                  "contactEmail": contactEmail?[idx] ?? "",
+                  "contactPhone": contactPhone?[idx] ?? "",
+                  "address": address?[idx] ?? "",
                   "verified": verified?[idx] ?? false,
                   "createdAt": createdAt?[idx]?.toIso8601String(),
                   "updatedAt": updatedAt?[idx]?.toIso8601String(),

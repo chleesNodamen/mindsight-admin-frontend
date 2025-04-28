@@ -29,7 +29,7 @@ class InquiryBoardDetailView extends GetWidget<InquiryBoardDetailController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TobBarSearch(
-                                    name: "Inquiry Board detail".tr,
+                                    name: "Inquiry board detail".tr,
                                     searchShow: false,
                                     viewCount: false,
                                   ),
@@ -57,7 +57,7 @@ class InquiryBoardDetailView extends GetWidget<InquiryBoardDetailController> {
       children: [
         InkWell(
           child: Text(
-            "Inquiry Board list".tr,
+            "Inquiry board list".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.underline,
@@ -69,7 +69,7 @@ class InquiryBoardDetailView extends GetWidget<InquiryBoardDetailController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Inquiry Board detail".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Inquiry board detail".tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }

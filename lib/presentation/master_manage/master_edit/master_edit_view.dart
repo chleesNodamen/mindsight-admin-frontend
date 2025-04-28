@@ -112,12 +112,12 @@ class MasterEditView extends GetWidget<MasterEditController> {
             BuildInput(
                 label: "First name".tr,
                 essential: true,
-                textController: controller.nameController),
+                textController: controller.firstNameController),
             const SizedBox(width: 24),
             BuildInput(
                 label: "Last name".tr,
                 essential: true,
-                textController: controller.nameController),
+                textController: controller.lastNameController),
           ],
         ),
         const SizedBox(height: 24),
@@ -129,7 +129,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
                 label: "Year of birth".tr,
                 hint: "0000",
                 essential: false,
-                textController: controller.yearOfBirthController),
+                textController: controller.birthDateController),
           ],
         ),
         const SizedBox(height: 24),
@@ -141,8 +141,12 @@ class MasterEditView extends GetWidget<MasterEditController> {
                   "Using a photo of your face as a profile image whenever possible can provide more trust to members"
                       .tr,
               essential: true,
-              hintText: ".jpg",
-              fileExtension: [FileExtension.jpg.keywordName],
+              hintText: ".jpg .jpeg .png",
+              fileExtension: [
+                FileExtension.jpg.keywordName,
+                FileExtension.jpeg.keywordName,
+                FileExtension.png.keywordName
+              ],
               initialUrl: controller.photoUrl.value,
               onFilePicked: (pickedFile) {
                 controller.onPickPhoto(pickedFile);
@@ -154,8 +158,12 @@ class MasterEditView extends GetWidget<MasterEditController> {
             PickFile(
               labelText: "ID Card".tr,
               essential: false,
-              hintText: ".jpg",
-              fileExtension: [FileExtension.jpg.keywordName],
+              hintText: ".jpg .jpeg .png",
+              fileExtension: [
+                FileExtension.jpg.keywordName,
+                FileExtension.jpeg.keywordName,
+                FileExtension.png.keywordName
+              ],
               isCircular: false,
               initialUrl: controller.idPhotoUrl.value,
               onFilePicked: (pickedFile) {
@@ -179,10 +187,10 @@ class MasterEditView extends GetWidget<MasterEditController> {
         Row(
           children: [
             _buildLanguage("Primary Language".tr, true,
-                controller.selectedPrimaryLanguage.value),
+                controller.selectedPrimaryLanguage),
             const SizedBox(width: 24),
             _buildLanguage("Secondary Language".tr, false,
-                controller.selectedSecondaryLanguage.value),
+                controller.selectedSecondaryLanguage),
           ],
         ),
         const SizedBox(height: 24),
@@ -299,8 +307,8 @@ class MasterEditView extends GetWidget<MasterEditController> {
   //           PickFile(
   //             labelText: "Photo".tr,
   //             essential: true,
-  //             hintText: ".jpg",
-  //             fileExtension: [FileExtension.jpg.keywordName],
+  //             hintText: ".jpg .jpeg .png",
+  //             fileExtension: [FileExtension.jpg.keywordName, FileExtension.jpeg.keywordName, FileExtension.png.keywordName],
   //             initialUrl: controller.photoUrl.value,
   //             onFilePicked: (pickedFile) {
   //               controller.onPickPhoto(pickedFile);
@@ -312,8 +320,8 @@ class MasterEditView extends GetWidget<MasterEditController> {
   //           PickFile(
   //             labelText: "ID Card".tr,
   //             essential: false,
-  //             hintText: ".jpg",
-  //             fileExtension: [FileExtension.jpg.keywordName],
+  //             hintText: ".jpg .jpeg .png",
+  //             fileExtension: [FileExtension.jpg.keywordName, FileExtension.jpeg.keywordName, FileExtension.png.keywordName],
   //             isCircular: false,
   //             initialUrl: controller.idPhotoUrl.value,
   //             onFilePicked: (pickedFile) {
@@ -475,7 +483,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
   }
 
   Widget _buildLanguage(
-      String text, bool essential, ContentLanguage? language) {
+      String text, bool essential, Rx<ContentLanguage?> language) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -504,7 +512,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
             hint: Text('Select Option'.tr,
                 style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: language,
+            value: language.value,
             underline: Container(),
             padding:
                 const EdgeInsets.only(left: 16, right: 16, top: 2, bottom: 2),
@@ -512,7 +520,7 @@ class MasterEditView extends GetWidget<MasterEditController> {
             // icon: const Icon(Icons.),
             elevation: 16,
             onChanged: (ContentLanguage? newValue) {
-              language = newValue;
+              language.value = newValue;
             },
             items: controller.languageLabels
                 .map<DropdownMenuItem<ContentLanguage>>(

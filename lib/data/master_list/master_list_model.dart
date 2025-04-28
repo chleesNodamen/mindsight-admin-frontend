@@ -46,13 +46,13 @@ class MasterListModel extends BaseModel {
         companyName: json["companyName"] == null
             ? []
             : List<String>.from(
-                json["companyName"].map((x) => x == null || x == "" ? "-" : x)),
+                json["companyName"].map((x) => x == null || x == "" ? "" : x)),
         email: json["email"] == null
             ? []
             : List<String>.from(json["email"].map((x) => x)),
         nickname: json["nickname"] == null
             ? []
-            : List<String>.from(json["nickname"].map((x) => x ?? "-")),
+            : List<String>.from(json["nickname"].map((x) => x ?? "")),
         createdAt: json["createdAt"] == null
             ? []
             : List<DateTime>.from(

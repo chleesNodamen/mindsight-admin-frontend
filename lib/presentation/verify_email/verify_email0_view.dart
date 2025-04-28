@@ -69,28 +69,20 @@ class VerifyEmail0View extends GetWidget<VerifyEmail0Controller> {
   Row _build123() {
     return Row(children: [
       Container(
-          width: 30.adaptSize,
-          height: 30.adaptSize,
+          width: 40.adaptSize,
+          height: 40.adaptSize,
           alignment: Alignment.center,
           decoration: AppDecoration.fillSkyBlue
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder12),
           child: Text("1", style: CustomTextStyles.bodyMediumWhite)),
       SizedBox(width: 8.h),
       Container(
-          width: 30.adaptSize,
-          height: 30.adaptSize,
+          width: 40.adaptSize,
+          height: 40.adaptSize,
           alignment: Alignment.center,
           decoration: AppDecoration.fillGrayScale1
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder12),
           child: Text("2", style: CustomTextStyles.bodyMediumGray)),
-      SizedBox(width: 8.h),
-      Container(
-          width: 30.adaptSize,
-          height: 30.adaptSize,
-          alignment: Alignment.center,
-          decoration: AppDecoration.fillGrayScale1
-              .copyWith(borderRadius: BorderRadiusStyle.roundedBorder12),
-          child: Text("3", style: CustomTextStyles.bodyMediumGray)),
     ]);
   }
 

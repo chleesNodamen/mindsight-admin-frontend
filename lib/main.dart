@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:mindsight_admin_page/firebase_options.dart';
 import 'package:mindsight_admin_page/initial_bindings/initial_bindings.dart';
 import 'package:mindsight_admin_page/localization/app_localization.dart';
 import 'app_export.dart';
@@ -9,6 +12,19 @@ Future<void> main() async {
   Logger.info("앱 시작: ${html.window.location.href}");
 
   WidgetsFlutterBinding.ensureInitialized(); // 비동기 작업을 위해 필요
+
+  if (kReleaseMode) {
+    // 배포 환경에서는 firebase.initializeApp() 호출 생략
+    Logger.info("Release Mode: firebase.initializeApp 생략");
+  } else {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
 
   Get.put(PrefUtils());
   Get.put(CustomHttpClient());

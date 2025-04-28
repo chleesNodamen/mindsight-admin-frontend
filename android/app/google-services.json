@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "86520359521",
+    "project_id": "mindsight-admin",
+    "storage_bucket": "mindsight-admin.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86520359521:android:635acf889c96bca6ce5820",
+        "android_client_info": {
+          "package_name": "com.example.mindsight_admin_page"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86520359521-d9fkua33tb3bd9ds5dapltlq52241k3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnCmm3cVi7Zf-2guEUdYjCbAwGmAGUUfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86520359521-d9fkua33tb3bd9ds5dapltlq52241k3k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "86520359521-i9nlllsqrhqk0boqh10lb3dlcea3najm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mindsightAdminPage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -36,7 +36,7 @@ class _VideoDialogContentState extends State<VideoDialogContent> {
         });
       }).catchError((error) {
         Logger.error("미디어 재생 실패: $error");
-        showSimpleMessage("미디어를 재생할 수 없습니다.".tr);
+        showSimpleMessage("Unable to play media.".tr);
         Navigator.of(context).pop();
       });
 
@@ -210,7 +210,7 @@ class VideoActionsWidget extends StatelessWidget {
         },
       );
     } else {
-      showSimpleMessage("비디오 URL이 유효하지 않습니다".tr);
+      showSimpleMessage("Unable to play media.".tr);
     }
   }
 

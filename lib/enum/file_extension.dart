@@ -1,6 +1,8 @@
 enum FileExtension {
   srt('srt', 'SRT'),
   jpg('jpg', 'JPG'),
+  jpeg('jpeg', 'JPEG'),
+  png('png', 'PNG'),
   mp4('mp4', 'MP4'),
   mp3('mp3', 'MP3'),
   wav('wav', 'WAV');

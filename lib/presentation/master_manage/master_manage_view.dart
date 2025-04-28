@@ -137,7 +137,7 @@ class MasterManageView extends GetWidget<MasterManageController> {
                   //       onChanged: (bool? value) {}),
                   // ),
                   DataColumn(
-                      label: Text("소속".tr,
+                      label: Text("Affiliation".tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text("Email address".tr,

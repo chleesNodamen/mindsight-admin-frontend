@@ -34,6 +34,8 @@ class ContentRegisterController extends GetxController {
   Rx<File?> mediaFile = Rx<File?>(null);
   Rx<File?> thumbnailFile = Rx<File?>(null);
 
+  Rx<Map<String, String>?> selectedMaster = Rx<Map<String, String>?>(null);
+
   @override
   Future<void> onClose() async {
     tagController.dispose();
@@ -112,16 +114,15 @@ class ContentRegisterController extends GetxController {
 
   Future<void> onSave() async {
     if (mediaFile.value == null) {
-      showSimpleMessage("No media file selected.".tr); // ✅ No media file
+      showSimpleMessage("No media file selected.".tr);
       return;
     }
 
     if (thumbnailFile.value == null) {
-      showSimpleMessage(
-          "No thumbnail file selected.".tr); // ✅ No thumbnail file
+      showSimpleMessage("No thumbnail file selected.".tr);
       return;
     }
-    // ✅ mediaFile에서 확장자 추출
+
     String? extension = mediaFile.value != null
         ? p.extension(mediaFile.value!.name).toLowerCase()
         : null;
@@ -159,19 +160,21 @@ class ContentRegisterController extends GetxController {
 
     int? durationTime = await getDurationTime(mediaFile.value!);
 
-    BaseModel contentRegisterModel =
-        await ContentRegisterRepository().post(ContentRegisterReqPost(
-      name: nameController.text,
-      category: selectedCategory.value?.keywordName,
-      level: selectedLevel.value?.keywordName,
-      targetLanguage: selectedTargetLanguage.value?.keywordName,
-      exposure: selectedExposure.value?.keywordName,
-      tags: tags,
-      intro: introController.text,
-      media: mediaUrl,
-      thumbnail: thumbnailUrl,
-      durationTime: durationTime,
-    ));
+    BaseModel contentRegisterModel = await ContentRegisterRepository().post(
+        ContentRegisterReqPost(
+            name: nameController.text,
+            category: selectedCategory.value?.keywordName,
+            level: selectedLevel.value?.keywordName,
+            targetLanguage: selectedTargetLanguage.value?.keywordName,
+            exposure: selectedExposure.value?.keywordName,
+            tags: tags,
+            intro: introController.text,
+            media: mediaUrl,
+            thumbnail: thumbnailUrl,
+            durationTime: durationTime,
+            masterId: selectedMaster.value != null
+                ? selectedMaster.value!["id"]
+                : null));
 
     isLoading.value = false;
 

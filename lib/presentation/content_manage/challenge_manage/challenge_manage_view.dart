@@ -226,7 +226,7 @@ class ChallengeManageView extends GetWidget<ChallengeManageController> {
                         DataCell(
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 24.0),
-                            child: Text("-",
+                            child: Text("",
                                 style: CustomTextStyles.bodyLargeBlack),
                           ),
                         ),

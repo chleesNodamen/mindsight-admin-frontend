@@ -188,7 +188,7 @@ class PracticeEditView extends GetWidget<PracticeEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "승인".tr,
+              text: "Comfirm".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))

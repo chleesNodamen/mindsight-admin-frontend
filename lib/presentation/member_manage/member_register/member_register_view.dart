@@ -39,14 +39,14 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                                     Row(
                                       children: [
                                         BuildInput(
-                                          label: "부서".tr,
+                                          label: "Department".tr,
                                           essential: true,
                                           textController:
                                               controller.departmentController,
                                         ),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "직책 또는 직급".tr,
+                                          label: "Position or Rank".tr,
                                           essential: true,
                                           textController:
                                               controller.positionController,
@@ -57,14 +57,14 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                                     Row(
                                       children: [
                                         BuildInput(
-                                          label: "Name (First name)".tr,
+                                          label: "First name".tr,
                                           essential: true,
                                           textController:
                                               controller.firstNameController,
                                         ),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "성 (Last name)".tr,
+                                          label: "Last name".tr,
                                           essential: true,
                                           textController:
                                               controller.lastNameController,
@@ -77,7 +77,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
                                         _buildGender(),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "태어난 Year".tr,
+                                          label: "Year of birth".tr,
                                           essential: true,
                                           textController:
                                               controller.yearController,
@@ -194,7 +194,9 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
         RichText(
           text: TextSpan(
             children: [
-              TextSpan(text: "소속".tr, style: CustomTextStyles.labelLargeBlack),
+              TextSpan(
+                  text: "Department".tr,
+                  style: CustomTextStyles.labelLargeBlack),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ],
           ),
@@ -214,7 +216,7 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
             hint: Text('Select Option'.tr,
                 style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: controller.affiliation.value == "-" ||
+            value: controller.affiliation.value == "" ||
                     controller.affiliation.value == ""
                 ? null
                 : controller.affiliation.value,
@@ -253,7 +255,8 @@ class MemberRegisterView extends GetWidget<MemberRegisterController> {
         RichText(
           text: TextSpan(
             children: [
-              TextSpan(text: "성별".tr, style: CustomTextStyles.labelLargeBlack),
+              TextSpan(
+                  text: "Gender".tr, style: CustomTextStyles.labelLargeBlack),
               TextSpan(text: " *", style: TextStyle(color: appTheme.red))
             ],
           ),

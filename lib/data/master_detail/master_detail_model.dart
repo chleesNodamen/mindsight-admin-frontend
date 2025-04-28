@@ -1,5 +1,3 @@
-// master_detail_response_dto.dart
-
 import 'package:mindsight_admin_page/data/base_model.dart';
 
 class MasterDetailModel extends BaseModel {
@@ -7,6 +5,9 @@ class MasterDetailModel extends BaseModel {
   final String? id;
   final String? email;
   final String? name;
+  final String? lastName; // ✅ 추가
+  final String? gender; // ✅ 추가
+  final String? birthDate; // ✅ 추가
   final String? nickname;
   final DateTime? createdAt;
   final bool? verified;
@@ -35,6 +36,9 @@ class MasterDetailModel extends BaseModel {
     this.id,
     this.email,
     this.name,
+    this.lastName, // ✅ 추가
+    this.gender, // ✅ 추가
+    this.birthDate, // ✅ 추가
     this.nickname,
     this.createdAt,
     this.verified,
@@ -46,7 +50,6 @@ class MasterDetailModel extends BaseModel {
     this.intro,
     this.currentProfitRate,
     this.previousProfitRate,
-    // Company info 필드
     this.companyName,
     this.representative,
     this.businessNumber,
@@ -64,6 +67,9 @@ class MasterDetailModel extends BaseModel {
       id: json['id'] as String?,
       email: json['email'] as String?,
       name: json['name'] as String?,
+      lastName: json['lastName'] as String?, // ✅ 추가
+      gender: json['gender'] as String?, // ✅ 추가
+      birthDate: json['birthDate'] as String?, // ✅ 추가
       nickname: json['nickname'] as String?,
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
@@ -80,7 +86,6 @@ class MasterDetailModel extends BaseModel {
       previousProfitRate: json['previousProfitRate'] != null
           ? (json['previousProfitRate'] as num).toDouble()
           : null,
-      // Company info 필드
       companyName: json['companyName'] as String?,
       representative: json['representative'] as String?,
       businessNumber: json['businessNumber'] as String?,

@@ -9,6 +9,7 @@ class ContentListModel extends BaseModel {
   List<int>? liked;
   List<bool>? status;
   List<bool>? exposure;
+  List<bool>? isTranscodingCompleted;
   int? total;
 
   ContentListModel({
@@ -20,6 +21,7 @@ class ContentListModel extends BaseModel {
     this.liked,
     this.status,
     this.exposure,
+    this.isTranscodingCompleted,
     this.total,
   });
 
@@ -31,7 +33,7 @@ class ContentListModel extends BaseModel {
         category: json["category"] == null
             ? []
             : List<String>.from(
-                json["category"]!.map((x) => x == null || x == "" ? "-" : x)),
+                json["category"]!.map((x) => x == null || x == "" ? "" : x)),
         name: json["name"] == null
             ? []
             : List<String>.from(json["name"]!.map((x) => x)),
@@ -50,6 +52,9 @@ class ContentListModel extends BaseModel {
         exposure: json["exposure"] == null
             ? []
             : List<bool>.from(json["exposure"]!.map((x) => x)),
+        isTranscodingCompleted: json["isTranscodingCompleted"] == null
+            ? []
+            : List<bool>.from(json["isTranscodingCompleted"]!.map((x) => x)),
         total: json["total"],
       );
 }

@@ -21,11 +21,7 @@ class FreeBoardDetailController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    if (Get.arguments != null) {
-      id = Get.arguments[RouteArguments.id];
-    } else {
-      id = "D%2Fu4uEmnvaNYr6uJ%2FR%2Fazw%3D%3D";
-    }
+    id = Get.arguments[RouteArguments.id];
 
     await initData();
 

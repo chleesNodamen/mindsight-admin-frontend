@@ -39,14 +39,14 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                     Row(
                                       children: [
                                         BuildInput(
-                                          label: "부서".tr,
+                                          label: "Department".tr,
                                           essential: true,
                                           textController:
                                               controller.departmentController,
                                         ),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "직책 또는 직급".tr,
+                                          label: "Position or Rank".tr,
                                           essential: true,
                                           textController:
                                               controller.positionController,
@@ -57,14 +57,14 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                     Row(
                                       children: [
                                         BuildInput(
-                                          label: "Name (First name)".tr,
+                                          label: "First name".tr,
                                           essential: true,
                                           textController:
                                               controller.firstNameController,
                                         ),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "성 (Last name)".tr,
+                                          label: "Last name".tr,
                                           essential: true,
                                           textController:
                                               controller.lastNameController,
@@ -77,7 +77,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                                         _buildGender(),
                                         const SizedBox(width: 24),
                                         BuildInput(
-                                          label: "태어난 Year".tr,
+                                          label: "Year of birth".tr,
                                           essential: true,
                                           textController:
                                               controller.yearController,
@@ -210,7 +210,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text('소속'.tr, style: CustomTextStyles.labelLargeBlack),
+        Text('Affiliation'.tr, style: CustomTextStyles.labelLargeBlack),
         const SizedBox(height: 8),
         Container(
           width: 353,
@@ -226,7 +226,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
             hint: Text('Select Option'.tr,
                 style: CustomTextStyles.bodyMediumGray),
             isExpanded: true,
-            value: controller.affiliation.value == "-" ||
+            value: controller.affiliation.value == "" ||
                     controller.affiliation.value == ""
                 ? null
                 : controller.affiliation.value,
@@ -262,7 +262,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("성별".tr, style: CustomTextStyles.labelLargeBlack),
+        Text("Gender".tr, style: CustomTextStyles.labelLargeBlack),
         const SizedBox(height: 8),
         Container(
           width: 353,
@@ -313,7 +313,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("부서".tr, style: CustomTextStyles.labelLargeBlack),
+            Text("Department".tr, style: CustomTextStyles.labelLargeBlack),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.departmentController,
@@ -336,7 +336,8 @@ class MemberEditView extends GetWidget<MemberEditController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("직책 또는 직급".tr, style: CustomTextStyles.labelLargeBlack),
+            Text("Position or Rank".tr,
+                style: CustomTextStyles.labelLargeBlack),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.positionController,
@@ -365,8 +366,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Name (First name)".tr,
-                style: CustomTextStyles.labelLargeBlack),
+            Text("First name".tr, style: CustomTextStyles.labelLargeBlack),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.firstNameController,
@@ -387,7 +387,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("성 (Last name)".tr, style: CustomTextStyles.labelLargeBlack),
+            Text("Last name".tr, style: CustomTextStyles.labelLargeBlack),
             const SizedBox(height: 8),
             CustomTextFormField(
                 controller: controller.lastNameController,
@@ -432,7 +432,7 @@ class MemberEditView extends GetWidget<MemberEditController> {
                   border: Border.all(color: appTheme.grayScale3),
                   color: appTheme.grayScale2),
               padding: const EdgeInsets.all(16),
-              child: Text(controller.membersDataModel.email ?? "-",
+              child: Text(controller.membersDataModel.email ?? "",
                   style: CustomTextStyles.bodyMediumGray),
             ),
           ],

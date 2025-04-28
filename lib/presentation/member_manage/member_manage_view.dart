@@ -106,7 +106,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('소속'.tr, style: CustomTextStyles.labelMediumGray),
+          Text('Affiliation'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +169,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                   //       onChanged: (bool? value) {}),
                   // ),
                   DataColumn(
-                      label: Text('소속'.tr,
+                      label: Text('Affiliation'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Email address'.tr,
@@ -209,7 +209,7 @@ class MemberManageView extends GetWidget<MemberManageController> {
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Text(
                               controller.membersModel.affiliation == null
-                                  ? "-"
+                                  ? ""
                                   : controller.membersModel.affiliation![index],
                               style: controller.memberState![index]
                                   ? CustomTextStyles.bodyLargeBlack

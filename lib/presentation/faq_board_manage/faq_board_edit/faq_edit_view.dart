@@ -75,8 +75,12 @@ class FAQBoardEditView extends GetWidget<FAQBoardEditController> {
           labelText: "Attached File".tr,
           essential: false,
           initialUrl: controller.faqBoardDetailModel.attachedFile,
-          hintText: ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.jpeg.keywordName,
+            FileExtension.png.keywordName
+          ],
           isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);

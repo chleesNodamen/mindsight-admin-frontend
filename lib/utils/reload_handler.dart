@@ -11,6 +11,7 @@ class ReloadHandler {
     if (!CustomHttpClient.to.isAccessTokenInited || AppConstant.test) {
       String? autoLoginId = PrefUtils.to.getSigninId();
       String? autoLoginPassword = PrefUtils.to.getSigninPassword();
+      bool? autoLoginIsThirdParty = PrefUtils.to.getSigninIsThirdParty();
 
       if (AppConstant.test) {
         autoLoginId = AppConstant.testEmail;
@@ -23,11 +24,11 @@ class ReloadHandler {
       if (autoLoginId.isNotEmpty && autoLoginPassword.isNotEmpty) {
         Logger.log("자동로그인:$autoLoginId $autoLoginPassword");
 
-        MasterSigninModel masterSigninModel =
-            await MasterSigninRepository().post(MasterSigninReqPost(
-          email: autoLoginId,
-          password: autoLoginPassword,
-        ));
+        MasterSigninModel masterSigninModel = await MasterSigninRepository()
+            .post(MasterSigninReqPost(
+                email: autoLoginId,
+                password: autoLoginPassword,
+                isThirdParty: autoLoginIsThirdParty));
         String path = html.window.location.href
             .substring(0, html.window.location.href.lastIndexOf('/'));
 

@@ -40,7 +40,7 @@ class MasterSettlementManageView
                                   const SizedBox(height: 32),
                                   _buildSummary(),
                                   const SizedBox(height: 32),
-                                  Text("Streaming Settlement".tr,
+                                  Text("Streaming settlement".tr,
                                       style: CustomTextStyles.bodyLargeBlack),
                                   const SizedBox(height: 32),
                                   _buildPage(),
@@ -277,7 +277,7 @@ class MasterSettlementManageView
                         DataCell(Text("Payment Completed",
                             style: CustomTextStyles.bodyLargeBlack)),
                         DataCell(
-                            Text("-", style: CustomTextStyles.bodyLargeBlack)),
+                            Text("", style: CustomTextStyles.bodyLargeBlack)),
                       ]);
                 }).toList(),
               ),

@@ -73,8 +73,12 @@ class FreeBoardEditView extends GetWidget<FreeBoardEditController> {
           labelText: "Attached File".tr,
           essential: false,
           initialUrl: controller.freeBoardDetailModel.attachedFile,
-          hintText: ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.jpeg.keywordName,
+            FileExtension.png.keywordName
+          ],
           isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);

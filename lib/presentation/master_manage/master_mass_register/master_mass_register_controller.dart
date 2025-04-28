@@ -3,9 +3,9 @@ import 'package:mindsight_admin_page/data/master_signin/master_signin_repository
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class MasterMassRegisterController extends GetxController {
-  // final id = Get.arguments[RouteArguments.id];
+  final id = Get.arguments[RouteArguments.id];
 
-  final id = "YJgrEkheVCbpnIwis2gYjg%3D%3D";
+  // final id = "YJgrEkheVCbpnIwis2gYjg%3D%3D";
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;

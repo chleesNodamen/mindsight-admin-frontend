@@ -51,7 +51,7 @@ class MasterProfitRateListModel extends BaseModel {
             : List<String>.from(json["email"]!.map((x) => x)),
         intro: json["intro"] == null
             ? []
-            : List<String>.from(json["intro"]!.map((x) => x ?? "-")),
+            : List<String>.from(json["intro"]!.map((x) => x ?? "")),
         currentProfitRate: json["currentProfitRate"] == null
             ? []
             : List<double>.from(json["currentProfitRate"]!.map((x) => x)),

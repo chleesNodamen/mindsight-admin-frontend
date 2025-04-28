@@ -6,7 +6,6 @@ import 'package:mindsight_admin_page/data/master_signin/master_signin_repository
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class MasterDetailsController extends GetxController {
-  // final id = Get.arguments[RouteArguments.id];
   late String id;
 
   RxBool isLoading = true.obs;

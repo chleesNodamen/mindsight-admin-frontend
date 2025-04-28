@@ -1,7 +1,7 @@
 enum Gender {
-  male('남자', 'MALE'),
-  female('여자', 'FEMALE'),
-  nonbinary('논바이너리', 'NONBINARY');
+  male('Male', 'MALE'),
+  female('Female', 'FEMALE'),
+  nonbinary('Nonbinary', 'NONBINARY');
 
   final String _displayName;
   final String _keywordName;

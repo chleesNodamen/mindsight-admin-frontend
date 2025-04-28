@@ -4,8 +4,8 @@ import 'package:mindsight_admin_page/data/activity/activity_repository.dart';
 import 'package:mindsight_admin_page/data/activity/activity_req_get.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_model.dart';
 import 'package:mindsight_admin_page/data/affiliation/affiliation_repository.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 

@@ -1,4 +1,5 @@
 // ignore: deprecated_member_use
+import 'dart:async';
 import 'dart:html' as html;
 import 'package:crop_your_image/crop_your_image.dart';
 import 'package:el_tooltip/el_tooltip.dart';
@@ -6,6 +7,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/widgets/circular_custom_image_view.dart';
 import 'package:image/image.dart' as img;
+import 'package:mindsight_admin_page/widgets/image_actions_widget.dart';
+import 'package:mindsight_admin_page/widgets/image_content_dialog.dart';
 
 class PickFile extends StatefulWidget {
   const PickFile({
@@ -221,15 +224,91 @@ class _PickFileState extends State<PickFile> {
     return Uint8List.fromList(img.encodeJpg(resizedImage));
   }
 
-  void _showImageDialog(String url) {
+  // void _openImageDialog(BuildContext context) {
+  //   if (imageUrl.isNotEmpty) {
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           contentPadding: EdgeInsets.zero,
+  //           content: ImageDialogContent(
+  //             url: imageUrl,
+  //             isCircular: isCircular,
+  //           ),
+  //         );
+  //       },
+  //     );
+  //   } else {
+  //     showSimpleMessage("Invalid image URL".tr);
+  //   }
+  // }
+
+  void _showImageDialog(String imageUrl) {
     showDialog(
       context: context,
-      builder: (_) => Dialog(
-        child: InteractiveViewer(
-          child: Image.network(url),
-        ),
-      ),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: ImageDialogContent(
+            url: imageUrl,
+            isCircular: false,
+          ),
+        );
+      },
     );
+
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => Dialog(
+    //     insetPadding: EdgeInsets.zero,
+    //     child: Container(
+    //       // padding: const EdgeInsets.all(10),
+    //       color: Colors.amber,
+    //       // height: 600,
+    //       // width: 900,
+    //       child: Column(
+    //         children: [
+    //           Expanded(
+    //             child: InteractiveViewer(
+    //               child: FutureBuilder<ImageInfo>(
+    //                 future: _getImageInfo(url),
+    //                 builder: (context, snapshot) {
+    //                   if (snapshot.hasData) {
+    //                     final imageInfo = snapshot.data!;
+    //                     return Image.network(
+    //                       url,
+    //                       width: imageInfo.image.width * 2,
+    //                       height: imageInfo.image.height * 2,
+    //                       fit: BoxFit.contain, // 가득 채움
+    //                     );
+    //                   } else {
+    //                     return const Center(child: CircularProgressIndicator());
+    //                   }
+    //                 },
+    //               ),
+    //             ),
+    //           ),
+    //           const SizedBox(height: 10),
+    //           TextButton(
+    //               onPressed: () => Navigator.of(context).pop(),
+    //               child: const Text('확인')),
+    //           const SizedBox(height: 10),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+  }
+
+  Future<ImageInfo> _getImageInfo(String url) async {
+    final completer = Completer<ImageInfo>();
+    final image = NetworkImage(url);
+    image.resolve(const ImageConfiguration()).addListener(
+      ImageStreamListener((ImageInfo info, bool _) {
+        completer.complete(info);
+      }),
+    );
+    return completer.future;
   }
 
   @override

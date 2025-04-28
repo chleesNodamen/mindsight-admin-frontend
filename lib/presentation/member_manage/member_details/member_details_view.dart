@@ -116,7 +116,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("소속".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Affiliation".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -135,7 +136,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("부서".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Department".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -154,7 +156,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("직책 또는 직급".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Position or Rank".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -181,7 +184,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Name (First name)".tr,
+                  Text("First name".tr,
                       style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
@@ -201,8 +204,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("성 (Last name)".tr,
-                      style: CustomTextStyles.labelMediumGray),
+                  Text("Last name".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -217,7 +219,7 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("성별".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Gender".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),
@@ -233,7 +235,8 @@ class MemberDetailsView extends GetWidget<MemberDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("태어난 Year".tr, style: CustomTextStyles.labelMediumGray),
+                  Text("Year of birth".tr,
+                      style: CustomTextStyles.labelMediumGray),
                   const SizedBox(
                     height: 16,
                   ),

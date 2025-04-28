@@ -74,8 +74,12 @@ class InquiryBoardEditView extends GetWidget<InquiryBoardEditController> {
           labelText: "Attached File".tr,
           essential: false,
           initialUrl: controller.inquiryBoardDetailModel.attachedFile,
-          hintText: ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.jpeg.keywordName,
+            FileExtension.png.keywordName
+          ],
           isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);
@@ -165,7 +169,7 @@ class InquiryBoardEditView extends GetWidget<InquiryBoardEditController> {
       children: [
         InkWell(
             child: Text(
-              "Inquiry Board list".tr,
+              "Inquiry board list".tr,
               style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
                 fontWeight: FontWeight.w500,
                 decoration: TextDecoration.underline,
@@ -180,7 +184,7 @@ class InquiryBoardEditView extends GetWidget<InquiryBoardEditController> {
         ),
         InkWell(
           child: Text(
-            "Inquiry Board detail".tr,
+            "Inquiry board detail".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.underline,
@@ -193,14 +197,14 @@ class InquiryBoardEditView extends GetWidget<InquiryBoardEditController> {
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Inquiry Board Edit".tr, style: CustomTextStyles.bodyMediumGray),
+        Text("Inquiry board Edit".tr, style: CustomTextStyles.bodyMediumGray),
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Inquiry Board Edit".tr,
+      name: "Inquiry board Edit".tr,
       searchShow: false,
       viewCount: false,
     );

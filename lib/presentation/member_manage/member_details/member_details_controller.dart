@@ -1,6 +1,6 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/member_detail/member_detail_model.dart';
@@ -8,7 +8,7 @@ import 'package:mindsight_admin_page/data/member_detail/member_detail_repository
 
 class MemberDetailsController extends GetxController {
   final id = Get.arguments[RouteArguments.id];
-  final String dash = "-";
+  final String dash = "";
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
   RxString lastName = "".obs;

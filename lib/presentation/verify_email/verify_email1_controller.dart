@@ -49,7 +49,7 @@ class VerifyEmail1Controller extends GetxController {
 
     if (model.isSuccess) {
       Get.toNamed(AppRoutes.masterRegister,
-          arguments: MasterRegisterArgs(email: email));
+          arguments: MasterRegisterArgs(email: email, isThirdParty: false));
     } else {
       showSimpleMessage(model.getErrorMessage());
     }

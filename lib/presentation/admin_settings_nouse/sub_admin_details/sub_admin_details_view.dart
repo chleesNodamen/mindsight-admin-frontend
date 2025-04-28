@@ -206,7 +206,7 @@ class SubAdminDetailsView extends GetWidget<SubAdminDetailsController> {
                     controller.adminDetailsModel.lastActivity != null
                         ? DateFormat('yyyy-MM-dd-HH:mm:ss')
                             .format(controller.adminDetailsModel.lastActivity!)
-                        : "-",
+                        : "",
                     style: CustomTextStyles.labelLargeGray
                         .copyWith(fontWeight: FontWeight.w600)),
               ],

@@ -73,7 +73,7 @@ class InactiveMemberManageView
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('소속'.tr, style: CustomTextStyles.labelMediumGray),
+          Text('Affiliation'.tr, style: CustomTextStyles.labelMediumGray),
           const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +121,7 @@ class InactiveMemberManageView
                     horizontalInside: BorderSide(color: appTheme.grayScale2)),
                 columns: [
                   DataColumn(
-                      label: Text('소속'.tr,
+                      label: Text('Affiliation'.tr,
                           style: CustomTextStyles.labelLargeGray)),
                   DataColumn(
                       label: Text('Email address'.tr,

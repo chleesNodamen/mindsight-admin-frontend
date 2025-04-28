@@ -69,7 +69,7 @@ class InquiryBoardManageView extends GetWidget<InquiryBoardManageController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Inquiry Board".tr,
+      name: "Inquiry board".tr,
       searchShow: true,
       viewCount: false,
       searchText: "Search subject".tr,
@@ -190,8 +190,8 @@ class InquiryBoardManageView extends GetWidget<InquiryBoardManageController> {
                     )),
                     DataCell(Text(
                       controller.inquiryBoardModel.status![index]
-                          ? "Answered"
-                          : "Pending",
+                          ? "Answered".tr
+                          : "Pending".tr,
                       style: CustomTextStyles.bodyLargeBlack,
                     )),
                   ]);

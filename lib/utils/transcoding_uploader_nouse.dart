@@ -9,7 +9,7 @@ import 'package:mindsight_admin_page/utils/logger.dart';
 
 class TranscodingUploader {
   final RxString ffmpegStatus = "".obs;
-  bool isTranscodingComplete = false;
+  bool isTranscodingCompleted = false;
   FFmpegService? _ffmpegService;
   String mediaUrl = "";
   List<dynamic>? filename;
@@ -19,7 +19,7 @@ class TranscodingUploader {
   Future<String> transcoding(html.File filePickerResult) async {
     try {
       await dispose();
-      isTranscodingComplete = false;
+      isTranscodingCompleted = false;
 
       // Get duration time
       durationTime = await getDurationTime(filePickerResult);
@@ -65,7 +65,7 @@ class TranscodingUploader {
       Logger.info("트랜 코딩 된 File리스트: $filename");
 
       ffmpegStatus.value = "Transcoding Complete".tr;
-      isTranscodingComplete = true;
+      isTranscodingCompleted = true;
 
       return mediaUrl;
     } catch (e) {
@@ -75,7 +75,7 @@ class TranscodingUploader {
       _ffmpegService?.dispose();
       _ffmpegService = null;
 
-      isTranscodingComplete = false;
+      isTranscodingCompleted = false;
 
       rethrow;
     }
@@ -136,7 +136,7 @@ class TranscodingUploader {
     data?.clear();
     durationTime = null;
 
-    isTranscodingComplete = false;
+    isTranscodingCompleted = false;
 
     Logger.info("트랜스코딩 해제");
   }

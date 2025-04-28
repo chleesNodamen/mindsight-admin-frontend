@@ -70,8 +70,12 @@ class InquiryBoardRegisterView
         PickFile(
           labelText: "Attached File".tr,
           essential: false,
-          hintText: controller.attachedFile?.name ?? ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: controller.attachedFile?.name ?? ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.jpeg.keywordName,
+            FileExtension.png.keywordName
+          ],
           isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);
@@ -159,7 +163,7 @@ class InquiryBoardRegisterView
       children: [
         InkWell(
           child: Text(
-            "Inquiry Board list".tr,
+            "Inquiry board list".tr,
             style: CustomTextStyles.bodyMediumSkyBlue.copyWith(
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.underline,
@@ -173,7 +177,7 @@ class InquiryBoardRegisterView
         CustomImageView(
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Inquiry Board New registration".tr,
+        Text("Inquiry board New registration".tr,
             style: CustomTextStyles.bodyMediumGray),
       ],
     );
@@ -181,7 +185,7 @@ class InquiryBoardRegisterView
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Inquiry Board New registration".tr,
+      name: "Inquiry board New registration".tr,
       searchShow: false,
       viewCount: false,
     );

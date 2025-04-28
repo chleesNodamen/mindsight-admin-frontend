@@ -42,6 +42,10 @@ class PrefUtils {
     return _sharedPreferences!.setString("SigninPassword", password);
   }
 
+  Future<bool> setSigninIsThirdPart(bool isThirdParty) {
+    return _sharedPreferences!.setBool("SigninIsThirdPart", isThirdParty);
+  }
+
   String getSigninId() {
     try {
       return _sharedPreferences!.getString("SigninId") ?? "";
@@ -57,6 +61,15 @@ class PrefUtils {
     } catch (e) {
       Logger.log("익셉션: getSigninPassword");
       return "";
+    }
+  }
+
+  bool getSigninIsThirdParty() {
+    try {
+      return _sharedPreferences!.getBool("SigninIsThirdPart") ?? false;
+    } catch (e) {
+      Logger.log("익셉션: SigninIsThirdPart");
+      return false;
     }
   }
 

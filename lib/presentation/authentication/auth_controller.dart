@@ -1,24 +1,26 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mindsight_admin_page/app_export.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_model.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
+import 'package:mindsight_admin_page/presentation/master_manage/master_register/master_register_controller.dart';
 
 class AuthenticationController extends GetxController {
   late MasterSigninModel masterSigninModel;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   RxBool isTextNotEmpty = false.obs;
   RxBool isObscured = true.obs;
-
   RxBool isLoading = false.obs;
   RxBool isInited = false.obs;
-
   RxBool isLoginMode = true.obs;
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     emailController.addListener(_updateTextStatus);
     isInited.value = true;
@@ -31,9 +33,9 @@ class AuthenticationController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     emailController.dispose();
     passwordController.dispose();
+    super.onClose();
   }
 
   void _updateTextStatus() {
@@ -45,9 +47,9 @@ class AuthenticationController extends GetxController {
         !isValidEmail(value, isRequired: true) ||
         masterSigninModel.isErrorCode(ApiErrorCode.credentialsInvalid) ||
         masterSigninModel.isErrorCode(ApiErrorCode.emailNotVerified)) {
-      return "가입된 정보가 없습니다. 다시 Confirm하고 입력해주세요. ".tr;
+      return "No registered information found. Please confirm and try again."
+          .tr;
     }
-
     return null;
   }
 
@@ -55,16 +57,87 @@ class AuthenticationController extends GetxController {
     if (value == null ||
         !isValidPassword(value, isRequired: true) ||
         masterSigninModel.isErrorCode(ApiErrorCode.credentialsMismatch)) {
-      return "가입된 정보가 없습니다. 다시 Confirm하고 입력해주세요.".tr;
+      return "No registered information found. Please confirm and try again."
+          .tr;
     }
     return null;
   }
 
   Future<bool> onContinue() async {
+    return _handleSignin(
+      isThirdParty: false,
+      email: emailController.text,
+      password: passwordController.text,
+    );
+  }
+
+  Future<void> onSigninWithGoogle() async {
+    isLoading.value = true;
+    try {
+      final userCredential = await googleLogin();
+      Logger.log('Login success: ${userCredential.user?.email}');
+
+      await _handleSignin(
+        isThirdParty: true,
+        email: userCredential.user?.email ?? '',
+        password: '',
+      );
+
+      isLoading.value = false;
+    } catch (e) {
+      Logger.log('Login failed: $e');
+      showSimpleMessage("Login Failed".tr);
+
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> onSignupWithGoogle() async {
     isLoading.value = true;
 
-    masterSigninModel = await MasterSigninRepository().post(MasterSigninReqPost(
-        email: emailController.text, password: passwordController.text));
+    try {
+      final userCredential = await googleLogin();
+      Logger.log('Login success: ${userCredential.user?.email}');
+
+      Get.toNamed(
+        AppRoutes.masterRegister,
+        arguments: MasterRegisterArgs(
+          email: userCredential.user!.email!,
+          isThirdParty: true,
+        ),
+      );
+
+      isLoading.value = false;
+    } catch (e) {
+      Logger.log('Login failed: $e');
+      showSimpleMessage("Login Failed".tr);
+
+      isLoading.value = false;
+    }
+  }
+
+  Future<UserCredential> googleLogin() async {
+    final GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+    googleProvider.setCustomParameters({'prompt': 'select_account'});
+
+    return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+  }
+
+  Future<bool> _handleSignin({
+    required bool isThirdParty,
+    required String email,
+    String? password,
+  }) async {
+    isLoading.value = true;
+
+    masterSigninModel = await MasterSigninRepository().post(
+      MasterSigninReqPost(
+        email: email,
+        password: password ?? '',
+        isThirdParty: isThirdParty,
+      ),
+    );
 
     isLoading.value = false;
 
@@ -79,23 +152,25 @@ class AuthenticationController extends GetxController {
         SideMenuController.to
             .changeActiveSubItem(contentManageContentDisplayName);
       }
+      return true;
     } else {
       if (masterSigninModel
           .getErrorMessage()
           .contains("Version is incorrect")) {
-        showSimpleMessage("버젼이 맞지 않습니다. 웹브라우져를 완전히 종료 후 다시 시작 해 주십시오.");
+        showSimpleMessage(
+          "The version does not match. Please completely close and reopen your browser."
+              .tr,
+        );
       } else {
         showSimpleMessage(
-            "Login에 실패 하였습니다. ${masterSigninModel.getErrorMessage().tr}");
+          "${"Login failed.".tr} ${masterSigninModel.getErrorMessage().tr}",
+        );
       }
+      return false;
     }
-
-    return true;
   }
 
   void onRegister() {
     Get.offAllNamed(AppRoutes.verifyEmail0);
   }
-
-  void onGoogleLogin() {}
 }

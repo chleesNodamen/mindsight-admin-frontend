@@ -9,7 +9,7 @@ class ContentRegisterReqPost {
   String? media;
   String? thumbnail;
   int? durationTime;
-  // List<double>? embedding; // 임베딩 값을 위한 새 필드
+  String? masterId;
 
   ContentRegisterReqPost({
     this.name,
@@ -22,7 +22,7 @@ class ContentRegisterReqPost {
     this.media,
     this.thumbnail,
     this.durationTime,
-    // this.embedding,
+    this.masterId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +36,6 @@ class ContentRegisterReqPost {
         "media": media,
         "thumbnail": thumbnail,
         "durationTime": durationTime,
-        // "embedding": embedding, // 임베딩 값 추가
+        "masterId": masterId,
       };
 }

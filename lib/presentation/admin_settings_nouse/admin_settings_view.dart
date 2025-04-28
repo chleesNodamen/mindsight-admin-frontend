@@ -84,7 +84,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text("ID".tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.adminMyDataModel.email ?? "-",
+                  Text(controller.adminMyDataModel.email ?? "",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
@@ -98,7 +98,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                   Text("Department".tr,
                       style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.adminMyDataModel.department ?? "-",
+                  Text(controller.adminMyDataModel.department ?? "",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
@@ -112,7 +112,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                   Text('Permission'.tr,
                       style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.adminMyDataModel.role ?? "-",
+                  Text(controller.adminMyDataModel.role ?? "",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               )
@@ -133,7 +133,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                 children: [
                   Text('Manager'.tr, style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.adminMyDataModel.manager ?? "-",
+                  Text(controller.adminMyDataModel.manager ?? "",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
@@ -147,7 +147,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                   Text('Contact number'.tr,
                       style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.adminMyDataModel.phone ?? "-",
+                  Text(controller.adminMyDataModel.phone ?? "",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               ),
@@ -161,7 +161,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                   Text('Email address'.tr,
                       style: CustomTextStyles.labelMediumGray),
                   const SizedBox(height: 16),
-                  Text(controller.adminMyDataModel.adminEmail ?? "-",
+                  Text(controller.adminMyDataModel.adminEmail ?? "",
                       style: CustomTextStyles.bodyLargeBlack),
                 ],
               )
@@ -193,7 +193,7 @@ class AdminSettingsView extends GetWidget<AdminSettingsController> {
                     controller.adminMyDataModel.lastActivity != null
                         ? DateFormat('yyyy-MM-dd-HH:mm:ss')
                             .format(controller.adminMyDataModel.lastActivity!)
-                        : "-",
+                        : "",
                     style: CustomTextStyles.labelLargeGray),
               ],
             ),

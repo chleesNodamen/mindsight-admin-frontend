@@ -16,6 +16,7 @@ class ContentDetailsModel extends BaseModel {
   int? durationTime;
   bool? status;
   bool? exposure;
+  bool? isTranscodingCompleted;
   String? level;
   String? targetLanguage;
 
@@ -23,6 +24,7 @@ class ContentDetailsModel extends BaseModel {
       {this.id,
       this.status,
       this.exposure,
+      this.isTranscodingCompleted,
       this.level,
       this.targetLanguage,
       this.category,
@@ -43,6 +45,7 @@ class ContentDetailsModel extends BaseModel {
         id: json["id"],
         status: json["status"],
         exposure: json["exposure"],
+        isTranscodingCompleted: json["isTranscodingCompleted"],
         level: json["level"],
         targetLanguage: json["targetLanguage"],
         category: json["category"],

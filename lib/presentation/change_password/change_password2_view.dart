@@ -79,24 +79,24 @@ class ChangePassword2View extends GetWidget<ChangePassword2Controller> {
   Row _build123() {
     return Row(children: [
       Container(
-          width: 30.adaptSize,
-          height: 30.adaptSize,
+          width: 40.adaptSize,
+          height: 40.adaptSize,
           alignment: Alignment.center,
           decoration: AppDecoration.fillGrayScale1
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder12),
           child: Text("1", style: CustomTextStyles.bodyMediumGray)),
       SizedBox(width: 8.h),
       Container(
-          width: 30.adaptSize,
-          height: 30.adaptSize,
+          width: 40.adaptSize,
+          height: 40.adaptSize,
           alignment: Alignment.center,
           decoration: AppDecoration.fillGrayScale1
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder12),
           child: Text("2", style: CustomTextStyles.bodyMediumGray)),
       SizedBox(width: 8.h),
       Container(
-          width: 30.adaptSize,
-          height: 30.adaptSize,
+          width: 40.adaptSize,
+          height: 40.adaptSize,
           alignment: Alignment.center,
           decoration: AppDecoration.fillSkyBlue
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder12),

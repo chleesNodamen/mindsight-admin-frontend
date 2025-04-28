@@ -304,8 +304,12 @@ class ChallengeRegisterView extends GetWidget<ChallengeRegisterController> {
           labelText: "Thumbnail file".tr,
           essential: true,
           initialUrl: controller.thumbnailFile.value?.name,
-          hintText: ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.jpeg.keywordName,
+            FileExtension.png.keywordName
+          ],
           isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickThumbnail(pickedFile);

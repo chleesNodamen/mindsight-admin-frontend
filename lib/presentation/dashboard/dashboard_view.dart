@@ -122,7 +122,7 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '어제 접속 회원 수'.tr,
+                  'Members accessed yesterday'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 const SizedBox(
@@ -187,7 +187,7 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '지난 7일 이벤트 수'.tr,
+                  'Number of events in the last 7 days'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 const SizedBox(
@@ -252,7 +252,7 @@ class DashboardView extends GetWidget<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '지난 7일 재사용 회원 수'.tr,
+                  'Returning members in the last 7 days'.tr,
                   style: CustomTextStyles.labelLargeGray,
                 ),
                 const SizedBox(
@@ -316,7 +316,7 @@ class DashboardView extends GetWidget<DashboardController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Register 사용자 수'.tr,
+              'Registered users'.tr,
               style: CustomTextStyles.labelLargeGray,
             ),
             const SizedBox(
@@ -343,7 +343,8 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('미가입자'.tr, style: CustomTextStyles.labelMediumGray)
+                Text('Not registered'.tr,
+                    style: CustomTextStyles.labelMediumGray)
               ],
             ),
             const SizedBox(
@@ -362,7 +363,8 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('Active 회원'.tr, style: CustomTextStyles.labelMediumGray)
+                Text('Active members'.tr,
+                    style: CustomTextStyles.labelMediumGray)
               ],
             ),
             const SizedBox(
@@ -381,7 +383,8 @@ class DashboardView extends GetWidget<DashboardController> {
                 const SizedBox(
                   width: 8,
                 ),
-                Text('Inactive 회원'.tr, style: CustomTextStyles.labelMediumGray)
+                Text('Inactive members'.tr,
+                    style: CustomTextStyles.labelMediumGray)
               ],
             ),
             Align(

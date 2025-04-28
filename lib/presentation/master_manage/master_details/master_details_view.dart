@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mindsight_admin_page/app_export.dart';
+import 'package:mindsight_admin_page/enum/gender.dart';
 import 'package:mindsight_admin_page/presentation/master_manage/master_details/master_details_controller.dart';
 import 'package:mindsight_admin_page/widgets/label_image.dart';
 import 'package:mindsight_admin_page/widgets/label_value.dart';
@@ -127,9 +128,11 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LabelValue(label: "First name", value: model.name!),
-              LabelValue(label: "Last name", value: "-"),
-              LabelValue(label: "Gender", value: "-"),
-              LabelValue(label: "Year of Birth", value: "-"),
+              LabelValue(label: "Last name", value: model.lastName ?? ""),
+              LabelValue(
+                  label: "Gender",
+                  value: Gender.fromKeyword(model.gender)?.displayName ?? ""),
+              LabelValue(label: "Year of birth", value: model.birthDate ?? ""),
             ],
           ),
           Divider(height: 49, thickness: 1, color: appTheme.grayScale2),
@@ -139,7 +142,7 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                   label: "Email address", value: model.email!, width: 230 * 2),
               VerifiedLabelValue(
                   label: "Mobile Number",
-                  value: model.phoneNumber ?? "-",
+                  value: model.phoneNumber ?? "",
                   width: 230 * 2),
             ],
           ),
@@ -156,7 +159,7 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
             children: [
               LabelValue(
                   label: "Country", value: controller.contry.displayName.tr),
-              LabelValue(label: "Address", value: model.address ?? "-"),
+              LabelValue(label: "Address", value: model.address ?? ""),
               LabelValue(
                   label: "Primary Language",
                   value: controller.primaryLanguage.displayName.tr),
@@ -187,7 +190,7 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
                 const SizedBox(width: 8),
                 Container(height: 14, width: 1, color: appTheme.grayScale3),
                 const SizedBox(width: 8),
-                Text("-", style: CustomTextStyles.labelLargeGray),
+                Text("", style: CustomTextStyles.labelLargeGray),
               ],
             ),
           ),
@@ -196,25 +199,23 @@ class MasterDetailsView extends GetWidget<MasterDetailsController> {
           const SizedBox(height: 24),
           Row(
             children: [
+              LabelValue(label: "Company name", value: model.companyName ?? ""),
               LabelValue(
-                  label: "Company name", value: model.companyName ?? "-"),
+                  label: "Representative", value: model.representative ?? ""),
               LabelValue(
-                  label: "Representative", value: model.representative ?? "-"),
-              LabelValue(
-                  label: "Business number", value: model.businessNumber ?? "-"),
-              LabelValue(label: "Phone", value: model.companyPhone ?? "-"),
+                  label: "Business number", value: model.businessNumber ?? ""),
+              LabelValue(label: "Phone", value: model.companyPhone ?? ""),
             ],
           ),
           Divider(height: 49, thickness: 1, color: appTheme.grayScale2),
           Row(
             children: [
+              LabelValue(label: "Contact name", value: model.contactName ?? ""),
               LabelValue(
-                  label: "Contact name", value: model.contactName ?? "-"),
+                  label: "Contact email", value: model.contactEmail ?? ""),
               LabelValue(
-                  label: "Contact email", value: model.contactEmail ?? "-"),
-              LabelValue(
-                  label: "Contact phone", value: model.contactPhone ?? "-"),
-              LabelValue(label: "Address", value: model.contactAddress ?? "-"),
+                  label: "Contact phone", value: model.contactPhone ?? ""),
+              LabelValue(label: "Address", value: model.contactAddress ?? ""),
             ],
           ),
         ],

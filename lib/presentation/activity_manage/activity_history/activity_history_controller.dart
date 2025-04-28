@@ -7,8 +7,8 @@ import 'package:mindsight_admin_page/data/activity_details/activity_details_req_
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_model.dart';
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_repository.dart';
 import 'package:mindsight_admin_page/data/activity_expert/activity_expert_req_put.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 

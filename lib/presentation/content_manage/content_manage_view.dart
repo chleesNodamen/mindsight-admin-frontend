@@ -224,8 +224,12 @@ class ContentManageView extends GetWidget<ContentManageController> {
                                     }))),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child:
-                              Text('-', style: CustomTextStyles.bodyLargeBlack),
+                          child: Text(
+                              controller.contentListModel.value
+                                      .isTranscodingCompleted![index]
+                                  ? "-"
+                                  : "Processing".tr,
+                              style: CustomTextStyles.bodyLargeBlack),
                         )),
                       ]);
                 }).toList(),

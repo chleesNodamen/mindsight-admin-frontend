@@ -97,18 +97,22 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                 toolTip: "Please enter your display name".tr),
           ],
         ),
-        const SizedBox(height: 24),
-        Row(
+        Column(
           children: [
-            BuildInput(
-                label: "Password".tr,
-                essential: true,
-                textController: controller.passwordController),
-            const SizedBox(width: 24),
-            BuildInput(
-                label: "Password Confirm".tr,
-                essential: true,
-                textController: controller.passwordCofirmController),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                BuildInput(
+                    label: "Password".tr,
+                    essential: true,
+                    textController: controller.passwordController),
+                const SizedBox(width: 24),
+                BuildInput(
+                    label: "Password Confirm".tr,
+                    essential: true,
+                    textController: controller.passwordCofirmController),
+              ],
+            ),
           ],
         ),
       ],
@@ -143,7 +147,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
                 label: "Year of birth".tr,
                 hint: "0000",
                 essential: false,
-                textController: controller.yearOfBirthController),
+                textController: controller.birthDateController),
           ],
         ),
         const SizedBox(height: 24),
@@ -153,8 +157,12 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
               "Using a photo of your face as a profile image whenever possible can provide more trust to members"
                   .tr,
           essential: true,
-          hintText: ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.jpeg.keywordName,
+            FileExtension.png.keywordName
+          ],
           initialUrl: controller.photoUrl.value,
           onFilePicked: (pickedFile) {
             controller.onPickPhoto(pickedFile);
@@ -194,7 +202,7 @@ class MasterRegisterView extends GetWidget<MasterRegisterController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("성별".tr, style: CustomTextStyles.labelLargeBlack),
+        Text("Gender".tr, style: CustomTextStyles.labelLargeBlack),
         const SizedBox(height: 8),
         Container(
           width: 353,

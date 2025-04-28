@@ -1,5 +1,8 @@
 class MasterEditReqPut {
   String? name;
+  String? lastName; // ✅ 추가
+  String? gender; // ✅ 추가
+  String? birthDate; // ✅ 추가
   String? nickname;
   String? password;
   String? photoUrl;
@@ -14,6 +17,9 @@ class MasterEditReqPut {
 
   MasterEditReqPut({
     this.name,
+    this.lastName, // ✅ 추가
+    this.gender, // ✅ 추가
+    this.birthDate, // ✅ 추가
     this.nickname,
     this.password,
     this.photoUrl,
@@ -30,6 +36,9 @@ class MasterEditReqPut {
   Map<String, dynamic> toJson() {
     return {
       "name": name,
+      "lastName": lastName, // ✅ 추가
+      "gender": gender, // ✅ 추가
+      "birthDate": birthDate, // ✅ 추가
       "nickname": nickname,
       "password": password,
       "photoUrl": photoUrl,

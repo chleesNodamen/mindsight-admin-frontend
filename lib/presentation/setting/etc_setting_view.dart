@@ -51,7 +51,7 @@ class EtcSettingView extends GetWidget<EtcSettingController> {
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "알림 및 기타 설정".tr,
+      name: "Notifications and Other Settings".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",
@@ -68,9 +68,9 @@ class EtcSettingView extends GetWidget<EtcSettingController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("알림".tr, style: CustomTextStyles.labelLargeBlack),
+          Text("Notification".tr, style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 32),
-          Text("전체 알림".tr, style: CustomTextStyles.labelLargeBlack),
+          Text("All Notifications".tr, style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -87,125 +87,43 @@ class EtcSettingView extends GetWidget<EtcSettingController> {
                 ),
               ),
               const SizedBox(width: 12),
-              Text("모든 알림을 받습니다".tr, style: CustomTextStyles.bodyMediumBlack),
+              Text("I receive all notifications.".tr,
+                  style: CustomTextStyles.bodyMediumBlack),
             ],
           ),
           Divider(height: 49, thickness: 1, color: appTheme.grayScale2),
-          Text("알림 유형 선택".tr, style: CustomTextStyles.labelLargeBlack),
+          Text("Select Notification Type".tr,
+              style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 12),
           Wrap(
             spacing: 32,
             children: [
+              _buildCheckbox("Email".tr, controller.emailAlarm.value,
+                  controller.onEmailToggle),
               _buildCheckbox(
-                  "이메일", controller.emailAlarm.value, controller.onEmailToggle),
-              _buildCheckbox(
-                  "SMS", controller.smsAlarm.value, controller.onSmsToggle),
+                  "SMS".tr, controller.smsAlarm.value, controller.onSmsToggle),
             ],
           ),
           Divider(height: 49, thickness: 1, color: appTheme.grayScale2),
-          Text("알림 항목 선택".tr, style: CustomTextStyles.labelLargeBlack),
+          Text("Select Notification Items".tr,
+              style: CustomTextStyles.labelLargeBlack),
           const SizedBox(height: 12),
           Wrap(
             spacing: 32,
             runSpacing: 16,
             children: [
-              _buildCheckbox("공지", controller.noticeAlarm.value,
+              _buildCheckbox("Notice".tr, controller.noticeAlarm.value,
                   controller.onNoticeToggle),
-              _buildCheckbox(
-                  "문의 및 답변", controller.qnaAlarm.value, controller.onQnaToggle),
-              _buildCheckbox("콘텐츠 승인 및 변경", controller.contentAlarm.value,
-                  controller.onContentToggle),
-              _buildCheckbox("정산", controller.settlementAlarm.value,
+              _buildCheckbox("Inquiries and Answers".tr,
+                  controller.qnaAlarm.value, controller.onQnaToggle),
+              _buildCheckbox("Content Approval and Modification".tr,
+                  controller.contentAlarm.value, controller.onContentToggle),
+              _buildCheckbox("Settlement".tr, controller.settlementAlarm.value,
                   controller.onSettlementToggle),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildToggleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("알림".tr, style: CustomTextStyles.labelLargeBlack),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Switch(
-              value: controller.receiveAllAlarm.value,
-              onChanged: controller.onAllAlarmToggle,
-              activeColor: appTheme.primary,
-            ),
-            const SizedBox(width: 12),
-            Text("모든 알림을 받습니다".tr, style: CustomTextStyles.bodyMediumBlack),
-          ],
-        ),
-        Text("알림 유형 선택".tr, style: CustomTextStyles.labelLargeBlack),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 32,
-          children: [
-            _buildCheckbox(
-                "이메일", controller.emailAlarm.value, controller.onEmailToggle),
-            _buildCheckbox(
-                "SMS", controller.smsAlarm.value, controller.onSmsToggle),
-          ],
-        ),
-        Divider(height: 49, thickness: 1, color: appTheme.grayScale2),
-        Text("알림 항목 선택".tr, style: CustomTextStyles.labelLargeBlack),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 32,
-          runSpacing: 16,
-          children: [
-            _buildCheckbox(
-                "공지", controller.noticeAlarm.value, controller.onNoticeToggle),
-            _buildCheckbox(
-                "문의 및 답변", controller.qnaAlarm.value, controller.onQnaToggle),
-            _buildCheckbox("콘텐츠 승인 및 변경", controller.contentAlarm.value,
-                controller.onContentToggle),
-            _buildCheckbox("정산", controller.settlementAlarm.value,
-                controller.onSettlementToggle),
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget _buildCheckboxSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("알림 유형 선택".tr, style: CustomTextStyles.labelLargeBlack),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 32,
-          children: [
-            _buildCheckbox(
-                "이메일", controller.emailAlarm.value, controller.onEmailToggle),
-            _buildCheckbox(
-                "SMS", controller.smsAlarm.value, controller.onSmsToggle),
-          ],
-        ),
-        Divider(height: 49, thickness: 1, color: appTheme.grayScale2),
-        Text("알림 항목 선택".tr, style: CustomTextStyles.labelLargeBlack),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 32,
-          runSpacing: 16,
-          children: [
-            _buildCheckbox(
-                "공지", controller.noticeAlarm.value, controller.onNoticeToggle),
-            _buildCheckbox(
-                "문의 및 답변", controller.qnaAlarm.value, controller.onQnaToggle),
-            _buildCheckbox("콘텐츠 승인 및 변경", controller.contentAlarm.value,
-                controller.onContentToggle),
-            _buildCheckbox("정산", controller.settlementAlarm.value,
-                controller.onSettlementToggle),
-          ],
-        )
-      ],
     );
   }
 

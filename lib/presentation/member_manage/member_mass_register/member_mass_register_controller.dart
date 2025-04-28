@@ -1,13 +1,13 @@
 import 'package:mindsight_admin_page/app_export.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_repository.dart';
-import 'package:mindsight_admin_page/data/admin_nouse/admin_signin/admin_signin_req_post.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_repository.dart';
+import 'package:mindsight_admin_page/data/admin_nouse/admin_signin_nouse/admin_signin_req_post.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_repository.dart';
 import 'package:mindsight_admin_page/data/master_signin/master_signin_req_post.dart';
 
 class MemberMassRegisterController extends GetxController {
-  // final id = Get.arguments[RouteArguments.id];
+  final id = Get.arguments[RouteArguments.id];
 
-  final id = "YJgrEkheVCbpnIwis2gYjg%3D%3D";
+  // final id = "YJgrEkheVCbpnIwis2gYjg%3D%3D";
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;

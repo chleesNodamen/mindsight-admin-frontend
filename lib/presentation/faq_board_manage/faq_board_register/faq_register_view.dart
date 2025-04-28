@@ -70,8 +70,12 @@ class FAQBoardRegisterView extends GetWidget<FAQBoardRegisterController> {
         PickFile(
           labelText: "Attached File".tr,
           essential: false,
-          hintText: controller.attachedFile?.name ?? ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: controller.attachedFile?.name ?? ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.jpeg.keywordName,
+            FileExtension.png.keywordName
+          ],
           isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickFile(pickedFile);

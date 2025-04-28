@@ -11,7 +11,7 @@ class ContentEditReqPut {
   bool? status;
   bool? exposure;
   int? durationTime;
-  // List<double>? embedding; // embedding 필드 추가
+  String? masterId;
 
   ContentEditReqPut({
     this.category,
@@ -26,7 +26,7 @@ class ContentEditReqPut {
     this.status,
     this.exposure,
     this.durationTime,
-    // this.embedding,
+    this.masterId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -42,6 +42,6 @@ class ContentEditReqPut {
         "status": status,
         "exposure": exposure,
         "durationTime": durationTime,
-        // "embedding": embedding,
+        "masterId": masterId,
       };
 }

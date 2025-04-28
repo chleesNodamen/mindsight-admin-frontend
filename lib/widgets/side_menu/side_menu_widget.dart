@@ -215,8 +215,7 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   void _logout() async {
-    Account.signOutSuccess();
-    PrefUtils.to.setSigninId("");
+    Account.signInClear();
 
     await Get.offAllNamed(AppRoutes.auth);
   }

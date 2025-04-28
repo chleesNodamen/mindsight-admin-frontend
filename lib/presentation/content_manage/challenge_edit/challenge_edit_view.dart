@@ -62,8 +62,11 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
           labelText: "Thumbnail file".tr,
           essential: true,
           initialUrl: controller.challengeDetailsModel.thumbnail,
-          hintText: ".jpg",
-          fileExtension: [FileExtension.jpg.keywordName],
+          hintText: ".jpg .jpeg .png",
+          fileExtension: [
+            FileExtension.jpg.keywordName,
+            FileExtension.png.keywordName
+          ],
           isCircular: false,
           onFilePicked: (pickedFile) {
             controller.onPickThumbnail(pickedFile);
@@ -251,7 +254,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          '${controller.challengeDetailsModel.duration!.toString()}${"일".tr}',
+                          '${controller.challengeDetailsModel.duration!.toString()}${"Day".tr}',
                           style: CustomTextStyles.bodyMediumGray),
                       CustomImageView(
                         imagePath: IconConstant.more,
@@ -376,7 +379,7 @@ class ChallengeEditView extends GetWidget<ChallengeEditController> {
         RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "승인".tr,
+              text: "Comfirm".tr,
               style: CustomTextStyles.labelLargeBlack
                   .copyWith(fontWeight: FontWeight.w600)),
           TextSpan(text: " *", style: TextStyle(color: appTheme.red))

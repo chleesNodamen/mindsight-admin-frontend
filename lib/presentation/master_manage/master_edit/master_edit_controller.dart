@@ -11,7 +11,6 @@ import 'package:universal_html/html.dart';
 
 class MasterEditController extends GetxController {
   final String id = Get.arguments[RouteArguments.id];
-  // final bool isSettingPage = Get.arguments[RouteArguments.isSettingPage];
 
   RxBool isLoading = true.obs;
   RxBool isInited = false.obs;
@@ -32,11 +31,12 @@ class MasterEditController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordCofirmController =
       TextEditingController();
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController introController = TextEditingController();
-  final TextEditingController yearOfBirthController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
 
   Rx<Contry?> selectedContry = Rx<Contry?>(null);
   Rx<ContentLanguage?> selectedPrimaryLanguage = Rx<ContentLanguage?>(null);
@@ -58,11 +58,12 @@ class MasterEditController extends GetxController {
     nicknameController.dispose();
     passwordController.dispose();
     passwordCofirmController.dispose();
-    nameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     phoneNumberController.dispose();
     addressController.dispose();
     introController.dispose();
-    yearOfBirthController.dispose();
+    birthDateController.dispose();
   }
 
   @override
@@ -81,12 +82,15 @@ class MasterEditController extends GetxController {
 
     masterDetailModel = await MasterDetailRepository().get(id);
 
-    emailController.text = masterDetailModel.email!;
-    nicknameController.text = masterDetailModel.nickname!;
-    nameController.text = masterDetailModel.name!;
-    phoneNumberController.text = masterDetailModel.phoneNumber ?? "-";
-    addressController.text = masterDetailModel.address ?? "-";
-    introController.text = masterDetailModel.intro!;
+    emailController.text = masterDetailModel.email ?? "";
+    nicknameController.text = masterDetailModel.nickname ?? "";
+    firstNameController.text = masterDetailModel.name ?? "";
+    lastNameController.text = masterDetailModel.lastName ?? "";
+    phoneNumberController.text = masterDetailModel.phoneNumber ?? "";
+    addressController.text = masterDetailModel.address ?? "";
+    introController.text = masterDetailModel.intro ?? "";
+    birthDateController.text = masterDetailModel.birthDate ?? "";
+    gender.value = Gender.fromKeyword(masterDetailModel.gender);
 
     selectedContry.value = Contry.fromKeyword(masterDetailModel.country!);
     selectedPrimaryLanguage.value =
@@ -134,7 +138,10 @@ class MasterEditController extends GetxController {
     BaseModel model = await MasterEditRepository().put(
         id,
         MasterEditReqPut(
-          name: nameController.text,
+          name: firstNameController.text,
+          lastName: lastNameController.text,
+          gender: gender.value?.keywordName,
+          birthDate: birthDateController.text,
           nickname: nicknameController.text,
           password: password,
           photoUrl: photoUrl.value,

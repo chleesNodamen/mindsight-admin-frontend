@@ -144,7 +144,7 @@ class RevenueShareManageView extends GetWidget<RevenueShareManageController> {
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child:
-                              Text("-", style: CustomTextStyles.bodyLargeBlack),
+                              Text("", style: CustomTextStyles.bodyLargeBlack),
                         )),
                         DataCell(Padding(
                           padding: const EdgeInsets.symmetric(vertical: 0.0),

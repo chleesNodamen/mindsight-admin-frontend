@@ -319,6 +319,12 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
                   // const SizedBox(width: 60),
                 ],
               ),
+              const SizedBox(height: 24),
+              LabelValue(
+                  label: "Note",
+                  value: !controller.contentDetailsModel.isTranscodingCompleted!
+                      ? "Processing".tr
+                      : "-")
             ],
           ),
         ],
@@ -345,14 +351,14 @@ class ContentDetailsView extends GetWidget<ContentDetailsController> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           imagePath: IconConstant.arrowRight,
         ),
-        Text("Content Details".tr, style: CustomTextStyles.bodyMediumGray)
+        Text("Content details".tr, style: CustomTextStyles.bodyMediumGray)
       ],
     );
   }
 
   TobBarSearch _buildTitle() {
     return TobBarSearch(
-      name: "Content Details".tr,
+      name: "Content details".tr,
       searchShow: false,
       viewCount: false,
       searchText: "",

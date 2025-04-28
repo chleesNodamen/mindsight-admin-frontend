@@ -12,8 +12,9 @@ import 'package:universal_html/html.dart';
 
 class MasterRegisterArgs {
   final String email;
+  final bool isThirdParty;
 
-  MasterRegisterArgs({required this.email});
+  MasterRegisterArgs({required this.email, required this.isThirdParty});
 }
 
 class MasterRegisterController extends GetxController {
@@ -38,10 +39,10 @@ class MasterRegisterController extends GetxController {
       TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+
   final TextEditingController addressController = TextEditingController();
   final TextEditingController introController = TextEditingController();
-  final TextEditingController yearOfBirthController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
 
   Rx<Contry?> selectedContry = Rx<Contry?>(Contry.unitedStates);
   Rx<ContentLanguage?> selectedPrimaryLanguage =
@@ -67,10 +68,9 @@ class MasterRegisterController extends GetxController {
     passwordCofirmController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
-    phoneNumberController.dispose();
     addressController.dispose();
     introController.dispose();
-    yearOfBirthController.dispose();
+    birthDateController.dispose();
   }
 
   @override
@@ -80,10 +80,10 @@ class MasterRegisterController extends GetxController {
   }
 
   Future<void> initData() async {
-    // args = Get.arguments;
-    // emailController.text = args.email;
+    args = Get.arguments;
+    emailController.text = args.email;
 
-    emailController.text = "chlee@nodamen.com";
+    // emailController.text = "chlee@nodamen.com";
 
     isInited.value = true;
     isLoading.value = false;
@@ -104,16 +104,16 @@ class MasterRegisterController extends GetxController {
       email: emailController.text,
       nickname: nicknameController.text,
       password: passwordController.text,
-      name: "${firstNameController.text} ${lastNameController.text}",
-      // phoneNumber: phoneNumberController.text,
+      name: firstNameController.text,
+      lastName: lastNameController.text,
+      gender: gender.value?.keywordName,
+      birthDate: birthDateController.text,
       country: selectedContry.value?.keywordName,
       address: addressController.text,
       primaryLanguage: selectedPrimaryLanguage.value?.keywordName,
       secondaryLanguage: selectedSecondaryLanguage.value?.keywordName,
       intro: introController.text,
-      // companyId: selectedCompany.value?["id"],
       photoUrl: photoUrl.value,
-      // idPhotoUrl: idPhotoUrl.value,
     ));
 
     if (model.isSuccess) {
@@ -126,8 +126,7 @@ class MasterRegisterController extends GetxController {
             .uploadFile(idPhotoFile!, blobName: idPhotoUrl.value!);
       }
 
-      await showSimpleMessage(
-          "Approval requested. It may take up to 2 business days.\nYou will be notified by email upon approval.");
+      await showSimpleMessage("Success.".tr);
 
       if (Account.isLogined) {
         Get.offAllNamed(AppRoutes.inactiveMasterManage);

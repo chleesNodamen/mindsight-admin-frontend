@@ -124,8 +124,6 @@ import 'package:mindsight_admin_page/presentation/verify_email/verify_email0_bin
 import 'package:mindsight_admin_page/presentation/verify_email/verify_email0_view.dart';
 import 'package:mindsight_admin_page/presentation/verify_email/verify_email1_binding.dart';
 import 'package:mindsight_admin_page/presentation/verify_email/verify_email1_view.dart';
-import 'package:mindsight_admin_page/presentation/verify_email/verify_email2_binding.dart';
-import 'package:mindsight_admin_page/presentation/verify_email/verify_email2_view.dart';
 
 class AppRoutes {
   // static const String rootRoute = "/";
@@ -543,11 +541,6 @@ class AppRoutes {
       name: verifyEmail1,
       page: () => const VerifyEmail1View(),
       bindings: [VerifyEmail1Binding()],
-    ),
-    GetPage(
-      name: verifyEmail2,
-      page: () => const VerifyEmail2View(),
-      bindings: [VerifyEmail2Binding()],
     ),
   ];
 }

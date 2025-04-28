@@ -1,6 +1,9 @@
 class MasterRegisterReqPost {
   String? email;
   String? name;
+  String? lastName; // ✅ 추가
+  String? gender; // ✅ 추가
+  String? birthDate; // ✅ 추가
   String? nickname;
   String? password;
   String? photoUrl;
@@ -16,6 +19,9 @@ class MasterRegisterReqPost {
   MasterRegisterReqPost({
     this.email,
     this.name,
+    this.lastName, // ✅ 추가
+    this.gender, // ✅ 추가
+    this.birthDate, // ✅ 추가
     this.nickname,
     this.password,
     this.photoUrl,
@@ -32,6 +38,9 @@ class MasterRegisterReqPost {
   MasterRegisterReqPost copyWith({
     String? email,
     String? name,
+    String? lastName, // ✅ 추가
+    String? gender, // ✅ 추가
+    String? birthDate, // ✅ 추가
     String? nickname,
     String? password,
     String? photoUrl,
@@ -47,6 +56,9 @@ class MasterRegisterReqPost {
       MasterRegisterReqPost(
         email: email ?? this.email,
         name: name ?? this.name,
+        lastName: lastName ?? this.lastName,
+        gender: gender ?? this.gender,
+        birthDate: birthDate ?? this.birthDate,
         nickname: nickname ?? this.nickname,
         password: password ?? this.password,
         photoUrl: photoUrl ?? this.photoUrl,
@@ -64,6 +76,9 @@ class MasterRegisterReqPost {
       MasterRegisterReqPost(
         email: json["email"],
         name: json["name"],
+        lastName: json["lastName"], // ✅ 추가
+        gender: json["gender"], // ✅ 추가
+        birthDate: json["birthDate"], // ✅ 추가
         nickname: json["nickname"],
         password: json["password"],
         photoUrl: json["photoUrl"],
@@ -80,6 +95,9 @@ class MasterRegisterReqPost {
   Map<String, dynamic> toJson() => {
         "email": email,
         "name": name,
+        "lastName": lastName, // ✅ 추가
+        "gender": gender, // ✅ 추가
+        "birthDate": birthDate, // ✅ 추가
         "nickname": nickname,
         "password": password,
         "photoUrl": photoUrl,
