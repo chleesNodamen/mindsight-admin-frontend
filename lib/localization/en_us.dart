@@ -276,4 +276,5 @@ final Map<String, String> enUs = {
   "Processing": "Processing",
   "Inactive master management": "Inactive master management",
   "Inactive member management": "Inactive member management",
+  "Uploading...": "Uploading...",
 };

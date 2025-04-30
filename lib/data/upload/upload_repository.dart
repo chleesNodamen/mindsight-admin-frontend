@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
@@ -48,7 +49,6 @@ class UploadRepository extends BaseRepository {
     }
   }
 
-  // ✅ 일반 파일 업로드
   Future<UploadModel> uploadFile(File file, {String? blobName}) async {
     final reader = FileReader();
     reader.readAsArrayBuffer(file);
@@ -63,19 +63,52 @@ class UploadRepository extends BaseRepository {
     );
   }
 
-  // ✅ 영상 파일 업로드
-  Future<UploadModel> uploadVideoFile(File file,
-      {required String blobName}) async {
+  // Future<UploadModel> uploadVideoFile(File file,
+  //     {required String blobName}) async {
+  //   final reader = FileReader();
+  //   reader.readAsArrayBuffer(file);
+  //   await reader.onLoadEnd.first;
+
+  //   Uint8List fileBytes = reader.result as Uint8List;
+  //   return await _sendMultipartRequest(
+  //     endpoint: 'upload/media',
+  //     fileName: blobName,
+  //     fileBytes: fileBytes,
+  //     isVideo: true,
+  //   );
+  // }
+
+  Future<bool> uploadWithProgress({
+    required File file,
+    required String endpoint,
+    required String fileName,
+    required void Function(double progress) onProgress,
+  }) {
+    final completer = Completer<bool>();
     final reader = FileReader();
     reader.readAsArrayBuffer(file);
-    await reader.onLoadEnd.first;
+    reader.onLoadEnd.listen((_) {
+      final blob = Blob([reader.result!], file.type);
+      final xhr = HttpRequest();
+      xhr.open('POST', '${httpClient.baseUrl}$endpoint');
+      final form = FormData()..appendBlob('file', blob, fileName);
 
-    Uint8List fileBytes = reader.result as Uint8List;
-    return await _sendMultipartRequest(
-      endpoint: 'upload/media',
-      fileName: blobName,
-      fileBytes: fileBytes,
-      isVideo: true,
-    );
+      // 진행률 리스너
+      xhr.upload.onProgress.listen((e) {
+        if (e.lengthComputable) {
+          onProgress(e.loaded! / e.total!);
+        }
+      });
+
+      // 완료 시점에 completer 완료
+      xhr.onLoadEnd.listen((e) {
+        final success = xhr.status == 200 || xhr.status == 201;
+        completer.complete(success);
+      });
+
+      xhr.send(form);
+    });
+
+    return completer.future;
   }
 }

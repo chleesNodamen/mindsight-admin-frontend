@@ -204,9 +204,27 @@ class _PickFileState extends State<PickFile> {
             onPressed: () => _cropController.crop(),
             child: Padding(
               padding: const EdgeInsets.all(10),
-              child: Text("Comfirm".tr),
+              child: Text("Comfirm".tr,
+                  style: const TextStyle(color: Colors.white)),
             ),
-          )
+          ),
+          const SizedBox(width: 10),
+
+          // CustomElevatedButton(
+          //   text: "Cancel".tr,
+          //   buttonTextStyle: CustomTextStyles.bodyMediumRedBold,
+          //   buttonStyle: CustomButtonStyles.fillRedTransparent,
+          //   margin: const EdgeInsets.only(left: 16),
+          //   height: 44,
+          //   onPressed: () => Navigator.of(context).pop(),
+          // ),
+          // CustomElevatedButton(
+          //   text: "Comfirm".tr,
+          //   buttonTextStyle: CustomTextStyles.bodyMediumWhiteBold,
+          //   buttonStyle: CustomButtonStyles.fillPrimary,
+          //   height: 44,
+          //   onPressed: () => _cropController.crop(),
+          // ),
         ],
       ),
     );

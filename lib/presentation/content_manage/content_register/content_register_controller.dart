@@ -5,6 +5,7 @@ import 'package:mindsight_admin_page/data/base_model.dart';
 import 'package:mindsight_admin_page/data/content_register/content_register_repository.dart';
 import 'package:mindsight_admin_page/data/content_register/content_register_req_post.dart';
 import 'package:mindsight_admin_page/data/upload/upload_repository.dart';
+import 'package:mindsight_admin_page/utils/upload_service.dart';
 import 'package:path/path.dart' as p;
 import 'package:video_player/video_player.dart';
 
@@ -184,10 +185,12 @@ class ContentRegisterController extends GetxController {
       await UploadRepository()
           .uploadFile(thumbnailFile.value!, blobName: thumbnailUrl);
 
-      await UploadRepository().uploadVideoFile(
-        mediaFile.value!,
-        blobName: mediaBlobName,
+      final ok = await UploadService.uploadWithProgressDialog(
+        file: mediaFile.value!,
+        endpoint: 'upload/media',
+        fileName: mediaBlobName,
       );
+      if (!ok) return showSimpleMessage('업로드 실패');
 
       isLoading.value = false;
 

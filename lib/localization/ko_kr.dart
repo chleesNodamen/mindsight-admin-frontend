@@ -272,6 +272,7 @@ final Map<String, String> koKR = {
   "Processing": "처리 중",
   "Inactive master management": "비활성 마스터 관리",
   "Inactive member management": "비활성 회원 관리",
+  "Uploading...": "업로드 중...",
 
 // 기존것 그냥 붙여넣기 했음
   "Company New registration": "회사 신규 등록",

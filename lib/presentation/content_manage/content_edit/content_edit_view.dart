@@ -38,9 +38,9 @@ class ContentEditView extends GetWidget<ContentEditController> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Visibility(
-                                        visible: Account.isAdmin,
-                                        child: _buildMasterInfo()),
+                                    // Visibility(
+                                    //     visible: Account.isAdmin,
+                                    //     child: _buildMasterInfo()),
                                     _buildBasicInfo(),
                                     const SizedBox(height: 32),
                                     _buildFile(),
@@ -60,51 +60,51 @@ class ContentEditView extends GetWidget<ContentEditController> {
         ));
   }
 
-  Widget _buildMasterInfo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text("Master info".tr, style: CustomTextStyles.bodyMediumBlack),
-            Text(" 관리자에게만 보이는 임시 마스터 선택창".tr,
-                style: CustomTextStyles.labelMediumGray),
-          ],
-        ),
-        const SizedBox(height: 24),
-        InkWell(
-          onTap: () async {
-            var result = await showMasterSearchDialog();
-            if (result != null) {
-              controller.selectedMaster.value = result;
-            }
-          },
-          child: Container(
-            width: 353,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadiusStyle.roundedBorder12,
-                border: Border.all(color: appTheme.grayScale3),
-                color: appTheme.white),
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    controller.selectedMaster.value == null
-                        ? ""
-                        : controller.selectedMaster.value!["nickname"]!,
-                    style: CustomTextStyles.bodyMediumGray),
-                CustomImageView(
-                  imagePath: IconConstant.search,
-                )
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 32),
-      ],
-    );
-  }
+  // Widget _buildMasterInfo() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Row(
+  //         children: [
+  //           Text("Master info".tr, style: CustomTextStyles.bodyMediumBlack),
+  //           Text(" 관리자에게만 보이는 임시 마스터 선택창".tr,
+  //               style: CustomTextStyles.labelMediumGray),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 24),
+  //       InkWell(
+  //         onTap: () async {
+  //           var result = await showMasterSearchDialog();
+  //           if (result != null) {
+  //             controller.selectedMaster.value = result;
+  //           }
+  //         },
+  //         child: Container(
+  //           width: 353,
+  //           decoration: BoxDecoration(
+  //               borderRadius: BorderRadiusStyle.roundedBorder12,
+  //               border: Border.all(color: appTheme.grayScale3),
+  //               color: appTheme.white),
+  //           padding: const EdgeInsets.all(16),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //             children: [
+  //               Text(
+  //                   controller.selectedMaster.value == null
+  //                       ? ""
+  //                       : controller.selectedMaster.value!["nickname"]!,
+  //                   style: CustomTextStyles.bodyMediumGray),
+  //               CustomImageView(
+  //                 imagePath: IconConstant.search,
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(height: 32),
+  //     ],
+  //   );
+  // }
 
   Row _buildSaveNCancel(GlobalKey<FormState> formKey) {
     return Row(

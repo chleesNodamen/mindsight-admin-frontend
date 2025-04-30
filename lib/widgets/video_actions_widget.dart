@@ -60,8 +60,8 @@ class _VideoDialogContentState extends State<VideoDialogContent> {
 
   @override
   Widget build(BuildContext context) {
-    // 다이얼로그 너비 설정
-    final double dialogWidth = MediaQuery.of(context).size.width * 0.4;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final dialogWidth = _isAudioOnly ? 400.0 : screenWidth * 0.4;
 
     return SizedBox(
       width: dialogWidth,
@@ -70,14 +70,14 @@ class _VideoDialogContentState extends State<VideoDialogContent> {
         children: [
           _isInitialized
               ? _isAudioOnly
-                  ? _buildAudioUI()
+                  ? _buildAudioUI(dialogWidth)
                   : _buildVideoUI()
               : const SizedBox(
-                  height: 200,
+                  height: 300,
                   child: Center(child: CircularProgressIndicator()),
                 ),
-          Align(
-            alignment: Alignment.centerRight,
+          SizedBox(
+            width: double.infinity,
             child: TextButton(
               onPressed: () {
                 _controller.pause();
@@ -91,20 +91,21 @@ class _VideoDialogContentState extends State<VideoDialogContent> {
     );
   }
 
-  Widget _buildAudioUI() {
+  Widget _buildAudioUI(double width) {
     return Container(
-      width: double.infinity,
-      height: 200, // 고정 높이 설정
-      color: Colors.black, // 배경색 설정 (필요에 따라 변경 가능)
+      width: width,
+      height: 300,
+      decoration: const BoxDecoration(color: Colors.black),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
             Icons.music_note,
-            size: 100,
+            size: 60,
             color: Colors.white,
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 12),
           VideoProgressIndicator(
             _controller,
             allowScrubbing: true,
@@ -114,7 +115,7 @@ class _VideoDialogContentState extends State<VideoDialogContent> {
               backgroundColor: Colors.white,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
