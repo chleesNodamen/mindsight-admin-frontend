@@ -190,7 +190,10 @@ class ContentRegisterController extends GetxController {
         endpoint: 'upload/media',
         fileName: mediaBlobName,
       );
-      if (!ok) return showSimpleMessage('업로드 실패');
+      if (!ok) {
+        isLoading.value = false;
+        return showSimpleMessage('업로드 실패. 서버에 디스크 용량이 부족 합니다.');
+      }
 
       isLoading.value = false;
 

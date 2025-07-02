@@ -118,10 +118,12 @@ class AuthenticationController extends GetxController {
 
   Future<UserCredential> googleLogin() async {
     final GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
     googleProvider.setCustomParameters({'prompt': 'select_account'});
 
     return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+
+    // await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+    // return await FirebaseAuth.instance.getRedirectResult();
   }
 
   Future<bool> _handleSignin({

@@ -273,6 +273,8 @@ final Map<String, String> koKR = {
   "Inactive master management": "비활성 마스터 관리",
   "Inactive member management": "비활성 회원 관리",
   "Uploading...": "업로드 중...",
+  "The version does not match. Please completely close and reopen your browser.":
+      "버전이 일치하지 않습니다. 브라우저를 완전히 종료한 후 다시 열어주세요.",
 
 // 기존것 그냥 붙여넣기 했음
   "Company New registration": "회사 신규 등록",

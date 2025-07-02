@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "86520359521-d9fkua33tb3bd9ds5dapltlq52241k3k.apps.googleusercontent.com",
+          "client_id": "86520359521-lq1e8vd7j06oa1hvs7irr8ti9m4k8j69.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,15 +27,8 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "86520359521-d9fkua33tb3bd9ds5dapltlq52241k3k.apps.googleusercontent.com",
+              "client_id": "86520359521-38ooa53hhrud0ev20hg1bsf8pn40fo8c.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "86520359521-i9nlllsqrhqk0boqh10lb3dlcea3najm.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mindsightAdminPage"
-              }
             }
           ]
         }

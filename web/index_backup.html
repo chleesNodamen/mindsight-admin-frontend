@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base href="$FLUTTER_BASE_HREF">
+
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A new Flutter project.">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="mindsight_admin">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <title>mindsight admin</title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- no-cache 설정 시작 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- no-cache 설정 끝 -->
+
+    <!-- hls 비디오 재생 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest" type="application/javascript"></script>
+
+    <!-- 구글로그인 시작 -->
+    <script>
+        // 1) AMD define 임시 제거
+        window._saved_define = window.define;
+        window.define = undefined;
+    </script>
+
+    <!-- 2) Firebase Compat SDK 로드 (defer) -->
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <!-- 3) Google Sign-In (defer로 바꿔도 무방) -->
+    <script async defer src="https://accounts.google.com/gsi/client"></script>
+
+    <!-- 4) compat SDK 실행 후에 define 복원 -->
+    <script defer>
+        window.define = window._saved_define;
+        delete window._saved_define;
+    </script>
+    <!-- 구글로그인 끝 -->
+    <!--
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzBKa_53LR-4Qw8xMKb5-f7KFdcxEsoTo",
+            authDomain: "mindsight-admin.firebaseapp.com",
+            projectId: "mindsight-admin",
+            storageBucket: "mindsight-admin.firebasestorage.app",
+            messagingSenderId: "86520359521",
+            appId: "1:86520359521:web:5a03cb272d825bf6ce5820"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    -->
+
+</head>
+
+<body>
+    <script src="flutter_bootstrap.js" async></script>
+</body>
+
+</html>

@@ -13,18 +13,18 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized(); // 비동기 작업을 위해 필요
 
-  if (kReleaseMode) {
-    // 배포 환경에서는 firebase.initializeApp() 호출 생략
-    Logger.info("Release Mode: firebase.initializeApp 생략");
-  } else {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
+  // if (kReleaseMode) {
+  //   // 배포 환경에서는 firebase.initializeApp() 호출 생략
+  //   Logger.info("Release Mode: firebase.initializeApp 생략");
+  // } else {
+  //   await Firebase.initializeApp(
+  //     options: DefaultFirebaseOptions.currentPlatform,
+  //   );
+  // }
 
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   Get.put(PrefUtils());
   Get.put(CustomHttpClient());

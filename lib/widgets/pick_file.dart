@@ -1,6 +1,7 @@
 // ignore: deprecated_member_use
 import 'dart:async';
 import 'dart:html' as html;
+import 'dart:typed_data';
 import 'package:crop_your_image/crop_your_image.dart';
 import 'package:el_tooltip/el_tooltip.dart';
 import 'package:file_picker/file_picker.dart';
@@ -103,43 +104,98 @@ class _PickFileState extends State<PickFile> {
   //   }
   // }
 
+  // Future<void> onPickFile() async {
+  //   try {
+  //     FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //       type: FileType.custom,
+  //       allowedExtensions: widget.fileExtension,
+  //       withData: true,
+  //     );
+
+  //     if (result != null && result.files.isNotEmpty) {
+  //       PlatformFile file = result.files.first;
+  //       final extension = file.extension?.toLowerCase();
+  //       final mimeType = extension != null
+  //           ? (_imageMimeTypes[extension] ?? _additionalMimeTypes[extension])
+  //           : null;
+
+  //       if (mimeType == null) {
+  //         Logger.error('Unsupported file type: .$extension');
+  //         return;
+  //       }
+
+  //       if (_imageMimeTypes.containsKey(extension)) {
+  //         Uint8List? resizedBytes = await resizeImage(file.bytes!);
+  //         if (resizedBytes == null) {
+  //           Logger.error('이미지 리사이즈 실패');
+  //           return;
+  //         }
+  //         _imageBytes = resizedBytes;
+  //         pickedFileName = file.name;
+  //         _showCropDialog();
+  //       } else {
+  //         pickedFile = html.File([file.bytes!], file.name, {'type': mimeType});
+  //         pickedFileName = file.name;
+  //         pickedFileUrl = null;
+  //         widget.onFilePicked(pickedFile);
+  //         setState(() {});
+  //       }
+  //     }
+  //   } catch (e) {
+  //     Logger.error('Error during file selection: $e');
+  //   }
+  // }
+
   Future<void> onPickFile() async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: widget.fileExtension,
-        withData: true,
-      );
+      final uploadInput = html.FileUploadInputElement();
+      uploadInput.accept = widget.fileExtension.map((e) => '.$e').join(',');
+      uploadInput.click();
 
-      if (result != null && result.files.isNotEmpty) {
-        PlatformFile file = result.files.first;
-        final extension = file.extension?.toLowerCase();
-        final mimeType = extension != null
-            ? (_imageMimeTypes[extension] ?? _additionalMimeTypes[extension])
-            : null;
+      uploadInput.onChange.listen((e) async {
+        final file = uploadInput.files?.first;
+        if (file == null) return;
+
+        final extension = file.name.split('.').last.toLowerCase();
+        final mimeType =
+            _imageMimeTypes[extension] ?? _additionalMimeTypes[extension];
 
         if (mimeType == null) {
           Logger.error('Unsupported file type: .$extension');
           return;
         }
 
+        pickedFileName = file.name;
+
         if (_imageMimeTypes.containsKey(extension)) {
-          Uint8List? resizedBytes = await resizeImage(file.bytes!);
-          if (resizedBytes == null) {
-            Logger.error('이미지 리사이즈 실패');
-            return;
-          }
-          _imageBytes = resizedBytes;
-          pickedFileName = file.name;
-          _showCropDialog();
+          final reader = html.FileReader();
+          reader.readAsArrayBuffer(file);
+          reader.onLoadEnd.listen((event) async {
+            if (reader.result is! Uint8List && reader.result is! ByteBuffer) {
+              Logger.error('Invalid image file buffer');
+              return;
+            }
+
+            final buffer = reader.result is Uint8List
+                ? reader.result as Uint8List
+                : Uint8List.view(reader.result as ByteBuffer);
+
+            Uint8List? resizedBytes = await resizeImage(buffer);
+            if (resizedBytes == null) {
+              Logger.error('이미지 리사이즈 실패');
+              return;
+            }
+
+            _imageBytes = resizedBytes;
+            _showCropDialog();
+          });
         } else {
-          pickedFile = html.File([file.bytes!], file.name, {'type': mimeType});
-          pickedFileName = file.name;
+          pickedFile = file;
           pickedFileUrl = null;
-          widget.onFilePicked(pickedFile);
+          widget.onFilePicked(file);
           setState(() {});
         }
-      }
+      });
     } catch (e) {
       Logger.error('Error during file selection: $e');
     }

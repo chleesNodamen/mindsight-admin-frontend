@@ -277,4 +277,6 @@ final Map<String, String> enUs = {
   "Inactive master management": "Inactive master management",
   "Inactive member management": "Inactive member management",
   "Uploading...": "Uploading...",
+  "The version does not match. Please completely close and reopen your browser.":
+      "The version does not match. Please completely close and reopen your browser.",
 };

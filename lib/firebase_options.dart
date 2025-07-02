@@ -45,7 +45,7 @@ class DefaultFirebaseOptions {
     appId: '1:86520359521:web:1098196ff024e6c5ce5820',
     messagingSenderId: '86520359521',
     projectId: 'mindsight-admin',
-    authDomain: 'master.mindsight.im',
+    authDomain: 'mindsight-admin.firebaseapp.com',
     storageBucket: 'mindsight-admin.firebasestorage.app',
   );
 
@@ -63,8 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '86520359521',
     projectId: 'mindsight-admin',
     storageBucket: 'mindsight-admin.firebasestorage.app',
-    iosClientId:
-        '86520359521-i9nlllsqrhqk0boqh10lb3dlcea3najm.apps.googleusercontent.com',
     iosBundleId: 'com.example.mindsightAdminPage',
   );
 
@@ -74,8 +72,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '86520359521',
     projectId: 'mindsight-admin',
     storageBucket: 'mindsight-admin.firebasestorage.app',
-    iosClientId:
-        '86520359521-i9nlllsqrhqk0boqh10lb3dlcea3najm.apps.googleusercontent.com',
     iosBundleId: 'com.example.mindsightAdminPage',
   );
 
@@ -84,7 +80,7 @@ class DefaultFirebaseOptions {
     appId: '1:86520359521:web:1098196ff024e6c5ce5820',
     messagingSenderId: '86520359521',
     projectId: 'mindsight-admin',
-    authDomain: 'master.mindsight.im',
+    authDomain: 'mindsight-admin.firebaseapp.com',
     storageBucket: 'mindsight-admin.firebasestorage.app',
   );
 }

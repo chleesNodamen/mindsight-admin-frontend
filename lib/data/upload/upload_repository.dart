@@ -78,6 +78,40 @@ class UploadRepository extends BaseRepository {
   //   );
   // }
 
+  // Future<bool> uploadWithProgress({
+  //   required File file,
+  //   required String endpoint,
+  //   required String fileName,
+  //   required void Function(double progress) onProgress,
+  // }) {
+  //   final completer = Completer<bool>();
+  //   final reader = FileReader();
+  //   reader.readAsArrayBuffer(file);
+  //   reader.onLoadEnd.listen((_) {
+  //     final blob = Blob([reader.result!], file.type);
+  //     final xhr = HttpRequest();
+  //     xhr.open('POST', '${httpClient.baseUrl}$endpoint');
+  //     final form = FormData()..appendBlob('file', blob, fileName);
+
+  //     // 진행률 리스너
+  //     xhr.upload.onProgress.listen((e) {
+  //       if (e.lengthComputable) {
+  //         onProgress(e.loaded! / e.total!);
+  //       }
+  //     });
+
+  //     // 완료 시점에 completer 완료
+  //     xhr.onLoadEnd.listen((e) {
+  //       final success = xhr.status == 200 || xhr.status == 201;
+  //       completer.complete(success);
+  //     });
+
+  //     xhr.send(form);
+  //   });
+
+  //   return completer.future;
+  // }
+
   Future<bool> uploadWithProgress({
     required File file,
     required String endpoint,
@@ -85,29 +119,29 @@ class UploadRepository extends BaseRepository {
     required void Function(double progress) onProgress,
   }) {
     final completer = Completer<bool>();
-    final reader = FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onLoadEnd.listen((_) {
-      final blob = Blob([reader.result!], file.type);
-      final xhr = HttpRequest();
-      xhr.open('POST', '${httpClient.baseUrl}$endpoint');
-      final form = FormData()..appendBlob('file', blob, fileName);
 
-      // 진행률 리스너
-      xhr.upload.onProgress.listen((e) {
-        if (e.lengthComputable) {
-          onProgress(e.loaded! / e.total!);
-        }
-      });
+    final xhr = HttpRequest();
+    xhr.open('POST', '${httpClient.baseUrl}$endpoint');
+    final form = FormData()..appendBlob('file', file, fileName);
 
-      // 완료 시점에 completer 완료
-      xhr.onLoadEnd.listen((e) {
-        final success = xhr.status == 200 || xhr.status == 201;
-        completer.complete(success);
-      });
-
-      xhr.send(form);
+    // 진행률 리스너
+    xhr.upload.onProgress.listen((e) {
+      if (e.lengthComputable) {
+        onProgress(e.loaded! / e.total!);
+      }
     });
+
+    xhr.onLoadEnd.listen((e) {
+      final success = xhr.status == 200 || xhr.status == 201;
+      completer.complete(success);
+    });
+
+    xhr.onError.listen((e) {
+      Logger.error('업로드 중 에러 발생');
+      completer.complete(false);
+    });
+
+    xhr.send(form); // ✅ 여기서 File을 그대로 보내기 때문에 메모리 로딩 불필요
 
     return completer.future;
   }
